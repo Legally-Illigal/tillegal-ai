@@ -1,0 +1,14 @@
+routing:
+  default_profile: legal_fast
+  fallback_profiles:
+    - legal_strict
+  max_fallback_attempts: 1
+  fallback_on:
+    - timeout
+    - rate_limit
+    - service_unavailable
+
+workflows:
+  legal_qa:
+    required_verification: true
+    require_citation_check: true

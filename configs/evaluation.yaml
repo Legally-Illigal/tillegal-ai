@@ -1,0 +1,16 @@
+datasets:
+  legal_regression:
+    path: tests/evaluation/datasets
+    enabled: true
+  quality_baseline:
+    path: tests/evaluation/datasets
+    enabled: false
+
+thresholds:
+  groundedness_min: 0.85
+  citation_accuracy_min: 0.9
+  legal_basis_min: 0.9
+
+settings:
+  require_versioned_dataset: true
+  fail_on_regression: true
