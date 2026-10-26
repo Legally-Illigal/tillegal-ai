@@ -1,1 +1,1 @@
-" \Test package initialization.\\n
+"""Test package."""

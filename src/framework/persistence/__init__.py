@@ -1,1 +1,1 @@
-" \Package initialization.\\n
+"""Persistence abstractions."""

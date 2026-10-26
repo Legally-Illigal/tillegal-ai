@@ -1,1 +1,15 @@
-# App Configuration
+app:
+  name: tillegal-ai
+  env: development
+  host: 0.0.0.0
+  port: 8000
+  debug: false
+  log_level: INFO
+
+api:
+  timeout_seconds: 120
+  max_body_size_mb: 25
+
+security:
+  redact_secrets: true
+  cors_allowed_origins: []

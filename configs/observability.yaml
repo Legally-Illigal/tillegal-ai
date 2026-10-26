@@ -1,1 +1,14 @@
-# Observability Configuration
+telemetry:
+  service_name: tillegal-ai
+  otel_enabled: false
+  exporter_endpoint_env: OTEL_EXPORTER_OTLP_ENDPOINT
+  sample_rate: 1.0
+
+logs:
+  level: INFO
+  redact_secrets: true
+  include_request_id: true
+
+tracing:
+  enabled: false
+  propagation: b3

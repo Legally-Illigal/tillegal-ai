@@ -1,1 +1,1 @@
-" \Package initialization.\\n
+"""Resilience utilities."""

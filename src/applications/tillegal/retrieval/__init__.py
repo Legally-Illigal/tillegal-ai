@@ -1,1 +1,1 @@
-" \Package initialization.\\n
+"""Legal document retrieval components."""

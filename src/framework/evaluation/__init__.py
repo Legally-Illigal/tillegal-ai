@@ -1,1 +1,1 @@
-" \Package initialization.\\n
+"""Evaluation framework components."""

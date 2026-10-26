@@ -1,6 +1,8 @@
 # tillegal-ai
 Tillegal - Phần AI Service của hệ thống, repo nhằm triển khai chi tiết cho hệ thống AI.
 
+The directory tree below is the agreed target structure currently being implemented. It describes the intended architecture; some listed modules may not exist in the working code yet.
+
 tillegal-ai-service/
 │
 ├── .agents/                              # AI Coding Harness

@@ -1,1 +1,1 @@
-" \Package initialization.\\n
+"""Response generation agent."""

@@ -1,1 +1,1 @@
-" \Package initialization.\\n
+"""External service integrations."""

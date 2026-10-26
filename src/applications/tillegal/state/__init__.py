@@ -1,1 +1,1 @@
-" \Package initialization.\\n
+"""Tillegal workflow state definitions."""

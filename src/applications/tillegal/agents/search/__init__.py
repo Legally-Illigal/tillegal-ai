@@ -1,1 +1,1 @@
-" \Package initialization.\\n
+"""Legal evidence search agent."""

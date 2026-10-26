@@ -1,1 +1,1 @@
-" \Package initialization.\\n
+"""Application packages."""
