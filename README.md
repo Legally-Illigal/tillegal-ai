@@ -3,6 +3,20 @@ Tillegal - Phần AI Service của hệ thống, repo nhằm triển khai chi ti
 
 The directory tree below is the agreed target structure currently being implemented. It describes the intended architecture; some listed modules may not exist in the working code yet.
 
+## Supabase
+
+The API creates a Supabase client during startup when database credentials are present. Configure these values in a local `.env` file (copy `.env.example`); do not commit real keys:
+
+```dotenv
+SUPABASE_URL=https://<project-ref>.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=<server-only-key>
+SUPABASE_VECTOR_TABLE=legal_documents
+```
+
+Use the project URL from Supabase Project Settings → API. Keep the service-role key on the server only because it bypasses Row Level Security. If the service-role key is not available, `SUPABASE_ANON_KEY` can be used with appropriate RLS policies. `SUPABASE_URL` and at least one API key must be configured together. Without either value, the API still starts with `app.state.supabase_client` set to `None`, which supports local development without Supabase.
+
+The application initializes the Supabase API client but does not create database tables or policies. Create the required schema and RLS policies in Supabase before using database-backed features.
+
 tillegal-ai-service/
 │
 ├── .agents/                              # AI Coding Harness
@@ -104,17 +118,17 @@ tillegal-ai-service/
 │   │   ├── troubleshooting.md
 │   │   └── incident-response.md
 │   │
-│   └── decisions/
-│       ├── ADR-001-langgraph.md
-│       ├── ADR-002-litellm.md
-│       ├── ADR-003-evaluation.md
-│       └── ADR-004-observability.md
-│
-├── tasks/
-│   ├── backlog/
-│   ├── in-progress/
-│   ├── completed/
-│   └── templates/
+│   ├── decisions/
+│   │   ├── ADR-001-langgraph.md
+│   │   ├── ADR-002-litellm.md
+│   │   ├── ADR-003-evaluation.md
+│   │   └── ADR-004-observability.md
+│   │
+│   └── tasks/
+│       ├── backlog/
+│       ├── in-progress/
+│       ├── completed/
+│       └── templates/
 │
 ├── src/
 │   ├── __init__.py

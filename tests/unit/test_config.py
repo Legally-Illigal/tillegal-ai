@@ -41,3 +41,46 @@ def test_load_settings_rejects_invalid_port(tmp_path: Path) -> None:
 
     with pytest.raises(ValidationError):
         load_settings(config_path, environ={})
+
+
+def test_load_settings_configures_supabase_from_environment(tmp_path: Path) -> None:
+    config_path = tmp_path / "app.yaml"
+    config_path.write_text("app: {}\n", encoding="utf-8")
+
+    settings = load_settings(
+        config_path,
+        environ={
+            "SUPABASE_URL": "https://example.supabase.co",
+            "SUPABASE_SERVICE_ROLE_KEY": "server-secret",
+            "SUPABASE_VECTOR_TABLE": "documents",
+        },
+    )
+
+    assert str(settings.supabase.url) == "https://example.supabase.co/"
+    assert settings.supabase.service_role_key is not None
+    assert settings.supabase.service_role_key.get_secret_value() == "server-secret"
+    assert settings.supabase.vector_table == "documents"
+    assert settings.supabase.is_configured is True
+
+
+def test_load_settings_rejects_partial_supabase_configuration(tmp_path: Path) -> None:
+    config_path = tmp_path / "app.yaml"
+    config_path.write_text("app: {}\n", encoding="utf-8")
+
+    with pytest.raises(ValidationError, match="SUPABASE_URL and a Supabase API key"):
+        load_settings(
+            config_path,
+            environ={"SUPABASE_URL": "https://example.supabase.co"},
+        )
+
+
+def test_load_settings_treats_empty_supabase_environment_as_unconfigured(tmp_path: Path) -> None:
+    config_path = tmp_path / "app.yaml"
+    config_path.write_text("app: {}\n", encoding="utf-8")
+
+    settings = load_settings(
+        config_path,
+        environ={"SUPABASE_URL": "", "SUPABASE_SERVICE_ROLE_KEY": ""},
+    )
+
+    assert settings.supabase.is_configured is False

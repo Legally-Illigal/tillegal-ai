@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from src.api.routes.health import router as health_router
 from src.core.config import AppSettings, load_settings
+from src.integrations.database.session import create_supabase_client
 
 
 def create_app(settings: AppSettings | None = None) -> FastAPI:
@@ -25,6 +26,9 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         redoc_url=None,
     )
     application.state.settings = app_settings
+    application.state.supabase_client = (
+        create_supabase_client(app_settings.supabase) if app_settings.supabase.is_configured else None
+    )
     application.include_router(health_router)
 
     allowed_origins: Sequence[str] = app_settings.security.cors_allowed_origins
