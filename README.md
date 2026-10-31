@@ -3,6 +3,32 @@ Tillegal - Phần AI Service của hệ thống, repo nhằm triển khai chi ti
 
 The directory tree below is the agreed target structure currently being implemented. It describes the intended architecture; some listed modules may not exist in the working code yet.
 
+## Supabase
+
+The API creates a Supabase client during startup when database credentials are present. Configure these values in a local `.env` file (copy `.env.example`); do not commit real keys:
+
+```dotenv
+SUPABASE_URL=https://<project-ref>.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=<server-only-key>
+SUPABASE_VECTOR_TABLE=dense_chunk_embeddings
+DATABASE_URL=postgresql://postgres:<database-password>@db.<project-ref>.supabase.co:5432/postgres
+SUPABASE_AUTO_MIGRATE=false
+```
+
+`SUPABASE_URL` and API keys are for the Supabase HTTP API. The application uses `DATABASE_URL` to connect directly to Supabase PostgreSQL for schema migrations. Get the database connection string from Supabase Dashboard → **Project Settings → Database → Connection string**; use the connection mode appropriate for your network (for example, Session Pooler if direct connections are unavailable). URL-encode special characters in the database password. Treat this URL as a secret and do not commit it. Keep the service-role key on the server only because it bypasses Row Level Security. The migration enables RLS without public policies, so the service-role key is required for server-side Data API access unless you add suitable policies. `SUPABASE_ANON_KEY` alone does not grant access to these tables. `SUPABASE_URL` and at least one API key must be configured together.
+
+Database migrations are kept under [`src/integrations/database/supabase/migrations`](./src/integrations/database/supabase/migrations). The migration [`20261028170000_unified_rag_storage.sql`](./src/integrations/database/supabase/migrations/20261028170000_unified_rag_storage.sql) creates the `dense_chunk_embeddings` table used for vector data and enables RLS on all schema tables. Its vector column and HNSW index are configured for 1536-dimensional cosine embeddings; change them to match your embedding model before applying the migration if needed.
+
+To apply pending migrations manually from the repository root:
+
+```powershell
+uv run python -m src.integrations.database.migrator
+```
+
+Or run `make db-migrate`. Both commands use `DATABASE_URL`; Supabase CLI login/link is not needed.
+
+To apply pending migrations automatically when the API starts, set `SUPABASE_AUTO_MIGRATE=true` and provide `DATABASE_URL` in `.env`. Startup applies each SQL migration once and aborts if the database connection or migration fails. Keep this setting `false` in production unless you explicitly want migrations to run on application startup; otherwise run them as a deployment step.
+
 tillegal-ai-service/
 │
 ├── .agents/                              # AI Coding Harness
@@ -104,17 +130,17 @@ tillegal-ai-service/
 │   │   ├── troubleshooting.md
 │   │   └── incident-response.md
 │   │
-│   └── decisions/
-│       ├── ADR-001-langgraph.md
-│       ├── ADR-002-litellm.md
-│       ├── ADR-003-evaluation.md
-│       └── ADR-004-observability.md
-│
-├── tasks/
-│   ├── backlog/
-│   ├── in-progress/
-│   ├── completed/
-│   └── templates/
+│   ├── decisions/
+│   │   ├── ADR-001-langgraph.md
+│   │   ├── ADR-002-litellm.md
+│   │   ├── ADR-003-evaluation.md
+│   │   └── ADR-004-observability.md
+│   │
+│   └── tasks/
+│       ├── backlog/
+│       ├── in-progress/
+│       ├── completed/
+│       └── templates/
 │
 ├── src/
 │   ├── __init__.py
