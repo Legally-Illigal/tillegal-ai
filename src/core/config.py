@@ -43,7 +43,6 @@ class SupabaseSettings(StrictConfig):
     service_role_key: SecretStr | None = None
     anon_key: SecretStr | None = None
     database_url: SecretStr | None = None
-    vector_table: str = "dense_chunk_embeddings"
     auto_migrate: bool = False
 
     @field_validator("url", mode="before")
@@ -137,7 +136,6 @@ def load_settings(
         "SUPABASE_SERVICE_ROLE_KEY": "service_role_key",
         "SUPABASE_ANON_KEY": "anon_key",
         "DATABASE_URL": "database_url",
-        "SUPABASE_VECTOR_TABLE": "vector_table",
         "SUPABASE_AUTO_MIGRATE": "auto_migrate",
     }
     for env_key, setting_key in supabase_overrides.items():

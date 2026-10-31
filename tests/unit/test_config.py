@@ -52,21 +52,13 @@ def test_load_settings_configures_supabase_from_environment(tmp_path: Path) -> N
         environ={
             "SUPABASE_URL": "https://example.supabase.co",
             "SUPABASE_SERVICE_ROLE_KEY": "server-secret",
-            "SUPABASE_VECTOR_TABLE": "documents",
         },
     )
 
     assert str(settings.supabase.url) == "https://example.supabase.co/"
     assert settings.supabase.service_role_key is not None
     assert settings.supabase.service_role_key.get_secret_value() == "server-secret"
-    assert settings.supabase.vector_table == "documents"
     assert settings.supabase.is_configured is True
-
-
-def test_supabase_vector_table_defaults_to_schema_embedding_table() -> None:
-    settings = load_settings(environ={})
-
-    assert settings.supabase.vector_table == "dense_chunk_embeddings"
 
 
 def test_load_settings_rejects_partial_supabase_configuration(tmp_path: Path) -> None:
