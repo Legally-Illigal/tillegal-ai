@@ -20,6 +20,10 @@ Database migrations are kept under [`src/integrations/database/supabase/migratio
 
 RAG data access is split by responsibility under [`src/integrations/database/repositories`](./src/integrations/database/repositories): source-document metadata, parsed document persistence, chunk reads, dense-index lifecycle, sparse-index lifecycle, and retrieval. The use case coordinates these repositories. Parse output (structure, nodes, blocks, and chunks) is persisted through one RPC so this multi-table write is atomic.
 
+Execution submission uses a PostgreSQL transactional outbox. The execution row and its `execution.queued` event are written in one `DATABASE_URL` transaction by separate execution and outbox repositories. The outbox dispatcher leases pending events with `FOR UPDATE SKIP LOCKED`, publishes through the `ExecutionQueuePublisher` interface, and records acknowledgements or bounded exponential retries. Delivery is at least once: queue consumers must make execution handling idempotent. This establishes persistence and dispatch boundaries; a concrete broker adapter and execution worker are not yet wired to the legal QA graph.
+
+The execution/outbox runtime therefore requires `DATABASE_URL`, independently of the Supabase Data API credentials. Apply the migration with the same migration command described below before enabling execution submission or dispatch.
+
 Apply all SQL migrations in filename order. Agent-facing dense vector retrieval uses `search_legal_chunks`; keyword retrieval uses `search_sparse_legal_chunks` over the BM25 inverted index. Both apply the requested effective date and require explicit allowlists for all source-governance statuses. Other repository operations use dedicated RPCs. These functions are exposed through Supabase's Data API, so query/write traffic does not use `DATABASE_URL`; keep the service-role key server-side because only `service_role` is granted permission to execute them. The dense query embedding must come from the same 1536-dimensional model/index named in the request.
 
 To apply pending migrations manually from the repository root:
