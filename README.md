@@ -10,12 +10,24 @@ The API creates a Supabase client during startup when database credentials are p
 ```dotenv
 SUPABASE_URL=https://<project-ref>.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=<server-only-key>
-SUPABASE_VECTOR_TABLE=legal_documents
+SUPABASE_VECTOR_TABLE=dense_chunk_embeddings
+DATABASE_URL=postgresql://postgres:<database-password>@db.<project-ref>.supabase.co:5432/postgres
+SUPABASE_AUTO_MIGRATE=false
 ```
 
-Use the project URL from Supabase Project Settings → API. Keep the service-role key on the server only because it bypasses Row Level Security. If the service-role key is not available, `SUPABASE_ANON_KEY` can be used with appropriate RLS policies. `SUPABASE_URL` and at least one API key must be configured together. Without either value, the API still starts with `app.state.supabase_client` set to `None`, which supports local development without Supabase.
+`SUPABASE_URL` and API keys are for the Supabase HTTP API. The application uses `DATABASE_URL` to connect directly to Supabase PostgreSQL for schema migrations. Get the database connection string from Supabase Dashboard → **Project Settings → Database → Connection string**; use the connection mode appropriate for your network (for example, Session Pooler if direct connections are unavailable). URL-encode special characters in the database password. Treat this URL as a secret and do not commit it. Keep the service-role key on the server only because it bypasses Row Level Security. The migration enables RLS without public policies, so the service-role key is required for server-side Data API access unless you add suitable policies. `SUPABASE_ANON_KEY` alone does not grant access to these tables. `SUPABASE_URL` and at least one API key must be configured together.
 
-The application initializes the Supabase API client but does not create database tables or policies. Create the required schema and RLS policies in Supabase before using database-backed features.
+Database migrations are kept under [`src/integrations/database/supabase/migrations`](./src/integrations/database/supabase/migrations). The migration [`20261028170000_unified_rag_storage.sql`](./src/integrations/database/supabase/migrations/20261028170000_unified_rag_storage.sql) creates the `dense_chunk_embeddings` table used for vector data and enables RLS on all schema tables. Its vector column and HNSW index are configured for 1536-dimensional cosine embeddings; change them to match your embedding model before applying the migration if needed.
+
+To apply pending migrations manually from the repository root:
+
+```powershell
+uv run python -m src.integrations.database.migrator
+```
+
+Or run `make db-migrate`. Both commands use `DATABASE_URL`; Supabase CLI login/link is not needed.
+
+To apply pending migrations automatically when the API starts, set `SUPABASE_AUTO_MIGRATE=true` and provide `DATABASE_URL` in `.env`. Startup applies each SQL migration once and aborts if the database connection or migration fails. Keep this setting `false` in production unless you explicitly want migrations to run on application startup; otherwise run them as a deployment step.
 
 tillegal-ai-service/
 │

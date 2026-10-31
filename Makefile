@@ -1,4 +1,4 @@
-.PHONY: help install test lint run
+.PHONY: help install test lint run db-migrate
 
 help:
 	@echo "Tillegal AI Service Makefile"
@@ -6,6 +6,7 @@ help:
 	@echo "  test      - run pytest"
 	@echo "  lint      - run ruff"
 	@echo "  run       - run the FastAPI app"
+	@echo "  db-migrate - apply pending Supabase migrations"
 
 install:
 	uv sync --all-groups
@@ -18,3 +19,6 @@ lint:
 
 run:
 	uv run python -m src.main
+
+db-migrate:
+	uv run python -m src.integrations.database.migrator

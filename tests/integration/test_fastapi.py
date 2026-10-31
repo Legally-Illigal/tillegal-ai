@@ -50,5 +50,27 @@ def test_app_runs_without_supabase_configuration() -> None:
     assert app.state.supabase_client is None
 
 
+def test_app_runs_supabase_migrations_on_startup_when_enabled(monkeypatch) -> None:
+    migration_calls: list[str] = []
+
+    async def fake_run_migrations(database_url) -> None:
+        migration_calls.append(database_url.get_secret_value())
+
+    monkeypatch.setattr("src.bootstrap.run_supabase_migrations", fake_run_migrations)
+    app = create_app(
+        AppSettings(
+            supabase={
+                "auto_migrate": True,
+                "database_url": "postgresql://user:password@db.example.supabase.co:5432/postgres",
+            }
+        )
+    )
+
+    with TestClient(app):
+        pass
+
+    assert migration_calls == ["postgresql://user:password@db.example.supabase.co:5432/postgres"]
+
+
 def test_asgi_entry_point_loads_project_configuration() -> None:
     assert configured_app.title == "tillegal-ai"

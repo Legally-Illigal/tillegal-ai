@@ -63,6 +63,12 @@ def test_load_settings_configures_supabase_from_environment(tmp_path: Path) -> N
     assert settings.supabase.is_configured is True
 
 
+def test_supabase_vector_table_defaults_to_schema_embedding_table() -> None:
+    settings = load_settings(environ={})
+
+    assert settings.supabase.vector_table == "dense_chunk_embeddings"
+
+
 def test_load_settings_rejects_partial_supabase_configuration(tmp_path: Path) -> None:
     config_path = tmp_path / "app.yaml"
     config_path.write_text("app: {}\n", encoding="utf-8")
@@ -84,3 +90,34 @@ def test_load_settings_treats_empty_supabase_environment_as_unconfigured(tmp_pat
     )
 
     assert settings.supabase.is_configured is False
+
+
+def test_load_settings_enables_supabase_auto_migrations(tmp_path: Path) -> None:
+    config_path = tmp_path / "app.yaml"
+    config_path.write_text("app: {}\n", encoding="utf-8")
+
+    settings = load_settings(
+        config_path,
+        environ={
+            "SUPABASE_AUTO_MIGRATE": "true",
+            "DATABASE_URL": "postgresql://user:password@db.example.supabase.co:5432/postgres",
+        },
+    )
+
+    assert settings.supabase.auto_migrate is True
+
+
+def test_load_settings_requires_database_url_for_auto_migrations(tmp_path: Path) -> None:
+    config_path = tmp_path / "app.yaml"
+    config_path.write_text("app: {}\n", encoding="utf-8")
+
+    with pytest.raises(ValidationError, match="DATABASE_URL is required"):
+        load_settings(config_path, environ={"SUPABASE_AUTO_MIGRATE": "true"})
+
+
+def test_load_settings_rejects_invalid_auto_migration_value(tmp_path: Path) -> None:
+    config_path = tmp_path / "app.yaml"
+    config_path.write_text("app: {}\n", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="SUPABASE_AUTO_MIGRATE must be either"):
+        load_settings(config_path, environ={"SUPABASE_AUTO_MIGRATE": "sometimes"})

@@ -42,7 +42,9 @@ class SupabaseSettings(StrictConfig):
     url: AnyHttpUrl | None = None
     service_role_key: SecretStr | None = None
     anon_key: SecretStr | None = None
-    vector_table: str = "legal_documents"
+    database_url: SecretStr | None = None
+    vector_table: str = "dense_chunk_embeddings"
+    auto_migrate: bool = False
 
     @field_validator("url", mode="before")
     @classmethod
@@ -51,7 +53,7 @@ class SupabaseSettings(StrictConfig):
             return None
         return value
 
-    @field_validator("service_role_key", "anon_key", mode="before")
+    @field_validator("service_role_key", "anon_key", "database_url", mode="before")
     @classmethod
     def empty_key_is_unset(cls, value: object) -> object:
         if isinstance(value, str) and not value.strip():
@@ -62,6 +64,8 @@ class SupabaseSettings(StrictConfig):
     def validate_connection_settings(self) -> SupabaseSettings:
         if (self.url is None) != (self.api_key is None):
             raise ValueError("SUPABASE_URL and a Supabase API key must be configured together")
+        if self.auto_migrate and self.database_url is None:
+            raise ValueError("DATABASE_URL is required when SUPABASE_AUTO_MIGRATE=true")
         return self
 
     @property
@@ -132,11 +136,19 @@ def load_settings(
         "SUPABASE_URL": "url",
         "SUPABASE_SERVICE_ROLE_KEY": "service_role_key",
         "SUPABASE_ANON_KEY": "anon_key",
+        "DATABASE_URL": "database_url",
         "SUPABASE_VECTOR_TABLE": "vector_table",
+        "SUPABASE_AUTO_MIGRATE": "auto_migrate",
     }
     for env_key, setting_key in supabase_overrides.items():
         if env_key in env:
             config["supabase"][setting_key] = env[env_key]
+
+    if "SUPABASE_AUTO_MIGRATE" in env:
+        auto_migrate_value = env["SUPABASE_AUTO_MIGRATE"].strip().lower()
+        if auto_migrate_value not in {"true", "false"}:
+            raise ValueError("SUPABASE_AUTO_MIGRATE must be either 'true' or 'false'")
+        config["supabase"]["auto_migrate"] = auto_migrate_value == "true"
 
     if "DEBUG" in env:
         debug_value = env["DEBUG"].strip().lower()
