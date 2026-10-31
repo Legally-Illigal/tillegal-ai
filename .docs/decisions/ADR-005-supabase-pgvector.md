@@ -12,6 +12,10 @@ The RAG workflow needs persistent storage for legal-source chunks, embedding vec
 
 Use Supabase Postgres with the `pgvector` extension as the RAG vector store. Access it through a retrieval/storage adapter and keep Supabase-specific clients and errors behind that boundary.
 
+The application performs vector searches through a narrowly scoped PostgreSQL RPC exposed by the Supabase Data API. Direct PostgreSQL connections are reserved for schema migrations. Retrieval requests must provide explicit allowlists for document governance statuses; the adapter does not invent policy values.
+
+Repositories are split by data responsibility (source documents, parsed structures, chunks, dense indexes, sparse indexes, and retrieval). Application use cases coordinate repository calls. The parsed structure/nodes/blocks/chunks write is one database RPC because those related rows must commit atomically.
+
 This decision covers RAG document and vector storage. It does not select Supabase as the LangGraph checkpointer, general application database, or source of legal documents.
 
 ## Constraints
@@ -21,6 +25,8 @@ This decision covers RAG document and vector storage. It does not select Supabas
 - Use server-side secrets; never expose service-role credentials to clients or logs.
 - Keep unit tests independent of a live Supabase project by using fakes or fixtures.
 - Validate the `pgvector` schema, indexes, and retrieval behavior in integration tests.
+- Keep the search RPC invoker-secure and grant execution only to the server-side `service_role`.
+- Keep repository adapters focused on persistence; orchestration and cross-repository workflows belong to application use cases.
 
 ## Consequences
 

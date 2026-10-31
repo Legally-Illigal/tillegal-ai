@@ -10,14 +10,17 @@ The API creates a Supabase client during startup when database credentials are p
 ```dotenv
 SUPABASE_URL=https://<project-ref>.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=<server-only-key>
-SUPABASE_VECTOR_TABLE=dense_chunk_embeddings
 DATABASE_URL=postgresql://postgres:<database-password>@db.<project-ref>.supabase.co:5432/postgres
 SUPABASE_AUTO_MIGRATE=false
 ```
 
 `SUPABASE_URL` and API keys are for the Supabase HTTP API. The application uses `DATABASE_URL` to connect directly to Supabase PostgreSQL for schema migrations. Get the database connection string from Supabase Dashboard → **Project Settings → Database → Connection string**; use the connection mode appropriate for your network (for example, Session Pooler if direct connections are unavailable). URL-encode special characters in the database password. Treat this URL as a secret and do not commit it. Keep the service-role key on the server only because it bypasses Row Level Security. The migration enables RLS without public policies, so the service-role key is required for server-side Data API access unless you add suitable policies. `SUPABASE_ANON_KEY` alone does not grant access to these tables. `SUPABASE_URL` and at least one API key must be configured together.
 
-Database migrations are kept under [`src/integrations/database/supabase/migrations`](./src/integrations/database/supabase/migrations). The migration [`20261028170000_unified_rag_storage.sql`](./src/integrations/database/supabase/migrations/20261028170000_unified_rag_storage.sql) creates the `dense_chunk_embeddings` table used for vector data and enables RLS on all schema tables. Its vector column and HNSW index are configured for 1536-dimensional cosine embeddings; change them to match your embedding model before applying the migration if needed.
+Database migrations are kept under [`src/integrations/database/supabase/migrations`](./src/integrations/database/supabase/migrations). The migration [`20261028170000_unified_rag_storage.sql`](./src/integrations/database/supabase/migrations/20261028170000_unified_rag_storage.sql) creates the `dense_chunk_embeddings` table used for vector data and enables RLS on all schema tables. Its vector column and HNSW index are configured for 1536-dimensional cosine embeddings; the retrieval RPC also assumes that dimension, so keep both migrations aligned if changing the embedding model.
+
+RAG data access is split by responsibility under [`src/integrations/database/repositories`](./src/integrations/database/repositories): source-document metadata, parsed document persistence, chunk reads, dense-index lifecycle, sparse-index lifecycle, and retrieval. The use case coordinates these repositories. Parse output (structure, nodes, blocks, and chunks) is persisted through one RPC so this multi-table write is atomic.
+
+Apply all SQL migrations in filename order. Agent-facing dense vector retrieval uses `search_legal_chunks`; keyword retrieval uses `search_sparse_legal_chunks` over the BM25 inverted index. Both apply the requested effective date and require explicit allowlists for all source-governance statuses. Other repository operations use dedicated RPCs. These functions are exposed through Supabase's Data API, so query/write traffic does not use `DATABASE_URL`; keep the service-role key server-side because only `service_role` is granted permission to execute them. The dense query embedding must come from the same 1536-dimensional model/index named in the request.
 
 To apply pending migrations manually from the repository root:
 
