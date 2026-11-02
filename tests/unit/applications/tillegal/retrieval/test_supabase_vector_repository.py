@@ -1,6 +1,7 @@
 """Tests for the Supabase vector-search repository."""
 
 import asyncio
+import logging
 from datetime import date
 from typing import Any
 
@@ -10,6 +11,7 @@ from pydantic import ValidationError
 
 from src.applications.tillegal.retrieval.document_models import VectorSearchRequest
 from src.applications.tillegal.retrieval.retriever import RetrievalError
+from src.framework.observability.correlation import bind_request_context
 from src.integrations.database.repositories.supabase_vector_repository import SupabaseVectorRepository
 
 
@@ -110,6 +112,25 @@ def test_search_calls_rpc_with_embedding_and_explicit_allowlists() -> None:
     assert len(results) == 1
     assert results[0].content == "Legal source text."
     assert results[0].effective_from == date(2026, 2, 1)
+
+
+def test_search_logs_correlated_result_metadata(caplog) -> None:
+    client = _FakeClient(_FakeResponse([_evidence_row()]))
+    repository = SupabaseVectorRepository(client)  # type: ignore[arg-type]
+
+    with caplog.at_level(logging.INFO, logger="tillegal.observability"):
+        with bind_request_context("request-retrieval-1"):
+            asyncio.run(repository.search(_request()))
+
+    events = [
+        record.event_data
+        for record in caplog.records
+        if record.name == "tillegal.observability"
+    ]
+    assert [event["event"] for event in events] == ["retrieval_started", "retrieval_completed"]
+    assert all(event["request_id"] == "request-retrieval-1" for event in events)
+    assert events[-1]["result_count"] == 1
+    assert "query_embedding" not in events[0]
 
 
 @pytest.mark.parametrize(

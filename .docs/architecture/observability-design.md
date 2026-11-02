@@ -59,7 +59,7 @@ Logs and telemetry must not be used as an implicit training dataset. Any separat
 
 ## 5. Metrics
 
-Useful initial metrics:
+These metrics are future operational goals, not part of the current logging foundation:
 - Request count and success/error rate.
 - End-to-end latency and per-node latency.
 - Model calls per request and search/repair rounds per workflow.
@@ -72,11 +72,11 @@ Useful initial metrics:
 
 Metrics should be segmented by workflow, model profile and configuration version when useful. Avoid high-cardinality labels containing user input or sensitive identifiers.
 
-## 6. Tracing and tooling
+## 6. Current logging foundation and future tooling
 
-Keep the application-facing telemetry interface independent from a specific observability vendor. A local structured logger is sufficient for the first bootstrap; tracing/metrics exporters can be added when the implementation needs them. Do not make an external observability service a mandatory dependency for unit tests.
+The current implementation uses local JSON structured logs, request correlation IDs, duration/status events, and retrieval lifecycle events. It does not require OpenTelemetry, an exporter, a collector, or an external observability service. Model/workflow event types should be emitted as those integrations are implemented.
 
-The selected tool and deployment configuration should be recorded in an ADR/configuration documentation. Provider-specific model-call metadata should be normalized before it reaches the generic telemetry layer.
+Keep the application-facing event interface independent from a specific observability vendor. Tracing and metrics exporters may be added when an operational need is established; do not make an external service mandatory for unit tests. Normalize provider-specific model-call metadata before emitting generic events.
 
 ## 7. Operational failure handling
 

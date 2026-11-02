@@ -1,14 +1,15 @@
 """Create the FastAPI application and wire runtime components."""
 
-import logging
 from collections.abc import AsyncIterator, Sequence
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from src.api.middleware.request_context import RequestContextMiddleware
 from src.api.routes.health import router as health_router
 from src.core.config import AppSettings, load_settings
+from src.framework.observability.logging import configure_logging
 from src.integrations.database.migrator import run_supabase_migrations
 from src.integrations.database.session import create_supabase_client
 
@@ -16,10 +17,7 @@ from src.integrations.database.session import create_supabase_client
 def create_app(settings: AppSettings | None = None) -> FastAPI:
     """Build the application using validated configuration."""
     app_settings = settings or load_settings()
-    logging.basicConfig(
-        level=app_settings.app.log_level,
-        format="%(asctime)s %(levelname)s %(name)s %(message)s",
-    )
+    configure_logging(app_settings.app.log_level)
 
     @asynccontextmanager
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
@@ -41,6 +39,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
     application.state.supabase_client = (
         create_supabase_client(app_settings.supabase) if app_settings.supabase.is_configured else None
     )
+    application.add_middleware(RequestContextMiddleware)
     application.include_router(health_router)
 
     allowed_origins: Sequence[str] = app_settings.security.cors_allowed_origins

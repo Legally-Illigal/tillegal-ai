@@ -1,5 +1,7 @@
 """FastAPI integration tests."""
 
+import logging
+
 from fastapi.testclient import TestClient
 
 from src.bootstrap import create_app
@@ -27,6 +29,59 @@ def test_liveness_endpoint_reports_ok() -> None:
 
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
+
+
+def test_request_context_is_logged_and_echoed(caplog) -> None:
+    app = create_app(AppSettings())
+
+    with caplog.at_level(logging.INFO, logger="tillegal.observability"):
+        response = TestClient(app).get("/health/live", headers={"X-Request-ID": "backend-request-123"})
+
+    assert response.status_code == 200
+    assert response.headers["X-Request-ID"] == "backend-request-123"
+    events = [
+        record.event_data
+        for record in caplog.records
+        if record.name == "tillegal.observability"
+    ]
+    assert [event["event"] for event in events] == ["request_started", "request_completed"]
+    assert all(event["request_id"] == "backend-request-123" for event in events)
+    assert events[-1]["route"] == "/health/live"
+
+
+def test_invalid_request_id_is_replaced_with_generated_id() -> None:
+    app = create_app(AppSettings())
+
+    response = TestClient(app).get("/health/live", headers={"X-Request-ID": "bad id"})
+
+    assert response.status_code == 200
+    generated_id = response.headers["X-Request-ID"]
+    assert generated_id != "bad id"
+    assert len(generated_id) == 36
+
+
+def test_unhandled_request_logs_error_category_without_exception_message(caplog) -> None:
+    app = create_app(AppSettings())
+
+    @app.get("/failure")
+    def fail() -> None:
+        raise RuntimeError("sensitive exception details")
+
+    with caplog.at_level(logging.ERROR, logger="tillegal.observability"):
+        response = TestClient(app, raise_server_exceptions=False).get(
+            "/failure",
+            headers={"X-Request-ID": "failed-request-1"},
+        )
+
+    assert response.status_code == 500
+    event = next(
+        record.event_data
+        for record in caplog.records
+        if record.name == "tillegal.observability" and record.event_data["event"] == "request_failed"
+    )
+    assert event["request_id"] == "failed-request-1"
+    assert event["error_category"] == "RuntimeError"
+    assert "sensitive exception details" not in str(event)
 
 
 def test_app_initializes_supabase_client_when_configured(monkeypatch) -> None:

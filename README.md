@@ -3,6 +3,16 @@ Tillegal - Phần AI Service của hệ thống, repo nhằm triển khai chi ti
 
 The directory tree below is the agreed target structure currently being implemented. It describes the intended architecture; some listed modules may not exist in the working code yet.
 
+## Request limits and caching
+
+The AI Service is an internal service called by the .NET Backend. User authentication, authorization, and request rate limiting belong to the Backend; the AI Service does not currently implement its own rate limiter.
+
+The AI Service has no cache or Redis dependency. Do not add a cache adapter or require Redis unless an approved workload need is documented. Request timeouts and bounded workflow/model concurrency remain responsibilities of the AI Service.
+
+## Observability
+
+The service currently emits JSON logs for request lifecycle and Supabase retrieval, with validated `X-Request-ID` propagation and sensitive-field redaction. Workflow run IDs can be bound to the same event context as graph and model integrations are implemented. The service does not require OpenTelemetry or an external telemetry backend.
+
 ## Supabase
 
 The API creates a Supabase client during startup when database credentials are present. Configure these values in a local `.env` file (copy `.env.example`); do not commit real keys:
@@ -108,7 +118,6 @@ tillegal-ai-service/
 │   ├── models.yaml                        # Model profiles
 │   ├── routing.yaml                       # Routing và fallback policies
 │   ├── evaluation.yaml                    # Evaluation policies
-│   ├── observability.yaml                 # Logging/tracing settings
 │   └── logging.yaml                       # Log format và log levels
 │
 ├── docs/
@@ -159,7 +168,6 @@ tillegal-ai-service/
 │   │   ├── dependencies.py
 │   │   ├── middleware/
 │   │   │   ├── request_context.py
-│   │   │   ├── request_logging.py
 │   │   │   └── error_handling.py
 │   │   ├── routes/
 │   │   │   ├── health.py
@@ -283,8 +291,6 @@ tillegal-ai-service/
 │   │   │
 │   │   ├── observability/
 │   │   │   ├── logging.py
-│   │   │   ├── tracing.py
-│   │   │   ├── metrics.py
 │   │   │   ├── events.py
 │   │   │   ├── correlation.py
 │   │   │   └── redaction.py
@@ -313,12 +319,6 @@ tillegal-ai-service/
 │   │   │   └── migrations/
 │   │   ├── langgraph/
 │   │   │   └── postgres_checkpointer.py
-│   │   ├── observability/
-│   │   │   ├── langsmith.py
-│   │   │   ├── opentelemetry.py
-│   │   │   └── exporters.py
-│   │   ├── cache/
-│   │   │   └── redis_cache.py
 │   │   └── secrets/
 │   │       └── environment_secrets.py
 │   │
@@ -417,8 +417,6 @@ tillegal-ai-service/
 │   │   └── Dockerfile
 │   ├── compose/
 │   │   └── docker-compose.yml
-│   └── observability/
-│       └── otel-collector.yaml
 │
 ├── .env.example
 ├── .gitignore
