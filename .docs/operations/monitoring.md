@@ -6,6 +6,8 @@ Define the minimum operational signals needed to understand the AI Service's hea
 
 Monitoring must support troubleshooting without exposing secrets or unnecessarily collecting user content.
 
+The current implementation provides JSON request lifecycle and Supabase retrieval logs with request correlation and duration. Metrics, traces, model-call events, dashboards, and alerts below describe later operational goals; no external telemetry backend is currently required.
+
 ## 2. Service-Level Signals
 
 Capture where applicable:

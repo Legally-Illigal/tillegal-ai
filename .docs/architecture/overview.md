@@ -19,6 +19,8 @@ AI Service chịu trách nhiệm chính về:
 
 AI Service **không** thay thế Backend trong xác thực người dùng, RBAC, quyền sở hữu hội thoại hoặc quản lý tài khoản. Legal Data Pipeline là workflow riêng, không phải Agent trong luồng trả lời câu hỏi.
 
+Backend .NET là caller nội bộ của AI Service và chịu trách nhiệm rate limiting request từ ứng dụng. AI Service hiện không có cache hoặc Redis dependency; chỉ bổ sung khi có nhu cầu workload được xác nhận và ghi nhận trong kiến trúc. AI Service vẫn phải giới hạn timeout, retry, concurrency và ngân sách workflow/model ở phạm vi của mình.
+
 ## 2. Hai lớp kiến trúc cần phân biệt
 
 ### Reusable AI framework

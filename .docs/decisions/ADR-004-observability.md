@@ -16,6 +16,8 @@ Use structured logs and consistent correlation identifiers across the API, orche
 
 Keep telemetry backends behind an implementation boundary where practical so that logging, metrics, and tracing implementations can change without requiring widespread changes to business logic.
 
+The initial implementation uses local JSON logs and correlation context. OpenTelemetry and external exporters are not required; add them only after an operational need and destination are agreed.
+
 ## Minimum Telemetry
 
 Capture applicable fields:
