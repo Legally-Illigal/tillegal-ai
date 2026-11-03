@@ -3,6 +3,11 @@
 from src.integrations.database.repositories.chunk_repository import ChunkRepository
 from src.integrations.database.repositories.dense_index_repository import DenseIndexRepository
 from src.integrations.database.repositories.execution_repository import ExecutionRepository
+from src.integrations.database.repositories.idempotency_repository import (
+    IdempotencyKeyConflictError,
+    IdempotencyLeaseLostError,
+    IdempotencyRepository,
+)
 from src.integrations.database.repositories.outbox_repository import OutboxLeaseError, OutboxRepository
 from src.integrations.database.repositories.parsed_document_repository import ParsedDocumentRepository
 from src.integrations.database.repositories.source_document_repository import SourceDocumentRepository
@@ -14,6 +19,9 @@ __all__ = [
     "ChunkRepository",
     "DenseIndexRepository",
     "ExecutionRepository",
+    "IdempotencyKeyConflictError",
+    "IdempotencyLeaseLostError",
+    "IdempotencyRepository",
     "OutboxLeaseError",
     "OutboxRepository",
     "ParsedDocumentRepository",
