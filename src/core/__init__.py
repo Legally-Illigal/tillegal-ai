@@ -1,1 +1,1 @@
-"""Core package."""
+"""Shared cross-layer primitives for the tillegal AI service."""
