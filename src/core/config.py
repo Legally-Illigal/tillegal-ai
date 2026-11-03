@@ -77,11 +77,22 @@ class SupabaseSettings(StrictConfig):
         return self.url is not None and self.api_key is not None
 
 
+class LangGraphSettings(StrictConfig):
+    checkpointer_enabled: bool = False
+
+
 class AppSettings(StrictConfig):
     app: ApplicationSettings = Field(default_factory=ApplicationSettings)
     api: APISettings = Field(default_factory=APISettings)
     security: SecuritySettings = Field(default_factory=SecuritySettings)
     supabase: SupabaseSettings = Field(default_factory=SupabaseSettings)
+    langgraph: LangGraphSettings = Field(default_factory=LangGraphSettings)
+
+    @model_validator(mode="after")
+    def validate_checkpointer_settings(self) -> AppSettings:
+        if self.langgraph.checkpointer_enabled and self.supabase.database_url is None:
+            raise ValueError("DATABASE_URL is required when LANGGRAPH_CHECKPOINTER_ENABLED=true")
+        return self
 
 
 def load_settings(
@@ -105,7 +116,7 @@ def load_settings(
         raise ValueError(f"Configuration root in {configured_path} must be a YAML mapping")
 
     config = dict(raw_config)
-    for section in ("app", "api", "security", "supabase"):
+    for section in ("app", "api", "security", "supabase", "langgraph"):
         value = config.get(section, {})
         if not isinstance(value, dict):
             raise ValueError(f"Configuration section '{section}' must be a YAML mapping")
@@ -141,6 +152,12 @@ def load_settings(
     for env_key, setting_key in supabase_overrides.items():
         if env_key in env:
             config["supabase"][setting_key] = env[env_key]
+
+    if "LANGGRAPH_CHECKPOINTER_ENABLED" in env:
+        checkpointer_value = env["LANGGRAPH_CHECKPOINTER_ENABLED"].strip().lower()
+        if checkpointer_value not in {"true", "false"}:
+            raise ValueError("LANGGRAPH_CHECKPOINTER_ENABLED must be either 'true' or 'false'")
+        config["langgraph"]["checkpointer_enabled"] = checkpointer_value == "true"
 
     if "SUPABASE_AUTO_MIGRATE" in env:
         auto_migrate_value = env["SUPABASE_AUTO_MIGRATE"].strip().lower()

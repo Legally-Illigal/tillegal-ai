@@ -3,6 +3,10 @@ Tillegal - Phần AI Service của hệ thống, repo nhằm triển khai chi ti
 
 The directory tree below is the agreed target structure currently being implemented. It describes the intended architecture; some listed modules may not exist in the working code yet.
 
+## LangGraph foundation
+
+`src/framework/graphs` provides shared helpers to create and compile LangGraph state graphs. PostgreSQL checkpoint storage is implemented by `src/integrations/langgraph/postgres_checkpointer.py`; it uses an async connection pool and initializes LangGraph's checkpoint tables when opened. To enable it, set `LANGGRAPH_CHECKPOINTER_ENABLED=true` and provide `DATABASE_URL`. The application exposes the initialized saver as `app.state.langgraph_checkpointer` for workflow compilation and closes its pool on shutdown. Checkpointing remains disabled by default, and the legal QA workflow is separate follow-up work.
+
 ## Request limits and caching
 
 The AI Service is an internal service called by the .NET Backend. User authentication, authorization, and request rate limiting belong to the Backend; the AI Service does not currently implement its own rate limiter.
@@ -319,8 +323,6 @@ tillegal-ai-service/
 │   │   │   └── migrations/
 │   │   ├── langgraph/
 │   │   │   └── postgres_checkpointer.py
-│   │   └── secrets/
-│   │       └── environment_secrets.py
 │   │
 │   ├── applications/                  # Application-specific modules
 │   │   └── tillegal/

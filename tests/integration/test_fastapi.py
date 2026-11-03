@@ -127,5 +127,34 @@ def test_app_runs_supabase_migrations_on_startup_when_enabled(monkeypatch) -> No
     assert migration_calls == ["postgresql://user:password@db.example.supabase.co:5432/postgres"]
 
 
+def test_app_opens_and_closes_langgraph_checkpointer_when_enabled(monkeypatch) -> None:
+    expected_saver = object()
+    lifecycle_calls: list[str] = []
+
+    class FakeCheckpointer:
+        def __init__(self, database_url) -> None:
+            assert database_url.get_secret_value() == "******db.example.supabase.co:5432/postgres"
+
+        async def open(self):
+            lifecycle_calls.append("open")
+            return expected_saver
+
+        async def close(self) -> None:
+            lifecycle_calls.append("close")
+
+    monkeypatch.setattr("src.bootstrap.PostgresCheckpointer", FakeCheckpointer)
+    app = create_app(
+        AppSettings(
+            supabase={"database_url": "******db.example.supabase.co:5432/postgres"},
+            langgraph={"checkpointer_enabled": True},
+        )
+    )
+
+    with TestClient(app):
+        assert app.state.langgraph_checkpointer is expected_saver
+
+    assert lifecycle_calls == ["open", "close"]
+
+
 def test_asgi_entry_point_loads_project_configuration() -> None:
     assert configured_app.title == "tillegal-ai"

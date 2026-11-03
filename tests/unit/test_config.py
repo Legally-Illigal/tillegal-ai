@@ -113,3 +113,34 @@ def test_load_settings_rejects_invalid_auto_migration_value(tmp_path: Path) -> N
 
     with pytest.raises(ValueError, match="SUPABASE_AUTO_MIGRATE must be either"):
         load_settings(config_path, environ={"SUPABASE_AUTO_MIGRATE": "sometimes"})
+
+
+def test_load_settings_enables_langgraph_checkpointer_with_database_url(tmp_path: Path) -> None:
+    config_path = tmp_path / "app.yaml"
+    config_path.write_text("app: {}\n", encoding="utf-8")
+
+    settings = load_settings(
+        config_path,
+        environ={
+            "LANGGRAPH_CHECKPOINTER_ENABLED": "true",
+            "DATABASE_URL": "postgresql://db.example/postgres",
+        },
+    )
+
+    assert settings.langgraph.checkpointer_enabled is True
+
+
+def test_load_settings_requires_database_url_for_langgraph_checkpointer(tmp_path: Path) -> None:
+    config_path = tmp_path / "app.yaml"
+    config_path.write_text("app: {}\n", encoding="utf-8")
+
+    with pytest.raises(ValidationError, match="DATABASE_URL is required"):
+        load_settings(config_path, environ={"LANGGRAPH_CHECKPOINTER_ENABLED": "true"})
+
+
+def test_load_settings_rejects_invalid_langgraph_checkpointer_value(tmp_path: Path) -> None:
+    config_path = tmp_path / "app.yaml"
+    config_path.write_text("app: {}\n", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="LANGGRAPH_CHECKPOINTER_ENABLED must be either"):
+        load_settings(config_path, environ={"LANGGRAPH_CHECKPOINTER_ENABLED": "sometimes"})

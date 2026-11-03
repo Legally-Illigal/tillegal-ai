@@ -12,6 +12,7 @@ from src.core.config import AppSettings, load_settings
 from src.framework.observability.logging import configure_logging
 from src.integrations.database.migrator import run_supabase_migrations
 from src.integrations.database.session import create_supabase_client
+from src.integrations.langgraph.postgres_checkpointer import PostgresCheckpointer
 
 
 def create_app(settings: AppSettings | None = None) -> FastAPI:
@@ -20,13 +21,26 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
     configure_logging(app_settings.app.log_level)
 
     @asynccontextmanager
-    async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+    async def lifespan(application: FastAPI) -> AsyncIterator[None]:
         if app_settings.supabase.auto_migrate:
             database_url = app_settings.supabase.database_url
             if database_url is None:
                 raise ValueError("DATABASE_URL is required when SUPABASE_AUTO_MIGRATE=true")
             await run_supabase_migrations(database_url)
-        yield
+
+        checkpointer: PostgresCheckpointer | None = None
+        if app_settings.langgraph.checkpointer_enabled:
+            database_url = app_settings.supabase.database_url
+            if database_url is None:
+                raise ValueError("DATABASE_URL is required when LANGGRAPH_CHECKPOINTER_ENABLED=true")
+            checkpointer = PostgresCheckpointer(database_url)
+            application.state.langgraph_checkpointer = await checkpointer.open()
+
+        try:
+            yield
+        finally:
+            if checkpointer is not None:
+                await checkpointer.close()
 
     application = FastAPI(
         title=app_settings.app.name,
@@ -36,6 +50,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         lifespan=lifespan,
     )
     application.state.settings = app_settings
+    application.state.langgraph_checkpointer = None
     application.state.supabase_client = (
         create_supabase_client(app_settings.supabase) if app_settings.supabase.is_configured else None
     )
