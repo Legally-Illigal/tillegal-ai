@@ -1,10 +1,10 @@
 """Outbox event dispatch use case."""
 
 from dataclasses import dataclass
-from uuid import uuid4
 
 from src.application.interfaces.execution_queue import ExecutionQueuePublisher, QueuePublishError
 from src.application.interfaces.execution_store import ExecutionStore
+from src.core.identifiers import new_id
 
 
 @dataclass(frozen=True)
@@ -34,7 +34,7 @@ class OutboxDispatcher:
             raise ValueError("Outbox lease duration must be positive")
         self._store = store
         self._publisher = publisher
-        self._owner = owner or str(uuid4())
+        self._owner = owner or str(new_id())
         self._batch_size = batch_size
         self._lease_seconds = lease_seconds
 

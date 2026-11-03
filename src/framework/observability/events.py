@@ -1,9 +1,9 @@
 """Structured, correlated application events."""
 
 import logging
-from datetime import UTC, datetime
 from typing import Any
 
+from src.core.clock import utc_now
 from src.framework.observability.correlation import current_correlation_context
 from src.framework.observability.redaction import redact_fields
 
@@ -20,7 +20,7 @@ def log_event(
     """Emit one structured event without logging sensitive payload fields."""
     event_data: dict[str, object] = {
         **redact_fields(fields),
-        "timestamp": datetime.now(UTC).isoformat(timespec="milliseconds").replace("+00:00", "Z"),
+        "timestamp": utc_now().isoformat(timespec="milliseconds").replace("+00:00", "Z"),
         "level": logging.getLevelName(level),
         "event": event,
         "component": component,

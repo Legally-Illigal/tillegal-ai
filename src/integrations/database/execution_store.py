@@ -2,13 +2,14 @@
 
 from collections.abc import Mapping
 from typing import Any
-from uuid import UUID, uuid4
+from uuid import UUID
 
 import psycopg
 from pydantic import SecretStr
 
 from src.application.dto.execution import OutboxEvent
 from src.application.interfaces.execution_store import ExecutionStore
+from src.core.identifiers import new_id
 from src.integrations.database.repositories.execution_repository import ExecutionRepository
 from src.integrations.database.repositories.outbox_repository import OutboxRepository
 from src.integrations.database.transaction import PostgresTransactionManager
@@ -21,7 +22,7 @@ class PostgresExecutionStore(ExecutionStore):
         self._transactions = PostgresTransactionManager(database_url)
 
     async def submit_execution(self, payload: Mapping[str, object]) -> UUID:
-        execution_id = uuid4()
+        execution_id = new_id()
 
         def persist(connection: psycopg.Connection[dict[str, Any]]) -> UUID:
             ExecutionRepository(connection).create_queued(execution_id, payload)

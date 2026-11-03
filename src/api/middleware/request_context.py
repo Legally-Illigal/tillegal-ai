@@ -4,10 +4,10 @@ import logging
 import re
 import time
 from collections.abc import Iterable
-from uuid import uuid4
 
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
+from src.core.identifiers import new_id
 from src.framework.observability.correlation import bind_request_context
 from src.framework.observability.events import log_event
 
@@ -87,7 +87,7 @@ class RequestContextMiddleware:
                 if _REQUEST_ID_PATTERN.fullmatch(candidate):
                     return candidate
                 break
-        return str(uuid4())
+        return str(new_id())
 
     @staticmethod
     def _duration_ms(started_at: float) -> float:

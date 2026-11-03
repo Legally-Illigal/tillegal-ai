@@ -3,9 +3,15 @@ Tillegal - Phần AI Service của hệ thống, repo nhằm triển khai chi ti
 
 The directory tree below is the agreed target structure currently being implemented. It describes the intended architecture; some listed modules may not exist in the working code yet.
 
+## Shared core
+
+`src/core` contains cross-layer utilities: validated application settings, UTC time handling, UUID creation/parsing, shared exceptions and typed results, and recursive redaction of sensitive fields. API, application, framework, and integration code can reuse these without placing use-case behavior in the core.
+
 ## LangGraph foundation
 
-`src/framework/graphs` provides shared helpers to create and compile LangGraph state graphs. PostgreSQL checkpoint storage is implemented by `src/integrations/langgraph/postgres_checkpointer.py`; it uses an async connection pool and initializes LangGraph's checkpoint tables when opened. To enable it, set `LANGGRAPH_CHECKPOINTER_ENABLED=true` and provide `DATABASE_URL`. The application exposes the initialized saver as `app.state.langgraph_checkpointer` for workflow compilation and closes its pool on shutdown. Checkpointing remains disabled by default, and the legal QA workflow is separate follow-up work.
+`src/framework/graphs` provides shared helpers to create and compile LangGraph state graphs. PostgreSQL checkpoint storage is implemented by `src/integrations/langgraph/postgres_checkpointer.py`; it uses an async connection pool and initializes LangGraph's checkpoint tables when opened. To enable it, set `LANGGRAPH_CHECKPOINTER_ENABLED=true` and provide `DATABASE_URL`. The application exposes the initialized saver as `app.state.langgraph_checkpointer` for workflow compilation and closes its pool on shutdown. Checkpointing remains disabled by default.
+
+`src/framework/human_in_the_loop` provides a reusable approval gate. Add `approval_gate` to a graph after the step requiring review and route its result with `approval_route`. The graph must be compiled with a checkpointer and invoked with a stable `configurable.thread_id`. When the graph returns an interrupt, present its request to the reviewer; then resume the same thread with `approval_resume_command(ApprovalDecision(...))`. Decisions are restricted to `approve` or `reject` and must reference the pending `approval_id`. The legal QA graph and HTTP endpoints for submitting or reviewing executions are not yet wired.
 
 ## Request limits and caching
 
