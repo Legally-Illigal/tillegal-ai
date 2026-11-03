@@ -13,3 +13,6 @@ api:
 security:
   redact_secrets: true
   cors_allowed_origins: []
+
+langgraph:
+  checkpointer_enabled: false
