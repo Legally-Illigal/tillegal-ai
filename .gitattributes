@@ -1,0 +1,6 @@
+*.py text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+# The index checks hashes of upstream source bytes, including line endings.
+ai_core/**/*.py -text
+ai_core/*.py -text

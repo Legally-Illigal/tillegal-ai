@@ -1,4 +1,13 @@
 # Byte-compiled / optimized / DLL files
+/data/
+/bm25.zip
+/.model-cache/
+/.tmp/
+/outputs/
+*.gguf
+*.safetensors
+.env.*
+!.env.example
 __pycache__/
 *.py[codz]
 *$py.class

@@ -21,3 +21,11 @@ tasks/
 tests/
 .pre-commit-config.yaml
 Makefile
+.docs/
+data/
+*.zip
+.model-cache/
+.tmp/
+outputs/
+*.gguf
+*.safetensors

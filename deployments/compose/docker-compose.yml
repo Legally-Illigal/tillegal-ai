@@ -1,1 +1,25 @@
-# docker-compose.yml
+services:
+  llama:
+    image: ghcr.io/ggml-org/llama.cpp:server-b12125
+    command: ["-m", "/models/qwen.gguf", "-a", "qwen-pilot", "--host", "127.0.0.1", "--port", "18963", "-c", "8192", "-t", "4", "-np", "1", "--temp", "0", "--offline"]
+    volumes:
+      - ../../data/models:/models:ro
+    ports:
+      - "127.0.0.1:8000:8000"
+  api:
+    build:
+      context: ../..
+      dockerfile: deployments/docker/Dockerfile
+    network_mode: "service:llama"
+    depends_on:
+      - llama
+    environment:
+      APP_ENV: development
+      TILLEGAL_RAG_PILOT: "1"
+      TILLEGAL_CONTEXT_POLICY: context_judge
+      TILLEGAL_ANSWER_PROVIDER: local
+      TILLEGAL_ANSWER_MODEL: qwen-pilot
+      TILLEGAL_LOCAL_PORT: "18963"
+      TILLEGAL_INDEX: /app/data/indexes/labor-pilot-3-t4-bm25/manifest.json
+    volumes:
+      - ../../data/indexes:/app/data/indexes:ro

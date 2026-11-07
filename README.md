@@ -1,4 +1,17 @@
 # tillegal-ai
+
+## Chạy Legal QA pilot từ checkout
+
+Lệnh dưới đây chạy từ **root của AI Service** sau khi nhánh tích hợp đã có trong repo nhóm. Dùng Python 3.12 và uv. Pilot BM25 trên host đã được kiểm thử trên Windows. Supabase, migrations, checkpoint DB, API keys và GPU không cần cho luồng này.
+
+1. Clone `https://github.com/Legally-Illigal/tillegal-ai.git`, checkout nhánh chứa các script dưới đây. Chạy `uv sync --python 3.12 --frozen --group dev`.
+2. Chạy `uv run python -m scripts.pilot_setup --download-model`. Script tải index nguồn từ [snapshot công khai ở commit cố định](https://github.com/lynkvu2901/Tilligal/tree/825b579cd0d8652d6d07ac3bb17524688ff07b30/data/indexes/labor-pilot-3-t4-bm25), kiểm SHA256, dùng tokenizer Python 3.12 dựng lại thống kê trên các chunk gốc, kiểm hash của index cuối, rồi tải GGUF từ revision đã pin. Corpus pilot có 3 văn bản, 3.085 chunks, xuất phát từ [Vietnamese Legal Documents](https://huggingface.co/datasets/th1nhng0/vietnamese-legal-documents). Thông tin nguồn, trạng thái rights và temporal nằm trong evidence. Repo nhóm không đóng gói lại nội dung corpus. Nếu đã có file, có thể dùng `--index-zip PATH --model PATH` để setup offline.
+3. Cài [llama.cpp b12125](https://github.com/ggml-org/llama.cpp/releases/tag/b12125). Trên Windows x64, giải nén archive CPU cùng các DLL; SHA256 archive đã kiểm là `968091ccb8c230e0cf7e0eed386310703bebae4a4fd4375f0c57db53958307d8`. Trên Linux/macOS dùng binary khớp OS/CPU từ release hoặc build từ tag bằng CMake: `git clone --depth 1 --branch b12125 https://github.com/ggml-org/llama.cpp.git`, `cmake -S llama.cpp -B llama.cpp/build -DCMAKE_BUILD_TYPE=Release`, `cmake --build llama.cpp/build --config Release --target llama-server`. Chạy `uv run python -m scripts.pilot_llama --binary PATH_TO_LLAMA_SERVER` hoặc bỏ `--binary` nếu executable đã có trong PATH. Giữ terminal mở đến khi server listening. Lượt kiểm thử thực tế dùng Windows CPU.
+4. Từ terminal thứ hai ở root service, chạy `uv run python -m uvicorn src.main:app --env-file configs/pilot.env.example --host 127.0.0.1 --port 8000`. Dùng shell mới với các biến TILLEGAL và DB chưa được override. Profile này chỉ bật pilot development.
+5. Từ terminal thứ hai chạy `uv run python -m scripts.pilot_socket_smoke`. Script POST câu hỏi về bảo hiểm tới `/pilot/legal-qa` với workflow `semantic`, in answer và citation ID sau khi đối chiếu claim, evidence span, hash và locator. Chạy tests bằng `uv run python -m pytest -q`. Một draft được kiểm văn bản vẫn cần review hiệu lực và applicability.
+
+**Docker development (NOT VERIFIED)**. Sau bước 2 chạy `docker compose -f deployments/compose/docker-compose.yml up --build`. Hai container dùng chung network namespace để API gọi llama trên loopback. Kiểm `/health/live`, đợi model sẵn sàng rồi chạy socket smoke ở bước 5. Dense/hybrid và reranker là các mode riêng cần compatible dense index, model locks và ML dependencies. Chúng chưa được chứng nhận trong môi trường BM25 này.
+Standalone packaging and semantic pilot setup: [standalone-service.md](.docs/development/standalone-service.md). The bundled `ai_core` package removes the sibling source-checkout requirement. Runtime index/model artifacts are provisioned separately. See the validation status in that guide before deployment.
 Tillegal - Phần AI Service của hệ thống, repo nhằm triển khai chi tiết cho hệ thống AI.
 
 The directory tree below is the agreed target structure currently being implemented. It describes the intended architecture; some listed modules may not exist in the working code yet.

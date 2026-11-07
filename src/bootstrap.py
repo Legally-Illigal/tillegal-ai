@@ -1,5 +1,6 @@
 """Create the FastAPI application and wire runtime components."""
 
+import os
 from collections.abc import AsyncIterator, Sequence
 from contextlib import asynccontextmanager
 
@@ -19,9 +20,19 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
     """Build the application using validated configuration."""
     app_settings = settings or load_settings()
     configure_logging(app_settings.app.log_level)
+    pilot_enabled = os.environ.get("TILLEGAL_RAG_PILOT") == "1"
+    if pilot_enabled and app_settings.app.env != "development":
+        raise ValueError("The RAG pilot requires APP_ENV=development")
+    if pilot_enabled and (app_settings.supabase.is_configured or app_settings.supabase.auto_migrate
+                          or app_settings.langgraph.checkpointer_enabled):
+        raise ValueError("Run the RAG pilot with database integrations disabled")
 
     @asynccontextmanager
     async def lifespan(application: FastAPI) -> AsyncIterator[None]:
+        if pilot_enabled:
+            from src.applications.tillegal.graphs.legal_qa import LegalQA
+
+            application.state.legal_qa = LegalQA(os.environ)
         if app_settings.supabase.auto_migrate:
             database_url = app_settings.supabase.database_url
             if database_url is None:
@@ -39,6 +50,8 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         try:
             yield
         finally:
+            if pilot_enabled:
+                del application.state.legal_qa
             if checkpointer is not None:
                 await checkpointer.close()
 
@@ -56,6 +69,10 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
     )
     application.add_middleware(RequestContextMiddleware)
     application.include_router(health_router)
+    if pilot_enabled:
+        from src.api.routes.chat import router as pilot_router
+
+        application.include_router(pilot_router)
 
     allowed_origins: Sequence[str] = app_settings.security.cors_allowed_origins
     if allowed_origins:

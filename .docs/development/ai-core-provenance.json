@@ -1,0 +1,87 @@
+[
+  {
+    "path": "ai_core/__init__.py",
+    "sha256": "1D8A25E993083A03F186CD56C446C692123C113907F80CD96243E953C62C3038",
+    "identical": true
+  },
+  {
+    "path": "ai_core/anthropic_provider.py",
+    "sha256": "2F8FD28D8E0FFA811F6B12B8B92F9FFF0837B6055E8F9EDCE30C479504ABDF78",
+    "identical": true
+  },
+  {
+    "path": "ai_core/basic_rag.py",
+    "sha256": "6AD6D0F8AE5EC2B6BF9DC38DCEC90A717CD89BFA7CEC7F9DCA47FEF1D309CF86",
+    "identical": true
+  },
+  {
+    "path": "ai_core/bm25_retrieval.py",
+    "sha256": "BE590E0437F74F25458C0D934995BB3C792D23E88F3D2476A45941170C2BACA9",
+    "identical": true
+  },
+  {
+    "path": "ai_core/data_contracts.py",
+    "sha256": "899671252B4D9536897698D055DEB0AFAF16483A88F7D649AE0FFD95EB791B8E",
+    "identical": true
+  },
+  {
+    "path": "ai_core/demo_cli.py",
+    "sha256": "E11F2C313518FCEA59E190F7079AB21041D19E110A96EF69095918DF4500FA38",
+    "identical": true
+  },
+  {
+    "path": "ai_core/dense_retrieval.py",
+    "sha256": "0D3320FBE7DF96255293BC71ACD818346683BF2C2BB3F08218B75DE3FFBCA3BE",
+    "identical": true
+  },
+  {
+    "path": "ai_core/evidence_builder.py",
+    "sha256": "934DB5B0FBF218659A61D3DCA5A8B6CE743378CC86B6E3279130C1EED0859F7C",
+    "identical": true
+  },
+  {
+    "path": "ai_core/hybrid_retrieval.py",
+    "sha256": "515FA23BC0D243D1E7D318D49C369BDEE8256E1BF27B1B0D2E55998A27CDFF56",
+    "identical": true
+  },
+  {
+    "path": "ai_core/legal_parser.py",
+    "sha256": "836FBCBC239422BB425EFED0599E72FDF46CF6603DAF4D27AFBB11D1EFC584E8",
+    "identical": true
+  },
+  {
+    "path": "ai_core/rag_cli.py",
+    "sha256": "3DE6FB82E3AD2C0CDB2D85AE2B60F29A66980494FDD37EC82486A7E7BEDCF1F3",
+    "identical": true
+  },
+  {
+    "path": "ai_core/rag_generation.py",
+    "sha256": "F384545DADAE1051287B85AAE2581D15E414C39730347C00B35516B5897FCE70",
+    "identical": true
+  },
+  {
+    "path": "ai_core/reranking.py",
+    "sha256": "0C0B3E16CE97764EF5F8D7A6F3F602F3BC33298D378C6D15A3100C92189A490F",
+    "identical": true
+  },
+  {
+    "path": "ai_core/retrieval_comparison.py",
+    "sha256": "A7A7586B6EB242C76260CBA3A272C891DA8397F13CEAC99EDFC2DFFB1D619A69",
+    "identical": true
+  },
+  {
+    "path": "ai_core/retrieval_contracts.py",
+    "sha256": "6586A2D47DA75D768907F7E926938B4EAED34B64A1519F2377B501586FE6EF9A",
+    "identical": true
+  },
+  {
+    "path": "ai_core/retrieval_evaluation.py",
+    "sha256": "BE1CF83FEBB11659ADFA92E016781DD61C2B9EB562C996CB31D7BB982AA95AA0",
+    "identical": true
+  },
+  {
+    "path": "ai_core/retrieval_runtime.py",
+    "sha256": "E4E4FDD4E025CB82BC5755BE2570C6211DFB85F7AA4318803A72529B1B521FBD",
+    "identical": true
+  }
+]
