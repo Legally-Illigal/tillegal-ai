@@ -1,0 +1,23 @@
+{
+  "data_contracts": "applications.tillegal.ingestion.data_contracts",
+  "legal_parser": "applications.tillegal.ingestion.legal_parser",
+  "bm25_retrieval": "applications.tillegal.retrieval.bm25",
+  "retrieval_contracts": "applications.tillegal.retrieval.contracts",
+  "evidence_builder": "applications.tillegal.retrieval.evidence_builder",
+  "hybrid_retrieval": "applications.tillegal.retrieval.hybrid",
+  "reranking": "integrations.embedding.reranking",
+  "dense_retrieval": "integrations.embedding.local_encoder",
+  "judge_agent": "applications.tillegal.agents.judge.agent",
+  "judge_contracts": "applications.tillegal.agents.judge.schemas",
+  "judge_adapter": "applications.tillegal.agents.judge.adapter",
+  "summary_agent": "applications.tillegal.agents.response.agent",
+  "summary_contracts": "applications.tillegal.agents.response.schemas",
+  "summary_adapter": "applications.tillegal.agents.response.adapter",
+  "summary_prompt": "applications.tillegal.agents.response.prompts",
+  "summary_display": "applications.tillegal.agents.response.display",
+  "draft_renderer": "applications.tillegal.agents.response.renderer",
+  "rag_generation": "applications.tillegal.retrieval.generation",
+  "gemini_provider": "integrations.llm.gemini_provider",
+  "openai_provider": "integrations.llm.openai_provider",
+  "anthropic_provider": "integrations.llm.anthropic_provider"
+}

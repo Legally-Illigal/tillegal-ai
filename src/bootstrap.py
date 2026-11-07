@@ -15,7 +15,7 @@ from src.integrations.database.session import create_supabase_client
 from src.integrations.langgraph.postgres_checkpointer import PostgresCheckpointer
 
 
-def create_app(settings: AppSettings | None = None) -> FastAPI:
+def create_app(settings: AppSettings | None = None, *, tillegal_modules=None) -> FastAPI:
     """Build the application using validated configuration."""
     app_settings = settings or load_settings()
     configure_logging(app_settings.app.log_level)
@@ -49,6 +49,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         redoc_url=None,
         lifespan=lifespan,
     )
+    application.state.tillegal_modules = tillegal_modules
     application.state.settings = app_settings
     application.state.langgraph_checkpointer = None
     application.state.supabase_client = (

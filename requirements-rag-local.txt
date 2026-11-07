@@ -1,0 +1,5 @@
+# Optional local E5 / cross-encoder backend and Gemini provider versions from transfer source.
+torch==2.14.1
+transformers==5.20.2
+numpy==2.5.4
+google-genai==2.34.0
