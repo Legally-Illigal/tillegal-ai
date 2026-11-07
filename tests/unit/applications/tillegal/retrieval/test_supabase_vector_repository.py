@@ -20,11 +20,7 @@ def _request(**overrides: Any) -> VectorSearchRequest:
         "dense_index_name": "legal-v1",
         "query_embedding": [0.1] * 1536,
         "as_of_date": date(2026, 10, 31),
-        "allowed_legal_approvals": ["APPROVED"],
         "allowed_usage_policies": ["PRODUCTION"],
-        "allowed_provenance_statuses": ["VERIFIED"],
-        "allowed_temporal_statuses": ["IN_FORCE"],
-        "allowed_rights_statuses": ["CLEARED"],
     }
     values.update(overrides)
     return VectorSearchRequest.model_validate(values)
@@ -48,10 +44,7 @@ def _evidence_row() -> dict[str, object]:
         "source_id": "official-gazette",
         "source_record_id": "record-1",
         "source_snapshot_id": "snapshot-1",
-        "document_number": "01/2026",
         "title": "Test legal document",
-        "document_type": "LAW",
-        "issuing_authority": "National Assembly",
         "language": "vi",
         "source_url": "https://example.test/law",
         "issued_on": "2026-01-01",
@@ -59,10 +52,6 @@ def _evidence_row() -> dict[str, object]:
         "effective_to": None,
         "effect_status_reported": "IN_FORCE",
         "usage_policy": "PRODUCTION",
-        "legal_approval": "APPROVED",
-        "provenance_status": "VERIFIED",
-        "temporal_status": "IN_FORCE",
-        "rights_status": "CLEARED",
         "source_metadata": {},
     }
 
@@ -104,11 +93,7 @@ def test_search_calls_rpc_with_embedding_and_explicit_allowlists() -> None:
     assert client.parameters is not None
     assert client.parameters["p_query_embedding"] == f"[{','.join(['0.1'] * 1536)}]"
     assert client.parameters["p_as_of_date"] == "2026-10-31"
-    assert client.parameters["p_legal_approvals"] == ["APPROVED"]
     assert client.parameters["p_usage_policies"] == ["PRODUCTION"]
-    assert client.parameters["p_provenance_statuses"] == ["VERIFIED"]
-    assert client.parameters["p_temporal_statuses"] == ["IN_FORCE"]
-    assert client.parameters["p_rights_statuses"] == ["CLEARED"]
     assert len(results) == 1
     assert results[0].content == "Legal source text."
     assert results[0].effective_from == date(2026, 2, 1)
@@ -138,11 +123,7 @@ def test_search_logs_correlated_result_metadata(caplog) -> None:
     [
         ("query_embedding", [0.1] * 1535),
         ("query_embedding", [0.0] * 1536),
-        ("allowed_legal_approvals", []),
         ("allowed_usage_policies", ["  "]),
-        ("allowed_provenance_statuses", [None]),
-        ("allowed_temporal_statuses", []),
-        ("allowed_rights_statuses", []),
         ("top_k", 51),
     ],
 )

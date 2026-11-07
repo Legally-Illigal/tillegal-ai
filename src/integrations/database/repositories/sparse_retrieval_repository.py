@@ -21,19 +21,11 @@ class SparseSearchRequest(BaseModel):
     terms: tuple[StrictStr, ...] = Field(min_length=1)
     top_k: int = Field(default=10, ge=1, le=50)
     as_of_date: date
-    allowed_legal_approvals: tuple[StrictStr, ...] = Field(min_length=1)
     allowed_usage_policies: tuple[StrictStr, ...] = Field(min_length=1)
-    allowed_provenance_statuses: tuple[StrictStr, ...] = Field(min_length=1)
-    allowed_temporal_statuses: tuple[StrictStr, ...] = Field(min_length=1)
-    allowed_rights_statuses: tuple[StrictStr, ...] = Field(min_length=1)
 
     @field_validator(
         "terms",
-        "allowed_legal_approvals",
         "allowed_usage_policies",
-        "allowed_provenance_statuses",
-        "allowed_temporal_statuses",
-        "allowed_rights_statuses",
     )
     @classmethod
     def reject_blank_values(cls, values: tuple[str, ...]) -> tuple[str, ...]:
@@ -73,11 +65,7 @@ class SparseRetrievalRepository(SupabaseRpcRepository):
                 "p_sparse_index_name": request.sparse_index_name,
                 "p_top_k": request.top_k,
                 "p_as_of_date": request.as_of_date.isoformat(),
-                "p_legal_approvals": list(request.allowed_legal_approvals),
                 "p_usage_policies": list(request.allowed_usage_policies),
-                "p_provenance_statuses": list(request.allowed_provenance_statuses),
-                "p_temporal_statuses": list(request.allowed_temporal_statuses),
-                "p_rights_statuses": list(request.allowed_rights_statuses),
             },
         )
         try:

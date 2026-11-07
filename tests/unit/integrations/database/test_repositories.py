@@ -197,11 +197,7 @@ def test_sparse_retrieval_uses_governance_allowlists() -> None:
         sparse_index_name="bm25-vi",
         terms=("luat", "hop-dong"),
         as_of_date=date(2026, 10, 31),
-        allowed_legal_approvals=("APPROVED",),
         allowed_usage_policies=("PRODUCTION",),
-        allowed_provenance_statuses=("VERIFIED",),
-        allowed_temporal_statuses=("IN_FORCE",),
-        allowed_rights_statuses=("CLEARED",),
     )
 
     hits = asyncio.run(repository.search(request))
@@ -209,7 +205,7 @@ def test_sparse_retrieval_uses_governance_allowlists() -> None:
     assert len(hits) == 1
     assert hits[0].score == 1.2
     assert client.calls[0][0] == "search_sparse_legal_chunks"
-    assert client.calls[0][1]["p_legal_approvals"] == ["APPROVED"]
+    assert client.calls[0][1]["p_usage_policies"] == ["PRODUCTION"]
 
 
 def test_sparse_search_requires_nonblank_terms_and_statuses() -> None:
@@ -218,11 +214,7 @@ def test_sparse_search_requires_nonblank_terms_and_statuses() -> None:
             sparse_index_name="bm25-vi",
             terms=(" ",),
             as_of_date=date(2026, 10, 31),
-            allowed_legal_approvals=("APPROVED",),
             allowed_usage_policies=("PRODUCTION",),
-            allowed_provenance_statuses=("VERIFIED",),
-            allowed_temporal_statuses=("IN_FORCE",),
-            allowed_rights_statuses=("CLEARED",),
         )
 
 

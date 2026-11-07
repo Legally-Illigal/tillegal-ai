@@ -72,11 +72,7 @@ class SupabaseVectorRepository:
                 "p_dense_index_name": request.dense_index_name,
                 "p_top_k": request.top_k,
                 "p_as_of_date": request.as_of_date.isoformat(),
-                "p_legal_approvals": list(request.allowed_legal_approvals),
                 "p_usage_policies": list(request.allowed_usage_policies),
-                "p_provenance_statuses": list(request.allowed_provenance_statuses),
-                "p_temporal_statuses": list(request.allowed_temporal_statuses),
-                "p_rights_statuses": list(request.allowed_rights_statuses),
             },
         ).execute()
         return response.data
