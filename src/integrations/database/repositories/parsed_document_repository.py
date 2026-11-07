@@ -21,7 +21,6 @@ class DocumentStructureWrite(BaseModel):
     parser_version: str = Field(min_length=1)
     content_sha256: str = Field(min_length=1)
     max_chars: int | None = Field(default=None, ge=0)
-    excluded_segments: list[dict[str, Any]] = Field(default_factory=list)
     issues: list[dict[str, Any]] = Field(default_factory=list)
 
 

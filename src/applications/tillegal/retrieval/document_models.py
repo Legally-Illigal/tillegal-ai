@@ -21,11 +21,7 @@ class VectorSearchRequest(BaseModel):
     )
     top_k: int = Field(default=10, ge=1, le=MAX_RETRIEVAL_RESULTS)
     as_of_date: date
-    allowed_legal_approvals: tuple[StrictStr, ...] = Field(min_length=1)
     allowed_usage_policies: tuple[StrictStr, ...] = Field(min_length=1)
-    allowed_provenance_statuses: tuple[StrictStr, ...] = Field(min_length=1)
-    allowed_temporal_statuses: tuple[StrictStr, ...] = Field(min_length=1)
-    allowed_rights_statuses: tuple[StrictStr, ...] = Field(min_length=1)
 
     @field_validator("dense_index_name")
     @classmethod
@@ -36,11 +32,7 @@ class VectorSearchRequest(BaseModel):
         return normalized
 
     @field_validator(
-        "allowed_legal_approvals",
         "allowed_usage_policies",
-        "allowed_provenance_statuses",
-        "allowed_temporal_statuses",
-        "allowed_rights_statuses",
         mode="before",
     )
     @classmethod
@@ -82,10 +74,7 @@ class RetrievedEvidence(BaseModel):
     source_id: str | None
     source_record_id: str | None
     source_snapshot_id: str | None
-    document_number: str | None
     title: str
-    document_type: str | None
-    issuing_authority: str | None
     language: str | None
     source_url: str | None
     issued_on: date | None
@@ -93,8 +82,4 @@ class RetrievedEvidence(BaseModel):
     effective_to: date | None
     effect_status_reported: str | None
     usage_policy: str
-    legal_approval: str
-    provenance_status: str
-    temporal_status: str
-    rights_status: str
     source_metadata: dict[str, object]
