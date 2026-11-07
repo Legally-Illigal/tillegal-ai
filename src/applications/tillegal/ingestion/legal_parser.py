@@ -699,7 +699,7 @@ def validate_result(document, result):
         raise ContractError("unknown block or duplicate chunk identity")
 
 
-def parse_document(document: DocumentVersion, max_chars=DEFAULT_MAX_CHARS):
+def parse_document(document: DocumentVersion, max_chars=DEFAULT_MAX_CHARS, *, chunker=make_chunks):
     if type(max_chars) is not int or max_chars < 64:
         raise ContractError("max_chars must be an integer >= 64")
     blocks, excluded, issues = extract_blocks(document)
@@ -728,7 +728,7 @@ def parse_document(document: DocumentVersion, max_chars=DEFAULT_MAX_CHARS):
         "nodes": nodes,
         "excluded_segments": excluded,
         "issues": sorted(set(issues + structure_issues)),
-        "chunks": make_chunks(document, blocks, nodes, max_chars),
+        "chunks": chunker(document, blocks, nodes, max_chars),
     }
     validate_result(document, result)
     return result

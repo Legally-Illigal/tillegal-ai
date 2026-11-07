@@ -1,5 +1,6 @@
 """Create the FastAPI application and wire runtime components."""
 
+import asyncio
 from collections.abc import AsyncIterator, Sequence
 from contextlib import asynccontextmanager
 
@@ -37,8 +38,18 @@ def create_app(settings: AppSettings | None = None, *, tillegal_modules=None) ->
             application.state.langgraph_checkpointer = await checkpointer.open()
 
         try:
+            if app_settings.rag.enabled and tillegal_modules is None:
+                from src.applications.tillegal.composition import create_local_rag_services
+
+                application.state.tillegal_modules = await asyncio.to_thread(
+                    create_local_rag_services,
+                    application.state.supabase_client,
+                    model_path=app_settings.rag.model_path,
+                    revision=app_settings.rag.revision,
+                )
             yield
         finally:
+            application.state.tillegal_modules = tillegal_modules
             if checkpointer is not None:
                 await checkpointer.close()
 

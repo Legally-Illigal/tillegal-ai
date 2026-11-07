@@ -84,7 +84,14 @@ class LangGraphSettings(StrictConfig):
     checkpointer_enabled: bool = False
 
 
+class RagSettings(StrictConfig):
+    enabled: bool = False
+    model_path: str = ""
+    revision: str = ""
+
+
 class AppSettings(StrictConfig):
+    rag: RagSettings = Field(default_factory=RagSettings)
     app: ApplicationSettings = Field(default_factory=ApplicationSettings)
     api: APISettings = Field(default_factory=APISettings)
     security: SecuritySettings = Field(default_factory=SecuritySettings)
@@ -95,6 +102,11 @@ class AppSettings(StrictConfig):
     def validate_checkpointer_settings(self) -> AppSettings:
         if self.langgraph.checkpointer_enabled and self.supabase.database_url is None:
             raise ConfigurationError("DATABASE_URL is required when LANGGRAPH_CHECKPOINTER_ENABLED=true")
+        if self.rag.enabled:
+            if not self.rag.model_path.strip() or not self.rag.revision.strip():
+                raise ConfigurationError("TILLEGAL_E5_PATH and TILLEGAL_E5_REVISION are required for local RAG")
+            if not self.supabase.service_role_key:
+                raise ConfigurationError("Local RAG requires SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY")
         return self
 
 
@@ -109,9 +121,7 @@ def load_settings(
     else:
         env = environ
 
-    configured_path = config_path or (
-        Path(env["CONFIG_FILE"]) if env.get("CONFIG_FILE") else DEFAULT_CONFIG_PATH
-    )
+    configured_path = config_path or (Path(env["CONFIG_FILE"]) if env.get("CONFIG_FILE") else DEFAULT_CONFIG_PATH)
     raw_config = yaml.safe_load(configured_path.read_text(encoding="utf-8"))
     if raw_config is None:
         raw_config = {}
@@ -119,11 +129,19 @@ def load_settings(
         raise ConfigurationError(f"Configuration root in {configured_path} must be a YAML mapping")
 
     config = dict(raw_config)
-    for section in ("app", "api", "security", "supabase", "langgraph"):
+    for section in ("app", "api", "security", "supabase", "langgraph", "rag"):
         value = config.get(section, {})
         if not isinstance(value, dict):
             raise ConfigurationError(f"Configuration section '{section}' must be a YAML mapping")
         config[section] = dict(value)
+
+    for key, field in (
+        ("TILLEGAL_RAG_ENABLED", "enabled"),
+        ("TILLEGAL_E5_PATH", "model_path"),
+        ("TILLEGAL_E5_REVISION", "revision"),
+    ):
+        if key in env:
+            config["rag"][field] = env[key]
 
     app_overrides = {
         "APP_NAME": "name",

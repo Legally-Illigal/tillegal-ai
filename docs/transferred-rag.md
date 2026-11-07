@@ -62,3 +62,15 @@ $env:PGLITE_TEST_PREFIX = Join-Path $env:TEMP 'tillegal-pgvector-test'
 npm install --prefix $env:PGLITE_TEST_PREFIX --ignore-scripts @electric-sql/pglite@0.5.15 @electric-sql/pglite-pgvector@0.0.16
 uv run python -m pytest -q tests/transferred/test_pgvector.py
 ```
+
+## Startup qua src.main:app
+
+Bật TILLEGAL_RAG_ENABLED=true, đặt TILLEGAL_E5_PATH trỏ tới snapshot E5 local,
+TILLEGAL_E5_REVISION, SUPABASE_URL và SUPABASE_SERVICE_ROLE_KEY, cài backend ở
+requirements-rag-local.txt rồi chạy uv run uvicorn src.main:app --workers 1.
+FastAPI lifespan nạp một encoder cho mỗi worker. Ingestion và retrieval dùng chung
+encoder qua app.state.tillegal_modules. Startup này cung cấp hai service RAG.
+Factory create_local_modules vẫn dành cho caller muốn cấp cả provider Judge/Summary.
+Mặc định flag tắt. Model không tải được thì startup thất bại. Cần migration window
+trên DB mục tiêu trước khi ingest. Có thể truyền chunker= vào factory để thay
+make_chunks. Output vẫn phải qua validate_result và giữ đúng schema, ID và offsets.

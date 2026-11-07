@@ -2,6 +2,14 @@
 
 from typing import Protocol
 
+from src.applications.tillegal.ingestion.data_contracts import DocumentVersion
+
+
+class Chunker(Protocol):
+    def __call__(
+        self, document: DocumentVersion, blocks: list[dict], nodes: list[dict], max_chars: int, /
+    ) -> list[dict]: ...
+
 
 class IngestionStore(Protocol):
     async def save(self, document: dict, parsed: dict, profile: dict, windows: list[dict]) -> str: ...
