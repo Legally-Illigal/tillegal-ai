@@ -1,0 +1,23 @@
+"""Ports for transferring parsed versions and window embeddings."""
+
+from typing import Protocol
+
+from src.applications.tillegal.ingestion.data_contracts import DocumentVersion
+
+
+class Chunker(Protocol):
+    def __call__(
+        self, document: DocumentVersion, blocks: list[dict], nodes: list[dict], max_chars: int, /
+    ) -> list[dict]: ...
+
+
+class IngestionStore(Protocol):
+    async def save(self, document: dict, parsed: dict, profile: dict, windows: list[dict]) -> str: ...
+    async def load(self, version_ids: tuple[str, ...], profile: dict) -> list[dict]: ...
+
+
+class Embedder(Protocol):
+    @property
+    def profile(self) -> dict: ...
+    async def embed_documents(self, chunks: list[dict]) -> list[dict]: ...
+    async def embed_query(self, question: str) -> list[float]: ...

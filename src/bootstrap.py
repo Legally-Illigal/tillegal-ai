@@ -1,5 +1,6 @@
 """Create the FastAPI application and wire runtime components."""
 
+import asyncio
 from collections.abc import AsyncIterator, Sequence
 from contextlib import asynccontextmanager
 
@@ -15,7 +16,7 @@ from src.integrations.database.session import create_supabase_client
 from src.integrations.langgraph.postgres_checkpointer import PostgresCheckpointer
 
 
-def create_app(settings: AppSettings | None = None) -> FastAPI:
+def create_app(settings: AppSettings | None = None, *, tillegal_modules=None) -> FastAPI:
     """Build the application using validated configuration."""
     app_settings = settings or load_settings()
     configure_logging(app_settings.app.log_level)
@@ -37,8 +38,18 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
             application.state.langgraph_checkpointer = await checkpointer.open()
 
         try:
+            if app_settings.rag.enabled and tillegal_modules is None:
+                from src.applications.tillegal.composition import create_local_rag_services
+
+                application.state.tillegal_modules = await asyncio.to_thread(
+                    create_local_rag_services,
+                    application.state.supabase_client,
+                    model_path=app_settings.rag.model_path,
+                    revision=app_settings.rag.revision,
+                )
             yield
         finally:
+            application.state.tillegal_modules = tillegal_modules
             if checkpointer is not None:
                 await checkpointer.close()
 
@@ -49,6 +60,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         redoc_url=None,
         lifespan=lifespan,
     )
+    application.state.tillegal_modules = tillegal_modules
     application.state.settings = app_settings
     application.state.langgraph_checkpointer = None
     application.state.supabase_client = (
