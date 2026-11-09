@@ -25,7 +25,14 @@ class PostgresTransactionManager:
         try:
             return await asyncio.to_thread(self._run, operation)
         except psycopg.Error as error:
-            raise DatabaseRepositoryError("PostgreSQL transaction failed") from error
+            diagnostic = error.diag
+            primary_message = diagnostic.message_primary if diagnostic is not None else None
+            details = f"SQLSTATE {error.sqlstate}" if error.sqlstate else type(error).__name__
+            if primary_message:
+                details = f"{details}: {primary_message}"
+            elif isinstance(error, psycopg.ProgrammingError) and str(error):
+                details = f"{details}: {error}"
+            raise DatabaseRepositoryError(f"PostgreSQL transaction failed ({details})") from error
 
     def _run(self, operation: TransactionOperation[T]) -> T:
         with psycopg.connect(
