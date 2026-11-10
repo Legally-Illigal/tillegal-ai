@@ -7,7 +7,7 @@ The directory tree below is the agreed target structure currently being implemen
 
 The API accepts a date (default: today in `Asia/Ho_Chi_Minh`), creates a durable `crawl_jobs` row, and returns immediately.
 The application worker claims the job with a PostgreSQL lease, scans the public sitemap index and all child sitemaps,
-then stores matching document URLs and per-sitemap counts in the job result.
+then fetches metadata and source files for matching document URLs.
 
 ```http
 POST /ingestion/vbpl/crawl
@@ -18,13 +18,27 @@ Content-Type: application/json
 
 Omit the body or `crawl_date` to use today's Vietnam date. The response is `202 Accepted` with a job ID; poll
 `GET /ingestion/vbpl/jobs/{job_id}` for `PENDING`, `RUNNING`, `SUCCEEDED`, or `FAILED` and its result/error. Duplicate
-requests for the same VBPL date reuse an already-active job. `DATABASE_URL` is required. The durable worker runs as part
-of the API application's lifespan and resumes pending/expired jobs after a restart; the same worker is also available
-as a standalone process with `uv run python -m src.workers.worker`.
+requests for the same VBPL date reuse an already-active job. `DATABASE_URL`, `SUPABASE_URL`,
+`SUPABASE_SERVICE_ROLE_KEY`, and the private `vbpl-raw` Storage bucket are required for jobs with matching documents.
+The durable worker runs as part of the API application's lifespan and resumes pending/expired jobs after a restart; the
+same worker, with the same file-storage wiring, is also available as a standalone process with
+`uv run python -m src.workers.worker`.
 
-This slice only discovers candidate URLs using sitemap `lastmod`; it does not fetch detail pages/files, parse Markdown,
-or write source-document records. Sitemap `lastmod` is not proof that legal content changed. Later ingestion stages
-must verify the detail page's `article:modified_time` and compare content/file hashes.
+For each sitemap candidate, the worker reads page metadata and uses the public file-list action exposed by the VBPL
+detail page, then downloads the listed `.doc`, original `.pdf`, and body `.html` files through VBPL's public gateway.
+For a new source record, all listed files are uploaded to the private `vbpl-raw` bucket under ASCII,
+content-hash-based object keys such as `vbpl/{source_record_id}/{sha256}/origin.pdf` (the upstream filename is retained
+in metadata, not used as a Storage path) and their
+references/hashes are stored in the existing `source_documents` columns and `raw_metadata`. For an
+existing record that already has stored file references, the worker updates VBPL metadata and the listed-file metadata
+only; it does not re-download or replace the stored files. If a previous partial attempt created the metadata record but
+stored no file references, the worker backfills its missing source files. The
+`20261109220000_vbpl_source_document_upsert.sql` migration updates the existing upsert function to persist and preserve
+stored refs/hashes when a field is omitted; it does not add or alter tables/columns. Apply this migration before running
+the worker; it verifies that newly stored file references were actually persisted.
+
+Sitemap `lastmod` is only a discovery signal, not proof that legal content changed. Markdown parsing, chunking, and
+embedding are not part of this stage.
 
 For manual source research, `scripts\crawl_vbpl_sitemap.py` can write a local JSON scan report and
 `scripts\inspect_vbpl.py` can capture individual raw HTML pages; neither script is the production crawl entry point.
@@ -70,7 +84,7 @@ DATABASE_URL=postgresql://postgres:<database-password>@db.<project-ref>.supabase
 SUPABASE_AUTO_MIGRATE=false
 ```
 
-`SUPABASE_URL` and API keys are for the Supabase HTTP API. The application uses `DATABASE_URL` to connect directly to Supabase PostgreSQL for schema migrations. Get the database connection string from Supabase Dashboard → **Project Settings → Database → Connection string**; use the connection mode appropriate for your network (for example, Session Pooler if direct connections are unavailable). URL-encode special characters in the database password. Treat this URL as a secret and do not commit it. Keep the service-role key on the server only because it bypasses Row Level Security. The migration enables RLS without public policies, so the service-role key is required for server-side Data API access unless you add suitable policies. `SUPABASE_ANON_KEY` alone does not grant access to these tables. `SUPABASE_URL` and at least one API key must be configured together.
+`SUPABASE_URL` and API keys are for the Supabase HTTP API. The application uses `DATABASE_URL` to connect directly to Supabase PostgreSQL for schema migrations. Get the database connection string from Supabase Dashboard → **Project Settings → Database → Connection string**; use the connection mode appropriate for your network (for example, Session Pooler if direct connections are unavailable). URL-encode special characters in the database password. Treat this URL as a secret and do not commit it. Keep the service-role key on the server only because it bypasses Row Level Security. The migration enables RLS without public policies, so the service-role key is required for server-side Data API and Storage access unless you add suitable policies. `SUPABASE_ANON_KEY` alone does not grant access to these tables. `SUPABASE_URL` and at least one API key must be configured together.
 
 Database migrations are kept under [`src/integrations/database/supabase/migrations`](./src/integrations/database/supabase/migrations). The migration [`20261028170000_unified_rag_storage.sql`](./src/integrations/database/supabase/migrations/20261028170000_unified_rag_storage.sql) creates the `dense_chunk_embeddings` table used for vector data and enables RLS on all schema tables. Its vector column and HNSW index are configured for 1536-dimensional cosine embeddings; the retrieval RPC also assumes that dimension, so keep both migrations aligned if changing the embedding model.
 

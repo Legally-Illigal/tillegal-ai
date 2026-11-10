@@ -2,21 +2,23 @@
 
 import asyncio
 import logging
+from collections.abc import Awaitable, Callable
 from uuid import UUID
 
 from src.application.interfaces.crawl_job_store import CrawlJobStore
-from src.applications.tillegal.ingestion.crawler.vbpl_sitemap import scan_vbpl_sitemaps
+from src.applications.tillegal.ingestion.crawler.vbpl_sitemap import VbplDocumentUrl, scan_vbpl_sitemaps
 
 logger = logging.getLogger("tillegal.ingestion")
 
 
 class VbplCrawlWorker:
-    """Claim durable VBPL jobs and persist sitemap discovery results."""
+    """Claim durable VBPL jobs, discover candidates, and ingest selected documents."""
 
     def __init__(
         self,
         jobs: CrawlJobStore,
         *,
+        document_ingestor: Callable[[VbplDocumentUrl], Awaitable[dict[str, object]]] | None = None,
         poll_interval_seconds: float = 5,
         lease_seconds: int = 180,
         heartbeat_interval_seconds: float = 45,
@@ -26,6 +28,7 @@ class VbplCrawlWorker:
         if heartbeat_interval_seconds >= lease_seconds:
             raise ValueError("Heartbeat interval must be shorter than the job lease")
         self._jobs = jobs
+        self._document_ingestor = document_ingestor
         self._poll_interval_seconds = poll_interval_seconds
         self._lease_seconds = lease_seconds
         self._heartbeat_interval_seconds = heartbeat_interval_seconds
@@ -39,6 +42,12 @@ class VbplCrawlWorker:
         heartbeat = asyncio.create_task(self._keep_lease(job.id, owner))
         try:
             result = await asyncio.to_thread(scan_vbpl_sitemaps, job.crawl_date)
+            if result.selected and self._document_ingestor is None:
+                raise RuntimeError("VBPL document ingestion requires SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY")
+            ingested_documents: list[dict[str, object]] = []
+            if self._document_ingestor is not None:
+                for document in result.selected:
+                    ingested_documents.append(await self._document_ingestor(document))
             await self._jobs.succeed(
                 job.id,
                 owner,
@@ -63,6 +72,20 @@ class VbplCrawlWorker:
                         }
                         for document in result.selected
                     ],
+                    "document_ingestion": {
+                        "created_count": sum(item.get("action") == "created" for item in ingested_documents),
+                        "files_backfilled_count": sum(
+                            item.get("action") == "files_backfilled" for item in ingested_documents
+                        ),
+                        "metadata_updated_count": sum(
+                            item.get("action") == "metadata_updated" for item in ingested_documents
+                        ),
+                        "attachment_count": sum(int(item.get("attachment_count", 0)) for item in ingested_documents),
+                        "downloaded_attachment_count": sum(
+                            int(item.get("downloaded_attachment_count", 0)) for item in ingested_documents
+                        ),
+                        "documents": ingested_documents,
+                    },
                 },
             )
         except Exception as error:

@@ -1,34 +1,14 @@
 """Repository operations for crawled source-document metadata."""
 
-from datetime import date, datetime
+import asyncio
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field
+import httpx
+from postgrest.exceptions import APIError
 from supabase import Client
 
+from src.application.dto.source_document import SourceDocumentWrite
 from src.integrations.database.repositories.rpc import DatabaseRepositoryError, SupabaseRpcRepository
-
-
-class SourceDocumentWrite(BaseModel):
-    """Validated document metadata accepted by the source-document RPC."""
-
-    model_config = ConfigDict(extra="forbid", frozen=True)
-
-    source_id: str = Field(min_length=1)
-    source_record_id: str = Field(min_length=1)
-    title: str = Field(min_length=1)
-    source_snapshot_id: str | None = None
-    language: str | None = None
-    source_url: str | None = None
-    issued_on: date | None = None
-    effective_from: date | None = None
-    effective_to: date | None = None
-    effect_status_reported: str | None = None
-    raw_content_ref: str | None = None
-    raw_content_sha256: str | None = None
-    raw_metadata: dict[str, object] = Field(default_factory=dict)
-    usage_policy: str = "EXPERIMENTAL_ONLY"
-    collected_at: datetime | None = None
 
 
 class SourceDocumentRepository(SupabaseRpcRepository):
@@ -58,3 +38,33 @@ class SourceDocumentRepository(SupabaseRpcRepository):
         if not isinstance(result, dict):
             raise DatabaseRepositoryError("get_source_document returned an invalid response")
         return result
+
+    async def get_by_source_record_id(
+        self,
+        source_id: str,
+        source_record_id: str,
+    ) -> dict[str, object] | None:
+        """Load a source document using its stable upstream identity."""
+        try:
+            response = await asyncio.to_thread(
+                lambda: (
+                    self._client.table("source_documents")
+                    .select("id,raw_file_ref,raw_file_sha256,raw_content_ref,raw_content_sha256,raw_metadata")
+                    .eq("source_id", source_id)
+                    .eq("source_record_id", source_record_id)
+                    .limit(1)
+                    .execute()
+                )
+            )
+        except (APIError, httpx.HTTPError) as error:
+            raise DatabaseRepositoryError("Loading source document by source identity failed") from error
+        if response is None:
+            raise DatabaseRepositoryError("Source-document lookup returned no response")
+        rows = response.data
+        if not isinstance(rows, list):
+            raise DatabaseRepositoryError("Source-document lookup returned an invalid response")
+        if not rows:
+            return None
+        if len(rows) != 1 or not isinstance(rows[0], dict):
+            raise DatabaseRepositoryError("Source-document lookup returned an invalid response")
+        return rows[0]

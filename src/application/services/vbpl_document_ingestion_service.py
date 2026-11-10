@@ -1,0 +1,190 @@
+"""Persist VBPL document metadata and source files."""
+
+import asyncio
+import hashlib
+import mimetypes
+import re
+from datetime import UTC, datetime
+
+from src.application.dto.source_document import SourceDocumentWrite
+from src.application.interfaces.object_storage import ObjectStorage
+from src.application.interfaces.source_document_store import SourceDocumentStore
+from src.applications.tillegal.ingestion.crawler.vbpl_document import (
+    VbplAttachment,
+    download_vbpl_attachment,
+    fetch_vbpl_document_page,
+)
+from src.applications.tillegal.ingestion.crawler.vbpl_sitemap import VbplDocumentUrl
+
+VBPL_STORAGE_BUCKET = "vbpl-raw"
+SOURCE_ID = "vbpl"
+
+
+class VbplDocumentIngestionService:
+    """Fetch VBPL source metadata/files and upsert the stable document record."""
+
+    def __init__(
+        self,
+        documents: SourceDocumentStore,
+        storage: ObjectStorage,
+        *,
+        bucket: str = VBPL_STORAGE_BUCKET,
+    ) -> None:
+        if not bucket.strip():
+            raise ValueError("VBPL storage bucket must not be empty")
+        self._documents = documents
+        self._storage = storage
+        self._bucket = bucket
+
+    async def ingest(self, document_url: VbplDocumentUrl) -> dict[str, object]:
+        """Ingest one discovered document, retaining previously stored file versions."""
+        page = await asyncio.to_thread(fetch_vbpl_document_page, document_url.url)
+        existing = await self._documents.get_by_source_record_id(SOURCE_ID, page.document_id)
+        previous_metadata = _mapping(existing.get("raw_metadata")) if existing is not None else {}
+        previous_stored_files = _stored_files(previous_metadata)
+        stored_files = previous_stored_files
+        raw_file_ref = _optional_string(existing, "raw_file_ref")
+        raw_file_sha256 = _optional_string(existing, "raw_file_sha256")
+        raw_content_ref = _optional_string(existing, "raw_content_ref")
+        raw_content_sha256 = _optional_string(existing, "raw_content_sha256")
+        downloaded_count = 0
+        needs_file_backfill = (
+            existing is not None and raw_file_ref is None and raw_content_ref is None and not previous_stored_files
+        )
+
+        if existing is None or needs_file_backfill:
+            stored_files = list(previous_stored_files)
+            for attachment in page.attachments:
+                if any(item.get("file_name") == attachment.file_name for item in stored_files):
+                    continue
+                content = await asyncio.to_thread(
+                    download_vbpl_attachment,
+                    page.document_id,
+                    attachment,
+                )
+                digest = hashlib.sha256(content).hexdigest()
+                object_key = _storage_key(page.document_id, digest, attachment.file_name)
+                await asyncio.to_thread(self._upload, object_key, content, _content_type(attachment))
+                stored_files.append(
+                    {
+                        "file_name": attachment.file_name,
+                        "storage_ref": f"{self._bucket}/{object_key}",
+                        "sha256": digest,
+                        "size": len(content),
+                        "content_type": _content_type(attachment),
+                    }
+                )
+                downloaded_count += 1
+
+            pdf_file = _stored_file_for_extension(stored_files, ".pdf")
+            html_file = _stored_file_for_extension(stored_files, ".html")
+            if pdf_file is not None:
+                raw_file_ref = _optional_string(pdf_file, "storage_ref")
+                raw_file_sha256 = _optional_string(pdf_file, "sha256")
+            if html_file is not None:
+                raw_content_ref = _optional_string(html_file, "storage_ref")
+                raw_content_sha256 = _optional_string(html_file, "sha256")
+        else:
+            if raw_file_ref is None:
+                pdf_file = _stored_file_for_extension(stored_files, ".pdf")
+                if pdf_file is not None:
+                    raw_file_ref = _optional_string(pdf_file, "storage_ref")
+                    raw_file_sha256 = _optional_string(pdf_file, "sha256")
+            if raw_content_ref is None:
+                html_file = _stored_file_for_extension(stored_files, ".html")
+                if html_file is not None:
+                    raw_content_ref = _optional_string(html_file, "storage_ref")
+                    raw_content_sha256 = _optional_string(html_file, "sha256")
+
+        metadata: dict[str, object] = {
+            **page.metadata,
+            "sitemap_lastmod": document_url.lastmod.isoformat(),
+            "sitemap_url": document_url.sitemap_url,
+            "source_files": [_attachment_metadata(item, page.document_id) for item in page.attachments],
+            "stored_files_refreshed": downloaded_count > 0,
+        }
+        if existing is None or needs_file_backfill or "stored_files" in previous_metadata:
+            metadata["stored_files"] = stored_files
+        saved = await self._documents.upsert(
+            SourceDocumentWrite(
+                source_id=SOURCE_ID,
+                source_record_id=page.document_id,
+                title=page.title,
+                language="vi",
+                source_url=document_url.url,
+                raw_file_ref=raw_file_ref,
+                raw_file_sha256=raw_file_sha256,
+                raw_content_ref=raw_content_ref,
+                raw_content_sha256=raw_content_sha256,
+                raw_metadata=metadata,
+                collected_at=datetime.now(UTC),
+            )
+        )
+        if raw_file_ref is not None and saved.get("raw_file_ref") != raw_file_ref:
+            raise RuntimeError("Database did not persist raw_file_ref; apply the VBPL source-document migration")
+        if raw_content_ref is not None and saved.get("raw_content_ref") != raw_content_ref:
+            raise RuntimeError("Database did not persist raw_content_ref; apply the VBPL source-document migration")
+        return {
+            "source_document_id": saved.get("id"),
+            "source_record_id": page.document_id,
+            "action": (
+                "created" if existing is None else "files_backfilled" if downloaded_count else "metadata_updated"
+            ),
+            "attachment_count": len(page.attachments),
+            "downloaded_attachment_count": downloaded_count,
+        }
+
+    def _upload(self, object_key: str, content: bytes, content_type: str) -> None:
+        self._storage.upload(self._bucket, object_key, content, content_type)
+
+
+def _mapping(value: object) -> dict[str, object]:
+    return value if isinstance(value, dict) else {}
+
+
+def _optional_string(value: dict[str, object] | None, key: str) -> str | None:
+    if value is None:
+        return None
+    result = value.get(key)
+    return result if isinstance(result, str) else None
+
+
+def _stored_files(metadata: dict[str, object]) -> list[dict[str, object]]:
+    files = metadata.get("stored_files")
+    if not isinstance(files, list):
+        return []
+    return [item for item in files if isinstance(item, dict)]
+
+
+def _stored_file_for_extension(
+    files: list[dict[str, object]],
+    extension: str,
+) -> dict[str, object] | None:
+    return next(
+        (
+            item
+            for item in files
+            if isinstance(item.get("file_name"), str) and item["file_name"].lower().endswith(extension)
+        ),
+        None,
+    )
+
+
+def _storage_key(document_id: str, digest: str, file_name: str) -> str:
+    extension_match = re.search(r"\.([A-Za-z0-9]{1,10})$", file_name)
+    extension = extension_match.group(1).lower() if extension_match is not None else "bin"
+    return f"vbpl/{document_id}/{digest}/origin.{extension}"
+
+
+def _content_type(attachment: VbplAttachment) -> str:
+    guessed, _ = mimetypes.guess_type(attachment.file_name)
+    return guessed or attachment.content_type
+
+
+def _attachment_metadata(attachment: VbplAttachment, document_id: str) -> dict[str, object]:
+    return {
+        "file_name": attachment.file_name,
+        "full_path": attachment.full_path or f"{document_id}/{attachment.file_name}",
+        "content_type": _content_type(attachment),
+        "size": attachment.size,
+    }

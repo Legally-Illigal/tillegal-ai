@@ -10,12 +10,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.api.middleware.request_context import RequestContextMiddleware
 from src.api.routes.health import router as health_router
 from src.api.routes.ingestion import router as ingestion_router
+from src.application.services.vbpl_document_ingestion_service import VbplDocumentIngestionService
 from src.core.config import AppSettings, load_settings
 from src.core.identifiers import new_id
 from src.framework.observability.logging import configure_logging
 from src.integrations.database.migrator import run_supabase_migrations
 from src.integrations.database.repositories.crawl_job_repository import CrawlJobRepository
+from src.integrations.database.repositories.source_document_repository import SourceDocumentRepository
 from src.integrations.database.session import create_supabase_client
+from src.integrations.database.supabase.storage import SupabaseObjectStorage
 from src.integrations.database.transaction import PostgresTransactionManager
 from src.integrations.langgraph.postgres_checkpointer import PostgresCheckpointer
 from src.workers.tasks import VbplCrawlWorker
@@ -44,7 +47,19 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
 
         worker_task: asyncio.Task[None] | None = None
         if app_settings.supabase.database_url is not None:
-            worker = VbplCrawlWorker(application.state.crawl_job_store)
+            supabase_client = application.state.supabase_client
+            document_ingestor = (
+                VbplDocumentIngestionService(
+                    SourceDocumentRepository(supabase_client),
+                    SupabaseObjectStorage(supabase_client),
+                ).ingest
+                if supabase_client is not None
+                else None
+            )
+            worker = VbplCrawlWorker(
+                application.state.crawl_job_store,
+                document_ingestor=document_ingestor,
+            )
             worker_task = asyncio.create_task(
                 worker.run_forever(str(new_id())),
                 name="vbpl-crawl-worker",
