@@ -11,8 +11,7 @@ from src.core.config import load_settings
 def test_load_settings_applies_environment_overrides(tmp_path: Path) -> None:
     config_path = tmp_path / "app.yaml"
     config_path.write_text(
-        "app:\n  name: configured-name\n  port: 8000\n"
-        "api:\n  timeout_seconds: 30\n",
+        "app:\n  name: configured-name\n  port: 8000\napi:\n  timeout_seconds: 30\n",
         encoding="utf-8",
     )
 
@@ -144,3 +143,47 @@ def test_load_settings_rejects_invalid_langgraph_checkpointer_value(tmp_path: Pa
 
     with pytest.raises(ValueError, match="LANGGRAPH_CHECKPOINTER_ENABLED must be either"):
         load_settings(config_path, environ={"LANGGRAPH_CHECKPOINTER_ENABLED": "sometimes"})
+
+
+def test_load_settings_applies_vbpl_environment_overrides(tmp_path: Path) -> None:
+    config_path = tmp_path / "app.yaml"
+    config_path.write_text("app: {}\n", encoding="utf-8")
+
+    settings = load_settings(
+        config_path,
+        environ={
+            "VBPL_MAX_ATTACHMENT_SIZE_MB": "150",
+            "VBPL_REQUEST_PAUSE_SECONDS": "0.5",
+            "VBPL_WORKER_LEASE_SECONDS": "240",
+        },
+    )
+
+    assert settings.vbpl.max_attachment_size_mb == 150
+    assert settings.vbpl.request_pause_seconds == 0.5
+    assert settings.vbpl.worker_lease_seconds == 240
+
+
+def test_load_settings_preserves_vbpl_defaults(tmp_path: Path) -> None:
+    config_path = tmp_path / "app.yaml"
+    config_path.write_text("app: {}\n", encoding="utf-8")
+
+    settings = load_settings(config_path, environ={})
+
+    assert settings.vbpl.max_sitemap_size_mb == 10
+    assert settings.vbpl.max_page_size_mb == 5
+    assert settings.vbpl.max_attachment_size_mb == 100
+    assert settings.vbpl.worker_poll_interval_seconds == 5
+
+
+def test_load_settings_rejects_vbpl_heartbeat_not_shorter_than_lease(tmp_path: Path) -> None:
+    config_path = tmp_path / "app.yaml"
+    config_path.write_text("app: {}\n", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="heartbeat interval must be shorter"):
+        load_settings(
+            config_path,
+            environ={
+                "VBPL_WORKER_LEASE_SECONDS": "45",
+                "VBPL_WORKER_HEARTBEAT_INTERVAL_SECONDS": "45",
+            },
+        )

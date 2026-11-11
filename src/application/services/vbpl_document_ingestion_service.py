@@ -20,6 +20,7 @@ from src.applications.tillegal.ingestion.crawler.vbpl_document import (
     fetch_vbpl_document_page,
 )
 from src.applications.tillegal.ingestion.crawler.vbpl_sitemap import VbplDocumentUrl
+from src.core.config import VbplCrawlSettings
 
 VBPL_STORAGE_BUCKET = "vbpl-raw"
 SOURCE_ID = "vbpl"
@@ -35,16 +36,21 @@ class VbplDocumentIngestionService:
         storage: ObjectStorage,
         *,
         bucket: str = VBPL_STORAGE_BUCKET,
+        settings: VbplCrawlSettings | None = None,
     ) -> None:
         if not bucket.strip():
             raise ValueError("VBPL storage bucket must not be empty")
         self._documents = documents
         self._storage = storage
         self._bucket = bucket
+        self._settings = settings
 
     async def ingest(self, document_url: VbplDocumentUrl) -> dict[str, object]:
         """Ingest one discovered document, retaining previously stored file versions."""
-        page = await asyncio.to_thread(fetch_vbpl_document_page, document_url.url)
+        if self._settings is None:
+            page = await asyncio.to_thread(fetch_vbpl_document_page, document_url.url)
+        else:
+            page = await asyncio.to_thread(fetch_vbpl_document_page, document_url.url, self._settings)
         existing = await self._documents.get_by_source_record_id(SOURCE_ID, page.document_id)
         previous_metadata = _mapping(existing.get("raw_metadata")) if existing is not None else {}
         previous_stored_files = _stored_files(previous_metadata)
@@ -68,11 +74,7 @@ class VbplDocumentIngestionService:
             for attachment in page.attachments:
                 if any(item.get("file_name") == attachment.file_name for item in stored_files):
                     continue
-                content = await asyncio.to_thread(
-                    download_vbpl_attachment,
-                    page.document_id,
-                    attachment,
-                )
+                content = await self._download_attachment(page.document_id, attachment)
                 digest = hashlib.sha256(content).hexdigest()
                 object_key = _storage_key(page.document_id, digest, attachment.file_name)
                 await asyncio.to_thread(self._upload, object_key, content, _content_type(attachment))
@@ -134,11 +136,7 @@ class VbplDocumentIngestionService:
                 source_content = await asyncio.to_thread(self._storage.download, storage_bucket, object_key)
 
             if source_content is None:
-                source_content = await asyncio.to_thread(
-                    download_vbpl_attachment,
-                    page.document_id,
-                    source_attachment,
-                )
+                source_content = await self._download_attachment(page.document_id, source_attachment)
                 source_sha256 = hashlib.sha256(source_content).hexdigest()
                 source_key = _storage_key(page.document_id, source_sha256, source_attachment.file_name)
                 source_ref = f"{self._bucket}/{source_key}"
@@ -163,7 +161,19 @@ class VbplDocumentIngestionService:
                     raw_content_sha256 = source_sha256
 
             try:
-                markdown = await asyncio.to_thread(_convert_markdown_source, source_attachment, source_content)
+                if self._settings is None:
+                    markdown = await asyncio.to_thread(
+                        _convert_markdown_source,
+                        source_attachment,
+                        source_content,
+                    )
+                else:
+                    markdown = await asyncio.to_thread(
+                        _convert_markdown_source,
+                        source_attachment,
+                        source_content,
+                        self._settings,
+                    )
             except LegacyDocConverterUnavailableError:
                 markdown_skipped_reason = "antiword_unavailable"
             else:
@@ -232,6 +242,11 @@ class VbplDocumentIngestionService:
     def _upload(self, object_key: str, content: bytes, content_type: str) -> None:
         self._storage.upload(self._bucket, object_key, content, content_type)
 
+    async def _download_attachment(self, document_id: str, attachment: VbplAttachment) -> bytes:
+        if self._settings is None:
+            return await asyncio.to_thread(download_vbpl_attachment, document_id, attachment)
+        return await asyncio.to_thread(download_vbpl_attachment, document_id, attachment, self._settings)
+
 
 def _mapping(value: object) -> dict[str, object]:
     return value if isinstance(value, dict) else {}
@@ -291,9 +306,15 @@ def _markdown_source_attachment(
     )
 
 
-def _convert_markdown_source(attachment: VbplAttachment, content: bytes) -> str:
+def _convert_markdown_source(
+    attachment: VbplAttachment,
+    content: bytes,
+    settings: VbplCrawlSettings | None = None,
+) -> str:
     if attachment.file_name.lower().endswith((".html", ".htm")):
         return convert_html_to_markdown(content)
+    if settings is not None:
+        return convert_word_to_markdown(content, attachment.file_name, settings.doc_conversion_timeout_seconds)
     return convert_word_to_markdown(content, attachment.file_name)
 
 

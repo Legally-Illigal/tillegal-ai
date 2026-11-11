@@ -7,6 +7,7 @@ from uuid import UUID
 
 from src.application.interfaces.crawl_job_store import CrawlJobStore
 from src.applications.tillegal.ingestion.crawler.vbpl_sitemap import VbplDocumentUrl, scan_vbpl_sitemaps
+from src.core.config import VbplCrawlSettings
 
 logger = logging.getLogger("tillegal.ingestion")
 
@@ -19,16 +20,24 @@ class VbplCrawlWorker:
         jobs: CrawlJobStore,
         *,
         document_ingestor: Callable[[VbplDocumentUrl], Awaitable[dict[str, object]]] | None = None,
-        poll_interval_seconds: float = 5,
-        lease_seconds: int = 180,
-        heartbeat_interval_seconds: float = 45,
+        poll_interval_seconds: float | None = None,
+        lease_seconds: int | None = None,
+        heartbeat_interval_seconds: float | None = None,
+        settings: VbplCrawlSettings | None = None,
     ) -> None:
+        if poll_interval_seconds is None:
+            poll_interval_seconds = settings.worker_poll_interval_seconds if settings else 5
+        if lease_seconds is None:
+            lease_seconds = settings.worker_lease_seconds if settings else 180
+        if heartbeat_interval_seconds is None:
+            heartbeat_interval_seconds = settings.worker_heartbeat_interval_seconds if settings else 45
         if poll_interval_seconds <= 0 or lease_seconds <= 0 or heartbeat_interval_seconds <= 0:
             raise ValueError("Worker polling and lease intervals must be positive")
         if heartbeat_interval_seconds >= lease_seconds:
             raise ValueError("Heartbeat interval must be shorter than the job lease")
         self._jobs = jobs
         self._document_ingestor = document_ingestor
+        self._settings = settings
         self._poll_interval_seconds = poll_interval_seconds
         self._lease_seconds = lease_seconds
         self._heartbeat_interval_seconds = heartbeat_interval_seconds
@@ -41,7 +50,10 @@ class VbplCrawlWorker:
 
         heartbeat = asyncio.create_task(self._keep_lease(job.id, owner))
         try:
-            result = await asyncio.to_thread(scan_vbpl_sitemaps, job.crawl_date)
+            if self._settings is None:
+                result = await asyncio.to_thread(scan_vbpl_sitemaps, job.crawl_date)
+            else:
+                result = await asyncio.to_thread(scan_vbpl_sitemaps, job.crawl_date, settings=self._settings)
             if result.selected and self._document_ingestor is None:
                 raise RuntimeError("VBPL document ingestion requires SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY")
             ingested_documents: list[dict[str, object]] = []

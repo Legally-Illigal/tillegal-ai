@@ -14,6 +14,8 @@ from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 from zoneinfo import ZoneInfo
 
+from src.core.config import VbplCrawlSettings
+
 SITEMAP_INDEX_URL = "https://vbpl.vn/sitemap.xml"
 USER_AGENT = "Tillegal-VBPL-Crawler/0.1"
 MAX_SITEMAP_BYTES = 10 * 1024 * 1024
@@ -79,8 +81,10 @@ class _VbplRedirectHandler(HTTPRedirectHandler):
         return super().redirect_request(request, file_pointer, code, message, headers, new_url)
 
 
-def _fetch_sitemap(url: str) -> bytes:
+def _fetch_sitemap(url: str, settings: VbplCrawlSettings | None = None) -> bytes:
     _validate_vbpl_url(url)
+    max_bytes = (settings.max_sitemap_size_mb if settings else MAX_SITEMAP_BYTES // (1024 * 1024)) * 1024 * 1024
+    timeout_seconds = settings.sitemap_timeout_seconds if settings else 45
     request = Request(
         url,
         headers={
@@ -89,14 +93,14 @@ def _fetch_sitemap(url: str) -> bytes:
         },
     )
     try:
-        with build_opener(_VbplRedirectHandler()).open(request, timeout=45) as response:
+        with build_opener(_VbplRedirectHandler()).open(request, timeout=timeout_seconds) as response:
             _validate_vbpl_url(response.geturl())
-            body = response.read(MAX_SITEMAP_BYTES + 1)
+            body = response.read(max_bytes + 1)
     except (OSError, URLError, TimeoutError, ValueError) as error:
         raise SitemapFetchError(f"Failed to fetch sitemap {url}: {error}") from error
 
-    if len(body) > MAX_SITEMAP_BYTES:
-        raise SitemapFetchError(f"Sitemap exceeds {MAX_SITEMAP_BYTES} bytes: {url}")
+    if len(body) > max_bytes:
+        raise SitemapFetchError(f"Sitemap exceeds {max_bytes} bytes: {url}")
     return body
 
 
@@ -118,8 +122,13 @@ def _parse_xml(xml_bytes: bytes, source_url: str) -> ET.Element:
         raise SitemapFetchError(f"Invalid XML in sitemap {source_url}: {error}") from error
 
 
-def parse_sitemap_index(xml_bytes: bytes) -> tuple[str, ...]:
+def parse_sitemap_index(
+    xml_bytes: bytes,
+    max_sitemap_count: int | None = None,
+) -> tuple[str, ...]:
     """Parse and validate child sitemap locations from the public index."""
+    if max_sitemap_count is None:
+        max_sitemap_count = MAX_SITEMAP_COUNT
     root = _parse_xml(xml_bytes, SITEMAP_INDEX_URL)
     if _local_name(root.tag) != "sitemapindex":
         raise SitemapFetchError("VBPL sitemap index did not contain a sitemapindex document")
@@ -136,8 +145,8 @@ def parse_sitemap_index(xml_bytes: bytes) -> tuple[str, ...]:
 
     if not locations:
         raise SitemapFetchError("VBPL sitemap index contains no child sitemaps")
-    if len(locations) > MAX_SITEMAP_COUNT:
-        raise SitemapFetchError(f"VBPL sitemap index exceeds the {MAX_SITEMAP_COUNT}-sitemap limit")
+    if len(locations) > max_sitemap_count:
+        raise SitemapFetchError(f"VBPL sitemap index exceeds the {max_sitemap_count}-sitemap limit")
     if len(set(locations)) != len(locations):
         raise SitemapFetchError("VBPL sitemap index contains duplicate child sitemap locations")
     return tuple(locations)
@@ -188,14 +197,18 @@ def parse_document_sitemap(
 def scan_vbpl_sitemaps(
     target_date: date,
     *,
-    request_pause_seconds: float = 0.25,
+    request_pause_seconds: float | None = None,
     fetch: Callable[[str], bytes] | None = None,
+    settings: VbplCrawlSettings | None = None,
 ) -> SitemapScanResult:
     """Read every public sitemap and select document URLs lastmodded on target_date."""
+    if request_pause_seconds is None:
+        request_pause_seconds = settings.request_pause_seconds if settings else 0.25
     if request_pause_seconds < 0:
         raise ValueError("request_pause_seconds must be non-negative")
-    fetch_sitemap = fetch or _fetch_sitemap
-    sitemap_urls = parse_sitemap_index(fetch_sitemap(SITEMAP_INDEX_URL))
+    fetch_sitemap = fetch or (lambda url: _fetch_sitemap(url, settings))
+    max_sitemap_count = settings.max_sitemap_count if settings else MAX_SITEMAP_COUNT
+    sitemap_urls = parse_sitemap_index(fetch_sitemap(SITEMAP_INDEX_URL), max_sitemap_count)
 
     document_url_count = 0
     selected_by_url: dict[str, VbplDocumentUrl] = {}

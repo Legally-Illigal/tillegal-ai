@@ -20,13 +20,13 @@ class LegacyDocConverterUnavailableError(RuntimeError):
     """Raised when the worker cannot find antiword for a legacy DOC file."""
 
 
-def convert_word_to_markdown(content: bytes, file_name: str) -> str:
+def convert_word_to_markdown(content: bytes, file_name: str, timeout_seconds: float = 60) -> str:
     """Convert a DOCX package or legacy DOC file into UTF-8 Markdown."""
     extension = Path(file_name).suffix.lower()
     if extension == ".docx":
         markdown = _convert_docx(content)
     elif extension == ".doc":
-        markdown = _convert_legacy_doc(content, file_name)
+        markdown = _convert_legacy_doc(content, file_name, timeout_seconds)
     else:
         raise ValueError(f"Unsupported VBPL Word attachment format: {extension or '(no extension)'}")
     markdown = re.sub(
@@ -144,7 +144,7 @@ def _escape_cell(value: str) -> str:
     return value.replace("|", r"\|")
 
 
-def _convert_legacy_doc(content: bytes, file_name: str) -> str:
+def _convert_legacy_doc(content: bytes, file_name: str, timeout_seconds: float) -> str:
     if not content.startswith(bytes.fromhex("D0CF11E0A1B11AE1")):
         raise ValueError(f"VBPL DOC attachment is not an OLE Word document: {file_name}")
     try:
@@ -155,7 +155,7 @@ def _convert_legacy_doc(content: bytes, file_name: str) -> str:
                 ["antiword", "-t", str(document_path)],
                 check=False,
                 capture_output=True,
-                timeout=60,
+                timeout=timeout_seconds,
             )
     except FileNotFoundError as error:
         raise LegacyDocConverterUnavailableError(

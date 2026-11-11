@@ -23,6 +23,8 @@ requests for the same VBPL date reuse an already-active job. `DATABASE_URL`, `SU
 The durable worker runs as part of the API application's lifespan and resumes pending/expired jobs after a restart; the
 same worker, with the same file-storage wiring, is also available as a standalone process with
 `uv run python -m src.workers.worker`.
+Crawler limits, request timeouts, pacing, and worker lease/poll intervals can be tuned with the `VBPL_*` environment
+variables documented in `.env.example`; defaults preserve the current crawl behavior.
 
 For each sitemap candidate, the worker reads page metadata and uses the public file-list action exposed by the VBPL
 detail page, then downloads the listed `.doc`, original `.pdf`, and body `.html` files using VBPL-provided signed URLs

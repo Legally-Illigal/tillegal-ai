@@ -52,6 +52,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
                 VbplDocumentIngestionService(
                     SourceDocumentRepository(supabase_client),
                     SupabaseObjectStorage(supabase_client),
+                    settings=app_settings.vbpl,
                 ).ingest
                 if supabase_client is not None
                 else None
@@ -59,6 +60,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
             worker = VbplCrawlWorker(
                 application.state.crawl_job_store,
                 document_ingestor=document_ingestor,
+                settings=app_settings.vbpl,
             )
             worker_task = asyncio.create_task(
                 worker.run_forever(str(new_id())),

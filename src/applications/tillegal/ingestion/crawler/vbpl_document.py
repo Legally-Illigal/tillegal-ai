@@ -11,6 +11,8 @@ from uuid import UUID
 
 import httpx
 
+from src.core.config import VbplCrawlSettings
+
 VBPL_HOST = "vbpl.vn"
 VBPL_GATEWAY_HOST = "vbpl-bientap-gateway.moj.gov.vn"
 USER_AGENT = "Tillegal-VBPL-Crawler/0.1"
@@ -123,16 +125,18 @@ def _parse_metadata(html: str) -> tuple[str, dict[str, object]]:
     }
 
 
-def _read_page_head(response: httpx.Response) -> str:
+def _read_page_head(response: httpx.Response, max_page_bytes: int | None = None) -> str:
     """Read only the bounded HTML head needed for metadata and script discovery."""
+    if max_page_bytes is None:
+        max_page_bytes = MAX_PAGE_BYTES
     head = bytearray()
     for chunk in response.iter_bytes(chunk_size=PAGE_READ_CHUNK_BYTES):
         head.extend(chunk)
         match = _HEAD_END_TAG.search(head)
         if match is not None:
             return bytes(head[: match.end()]).decode(response.encoding or "utf-8", errors="replace")
-        if len(head) > MAX_PAGE_BYTES:
-            raise VbplDocumentFetchError(f"VBPL document page head exceeds {MAX_PAGE_BYTES} bytes")
+        if len(head) > max_page_bytes:
+            raise VbplDocumentFetchError(f"VBPL document page head exceeds {max_page_bytes} bytes")
     raise VbplDocumentFetchError("VBPL document page did not contain a closing </head> tag")
 
 
@@ -147,12 +151,19 @@ def _script_urls(html: str, page_url: str) -> tuple[str, ...]:
     return tuple(dict.fromkeys(urls))
 
 
-def _find_file_list_action(client: httpx.Client, html: str, page_url: str) -> str:
+def _find_file_list_action(
+    client: httpx.Client,
+    html: str,
+    page_url: str,
+    max_bundle_bytes: int | None = None,
+) -> str:
+    if max_bundle_bytes is None:
+        max_bundle_bytes = MAX_BUNDLE_BYTES
     for script_url in _script_urls(html, page_url):
         response = client.get(script_url)
         if response.status_code != 200:
             continue
-        if len(response.content) > MAX_BUNDLE_BYTES:
+        if len(response.content) > max_bundle_bytes:
             continue
         source = response.text
         export_match = _ACTION_EXPORT.search(source)
@@ -216,33 +227,56 @@ def _parse_action_attachments(body: str) -> tuple[VbplAttachment, ...]:
     return tuple(attachments)
 
 
-def fetch_vbpl_document_page(document_url: str) -> VbplDocumentPage:
+def fetch_vbpl_document_page(
+    document_url: str,
+    settings: VbplCrawlSettings | None = None,
+) -> VbplDocumentPage:
     """Fetch document metadata and list attachments through the public Next.js action."""
     global _FILE_LIST_ACTION_ID
 
     document_id = parse_document_id(document_url)
+    max_page_bytes = settings.max_page_size_mb * 1024 * 1024 if settings else MAX_PAGE_BYTES
+    max_bundle_bytes = settings.max_bundle_size_mb * 1024 * 1024 if settings else MAX_BUNDLE_BYTES
+    page_timeout_seconds = settings.page_timeout_seconds if settings else 45
     with httpx.Client(
-        timeout=httpx.Timeout(45),
+        timeout=httpx.Timeout(page_timeout_seconds),
         follow_redirects=False,
         headers={"User-Agent": USER_AGENT, "Accept": "text/html,application/xhtml+xml"},
     ) as client:
         with client.stream("GET", document_url) as response:
             if response.status_code != 200:
                 raise VbplDocumentFetchError(f"VBPL detail page returned HTTP {response.status_code}: {document_url}")
-            page_head = _read_page_head(response)
+            page_head = _read_page_head(response, max_page_bytes)
         title, metadata = _parse_metadata(page_head)
-        action_id = _FILE_LIST_ACTION_ID or _find_file_list_action(client, page_head, document_url)
+        action_id = _FILE_LIST_ACTION_ID or _find_file_list_action(
+            client,
+            page_head,
+            document_url,
+            max_bundle_bytes,
+        )
         # Keep the site's anti-bot cookies, but avoid carrying its locale preference into this action.
         for cookie in tuple(client.cookies.jar):
             if cookie.name == "NEXT_LOCALE":
                 client.cookies.jar.clear(cookie.domain, cookie.path, cookie.name)
         try:
-            attachments = _request_attachments(client, document_url, document_id, action_id)
+            attachments = _request_attachments(
+                client,
+                document_url,
+                document_id,
+                action_id,
+                max_page_bytes,
+            )
         except VbplDocumentFetchError:
             if _FILE_LIST_ACTION_ID is None:
                 raise
-            action_id = _find_file_list_action(client, page_head, document_url)
-            attachments = _request_attachments(client, document_url, document_id, action_id)
+            action_id = _find_file_list_action(client, page_head, document_url, max_bundle_bytes)
+            attachments = _request_attachments(
+                client,
+                document_url,
+                document_id,
+                action_id,
+                max_page_bytes,
+            )
         _FILE_LIST_ACTION_ID = action_id
 
     return VbplDocumentPage(document_id, title, metadata, attachments)
@@ -253,7 +287,10 @@ def _request_attachments(
     document_url: str,
     document_id: str,
     action_id: str,
+    max_page_bytes: int | None = None,
 ) -> tuple[VbplAttachment, ...]:
+    if max_page_bytes is None:
+        max_page_bytes = MAX_PAGE_BYTES
     action_response = client.post(
         document_url,
         headers={
@@ -267,16 +304,22 @@ def _request_attachments(
         raise VbplDocumentFetchError(
             f"VBPL file-list action returned HTTP {action_response.status_code}: {document_url}"
         )
-    if len(action_response.content) > MAX_PAGE_BYTES:
+    if len(action_response.content) > max_page_bytes:
         raise VbplDocumentFetchError("VBPL file-list response exceeded the size limit")
     return _parse_action_attachments(action_response.text)
 
 
-def download_vbpl_attachment(document_id: str, attachment: VbplAttachment) -> bytes:
+def download_vbpl_attachment(
+    document_id: str,
+    attachment: VbplAttachment,
+    settings: VbplCrawlSettings | None = None,
+) -> bytes:
     """Download one listed attachment from VBPL's public gateway."""
     url = _attachment_download_url(document_id, attachment)
+    max_attachment_bytes = settings.max_attachment_size_mb * 1024 * 1024 if settings else MAX_ATTACHMENT_BYTES
+    timeout_seconds = settings.attachment_timeout_seconds if settings else 90
     with httpx.Client(
-        timeout=httpx.Timeout(90),
+        timeout=httpx.Timeout(timeout_seconds),
         follow_redirects=False,
         headers={"User-Agent": USER_AGENT, "Accept": "application/octet-stream,*/*;q=0.8"},
     ) as client:
@@ -285,8 +328,8 @@ def download_vbpl_attachment(document_id: str, attachment: VbplAttachment) -> by
         raise VbplDocumentFetchError(
             f"VBPL attachment download returned HTTP {response.status_code}: {attachment.file_name}"
         )
-    if len(response.content) > MAX_ATTACHMENT_BYTES:
-        raise VbplDocumentFetchError(f"VBPL attachment exceeds {MAX_ATTACHMENT_BYTES} bytes: {attachment.file_name}")
+    if len(response.content) > max_attachment_bytes:
+        raise VbplDocumentFetchError(f"VBPL attachment exceeds {max_attachment_bytes} bytes: {attachment.file_name}")
     if attachment.size is not None and attachment.size and len(response.content) != attachment.size:
         raise VbplDocumentFetchError(
             f"VBPL attachment size mismatch for {attachment.file_name}: "

@@ -26,8 +26,13 @@ async def run_worker() -> None:
     ingestor = VbplDocumentIngestionService(
         SourceDocumentRepository(supabase_client),
         SupabaseObjectStorage(supabase_client),
+        settings=settings.vbpl,
     )
-    await VbplCrawlWorker(repository, document_ingestor=ingestor.ingest).run_forever(str(new_id()))
+    await VbplCrawlWorker(
+        repository,
+        document_ingestor=ingestor.ingest,
+        settings=settings.vbpl,
+    ).run_forever(str(new_id()))
 
 
 def main() -> None:

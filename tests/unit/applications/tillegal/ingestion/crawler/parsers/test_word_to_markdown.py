@@ -54,12 +54,16 @@ def test_converts_legacy_doc_using_antiword(monkeypatch) -> None:
         "src.applications.tillegal.ingestion.crawler.parsers.word_to_markdown.subprocess.run",
         fake_run,
     )
-    markdown = convert_word_to_markdown(bytes.fromhex("D0CF11E0A1B11AE1") + b"word data", "source.doc")
+    markdown = convert_word_to_markdown(
+        bytes.fromhex("D0CF11E0A1B11AE1") + b"word data",
+        "source.doc",
+        timeout_seconds=12,
+    )
 
     assert markdown == "Điều 1. Phạm vi.\n"
     assert observed["command"][:2] == ["antiword", "-t"]
     assert observed["content"] == bytes.fromhex("D0CF11E0A1B11AE1") + b"word data"
-    assert observed["options"] == (False, True, 60)
+    assert observed["options"] == (False, True, 12)
 
 
 def test_legacy_doc_reports_missing_antiword(monkeypatch) -> None:
