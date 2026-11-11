@@ -18,7 +18,7 @@ from src.integrations.database.repositories.supabase_vector_repository import Su
 def _request(**overrides: Any) -> VectorSearchRequest:
     values: dict[str, Any] = {
         "dense_index_name": "legal-v1",
-        "query_embedding": [0.1] * 1536,
+        "query_embedding": [0.1] * 384,
         "as_of_date": date(2026, 10, 31),
         "allowed_usage_policies": ["PRODUCTION"],
     }
@@ -91,7 +91,7 @@ def test_search_calls_rpc_with_embedding_and_explicit_allowlists() -> None:
 
     assert client.function_name == "search_legal_chunks"
     assert client.parameters is not None
-    assert client.parameters["p_query_embedding"] == f"[{','.join(['0.1'] * 1536)}]"
+    assert client.parameters["p_query_embedding"] == f"[{','.join(['0.1'] * 384)}]"
     assert client.parameters["p_as_of_date"] == "2026-10-31"
     assert client.parameters["p_usage_policies"] == ["PRODUCTION"]
     assert len(results) == 1
@@ -107,11 +107,7 @@ def test_search_logs_correlated_result_metadata(caplog) -> None:
         with bind_request_context("request-retrieval-1"):
             asyncio.run(repository.search(_request()))
 
-    events = [
-        record.event_data
-        for record in caplog.records
-        if record.name == "tillegal.observability"
-    ]
+    events = [record.event_data for record in caplog.records if record.name == "tillegal.observability"]
     assert [event["event"] for event in events] == ["retrieval_started", "retrieval_completed"]
     assert all(event["request_id"] == "request-retrieval-1" for event in events)
     assert events[-1]["result_count"] == 1
@@ -122,7 +118,7 @@ def test_search_logs_correlated_result_metadata(caplog) -> None:
     ("field", "value"),
     [
         ("query_embedding", [0.1] * 1535),
-        ("query_embedding", [0.0] * 1536),
+        ("query_embedding", [0.0] * 384),
         ("allowed_usage_policies", ["  "]),
         ("top_k", 51),
     ],

@@ -155,12 +155,16 @@ def test_load_settings_applies_vbpl_environment_overrides(tmp_path: Path) -> Non
             "VBPL_MAX_ATTACHMENT_SIZE_MB": "150",
             "VBPL_REQUEST_PAUSE_SECONDS": "0.5",
             "VBPL_WORKER_LEASE_SECONDS": "240",
+            "VBPL_CHUNK_MAX_TOKENS": "400",
+            "VBPL_EMBEDDING_BATCH_SIZE": "16",
         },
     )
 
     assert settings.vbpl.max_attachment_size_mb == 150
     assert settings.vbpl.request_pause_seconds == 0.5
     assert settings.vbpl.worker_lease_seconds == 240
+    assert settings.vbpl.chunk_max_tokens == 400
+    assert settings.vbpl.embedding_batch_size == 16
 
 
 def test_load_settings_preserves_vbpl_defaults(tmp_path: Path) -> None:

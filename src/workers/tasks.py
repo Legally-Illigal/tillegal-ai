@@ -99,6 +99,14 @@ class VbplCrawlWorker:
                         "markdown_created_count": sum(
                             item.get("markdown_created") is True for item in ingested_documents
                         ),
+                        "chunk_count": sum(
+                            int(_mapping(item.get("markdown_indexing")).get("chunk_count", 0))
+                            for item in ingested_documents
+                        ),
+                        "embedding_count": sum(
+                            int(_mapping(item.get("markdown_indexing")).get("embedding_count", 0))
+                            for item in ingested_documents
+                        ),
                         "documents": ingested_documents,
                     },
                 },
@@ -139,3 +147,7 @@ class VbplCrawlWorker:
             await asyncio.sleep(self._heartbeat_interval_seconds)
             if not await self._jobs.renew(job_id, owner, self._lease_seconds):
                 raise RuntimeError(f"Lost lease for crawl job {job_id}")
+
+
+def _mapping(value: object) -> dict[str, object]:
+    return value if isinstance(value, dict) else {}

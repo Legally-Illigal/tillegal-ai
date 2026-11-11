@@ -31,3 +31,5 @@ vbpl:
   worker_poll_interval_seconds: 5
   worker_lease_seconds: 180
   worker_heartbeat_interval_seconds: 45
+  chunk_max_tokens: 480
+  embedding_batch_size: 32

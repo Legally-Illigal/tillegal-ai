@@ -98,6 +98,8 @@ class VbplCrawlSettings(StrictConfig):
     worker_poll_interval_seconds: float = Field(default=5, gt=0)
     worker_lease_seconds: int = Field(default=180, ge=1)
     worker_heartbeat_interval_seconds: float = Field(default=45, gt=0)
+    chunk_max_tokens: int = Field(default=480, ge=16, le=512)
+    embedding_batch_size: int = Field(default=32, ge=1, le=256)
 
     @model_validator(mode="after")
     def validate_worker_lease(self) -> VbplCrawlSettings:
@@ -197,6 +199,8 @@ def load_settings(
         "VBPL_WORKER_POLL_INTERVAL_SECONDS": "worker_poll_interval_seconds",
         "VBPL_WORKER_LEASE_SECONDS": "worker_lease_seconds",
         "VBPL_WORKER_HEARTBEAT_INTERVAL_SECONDS": "worker_heartbeat_interval_seconds",
+        "VBPL_CHUNK_MAX_TOKENS": "chunk_max_tokens",
+        "VBPL_EMBEDDING_BATCH_SIZE": "embedding_batch_size",
     }
     for env_key, setting_key in vbpl_overrides.items():
         if env_key in env:

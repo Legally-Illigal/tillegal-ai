@@ -4,7 +4,11 @@ import asyncio
 import hashlib
 import mimetypes
 import re
+from collections.abc import Awaitable, Callable
 from datetime import UTC, datetime
+from uuid import UUID
+
+from storage3.exceptions import StorageApiError
 
 from src.application.dto.source_document import SourceDocumentWrite
 from src.application.interfaces.object_storage import ObjectStorage
@@ -37,6 +41,7 @@ class VbplDocumentIngestionService:
         *,
         bucket: str = VBPL_STORAGE_BUCKET,
         settings: VbplCrawlSettings | None = None,
+        markdown_indexer: Callable[[UUID, str, str], Awaitable[dict[str, object]]] | None = None,
     ) -> None:
         if not bucket.strip():
             raise ValueError("VBPL storage bucket must not be empty")
@@ -44,6 +49,7 @@ class VbplDocumentIngestionService:
         self._storage = storage
         self._bucket = bucket
         self._settings = settings
+        self._markdown_indexer = markdown_indexer
 
     async def ingest(self, document_url: VbplDocumentUrl) -> dict[str, object]:
         """Ingest one discovered document, retaining previously stored file versions."""
@@ -65,12 +71,28 @@ class VbplDocumentIngestionService:
         html_attachment = _body_html_attachment(page.attachments)
         source_attachment = _markdown_source_attachment(page.attachments, html_attachment)
         downloaded_contents: dict[str, bytes] = {}
+        markdown_content_for_indexing: bytes | None = None
         needs_file_backfill = (
             existing is not None and raw_file_ref is None and raw_content_ref is None and not previous_stored_files
         )
 
+        markdown_file = _stored_file_for_role(stored_files, "normalized_markdown")
+        markdown_ref = _optional_string(markdown_file, "storage_ref")
+        if self._markdown_indexer is not None and markdown_ref is not None:
+            markdown_bucket, markdown_key = _storage_location(markdown_ref, self._bucket)
+            try:
+                markdown_content_for_indexing = await asyncio.to_thread(
+                    self._storage.download,
+                    markdown_bucket,
+                    markdown_key,
+                )
+            except StorageApiError as error:
+                if not _is_missing_storage_object(error):
+                    raise
+                stored_files = [item for item in stored_files if item is not markdown_file]
+
         if existing is None or needs_file_backfill:
-            stored_files = list(previous_stored_files)
+            stored_files = list(stored_files)
             for attachment in page.attachments:
                 if any(item.get("file_name") == attachment.file_name for item in stored_files):
                     continue
@@ -133,7 +155,15 @@ class VbplDocumentIngestionService:
             source_content = downloaded_contents.get(source_attachment.file_name)
             if source_content is None and source_ref is not None:
                 storage_bucket, object_key = _storage_location(source_ref, self._bucket)
-                source_content = await asyncio.to_thread(self._storage.download, storage_bucket, object_key)
+                try:
+                    source_content = await asyncio.to_thread(
+                        self._storage.download,
+                        storage_bucket,
+                        object_key,
+                    )
+                except StorageApiError as error:
+                    if not _is_missing_storage_object(error):
+                        raise
 
             if source_content is None:
                 source_content = await self._download_attachment(page.document_id, source_attachment)
@@ -146,14 +176,16 @@ class VbplDocumentIngestionService:
                     source_content,
                     _content_type(source_attachment),
                 )
-                stored_files.append(
+                _replace_stored_file(
+                    stored_files,
+                    source_attachment.file_name,
                     {
                         "file_name": source_attachment.file_name,
                         "storage_ref": source_ref,
                         "sha256": source_sha256,
                         "size": len(source_content),
                         "content_type": _content_type(source_attachment),
-                    }
+                    },
                 )
                 downloaded_count += 1
                 if source_attachment == html_attachment:
@@ -181,7 +213,10 @@ class VbplDocumentIngestionService:
                 markdown_digest = hashlib.sha256(markdown_content).hexdigest()
                 markdown_key = _storage_key(page.document_id, markdown_digest, "origin.md")
                 await asyncio.to_thread(self._upload, markdown_key, markdown_content, MARKDOWN_CONTENT_TYPE)
-                stored_files.append(
+                markdown_content_for_indexing = markdown_content
+                _replace_stored_file(
+                    stored_files,
+                    "origin.md",
                     {
                         "file_name": "origin.md",
                         "source_file_name": source_attachment.file_name,
@@ -192,7 +227,7 @@ class VbplDocumentIngestionService:
                         "role": "normalized_markdown",
                         "source_storage_ref": source_ref,
                         "source_sha256": source_sha256,
-                    }
+                    },
                 )
                 markdown_created = True
 
@@ -226,6 +261,25 @@ class VbplDocumentIngestionService:
             raise RuntimeError("Database did not persist raw_file_ref; apply the VBPL source-document migration")
         if raw_content_ref is not None and saved.get("raw_content_ref") != raw_content_ref:
             raise RuntimeError("Database did not persist raw_content_ref; apply the VBPL source-document migration")
+        markdown_indexing: dict[str, object] | None = None
+        markdown_file = _stored_file_for_role(stored_files, "normalized_markdown")
+        if self._markdown_indexer is not None and markdown_file is not None:
+            source_document_id = _required_uuid(saved.get("id"), "source document id")
+            current_markdown_ref = _optional_string(markdown_file, "storage_ref")
+            if current_markdown_ref is None:
+                raise RuntimeError("Stored normalized Markdown is missing its Storage reference")
+            if markdown_content_for_indexing is None:
+                markdown_bucket, markdown_key = _storage_location(current_markdown_ref, self._bucket)
+                markdown_content_for_indexing = await asyncio.to_thread(
+                    self._storage.download,
+                    markdown_bucket,
+                    markdown_key,
+                )
+            markdown_indexing = await self._markdown_indexer(
+                source_document_id,
+                page.title,
+                markdown_content_for_indexing.decode("utf-8"),
+            )
         return {
             "source_document_id": saved.get("id"),
             "source_record_id": page.document_id,
@@ -237,6 +291,7 @@ class VbplDocumentIngestionService:
             "markdown_created": markdown_created,
             "markdown_source_file": source_attachment.file_name if markdown_created and source_attachment else None,
             "markdown_skipped_reason": markdown_skipped_reason,
+            "markdown_indexing": markdown_indexing,
         }
 
     def _upload(self, object_key: str, content: bytes, content_type: str) -> None:
@@ -283,6 +338,28 @@ def _stored_file_for_extension(
 
 def _stored_file_for_name(files: list[dict[str, object]], file_name: str) -> dict[str, object] | None:
     return next((item for item in files if item.get("file_name") == file_name), None)
+
+
+def _stored_file_for_role(files: list[dict[str, object]], role: str) -> dict[str, object] | None:
+    return next((item for item in files if item.get("role") == role), None)
+
+
+def _replace_stored_file(files: list[dict[str, object]], file_name: str, replacement: dict[str, object]) -> None:
+    files[:] = [item for item in files if item.get("file_name") != file_name]
+    files.append(replacement)
+
+
+def _is_missing_storage_object(error: StorageApiError) -> bool:
+    return str(error.status) == "404" and error.code.lower() in {"not_found", "object_not_found"}
+
+
+def _required_uuid(value: object, field_name: str) -> UUID:
+    if not isinstance(value, str):
+        raise RuntimeError(f"Database response is missing {field_name}")
+    try:
+        return UUID(value)
+    except ValueError as error:
+        raise RuntimeError(f"Database returned an invalid {field_name}") from error
 
 
 def _body_html_attachment(attachments: tuple[VbplAttachment, ...]) -> VbplAttachment | None:

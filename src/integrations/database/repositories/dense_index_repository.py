@@ -19,7 +19,7 @@ class DenseIndexWrite(BaseModel):
     index_name: str = Field(min_length=1)
     provider: str = Field(min_length=1)
     model_name: str = Field(min_length=1)
-    embedding_dimension: Literal[1536] = 1536
+    embedding_dimension: int = Field(default=1536, ge=1, le=2000)
     distance_metric: Literal["cosine"] = "cosine"
     index_version: str = "v1"
     status: Literal["BUILDING", "READY", "STALE", "FAILED", "DISABLED"] = "BUILDING"
@@ -32,7 +32,7 @@ class DenseEmbeddingWrite(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True, allow_inf_nan=False)
 
     retrieval_chunk_id: UUID
-    embedding: tuple[float, ...] = Field(min_length=1536, max_length=1536)
+    embedding: tuple[float, ...] = Field(min_length=1, max_length=2000)
     embedded_text_sha256: str = Field(min_length=1)
     status: Literal["INDEXED"] = "INDEXED"
     metadata: dict[str, Any] = Field(default_factory=dict)
@@ -103,6 +103,12 @@ class DenseIndexRepository(SupabaseRpcRepository):
         )
         if not isinstance(result, int):
             raise DatabaseRepositoryError("upsert_dense_embedding_statuses returned an invalid response")
+        return result
+
+    async def refresh_index_status(self, index_name: str) -> str:
+        result = await self.call_rpc("refresh_dense_index_status", {"p_index_name": index_name})
+        if not isinstance(result, str):
+            raise DatabaseRepositoryError("refresh_dense_index_status returned an invalid response")
         return result
 
     async def list_embedding_work(

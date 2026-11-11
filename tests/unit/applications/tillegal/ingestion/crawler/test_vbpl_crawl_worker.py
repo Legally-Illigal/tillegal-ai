@@ -89,6 +89,8 @@ def test_worker_persists_sitemap_scan_result(monkeypatch) -> None:
     assert isinstance(ingestion, dict)
     assert ingestion["created_count"] == 1
     assert ingestion["downloaded_attachment_count"] == 3
+    assert ingestion["chunk_count"] == 0
+    assert ingestion["embedding_count"] == 0
 
 
 def test_worker_fails_when_files_need_ingestion_but_storage_is_not_configured(monkeypatch) -> None:

@@ -3,6 +3,8 @@ from datetime import date
 from io import BytesIO
 from zipfile import ZIP_DEFLATED, ZipFile
 
+from storage3.exceptions import StorageApiError
+
 from src.application.services.vbpl_document_ingestion_service import (
     VBPL_STORAGE_BUCKET,
     VbplDocumentIngestionService,
@@ -17,8 +19,9 @@ from src.applications.tillegal.ingestion.crawler.vbpl_sitemap import VbplDocumen
 
 
 class FakeDocuments:
-    def __init__(self, existing: dict[str, object] | None = None) -> None:
+    def __init__(self, existing: dict[str, object] | None = None, saved_id: str = "source-document-id") -> None:
         self.existing = existing
+        self.saved_id = saved_id
         self.saved = None
 
     async def get_by_source_record_id(self, source_id: str, source_record_id: str):
@@ -27,7 +30,7 @@ class FakeDocuments:
     async def upsert(self, document):
         self.saved = document
         return {
-            "id": "source-document-id",
+            "id": self.saved_id,
             "raw_file_ref": document.raw_file_ref,
             "raw_content_ref": document.raw_content_ref,
         }
@@ -45,6 +48,14 @@ class FakeStorage:
 
     def download(self, bucket: str, key: str) -> bytes:
         return self.objects[(bucket, key)]
+
+
+class MissingObjectStorage(FakeStorage):
+    def download(self, bucket: str, key: str) -> bytes:
+        try:
+            return super().download(bucket, key)
+        except KeyError as error:
+            raise StorageApiError("Object not found", "not_found", 404) from error
 
 
 def _page() -> VbplDocumentPage:
@@ -131,10 +142,42 @@ def test_new_document_downloads_and_uploads_all_source_attachments(monkeypatch) 
     assert markdown_upload[2].decode("utf-8") == "Document **content**.\n"
 
 
+def test_ingestion_indexes_stored_markdown_after_persisting_source_document(monkeypatch) -> None:
+    documents = FakeDocuments(saved_id="00000000-0000-0000-0000-000000000001")
+    storage = FakeStorage()
+    observed: list[tuple[object, str, str]] = []
+    monkeypatch.setattr(
+        "src.application.services.vbpl_document_ingestion_service.fetch_vbpl_document_page",
+        lambda url: _page(),
+    )
+    monkeypatch.setattr(
+        "src.application.services.vbpl_document_ingestion_service.download_vbpl_attachment",
+        _download_attachment,
+    )
+
+    async def index_markdown(source_document_id, title, markdown):
+        observed.append((source_document_id, title, markdown))
+        return {"chunk_count": 1, "embedding_count": 1}
+
+    result = asyncio.run(
+        VbplDocumentIngestionService(
+            documents,
+            storage,
+            markdown_indexer=index_markdown,
+        ).ingest(_document_url())
+    )
+
+    assert len(observed) == 1
+    assert str(observed[0][0]) == "00000000-0000-0000-0000-000000000001"
+    assert observed[0][1] == "Nghị quyết"
+    assert "Document **content**." in observed[0][2]
+    assert result["markdown_indexing"] == {"chunk_count": 1, "embedding_count": 1}
+
+
 def test_existing_document_updates_metadata_without_replacing_raw_files(monkeypatch) -> None:
     documents = FakeDocuments(
         {
-            "id": "source-document-id",
+            "id": "00000000-0000-0000-0000-000000000001",
             "raw_file_ref": "vbpl-raw/old-pdf",
             "raw_file_sha256": "old-pdf-hash",
             "raw_content_ref": "vbpl-raw/old-html",
@@ -146,7 +189,8 @@ def test_existing_document_updates_metadata_without_replacing_raw_files(monkeypa
                     {"file_name": "origin.md", "storage_ref": "vbpl-raw/old-md", "role": "normalized_markdown"},
                 ]
             },
-        }
+        },
+        saved_id="00000000-0000-0000-0000-000000000001",
     )
     storage = FakeStorage()
     monkeypatch.setattr(
@@ -235,6 +279,120 @@ def test_existing_document_creates_markdown_from_stored_html_once(monkeypatch) -
     assert any(item.get("role") == "normalized_markdown" for item in documents.saved.raw_metadata["stored_files"])
 
 
+def test_missing_stored_markdown_is_rebuilt_from_source_and_indexed(monkeypatch) -> None:
+    source_key = "vbpl/175384/docx-hash/origin.docx"
+    documents = FakeDocuments(
+        {
+            "id": "00000000-0000-0000-0000-000000000001",
+            "raw_metadata": {
+                "stored_files": [
+                    {
+                        "file_name": "source.docx",
+                        "storage_ref": f"{VBPL_STORAGE_BUCKET}/{source_key}",
+                        "sha256": "docx-hash",
+                    },
+                    {
+                        "file_name": "origin.md",
+                        "storage_ref": f"{VBPL_STORAGE_BUCKET}/vbpl/175384/missing/origin.md",
+                        "role": "normalized_markdown",
+                    },
+                ]
+            },
+        },
+        saved_id="00000000-0000-0000-0000-000000000001",
+    )
+    storage = MissingObjectStorage()
+    storage.objects[(VBPL_STORAGE_BUCKET, source_key)] = _docx_content()
+    observed_markdown: list[str] = []
+    monkeypatch.setattr(
+        "src.application.services.vbpl_document_ingestion_service.fetch_vbpl_document_page",
+        lambda url: _page_without_html(),
+    )
+    monkeypatch.setattr(
+        "src.application.services.vbpl_document_ingestion_service._convert_markdown_source",
+        lambda attachment, content, settings=None: "Rebuilt markdown.\n",
+    )
+
+    async def index_markdown(source_document_id, title, markdown):
+        observed_markdown.append(markdown)
+        return {"chunk_count": 1, "embedding_count": 1}
+
+    result = asyncio.run(
+        VbplDocumentIngestionService(
+            documents,
+            storage,
+            markdown_indexer=index_markdown,
+        ).ingest(_document_url())
+    )
+
+    markdown_files = [
+        item for item in documents.saved.raw_metadata["stored_files"] if item.get("role") == "normalized_markdown"
+    ]
+    assert len(markdown_files) == 1
+    assert result["markdown_created"] is True
+    assert observed_markdown == ["Rebuilt markdown.\n"]
+    assert storage.objects[(VBPL_STORAGE_BUCKET, markdown_files[0]["storage_ref"].removeprefix("vbpl-raw/"))]
+    assert result["markdown_indexing"] == {"chunk_count": 1, "embedding_count": 1}
+
+
+def test_missing_stored_source_is_redownloaded_and_reference_replaced(monkeypatch) -> None:
+    page = VbplDocumentPage(
+        document_id="175384",
+        title="Nghị quyết",
+        metadata={},
+        attachments=(
+            VbplAttachment("original.pdf", "175384/original.pdf", "application/pdf", 5),
+            VbplAttachment("source.doc", "175384/source.doc", "application/msword", 5),
+        ),
+    )
+    stale_source_key = "vbpl/175384/missing/origin.doc"
+    documents = FakeDocuments(
+        {
+            "id": "00000000-0000-0000-0000-000000000001",
+            "raw_metadata": {
+                "stored_files": [
+                    {
+                        "file_name": "source.doc",
+                        "storage_ref": f"{VBPL_STORAGE_BUCKET}/{stale_source_key}",
+                        "sha256": "stale-hash",
+                    }
+                ]
+            },
+        }
+    )
+    storage = MissingObjectStorage()
+    downloaded: list[str] = []
+    monkeypatch.setattr(
+        "src.application.services.vbpl_document_ingestion_service.fetch_vbpl_document_page",
+        lambda url: page,
+    )
+
+    def download(document_id: str, attachment: VbplAttachment) -> bytes:
+        downloaded.append(attachment.file_name)
+        return b"refetched legal document"
+
+    monkeypatch.setattr(
+        "src.application.services.vbpl_document_ingestion_service.download_vbpl_attachment",
+        download,
+    )
+    monkeypatch.setattr(
+        "src.application.services.vbpl_document_ingestion_service._convert_markdown_source",
+        lambda attachment, content, settings=None: "Refetched markdown.\n",
+    )
+
+    result = asyncio.run(VbplDocumentIngestionService(documents, storage).ingest(_document_url()))
+
+    source_files = [
+        item for item in documents.saved.raw_metadata["stored_files"] if item.get("file_name") == "source.doc"
+    ]
+    assert downloaded == ["source.doc"]
+    assert len(source_files) == 1
+    assert source_files[0]["sha256"] != "stale-hash"
+    assert storage.objects[(VBPL_STORAGE_BUCKET, source_files[0]["storage_ref"].removeprefix("vbpl-raw/"))]
+    assert result["downloaded_attachment_count"] == 1
+    assert result["markdown_created"] is True
+
+
 def test_document_without_html_uses_docx_as_markdown_source(monkeypatch) -> None:
     documents = FakeDocuments()
     storage = FakeStorage()
@@ -269,7 +427,7 @@ def test_existing_document_without_html_converts_stored_docx(monkeypatch) -> Non
     docx_ref = f"{VBPL_STORAGE_BUCKET}/{docx_key}"
     documents = FakeDocuments(
         {
-            "id": "source-document-id",
+            "id": "00000000-0000-0000-0000-000000000001",
             "raw_file_ref": "vbpl-raw/vbpl/175384/pdf-hash/origin.pdf",
             "raw_file_sha256": "pdf-hash",
             "raw_metadata": {

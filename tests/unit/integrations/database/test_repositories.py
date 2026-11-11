@@ -189,13 +189,13 @@ def test_dense_index_repository_writes_indexed_embeddings() -> None:
     assert len(embedding_rows[0]["embedding"]) == 1536
 
 
-def test_dense_index_contract_rejects_mismatched_embedding_dimension() -> None:
+def test_dense_index_contract_rejects_invalid_embedding_dimension() -> None:
     with pytest.raises(ValidationError):
         DenseIndexWrite(
             index_name="legal-v1",
             provider="test",
             model_name="embed-v1",
-            embedding_dimension=768,
+            embedding_dimension=0,
         )
 
 

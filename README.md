@@ -18,8 +18,10 @@ Content-Type: application/json
 
 Omit the body or `crawl_date` to use today's Vietnam date. The response is `202 Accepted` with a job ID; poll
 `GET /ingestion/vbpl/jobs/{job_id}` for `PENDING`, `RUNNING`, `SUCCEEDED`, or `FAILED` and its result/error. Duplicate
-requests for the same VBPL date reuse an already-active job. `DATABASE_URL`, `SUPABASE_URL`,
-`SUPABASE_SERVICE_ROLE_KEY`, and the private `vbpl-raw` Storage bucket are required for jobs with matching documents.
+requests for the same VBPL date reuse an already-active job. `DATABASE_URL`, `SUPABASE_URL`, and
+`SUPABASE_SERVICE_ROLE_KEY` are required for jobs with matching documents. The
+`20261111135000_create_vbpl_storage_bucket.sql` migration creates the private `vbpl-raw` Storage bucket with a 100 MiB
+per-file limit.
 The durable worker runs as part of the API application's lifespan and resumes pending/expired jobs after a restart; the
 same worker, with the same file-storage wiring, is also available as a standalone process with
 `uv run python -m src.workers.worker`.
@@ -38,13 +40,19 @@ in metadata, not used as a Storage path). Body HTML is converted to Markdown and
 and Markdown references and hashes are recorded in the existing `source_documents` columns and `raw_metadata`.
 Existing records with stored HTML but no Markdown are converted from the stored HTML without replacing the original
 files. If a previous partial attempt created the metadata record but stored no file references, the worker backfills its
-missing source files and Markdown. The
-`20261109220000_vbpl_source_document_upsert.sql` migration updates the existing upsert function to persist and preserve
-stored refs/hashes when a field is omitted; it does not add or alter tables/columns. Apply this migration before running
-the worker; it verifies that newly stored file references were actually persisted.
+missing source files and Markdown. Markdown is parsed into legal nodes and blocks, then chunked with breadcrumbs in the
+format `document > chapter/section > article > clause/point > text`. Chunks are embedded locally on CPU with
+`intfloat/multilingual-e5-small` using the E5 `passage: ` prefix and normalized 384-dimensional vectors. The first
+embedding run downloads the model from Hugging Face and caches it in the worker's Hugging Face cache. Chunk length and
+embedding batch size are configurable through `VBPL_CHUNK_MAX_TOKENS` and `VBPL_EMBEDDING_BATCH_SIZE`.
 
-Sitemap `lastmod` is only a discovery signal, not proof that legal content changed. Chunking and embedding are not part
-of this stage.
+Apply all migrations before running the worker. In particular, `20261109220000_vbpl_source_document_upsert.sql`
+persists stored file refs/hashes, `20261111130000_multilingual_e5_embeddings.sql` supports 384-dimensional E5 vectors
+while retaining existing 1536-dimensional embeddings, and `20261111135000_create_vbpl_storage_bucket.sql` provisions
+the private VBPL Storage bucket. `dense_indexes.status` becomes `READY` only when every stored chunk has an indexed
+vector for that index. BM25 indexing is not yet part of this ingestion step.
+
+Sitemap `lastmod` remains a discovery signal, not proof that legal content changed.
 
 For manual source research, `scripts\crawl_vbpl_sitemap.py` can write a local JSON scan report and
 `scripts\inspect_vbpl.py` can capture individual raw HTML pages; neither script is the production crawl entry point.

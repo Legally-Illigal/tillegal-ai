@@ -5,7 +5,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 
-EMBEDDING_DIMENSION = 1536
+EMBEDDING_DIMENSION = 384
 MAX_RETRIEVAL_RESULTS = 50
 
 
