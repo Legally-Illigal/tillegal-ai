@@ -84,6 +84,9 @@ class VbplCrawlWorker:
                         "downloaded_attachment_count": sum(
                             int(item.get("downloaded_attachment_count", 0)) for item in ingested_documents
                         ),
+                        "markdown_created_count": sum(
+                            item.get("markdown_created") is True for item in ingested_documents
+                        ),
                         "documents": ingested_documents,
                     },
                 },

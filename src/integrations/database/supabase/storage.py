@@ -4,7 +4,7 @@ from supabase import Client
 
 
 class SupabaseObjectStorage:
-    """Upload files using the configured Supabase client."""
+    """Read and write files using the configured Supabase client."""
 
     def __init__(self, client: Client) -> None:
         self._client = client
@@ -21,3 +21,9 @@ class SupabaseObjectStorage:
             content,
             file_options={"content-type": content_type, "upsert": "true"},
         )
+
+    def download(self, bucket: str, object_key: str) -> bytes:
+        content = self._client.storage.from_(bucket).download(object_key)
+        if not isinstance(content, bytes):
+            raise TypeError("Supabase Storage returned a non-bytes object")
+        return content

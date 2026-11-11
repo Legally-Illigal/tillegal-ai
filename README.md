@@ -25,20 +25,24 @@ same worker, with the same file-storage wiring, is also available as a standalon
 `uv run python -m src.workers.worker`.
 
 For each sitemap candidate, the worker reads page metadata and uses the public file-list action exposed by the VBPL
-detail page, then downloads the listed `.doc`, original `.pdf`, and body `.html` files through VBPL's public gateway.
+detail page, then downloads the listed `.doc`, original `.pdf`, and body `.html` files using VBPL-provided signed URLs
+or the public download gateway. When a body HTML attachment is absent, `.docx` is used as the Markdown source if
+available; otherwise a legacy `.doc` is converted with `antiword`. The Docker image installs `antiword`; when it is
+unavailable on a directly-run worker, the original `.doc` is still stored and the crawl continues without creating
+Markdown for that document.
 For a new source record, all listed files are uploaded to the private `vbpl-raw` bucket under ASCII,
 content-hash-based object keys such as `vbpl/{source_record_id}/{sha256}/origin.pdf` (the upstream filename is retained
-in metadata, not used as a Storage path) and their
-references/hashes are stored in the existing `source_documents` columns and `raw_metadata`. For an
-existing record that already has stored file references, the worker updates VBPL metadata and the listed-file metadata
-only; it does not re-download or replace the stored files. If a previous partial attempt created the metadata record but
-stored no file references, the worker backfills its missing source files. The
+in metadata, not used as a Storage path). Body HTML is converted to Markdown and stored as `origin.md`; the HTML, PDF,
+and Markdown references and hashes are recorded in the existing `source_documents` columns and `raw_metadata`.
+Existing records with stored HTML but no Markdown are converted from the stored HTML without replacing the original
+files. If a previous partial attempt created the metadata record but stored no file references, the worker backfills its
+missing source files and Markdown. The
 `20261109220000_vbpl_source_document_upsert.sql` migration updates the existing upsert function to persist and preserve
 stored refs/hashes when a field is omitted; it does not add or alter tables/columns. Apply this migration before running
 the worker; it verifies that newly stored file references were actually persisted.
 
-Sitemap `lastmod` is only a discovery signal, not proof that legal content changed. Markdown parsing, chunking, and
-embedding are not part of this stage.
+Sitemap `lastmod` is only a discovery signal, not proof that legal content changed. Chunking and embedding are not part
+of this stage.
 
 For manual source research, `scripts\crawl_vbpl_sitemap.py` can write a local JSON scan report and
 `scripts\inspect_vbpl.py` can capture individual raw HTML pages; neither script is the production crawl entry point.

@@ -4,7 +4,7 @@ from typing import Protocol
 
 
 class ObjectStorage(Protocol):
-    """Upload an immutable object to a named bucket."""
+    """Read and write objects in a named bucket."""
 
     def upload(
         self,
@@ -13,3 +13,5 @@ class ObjectStorage(Protocol):
         content: bytes,
         content_type: str,
     ) -> None: ...
+
+    def download(self, bucket: str, object_key: str) -> bytes: ...
