@@ -8,6 +8,7 @@ from uuid import UUID
 
 import httpx
 import pytest
+from postgrest.exceptions import APIError
 from pydantic import ValidationError
 
 from src.integrations.database.repositories.dense_index_repository import (
@@ -276,3 +277,23 @@ def test_repository_surfaces_transport_errors() -> None:
 
     with pytest.raises(DatabaseRepositoryError, match="get_sparse_index"):
         asyncio.run(repository.get_index("bm25-vi"))
+
+
+def test_repository_preserves_postgres_rpc_error_details() -> None:
+    api_error = APIError(
+        {
+            "code": "23503",
+            "message": "insert or update violates foreign key constraint",
+            "details": "Key (source_document_id) is not present.",
+            "hint": "Check the source document record.",
+        }
+    )
+    repository = SparseIndexRepository(_FakeClient(api_error))  # type: ignore[arg-type]
+
+    with pytest.raises(DatabaseRepositoryError) as raised:
+        asyncio.run(repository.get_index("bm25-vi"))
+
+    assert "23503" in str(raised.value)
+    assert "foreign key constraint" in str(raised.value)
+    assert "Check the source document record." in str(raised.value)
+    assert raised.value.__cause__ is api_error
