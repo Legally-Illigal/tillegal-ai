@@ -7,6 +7,36 @@ from src.applications.tillegal.ingestion.crawler.parsers.legal_markdown import p
 _SOURCE_DOCUMENT_ID = UUID("00000000-0000-0000-0000-000000000001")
 
 
+@pytest.mark.parametrize("marker", ["**", "__"])
+@pytest.mark.parametrize("separator", [" ", "\n"])
+def test_article_number_only_heading_preserves_searchable_body(marker: str, separator: str) -> None:
+    body = "Ban hành kèm theo Quyết định này Quy chế làm việc."
+    markdown = f"{marker}Điều 1.{marker}{separator}{body}\nDòng tiếp nối."
+    parsed = parse_legal_markdown(markdown, source_document_id=_SOURCE_DOCUMENT_ID, title="Quyết định")
+    article = next(node for node in parsed.nodes if node.kind == "article")
+    assert article.label == "Điều 1"
+    heading, paragraph = parsed.blocks
+    assert heading.block_type == "heading"
+    assert heading.content == "Điều 1."
+    assert paragraph.block_type == "paragraph"
+    assert paragraph.content == body + " Dòng tiếp nối."
+    assert paragraph.node_id == article.node_id
+    assert article.heading_block_id == heading.block_id
+    assert markdown[heading.start_offset:heading.end_offset] == f"{marker}Điều 1.{marker}"
+    assert markdown[paragraph.start_offset:paragraph.end_offset] == body + "\nDòng tiếp nối."
+    assert any(chunk.block_id == paragraph.block_id and body in chunk.content for chunk in parsed.chunks)
+
+
+@pytest.mark.parametrize("heading", ["**Điều 7. Trách nhiệm**", "**Điều 7.** **Trách nhiệm**"])
+def test_full_article_title_remains_a_heading(heading: str) -> None:
+    parsed = parse_legal_markdown(
+        heading + "\n\n1. Nội dung khoản.", source_document_id=_SOURCE_DOCUMENT_ID, title="Quy chế"
+    )
+    assert parsed.blocks[0].block_type == "heading"
+    assert parsed.blocks[0].content == "Điều 7: Trách nhiệm"
+    assert [block.block_type for block in parsed.blocks] == ["heading", "clause"]
+
+
 @pytest.mark.parametrize("marker", ["đ", "Đ"])
 def test_point_d_stroke_has_distinct_id_and_correct_order(marker: str) -> None:
     parsed = parse_legal_markdown(

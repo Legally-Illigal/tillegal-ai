@@ -17,7 +17,7 @@ from src.integrations.database.repositories.parsed_document_repository import (
 )
 
 SCHEMA_VERSION = "legal-structure-v1"
-PARSER_VERSION = "vbpl-markdown-v1"
+PARSER_VERSION = "vbpl-markdown-v2"
 DEFAULT_MAX_CHUNK_TOKENS = 480
 _SECTION_HEADING = re.compile(
     r"^(?:#{1,6}\s*)?(Chương|Phần|Mục|Tiểu mục)\s+"
@@ -25,6 +25,10 @@ _SECTION_HEADING = re.compile(
     re.IGNORECASE,
 )
 _ARTICLE_HEADING = re.compile(r"^(?:#{1,6}\s*)?Điều\s+(\d+[a-zA-Z]?)(?:\s*[.:–—-]\s*|\s+)?(.*)$", re.IGNORECASE)
+_ARTICLE_INLINE_BODY = re.compile(
+    r"^\s*(?P<marker>\*\*|__)(?P<label>Điều\s+\d+[a-zA-Z]?[.:])(?P=marker)\s+(?P<body>\S.*)$",
+    re.IGNORECASE | re.DOTALL,
+)
 _CLAUSE = re.compile(r"^(\d+)\.\s+(.+)$")
 _POINT = re.compile(r"^([a-zđ])\)\s*(.*)$", re.IGNORECASE)
 _INLINE_MARKDOWN = re.compile(r"\[([^\]]+)\]\([^)]+\)|\*\*|__|~~|`|\*|_")
@@ -141,6 +145,14 @@ def parse_legal_markdown(
         article_match = _ARTICLE_HEADING.match(cleaned)
         if article_match is not None:
             number, heading = article_match.groups()
+            source_start = rendered_lines[0].start
+            source_end = rendered_lines[-1].end
+            inline_body = _ARTICLE_INLINE_BODY.match(markdown[source_start:source_end])
+            # A separately bold title is still a heading, not article body text.
+            if inline_body is not None and inline_body.group("body").startswith(("**", "__")):
+                inline_body = None
+            if inline_body is not None:
+                heading = ""
             parent = current_sections[-1] if current_sections else root
             label = f"Điều {number}: {heading.strip()}" if heading.strip() else f"Điều {number}"
             node_id = _unique_node_id(
@@ -166,13 +178,24 @@ def parse_legal_markdown(
             )
             _append_block(
                 blocks,
-                label,
+                inline_body.group("label") if inline_body is not None else label,
                 node_id,
                 "heading",
-                rendered_lines[0].start,
-                rendered_lines[-1].end,
+                source_start,
+                source_start + inline_body.end("label") + len(inline_body.group("marker"))
+                if inline_body is not None
+                else source_end,
                 block_id=block_id,
             )
+            if inline_body is not None:
+                _append_block(
+                    blocks,
+                    _clean_line(inline_body.group("body")),
+                    node_id,
+                    "paragraph",
+                    source_start + inline_body.start("body"),
+                    source_end,
+                )
             current_clause = None
             continue
 
