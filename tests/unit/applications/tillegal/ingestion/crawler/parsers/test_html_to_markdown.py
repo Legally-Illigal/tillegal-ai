@@ -60,6 +60,18 @@ def test_cleanup_does_not_trim_articles_before_an_attachment_title() -> None:
     assert clean_legal_markdown(markdown) == markdown
 
 
+def test_cleanup_joins_wrapped_subtitle_without_merging_articles() -> None:
+    markdown = (
+        "**NGHỊ QUYẾT**\n\n**Quy định** **phân bổ vốn**\n\n"
+        "**đến năm 2030** **trên địa bàn tỉnh**\n\n"
+        "**Điều 1. Phạm vi**\n\nNội dung.\n\n**Điều 2. Thi hành**\n"
+    )
+    cleaned = clean_legal_markdown(markdown)
+    assert "**phân bổ vốn** **đến năm 2030**" in cleaned
+    assert "\n\n**Điều 1. Phạm vi**\n\n" in cleaned
+    assert clean_legal_markdown(cleaned) == cleaned
+
+
 def test_converts_vbpl_document_body_to_markdown() -> None:
     html = """
     <!doctype html>

@@ -17,7 +17,7 @@ from src.integrations.database.repositories.parsed_document_repository import (
 )
 
 SCHEMA_VERSION = "legal-structure-v1"
-PARSER_VERSION = "vbpl-markdown-v2"
+PARSER_VERSION = "vbpl-markdown-v3"
 DEFAULT_MAX_CHUNK_TOKENS = 480
 _SECTION_HEADING = re.compile(
     r"^(?:#{1,6}\s*)?(Chương|Phần|Mục|Tiểu mục)\s+"
@@ -73,6 +73,7 @@ def parse_legal_markdown(
     current_sections: list[_NodeContext] = []
     current_article: _NodeContext | None = None
     current_clause: _NodeContext | None = None
+    current_point: _NodeContext | None = None
     used_node_ids = {root.node_id}
 
     for group in _paragraphs(markdown):
@@ -84,7 +85,7 @@ def parse_legal_markdown(
             _append_block(
                 blocks,
                 block_text,
-                _nearest_context(current_article, current_sections, root).node_id,
+                (current_point or current_clause or _nearest_context(current_article, current_sections, root)).node_id,
                 "table",
                 rendered_lines[0].start,
                 rendered_lines[-1].end,
@@ -140,6 +141,7 @@ def parse_legal_markdown(
             current_sections.append(context)
             current_article = None
             current_clause = None
+            current_point = None
             continue
 
         article_match = _ARTICLE_HEADING.match(cleaned)
@@ -197,9 +199,10 @@ def parse_legal_markdown(
                     source_end,
                 )
             current_clause = None
+            current_point = None
             continue
 
-        for line in rendered_lines:
+        for line in _logical_lines(rendered_lines):
             cleaned_line = _clean_line(line.text)
             if not cleaned_line:
                 continue
@@ -214,6 +217,7 @@ def parse_legal_markdown(
                 )
                 clause_label = f"Khoản {number}"
                 current_clause = _NodeContext(clause_id, "clause", clause_label, current_article.node_id)
+                current_point = None
                 nodes.append(
                     DocumentNodeWrite(
                         node_id=clause_id,
@@ -234,6 +238,7 @@ def parse_legal_markdown(
                     used_node_ids,
                 )
                 point_label = f"Điểm {marker.lower()}"
+                current_point = _NodeContext(point_id, "point", point_label, current_clause.node_id)
                 nodes.append(
                     DocumentNodeWrite(
                         node_id=point_id,
@@ -247,7 +252,10 @@ def parse_legal_markdown(
                 _append_block(blocks, f"{marker.lower()}) {body}".strip(), point_id, "point", line.start, line.end)
                 continue
 
-            owner = current_clause or current_article or (current_sections[-1] if current_sections else root)
+            owner = (
+                current_point or current_clause or current_article
+                or (current_sections[-1] if current_sections else root)
+            )
             block_type = "list_item" if re.match(r"^(?:[-*+]|\d+[.)])\s+", cleaned_line) else "paragraph"
             _append_block(blocks, cleaned_line, owner.node_id, block_type, line.start, line.end)
 
@@ -294,10 +302,27 @@ def _paragraphs(markdown: str) -> list[list[_SourceLine]]:
                 paragraphs.append(current)
                 current = []
             continue
+        cleaned = _clean_line(content)
+        if current and (_ARTICLE_HEADING.match(cleaned) or _SECTION_HEADING.match(cleaned)
+                        or _CLAUSE.match(cleaned) or _POINT.match(cleaned)):
+            paragraphs.append(current)
+            current = []
         current.append(_SourceLine(content, start, end))
     if current:
         paragraphs.append(current)
     return paragraphs
+
+
+def _logical_lines(lines: list[_SourceLine]) -> list[_SourceLine]:
+    """Join soft wraps while retaining explicit list entries and source offsets."""
+    result: list[_SourceLine] = []
+    for line in lines:
+        if result and not re.match(r"^(?:[-*+] |\d+[.)]\s|[a-zđ]\)\s)", _clean_line(line.text), re.IGNORECASE):
+            previous = result[-1]
+            result[-1] = _SourceLine(previous.text.rstrip() + " " + line.text.strip(), previous.start, line.end)
+        else:
+            result.append(line)
+    return result
 
 
 def _clean_line(value: str) -> str:

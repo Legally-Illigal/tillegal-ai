@@ -62,6 +62,17 @@ def clean_legal_markdown(markdown: str) -> str:
         if in_footer:
             continue
         result.append(group.strip())
+    # Word-exported titles can use separate paragraphs for visual wrapping.
+    # Join only the bold subtitle immediately following a document-type title.
+    subtitle = 1
+    if result and title.fullmatch(plain(result[0])):
+        while subtitle + 1 < len(result):
+            left, right = result[subtitle], result[subtitle + 1]
+            fully_bold = r"(?:\s*\*\*[^*]+\*\*\s*)+"
+            if (not re.fullmatch(fully_bold, left) or not re.fullmatch(fully_bold, right)
+                    or boundary.match(plain(right)) or title.fullmatch(plain(right))):
+                break
+            result[subtitle:subtitle + 2] = [left + " " + right]
     cleaned = "\n\n".join(result).strip()
     if not cleaned:
         raise ValueError("Administrative cleanup produced empty legal Markdown")

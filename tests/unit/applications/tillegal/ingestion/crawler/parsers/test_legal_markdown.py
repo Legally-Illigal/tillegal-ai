@@ -7,6 +7,27 @@ from src.applications.tillegal.ingestion.crawler.parsers.legal_markdown import p
 _SOURCE_DOCUMENT_ID = UUID("00000000-0000-0000-0000-000000000001")
 
 
+def test_wrapped_points_keep_continuations_tables_and_chunk_context() -> None:
+    markdown = (
+        "**Điều 4. Phân bổ vốn**\n1. Tiêu chí:\na) Nội dung\n"
+        "tiếp nối.\n\nHệ số gốc:\n\nXã loại I: 3,0.\n\n"
+        "| Loại | Hệ số |\n| --- | --- |\n| I | 3 |\n\n"
+        "b) Điểm khác.\n\n2. Khoản tiếp theo.\n\nGiải thích khoản.\n\n"
+        "**Điều 5. Thi hành**\n\nNội dung Điều 5."
+    )
+    parsed = parse_legal_markdown(markdown, source_document_id=_SOURCE_DOCUMENT_ID, title="Nghị quyết")
+    wrapped = next(block for block in parsed.blocks if block.content == "a) Nội dung tiếp nối.")
+    assert markdown[wrapped.start_offset:wrapped.end_offset] == "a) Nội dung\ntiếp nối."
+    for content in ("Hệ số gốc:", "Xã loại I: 3,0."):
+        block = next(block for block in parsed.blocks if block.content == content)
+        assert block.node_id == "article-4-clause-1-point-a"
+        assert any("Điểm a" in chunk.content and content in chunk.content for chunk in parsed.chunks)
+    assert next(block for block in parsed.blocks if block.block_type == "table").node_id == wrapped.node_id
+    explanation = next(block for block in parsed.blocks if block.content == "Giải thích khoản.")
+    assert explanation.node_id == "article-4-clause-2"
+    assert next(block for block in parsed.blocks if block.content == "Nội dung Điều 5.").node_id == "article-5"
+
+
 @pytest.mark.parametrize("marker", ["**", "__"])
 @pytest.mark.parametrize("separator", [" ", "\n"])
 def test_article_number_only_heading_preserves_searchable_body(marker: str, separator: str) -> None:
