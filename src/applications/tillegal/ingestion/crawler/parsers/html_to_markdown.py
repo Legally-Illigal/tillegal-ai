@@ -4,7 +4,69 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
+from html import unescape
 from html.parser import HTMLParser
+
+
+def clean_legal_markdown(markdown: str) -> str:
+    """Remove administrative layout blocks, retaining attached legal documents."""
+    groups = re.split(r"\n\s*\n", markdown.replace("\r\n", "\n").strip())
+
+    def plain(value: str) -> str:
+        value = re.sub(r"<br\s*/?>", "\n", value, flags=re.IGNORECASE)
+        value = re.sub(r"<[^>]+>", "", value)
+        return re.sub(r"[ \t]+", " ", unescape(re.sub(r"[*_#`|]", "", value))).strip()
+
+    title = re.compile(r"^(?:NGHỊ QUYẾT|QUYẾT ĐỊNH|NGHỊ ĐỊNH|THÔNG TƯ|LUẬT|PHÁP LỆNH|QUY CHẾ|QUY ĐỊNH)$")
+    boundary = re.compile(r"^(?:Điều\s+\d|Chương\s+|Phần\s+|Mục\s+|PHỤ LỤC\b)", re.IGNORECASE)
+    footer = re.compile(
+        r"^(?:Nơi nhận\s*:|(?:TM|KT|TL|TUQ)\s*\.|CHỦ TỊCH$|PHÓ CHỦ TỊCH$|"
+        r"BỘ TRƯỞNG$|THỨ TRƯỞNG$|THỦ TƯỚNG$|PHÓ THỦ TƯỚNG$|CHỦ TỊCH QUỐC HỘI$)",
+        re.IGNORECASE,
+    )
+    texts = [plain(group) for group in groups]
+    # Only trim a leading administrative region when a standalone document title exists.
+    first_title = next((i for i, value in enumerate(texts) if title.fullmatch(value)), None)
+    start = 0
+    if first_title is not None and not any(
+        boundary.match(value) or value.startswith("Căn cứ ") for value in texts[:first_title]
+    ) and any(
+        re.search(r"CỘNG HÒA|Độc lập\s*[-–]|\bSố\s*:", value, re.IGNORECASE)
+        for value in texts[:first_title]
+    ):
+        start = first_title
+    result: list[str] = []
+    in_footer = False
+    for index in range(start, len(groups)):
+        group, value = groups[index], texts[index]
+        first_line = value.splitlines()[0] if value else ""
+        resumes = title.fullmatch(first_line) is not None or boundary.match(first_line) is not None
+        if resumes:
+            in_footer = False
+        if (
+            value == value.upper()
+            and re.match(r"^(?:ỦY BAN NHÂN DÂN|HỘI ĐỒNG NHÂN DÂN)\b", value)
+            and index + 1 < len(texts)
+            and texts[index + 1].startswith("Căn cứ ")
+        ):
+            continue
+        # Tables may contain both a signature and the next attachment's masthead.
+        is_table = group.lstrip().startswith("|")
+        if is_table and not re.sub(r"[\s|:\-]", "", value):
+            continue
+        if not resumes and re.search(r"CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM", value, re.IGNORECASE):
+            if is_table or first_line.upper() == "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM":
+                continue
+        if footer.match(first_line):
+            in_footer = True
+        if in_footer:
+            continue
+        result.append(group.strip())
+    cleaned = "\n\n".join(result).strip()
+    if not cleaned:
+        raise ValueError("Administrative cleanup produced empty legal Markdown")
+    return cleaned + "\n"
+
 
 _VOID_TAGS = {
     "area",

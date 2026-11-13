@@ -13,7 +13,10 @@ from storage3.exceptions import StorageApiError
 from src.application.dto.source_document import SourceDocumentWrite
 from src.application.interfaces.object_storage import ObjectStorage
 from src.application.interfaces.source_document_store import SourceDocumentStore
-from src.applications.tillegal.ingestion.crawler.parsers.html_to_markdown import convert_html_to_markdown
+from src.applications.tillegal.ingestion.crawler.parsers.html_to_markdown import (
+    clean_legal_markdown,
+    convert_html_to_markdown,
+)
 from src.applications.tillegal.ingestion.crawler.parsers.word_to_markdown import (
     LegacyDocConverterUnavailableError,
     convert_word_to_markdown,
@@ -247,6 +250,9 @@ class VbplDocumentIngestionService:
                 source_id=SOURCE_ID,
                 source_record_id=page.document_id,
                 title=page.title,
+                document_number=page.document_number,
+                document_type=page.document_type,
+                issuing_authority=page.issuing_authority,
                 language="vi",
                 source_url=document_url.url,
                 issued_on=page.issued_on,
@@ -393,10 +399,12 @@ def _convert_markdown_source(
     settings: VbplCrawlSettings | None = None,
 ) -> str:
     if attachment.file_name.lower().endswith((".html", ".htm")):
-        return convert_html_to_markdown(content)
-    if settings is not None:
-        return convert_word_to_markdown(content, attachment.file_name, settings.doc_conversion_timeout_seconds)
-    return convert_word_to_markdown(content, attachment.file_name)
+        markdown = convert_html_to_markdown(content)
+    elif settings is not None:
+        markdown = convert_word_to_markdown(content, attachment.file_name, settings.doc_conversion_timeout_seconds)
+    else:
+        markdown = convert_word_to_markdown(content, attachment.file_name)
+    return clean_legal_markdown(markdown)
 
 
 def _has_markdown(files: list[dict[str, object]]) -> bool:

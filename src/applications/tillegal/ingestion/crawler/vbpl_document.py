@@ -57,6 +57,9 @@ class VbplDocumentPage:
     effective_from: date | None = None
     effective_to: date | None = None
     effect_status_reported: str | None = None
+    document_number: str | None = None
+    document_type: str | None = None
+    issuing_authority: str | None = None
 
 
 class _PageMetadataParser(HTMLParser):
@@ -173,7 +176,10 @@ def _parse_document_attributes(html: str, document_id: str) -> dict[str, object]
         except json.JSONDecodeError:
             continue
         if isinstance(document, dict) and str(document.get("id")) == document_id:
-            return {key: document.get(key) for key in ("issueDate", "effFrom", "effTo", "effStatus")}
+            return {
+                key: document.get(key)
+                for key in ("issueDate", "effFrom", "effTo", "effStatus", "docNum", "docType", "agencyName")
+            }
     raise VbplDocumentFetchError("VBPL page did not expose attributes for the requested document")
 
 
@@ -187,6 +193,21 @@ def _attribute_date(attributes: dict[str, object], key: str) -> date | None:
         except ValueError:
             pass
     raise VbplDocumentFetchError(f"VBPL document has an invalid {key}: {value!r}")
+
+
+def _attribute_text(attributes: dict[str, object], key: str, *, named: bool = False) -> str | None:
+    value = attributes.get(key)
+    if value is None:
+        return None
+    if named:
+        if not isinstance(value, dict):
+            raise VbplDocumentFetchError(f"VBPL document has an invalid {key}")
+        value = value.get("name")
+    if value is None:
+        return None
+    if not isinstance(value, str):
+        raise VbplDocumentFetchError(f"VBPL document has an invalid {key}")
+    return value.strip() or None
 
 
 def _script_urls(html: str, page_url: str) -> tuple[str, ...]:
@@ -340,6 +361,9 @@ def fetch_vbpl_document_page(
     return VbplDocumentPage(
         document_id, title, metadata, attachments,
         issued_on, effective_from, effective_to, status_name,
+        document_number=_attribute_text(attributes, "docNum"),
+        document_type=_attribute_text(attributes, "docType", named=True),
+        issuing_authority=_attribute_text(attributes, "agencyName"),
     )
 
 

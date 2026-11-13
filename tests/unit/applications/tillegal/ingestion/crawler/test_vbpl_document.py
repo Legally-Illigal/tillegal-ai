@@ -9,6 +9,7 @@ from src.applications.tillegal.ingestion.crawler.vbpl_document import (
     VbplDocumentFetchError,
     _attachment_download_url,
     _attribute_date,
+    _attribute_text,
     _find_file_list_action,
     _parse_action_attachments,
     _parse_document_attributes,
@@ -24,6 +25,9 @@ def test_document_attributes_are_read_from_matching_initial_doc_across_chunks() 
         "id": "175384", "issueDate": "2026-10-22T00:00:00",
         "effFrom": "2026-11-01T00:00:00", "effTo": None,
         "effStatus": {"code": "CHL", "name": "Còn hiệu lực"},
+        "docNum": "58/2026/QĐ-UBND",
+        "docType": {"name": "Quyết định", "code": "QĐ"},
+        "agencyName": "UBND Tỉnh Hưng Yên",
     }
     payload = json.dumps({"initialDoc": document}, ensure_ascii=False)
     html = '<head><title>Document</title></head><body>'
@@ -35,6 +39,25 @@ def test_document_attributes_are_read_from_matching_initial_doc_across_chunks() 
     assert _attribute_date(attributes, "effFrom") == date(2026, 11, 1)
     assert _attribute_date(attributes, "effTo") is None
     assert attributes["effStatus"] == document["effStatus"]
+    assert _attribute_text(attributes, "docNum") == "58/2026/QĐ-UBND"
+    assert _attribute_text(attributes, "docType", named=True) == "Quyết định"
+    assert _attribute_text(attributes, "agencyName") == "UBND Tỉnh Hưng Yên"
+
+
+@pytest.mark.parametrize("value", [None, "", "   "])
+def test_attribute_text_treats_missing_values_as_unknown(value) -> None:
+    assert _attribute_text({"docNum": value}, "docNum") is None
+
+
+def test_attribute_text_handles_missing_type_name_and_trims_values() -> None:
+    assert _attribute_text({"docType": {}}, "docType", named=True) is None
+    assert _attribute_text({"agencyName": " Agency "}, "agencyName") == "Agency"
+
+
+@pytest.mark.parametrize("value", ["Decision", 123, {"name": 123}])
+def test_attribute_text_rejects_malformed_named_attributes(value) -> None:
+    with pytest.raises(VbplDocumentFetchError, match="invalid docType"):
+        _attribute_text({"docType": value}, "docType", named=True)
 
 
 @pytest.mark.parametrize("document", [{"id": "other", "issueDate": "2026-10-22"}, None])

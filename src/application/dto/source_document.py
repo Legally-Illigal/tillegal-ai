@@ -13,6 +13,9 @@ class SourceDocumentWrite(BaseModel):
     source_id: str = Field(min_length=1)
     source_record_id: str = Field(min_length=1)
     title: str = Field(min_length=1)
+    document_number: str | None = None
+    document_type: str | None = None
+    issuing_authority: str | None = None
     source_snapshot_id: str | None = None
     language: str | None = None
     source_url: str | None = None

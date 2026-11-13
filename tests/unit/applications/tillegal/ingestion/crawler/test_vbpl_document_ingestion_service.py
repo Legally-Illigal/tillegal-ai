@@ -67,6 +67,9 @@ def _page() -> VbplDocumentPage:
         effective_from=date(2026, 11, 1),
         effective_to=date(2027, 1, 1),
         effect_status_reported="Còn hiệu lực",
+        document_number="58/2026/QĐ-UBND",
+        document_type="Quyết định",
+        issuing_authority="UBND Tỉnh Hưng Yên",
         attachments=(
             VbplAttachment("original.pdf", "175384/original.pdf", "application/octet-stream", 5),
             VbplAttachment("body.html", "175384/body.html", "application/octet-stream", 5),
@@ -136,6 +139,9 @@ def test_new_document_downloads_and_uploads_all_source_attachments(monkeypatch) 
     assert result["markdown_created"] is True
     assert len(storage.uploads) == 4
     assert documents.saved is not None
+    assert documents.saved.document_number == "58/2026/QĐ-UBND"
+    assert documents.saved.document_type == "Quyết định"
+    assert documents.saved.issuing_authority == "UBND Tỉnh Hưng Yên"
     assert documents.saved.issued_on == date(2026, 10, 22)
     assert documents.saved.effective_from == date(2026, 11, 1)
     assert documents.saved.effective_to == date(2027, 1, 1)
@@ -213,6 +219,9 @@ def test_existing_document_updates_metadata_without_replacing_raw_files(monkeypa
     result = asyncio.run(VbplDocumentIngestionService(documents, storage).ingest(_document_url()))
 
     assert result["action"] == "metadata_updated"
+    assert documents.saved.document_number == "58/2026/QĐ-UBND"
+    assert documents.saved.document_type == "Quyết định"
+    assert documents.saved.issuing_authority == "UBND Tỉnh Hưng Yên"
     assert documents.saved.issued_on == date(2026, 10, 22)
     assert documents.saved.effective_from == date(2026, 11, 1)
     assert documents.saved.effective_to == date(2027, 1, 1)
