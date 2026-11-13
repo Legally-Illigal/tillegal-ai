@@ -218,7 +218,7 @@ def parse_legal_markdown(
                         kind="point",
                         label=point_label,
                         scope=current_article.label if current_article else None,
-                        ordinal=ord(marker.lower()) - ord("a"),
+                        ordinal="abcdđefghijklmnopqrstuvwxyz".index(marker.lower()),
                     )
                 )
                 _append_block(blocks, f"{marker.lower()}) {body}".strip(), point_id, "point", line.start, line.end)
@@ -299,7 +299,7 @@ def _normalized_section_kind(value: str) -> str:
 
 
 def _slug(value: str) -> str:
-    slug = re.sub(r"[^a-zA-Z0-9]+", "-", value.lower()).strip("-")
+    slug = re.sub(r"[^a-zA-Z0-9]+", "-", value.lower().replace("đ", "dd")).strip("-")
     return slug or "node"
 
 

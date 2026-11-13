@@ -87,14 +87,20 @@ def _render_docx_paragraph(paragraph: ET.Element) -> str:
             elif child.tag in {f"{_W}br", f"{_W}cr"}:
                 text_parts.append("\n")
         text = "".join(text_parts)
-        if run_properties is not None:
-            if _has_enabled_property(run_properties, _BOLD) and text.strip():
-                text = f"**{text.strip()}**"
-            if _has_enabled_property(run_properties, _ITALIC) and text.strip():
-                text = f"*{text.strip()}*"
+        if run_properties is not None and text.strip():
+            # Run boundaries are formatting boundaries, not word boundaries.
+            # Keep whitespace outside emphasis markers so Markdown remains valid.
+            leading = text[: len(text) - len(text.lstrip())]
+            trailing = text[len(text.rstrip()) :]
+            core = text.strip()
+            if _has_enabled_property(run_properties, _BOLD):
+                core = f"**{core}**"
+            if _has_enabled_property(run_properties, _ITALIC):
+                core = f"*{core}*"
+            text = f"{leading}{core}{trailing}"
         parts.append(text)
 
-    paragraph_text = _join_inline(parts).strip()
+    paragraph_text = "".join(parts).strip()
     if not paragraph_text:
         return ""
     if paragraph.find(f"{_W}pPr/{_W}numPr") is not None:
@@ -105,17 +111,6 @@ def _render_docx_paragraph(paragraph: ET.Element) -> str:
 def _has_enabled_property(properties: ET.Element, tag: str) -> bool:
     value = properties.find(tag)
     return value is not None and value.get(f"{_W}val", "1") not in {"0", "false", "off"}
-
-
-def _join_inline(parts: list[str]) -> str:
-    result = ""
-    for part in parts:
-        if not part:
-            continue
-        if result and result[-1].isalnum() and part[0].isalnum():
-            result += " "
-        result += part
-    return result
 
 
 def _render_docx_table(table: ET.Element) -> str:

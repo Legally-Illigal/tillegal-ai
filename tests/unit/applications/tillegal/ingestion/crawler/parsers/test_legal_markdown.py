@@ -1,8 +1,27 @@
 from uuid import UUID
 
+import pytest
+
 from src.applications.tillegal.ingestion.crawler.parsers.legal_markdown import parse_legal_markdown
 
 _SOURCE_DOCUMENT_ID = UUID("00000000-0000-0000-0000-000000000001")
+
+
+@pytest.mark.parametrize("marker", ["đ", "Đ"])
+def test_point_d_stroke_has_distinct_id_and_correct_order(marker: str) -> None:
+    parsed = parse_legal_markdown(
+        f"Điều 1. Trách nhiệm\n\n1. Nhiệm vụ:\n\nd) Nội dung d\n\n{marker}) Nội dung đ\n\ne) Nội dung e",
+        source_document_id=_SOURCE_DOCUMENT_ID,
+        title="Quy chế",
+    )
+    points = [node for node in parsed.nodes if node.kind == "point"]
+    assert [node.node_id for node in points] == [f"article-1-clause-1-point-{suffix}" for suffix in ("d", "dd", "e")]
+    assert [node.label for node in points] == ["Điểm d", "Điểm đ", "Điểm e"]
+    assert [node.ordinal for node in points] == [3, 4, 5]
+    point_dd = points[1]
+    assert point_dd.parent_node_id == "article-1-clause-1"
+    assert any(block.node_id == point_dd.node_id and block.content == "đ) Nội dung đ" for block in parsed.blocks)
+    assert any(chunk.node_id == point_dd.node_id and "Điểm đ" in chunk.content for chunk in parsed.chunks)
 
 
 def test_parses_legal_hierarchy_and_builds_breadcrumb_chunks() -> None:

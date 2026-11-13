@@ -1,16 +1,65 @@
 import subprocess
 from io import BytesIO
 from pathlib import Path
+from uuid import UUID
+from xml.sax.saxutils import escape
 from zipfile import ZIP_DEFLATED, ZipFile
 
 import pytest
 
+from src.applications.tillegal.ingestion.crawler.parsers.legal_markdown import parse_legal_markdown
 from src.applications.tillegal.ingestion.crawler.parsers.word_to_markdown import (
     LegacyDocConverterUnavailableError,
     convert_word_to_markdown,
 )
 
 _WORD_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+
+
+def _docx_with_body(body: str) -> bytes:
+    archive = BytesIO()
+    with ZipFile(archive, "w", ZIP_DEFLATED) as docx:
+        docx.writestr("word/document.xml", f'<w:document xmlns:w="{_WORD_NS}"><w:body>{body}</w:body></w:document>')
+    return archive.getvalue()
+
+
+@pytest.mark.parametrize("properties,marker", [("", ""), ("<w:b/>", "**"), ("<w:i/>", "*"), ("<w:b/><w:i/>", "***")])
+def test_preserves_whitespace_around_formatted_runs(properties: str, marker: str) -> None:
+    body = (
+        '<w:p><w:r><w:t>Ủy</w:t></w:r>'
+        f'<w:r><w:rPr>{properties}</w:rPr><w:t xml:space="preserve"> viên </w:t></w:r>'
+        '<w:r><w:t>Ủy ban</w:t></w:r></w:p>'
+    )
+    assert convert_word_to_markdown(_docx_with_body(body), "source.docx") == f"Ủy {marker}viên{marker} Ủy ban\n"
+
+
+@pytest.mark.parametrize("parts", [("Trá", "ch"), ("Điều\u00a0", "8"), ("Ủy", " ", "viên")])
+def test_preserves_text_across_unformatted_runs(parts: tuple[str, ...]) -> None:
+    runs = ''.join(f'<w:r><w:t xml:space="preserve">{escape(part)}</w:t></w:r>' for part in parts)
+    assert convert_word_to_markdown(_docx_with_body(f"<w:p>{runs}</w:p>"), "source.docx") == ''.join(parts) + "\n"
+
+
+def test_split_bold_article_heading_keeps_clauses_in_the_correct_article() -> None:
+    body = '<w:p><w:r><w:t>Chương II. Công việc</w:t></w:r></w:p>'
+    for number in (7, 8):
+        runs = ''.join(
+            f'<w:r><w:rPr><w:b/></w:rPr><w:t xml:space="preserve">{part}</w:t></w:r>'
+            for part in ("Điều ", str(number), ". Trách nhiệm của Ủy", " viên", " Ủy ban")
+        )
+        body += f'<w:p>{runs}</w:p><w:p><w:r><w:t>2. Nội dung khoản {number}</w:t></w:r></w:p>'
+        body += '<w:p><w:r><w:t>a) Nội dung điểm</w:t></w:r></w:p>'
+    markdown = convert_word_to_markdown(_docx_with_body(body), "source.docx")
+    parsed = parse_legal_markdown(markdown, source_document_id=UUID(int=1), title="Quy chế")
+    articles = [node for node in parsed.nodes if node.kind == "article"]
+    assert [node.label for node in articles] == [
+        f"Điều {number}: Trách nhiệm của Ủy viên Ủy ban" for number in (7, 8)
+    ]
+    assert [node.node_id for node in parsed.nodes if node.kind == "clause"] == [
+        f"chapter-ii-article-{number}-clause-2" for number in (7, 8)
+    ]
+    assert [node.parent_node_id for node in parsed.nodes if node.kind == "point"] == [
+        f"chapter-ii-article-{number}-clause-2" for number in (7, 8)
+    ]
 
 
 def _docx_bytes() -> bytes:
