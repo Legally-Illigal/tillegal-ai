@@ -7,6 +7,32 @@ from src.applications.tillegal.ingestion.crawler.parsers.legal_markdown import p
 _SOURCE_DOCUMENT_ID = UUID("00000000-0000-0000-0000-000000000001")
 
 
+def test_appendix_forms_do_not_inherit_main_chapter_or_previous_form_article() -> None:
+    markdown = (
+        "**Chương VII**\n\n**Điều 21. Hiệu lực**\n\n1. Nội dung.\n\n"
+        "**Điều 22. Thi hành**\n\n2. Trách nhiệm.\n\n**PHỤ LỤC**\n\n"
+        "1. Mẫu số 1: Danh mục mẫu.\n\nMẫu số 1\n\n**QUYẾT ĐỊNH**\n\n"
+        "**Điều 3.** Thi hành mẫu thứ nhất.\n\n**QUYẾT ĐỊNH**\n\n"
+        "**Về việc cử Trưởng đoàn**\n\n**QUYẾT ĐỊNH:**\n\n"
+        "**Điều 1.** Cử Trưởng đoàn.\n\n**Điều 3.** Thi hành mẫu thứ hai.\n\n"
+        "**PHỤ LỤC II**\n\nMẫu số 2\n\n**Chương I**\n\n**Điều 1. Phạm vi**"
+    )
+    parsed = parse_legal_markdown(markdown, source_document_id=_SOURCE_DOCUMENT_ID, title="Thông tư")
+    nodes = {node.node_id: node for node in parsed.nodes}
+    assert {node.label for node in parsed.nodes if node.parent_node_id == "chapter-vii"} == {
+        "Điều 21: Hiệu lực", "Điều 22: Thi hành",
+    }
+    assert nodes["appendix-1-attachment-1"].label == "Mẫu số 1"
+    target = next(block for block in parsed.blocks if block.content == "Về việc cử Trưởng đoàn")
+    assert target.node_id == "appendix-1-attachment-2"
+    assert nodes["appendix-1-attachment-2-article-3"].parent_node_id == target.node_id
+    chunk = next(chunk for chunk in parsed.chunks if chunk.block_id == target.block_id)
+    assert "PHỤ LỤC" in chunk.content and "QUYẾT ĐỊNH" in chunk.content
+    assert "Chương VII" not in chunk.content and "Điều 3" not in chunk.content
+    assert nodes["appendix-2-attachment-1-chapter-i"].parent_node_id == "appendix-2-attachment-1"
+    assert markdown[target.start_offset:target.end_offset] == "**Về việc cử Trưởng đoàn**"
+
+
 def test_wrapped_points_keep_continuations_tables_and_chunk_context() -> None:
     markdown = (
         "**Điều 4. Phân bổ vốn**\n1. Tiêu chí:\na) Nội dung\n"

@@ -17,7 +17,7 @@ from src.integrations.database.repositories.parsed_document_repository import (
 )
 
 SCHEMA_VERSION = "legal-structure-v1"
-PARSER_VERSION = "vbpl-markdown-v3"
+PARSER_VERSION = "vbpl-markdown-v4"
 DEFAULT_MAX_CHUNK_TOKENS = 480
 _SECTION_HEADING = re.compile(
     r"^(?:#{1,6}\s*)?(Chương|Phần|Mục|Tiểu mục)\s+"
@@ -31,6 +31,9 @@ _ARTICLE_INLINE_BODY = re.compile(
 )
 _CLAUSE = re.compile(r"^(\d+)\.\s+(.+)$")
 _POINT = re.compile(r"^([a-zđ])\)\s*(.*)$", re.IGNORECASE)
+_APPENDIX = re.compile(r"^PHỤ LỤC(?:\s+(?:[IVXLCDM]+|\d+))?$", re.IGNORECASE)
+_FORM = re.compile(r"^Mẫu số\s+\d+[a-zA-Z]?(?:\s*[:.–-]\s*.*)?$", re.IGNORECASE)
+_ATTACHED_TITLE = re.compile(r"^(?:QUYẾT ĐỊNH|NGHỊ QUYẾT|QUY CHẾ|QUY ĐỊNH)$")
 _INLINE_MARKDOWN = re.compile(r"\[([^\]]+)\]\([^)]+\)|\*\*|__|~~|`|\*|_")
 
 
@@ -75,8 +78,11 @@ def parse_legal_markdown(
     current_clause: _NodeContext | None = None
     current_point: _NodeContext | None = None
     used_node_ids = {root.node_id}
+    current_appendix: _NodeContext | None = None
+    current_attachment: _NodeContext | None = None
 
-    for group in _paragraphs(markdown):
+    groups = _paragraphs(markdown)
+    for group_index, group in enumerate(groups):
         rendered_lines = [line for line in group if line.text.strip()]
         if not rendered_lines:
             continue
@@ -94,12 +100,42 @@ def parse_legal_markdown(
 
         text = " ".join(line.text.strip() for line in rendered_lines)
         cleaned = _clean_line(text)
+        appendix_heading = _APPENDIX.fullmatch(cleaned)
+        form_heading = _FORM.fullmatch(cleaned)
+        attached_heading = _ATTACHED_TITLE.fullmatch(cleaned) if current_appendix else None
+        # A document-type title following an explicit form label belongs to that form.
+        previous_text = _clean_line(" ".join(line.text for line in groups[group_index - 1])) if group_index else ""
+        if attached_heading and _FORM.fullmatch(previous_text):
+            attached_heading = None
+        if appendix_heading or form_heading or attached_heading:
+            if appendix_heading:
+                kind, parent = "appendix", root
+            else:
+                kind, parent = "attachment", current_appendix or root
+            ordinal = 1 + sum(node.parent_node_id == parent.node_id and node.kind == kind for node in nodes)
+            node_id = _unique_node_id(f"{kind}-{ordinal}", parent.node_id, used_node_ids)
+            block_id = _next_block_id(len(blocks))
+            context = _NodeContext(node_id, kind, cleaned, parent.node_id)
+            nodes.append(DocumentNodeWrite(
+                node_id=node_id, parent_node_id=parent.node_id, kind=kind, label=cleaned,
+                scope=cleaned, heading_block_id=block_id, ordinal=ordinal,
+            ))
+            _append_block(blocks, cleaned, node_id, "heading", rendered_lines[0].start,
+                          rendered_lines[-1].end, block_id=block_id)
+            if appendix_heading:
+                current_appendix = context
+                current_attachment = None
+            else:
+                current_attachment = context
+            current_sections = [context]
+            current_article = current_clause = current_point = None
+            continue
         section_match = _SECTION_HEADING.match(cleaned)
         if section_match is not None:
             section_kind, number, heading = section_match.groups()
             normalized_kind = section_kind.lower()
             if normalized_kind in {"chương", "phần"}:
-                parent = root
+                parent = current_attachment or current_appendix or root
                 current_sections = []
                 node_kind = "chapter" if normalized_kind == "chương" else "part"
             else:
@@ -303,7 +339,9 @@ def _paragraphs(markdown: str) -> list[list[_SourceLine]]:
                 current = []
             continue
         cleaned = _clean_line(content)
-        if current and (_ARTICLE_HEADING.match(cleaned) or _SECTION_HEADING.match(cleaned)
+        if current and (_APPENDIX.fullmatch(cleaned) or _FORM.fullmatch(cleaned)
+                        or _ATTACHED_TITLE.fullmatch(cleaned)
+                        or _ARTICLE_HEADING.match(cleaned) or _SECTION_HEADING.match(cleaned)
                         or _CLAUSE.match(cleaned) or _POINT.match(cleaned)):
             paragraphs.append(current)
             current = []
