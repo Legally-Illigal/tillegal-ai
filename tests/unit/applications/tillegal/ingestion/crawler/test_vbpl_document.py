@@ -1,3 +1,6 @@
+import json
+from datetime import date
+
 import httpx
 import pytest
 
@@ -5,12 +8,57 @@ from src.applications.tillegal.ingestion.crawler.vbpl_document import (
     VbplAttachment,
     VbplDocumentFetchError,
     _attachment_download_url,
+    _attribute_date,
     _find_file_list_action,
     _parse_action_attachments,
+    _parse_document_attributes,
     _parse_metadata,
+    _read_document_page,
     _read_page_head,
     parse_document_id,
 )
+
+
+def test_document_attributes_are_read_from_matching_initial_doc_across_chunks() -> None:
+    document = {
+        "id": "175384", "issueDate": "2026-10-22T00:00:00",
+        "effFrom": "2026-11-01T00:00:00", "effTo": None,
+        "effStatus": {"code": "CHL", "name": "Còn hiệu lực"},
+    }
+    payload = json.dumps({"initialDoc": document}, ensure_ascii=False)
+    html = '<head><title>Document</title></head><body>'
+    for part in (payload[:35], payload[35:]):
+        html += f'<script>self.__next_f.push({json.dumps([1, part])})</script>'
+    response = httpx.Response(200, text=html + '</body>')
+    attributes = _parse_document_attributes(_read_document_page(response, 10000), "175384")
+    assert _attribute_date(attributes, "issueDate") == date(2026, 10, 22)
+    assert _attribute_date(attributes, "effFrom") == date(2026, 11, 1)
+    assert _attribute_date(attributes, "effTo") is None
+    assert attributes["effStatus"] == document["effStatus"]
+
+
+@pytest.mark.parametrize("document", [{"id": "other", "issueDate": "2026-10-22"}, None])
+def test_document_attributes_reject_missing_or_wrong_document(document) -> None:
+    payload = json.dumps([1, json.dumps({"initialDoc": document})])
+    with pytest.raises(VbplDocumentFetchError, match="requested document"):
+        _parse_document_attributes(f'<script>self.__next_f.push({payload})</script>', "175384")
+
+
+@pytest.mark.parametrize("value", ["2026-02-30", "unknown", 20261022])
+def test_attribute_date_rejects_invalid_source_values(value) -> None:
+    with pytest.raises(VbplDocumentFetchError, match="invalid effTo"):
+        _attribute_date({"effTo": value}, "effTo")
+
+
+def test_attribute_date_preserves_expiry_and_missing_dates() -> None:
+    assert _attribute_date({"effTo": "2027-01-01T00:00:00"}, "effTo") == date(2027, 1, 1)
+    assert _attribute_date({"effTo": ""}, "effTo") is None
+    assert _attribute_date({}, "effTo") is None
+
+
+def test_read_document_page_enforces_body_size_limit() -> None:
+    with pytest.raises(VbplDocumentFetchError, match="page exceeds"):
+        _read_document_page(httpx.Response(200, content=b'<head></head>' + b'x' * 100), 50)
 
 
 def test_parse_document_id_from_vbpl_detail_url() -> None:

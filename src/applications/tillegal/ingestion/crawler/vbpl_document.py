@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass
+from datetime import date, datetime
 from html.parser import HTMLParser
 from urllib.parse import quote, urljoin, urlsplit
 from uuid import UUID
@@ -52,6 +53,10 @@ class VbplDocumentPage:
     title: str
     metadata: dict[str, object]
     attachments: tuple[VbplAttachment, ...]
+    issued_on: date | None = None
+    effective_from: date | None = None
+    effective_to: date | None = None
+    effect_status_reported: str | None = None
 
 
 class _PageMetadataParser(HTMLParser):
@@ -138,6 +143,50 @@ def _read_page_head(response: httpx.Response, max_page_bytes: int | None = None)
         if len(head) > max_page_bytes:
             raise VbplDocumentFetchError(f"VBPL document page head exceeds {max_page_bytes} bytes")
     raise VbplDocumentFetchError("VBPL document page did not contain a closing </head> tag")
+
+
+def _read_document_page(response: httpx.Response, max_page_bytes: int) -> str:
+    """Read the bounded page, including document attributes in Next.js hydration data."""
+    content = bytearray()
+    for chunk in response.iter_bytes(chunk_size=PAGE_READ_CHUNK_BYTES):
+        content.extend(chunk)
+        if len(content) > max_page_bytes:
+            raise VbplDocumentFetchError(f"VBPL document page exceeds {max_page_bytes} bytes")
+    return content.decode(response.encoding or "utf-8", errors="replace")
+
+
+def _parse_document_attributes(html: str, document_id: str) -> dict[str, object]:
+    """Extract only the requested initialDoc, never related documents or UI labels."""
+    parts: list[str] = []
+    for match in re.finditer(r"self\.__next_f\.push\((.*?)\)</script>", html, re.DOTALL):
+        try:
+            payload = json.loads(match.group(1))
+        except json.JSONDecodeError:
+            continue
+        if isinstance(payload, list) and len(payload) == 2 and payload[0] == 1 and isinstance(payload[1], str):
+            parts.append(payload[1])
+    data = "".join(parts)
+    decoder = json.JSONDecoder()
+    for match in re.finditer(r'"initialDoc"\s*:\s*', data):
+        try:
+            document, _ = decoder.raw_decode(data, match.end())
+        except json.JSONDecodeError:
+            continue
+        if isinstance(document, dict) and str(document.get("id")) == document_id:
+            return {key: document.get(key) for key in ("issueDate", "effFrom", "effTo", "effStatus")}
+    raise VbplDocumentFetchError("VBPL page did not expose attributes for the requested document")
+
+
+def _attribute_date(attributes: dict[str, object], key: str) -> date | None:
+    value = attributes.get(key)
+    if value is None or value == "":
+        return None
+    if isinstance(value, str):
+        try:
+            return datetime.fromisoformat(value).date()
+        except ValueError:
+            pass
+    raise VbplDocumentFetchError(f"VBPL document has an invalid {key}: {value!r}")
 
 
 def _script_urls(html: str, page_url: str) -> tuple[str, ...]:
@@ -246,8 +295,17 @@ def fetch_vbpl_document_page(
         with client.stream("GET", document_url) as response:
             if response.status_code != 200:
                 raise VbplDocumentFetchError(f"VBPL detail page returned HTTP {response.status_code}: {document_url}")
-            page_head = _read_page_head(response, max_page_bytes)
+            page_head = _read_document_page(response, max_page_bytes)
         title, metadata = _parse_metadata(page_head)
+        attributes = _parse_document_attributes(page_head, document_id)
+        metadata["document_attributes"] = attributes
+        issued_on = _attribute_date(attributes, "issueDate")
+        effective_from = _attribute_date(attributes, "effFrom")
+        effective_to = _attribute_date(attributes, "effTo")
+        status = attributes.get("effStatus")
+        status_name = status.get("name") if isinstance(status, dict) else None
+        if status_name is not None and not isinstance(status_name, str):
+            raise VbplDocumentFetchError("VBPL document has an invalid effect status name")
         action_id = _FILE_LIST_ACTION_ID or _find_file_list_action(
             client,
             page_head,
@@ -279,7 +337,10 @@ def fetch_vbpl_document_page(
             )
         _FILE_LIST_ACTION_ID = action_id
 
-    return VbplDocumentPage(document_id, title, metadata, attachments)
+    return VbplDocumentPage(
+        document_id, title, metadata, attachments,
+        issued_on, effective_from, effective_to, status_name,
+    )
 
 
 def _request_attachments(
