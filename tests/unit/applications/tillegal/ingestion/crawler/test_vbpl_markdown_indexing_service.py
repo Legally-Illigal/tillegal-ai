@@ -1,10 +1,15 @@
 import asyncio
 import hashlib
+import unicodedata
 from uuid import UUID
+
+import pytest
 
 from src.application.services.vbpl_markdown_indexing_service import (
     DENSE_INDEX_NAME,
     VbplMarkdownIndexingService,
+    VbplSparseIndexingService,
+    tokenize_sparse_text,
 )
 from src.core.config import VbplCrawlSettings
 
@@ -67,12 +72,14 @@ class FakeEmbedder:
 def test_indexing_service_saves_chunks_and_e5_embeddings() -> None:
     parsed_documents = FakeParsedDocuments()
     dense_indexes = FakeDenseIndexes()
+    sparse_indexes = FakeSparseIndexes()
     service = VbplMarkdownIndexingService(
         parsed_documents,  # type: ignore[arg-type]
         FakeChunks(),  # type: ignore[arg-type]
         dense_indexes,  # type: ignore[arg-type]
         VbplCrawlSettings(embedding_batch_size=1),
         embedder=FakeEmbedder(),
+        sparse_indexes=sparse_indexes,
     )
 
     result = asyncio.run(
@@ -98,3 +105,68 @@ def test_indexing_service_saves_chunks_and_e5_embeddings() -> None:
     assert result["chunk_count"] == 2
     assert result["embedding_count"] == 2
     assert result["dense_index_status"] == "READY"
+    assert result["sparse_chunk_count"] == 2
+    assert result["sparse_index_status"] == "READY"
+    assert len(sparse_indexes.documents) == 2
+
+
+class FakeSparseIndexes:
+    def __init__(self, chunks=()) -> None:
+        self.chunks = chunks
+        self.documents = {}
+        self.status = None
+        self.fail = False
+
+    async def upsert_index(self, index):
+        self.status = index.status
+        return {}
+
+    async def list_index_work(self, index_name, limit=100):
+        return tuple(c for c in self.chunks if UUID(c["id"]) not in self.documents)[:limit]
+
+    async def upsert_chunk_documents(self, index_name, chunks):
+        if self.fail:
+            return 0
+        for chunk in chunks:
+            self.documents[chunk.retrieval_chunk_id] = chunk
+        return len(chunks)
+
+
+def test_sparse_normalizes_vietnamese_without_removing_accents() -> None:
+    text = unicodedata.normalize("NFD", "THUẾ, thuế! Điều 7; điểm đ.")
+    assert tokenize_sparse_text(text) == ("thuế", "thuế", "điều", "7", "điểm", "đ")
+
+
+def test_sparse_backfill_resumes_and_records_frequencies_positions_and_hash() -> None:
+    content = "Thuế thuế; Điều 7."
+    indexes = FakeSparseIndexes(tuple({"id": i, "content": content} for i in _CHUNK_IDS))
+    service = VbplSparseIndexingService(indexes, batch_size=1)
+    first = asyncio.run(service.backfill())
+    assert first["sparse_chunk_count"] == 2
+    assert first["sparse_index_status"] == "READY"
+    document = indexes.documents[UUID(_CHUNK_IDS[0])]
+    assert document.token_count == 4
+    assert document.indexed_text_sha256 == hashlib.sha256(content.encode()).hexdigest()
+    posting = next(p for p in document.postings if p.term == "thuế")
+    assert posting.term_frequency == 2
+    assert posting.positions == (0, 1)
+    assert asyncio.run(service.backfill())["sparse_chunk_count"] == 0
+
+
+def test_sparse_remains_stale_until_all_chunks_are_indexed_and_replaces_changed_postings() -> None:
+    chunks = tuple({"id": i, "content": "thuế"} for i in _CHUNK_IDS)
+    indexes = FakeSparseIndexes(chunks)
+    service = VbplSparseIndexingService(indexes)
+    assert asyncio.run(service.index_chunks(chunks[:1]))["sparse_index_status"] == "STALE"
+    changed = ({"id": _CHUNK_IDS[0], "content": "đất"},)
+    asyncio.run(service.index_chunks(changed))
+    assert [p.term for p in indexes.documents[UUID(_CHUNK_IDS[0])].postings] == ["đất"]
+    assert asyncio.run(service.backfill())["sparse_index_status"] == "READY"
+
+
+def test_sparse_partial_write_does_not_mark_index_ready() -> None:
+    indexes = FakeSparseIndexes(({"id": _CHUNK_IDS[0], "content": "thuế"},))
+    indexes.fail = True
+    with pytest.raises(RuntimeError, match="stored 0 of 1"):
+        asyncio.run(VbplSparseIndexingService(indexes).backfill())
+    assert indexes.status != "READY"

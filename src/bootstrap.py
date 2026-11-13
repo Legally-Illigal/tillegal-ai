@@ -22,6 +22,7 @@ from src.integrations.database.repositories.crawl_job_repository import CrawlJob
 from src.integrations.database.repositories.dense_index_repository import DenseIndexRepository
 from src.integrations.database.repositories.parsed_document_repository import ParsedDocumentRepository
 from src.integrations.database.repositories.source_document_repository import SourceDocumentRepository
+from src.integrations.database.repositories.sparse_index_repository import SparseIndexRepository
 from src.integrations.database.session import create_supabase_client
 from src.integrations.database.supabase.storage import SupabaseObjectStorage
 from src.integrations.database.transaction import PostgresTransactionManager
@@ -126,6 +127,7 @@ def _create_vbpl_document_ingestor(supabase_client: Client, settings: AppSetting
         ChunkRepository(supabase_client),
         DenseIndexRepository(supabase_client),
         settings.vbpl,
+        sparse_indexes=SparseIndexRepository(supabase_client),
     )
     return VbplDocumentIngestionService(
         SourceDocumentRepository(supabase_client),
