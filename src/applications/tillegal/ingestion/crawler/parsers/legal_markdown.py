@@ -17,7 +17,7 @@ from src.integrations.database.repositories.parsed_document_repository import (
 )
 
 SCHEMA_VERSION = "legal-structure-v1"
-PARSER_VERSION = "vbpl-markdown-v4"
+PARSER_VERSION = "vbpl-markdown-v5"
 DEFAULT_MAX_CHUNK_TOKENS = 480
 _SECTION_HEADING = re.compile(
     r"^(?:#{1,6}\s*)?(Chương|Phần|Mục|Tiểu mục)\s+"
@@ -31,8 +31,10 @@ _ARTICLE_INLINE_BODY = re.compile(
 )
 _CLAUSE = re.compile(r"^(\d+)\.\s+(.+)$")
 _POINT = re.compile(r"^([a-zđ])\)\s*(.*)$", re.IGNORECASE)
-_APPENDIX = re.compile(r"^PHỤ LỤC(?:\s+(?:[IVXLCDM]+|\d+))?$", re.IGNORECASE)
-_FORM = re.compile(r"^Mẫu số\s+\d+[a-zA-Z]?(?:\s*[:.–-]\s*.*)?$", re.IGNORECASE)
+_APPENDIX = re.compile(
+    r"^PHỤ LỤC(?:\s+(?:[IVXLCDM]+|\d+[a-z]?))?(?:\s*[.:–—-]\s*\S.*)?$", re.IGNORECASE
+)
+_FORM = re.compile(r"^Mẫu số\s+\d+[a-zA-Z]?(?:[/.-][\w-]+)*(?:\s*[:.–-]\s*.*)?$", re.IGNORECASE)
 _ATTACHED_TITLE = re.compile(r"^(?:QUYẾT ĐỊNH|NGHỊ QUYẾT|QUY CHẾ|QUY ĐỊNH)$")
 _INLINE_MARKDOWN = re.compile(r"\[([^\]]+)\]\([^)]+\)|\*\*|__|~~|`|\*|_")
 
@@ -104,7 +106,13 @@ def parse_legal_markdown(
         form_heading = _FORM.fullmatch(cleaned)
         attached_heading = _ATTACHED_TITLE.fullmatch(cleaned) if current_appendix else None
         # A document-type title following an explicit form label belongs to that form.
-        previous_text = _clean_line(" ".join(line.text for line in groups[group_index - 1])) if group_index else ""
+        previous_index = group_index - 1
+        # Masthead tables between a form number and its title do not start a new form.
+        while previous_index >= 0 and groups[previous_index][0].text.lstrip().startswith("|"):
+            previous_index -= 1
+        previous_text = (
+            _clean_line(" ".join(line.text for line in groups[previous_index])) if previous_index >= 0 else ""
+        )
         if attached_heading and _FORM.fullmatch(previous_text):
             attached_heading = None
         if appendix_heading or form_heading or attached_heading:
@@ -346,6 +354,9 @@ def _paragraphs(markdown: str) -> list[list[_SourceLine]]:
             paragraphs.append(current)
             current = []
         current.append(_SourceLine(content, start, end))
+        if _APPENDIX.fullmatch(cleaned) or _FORM.fullmatch(cleaned):
+            paragraphs.append(current)
+            current = []
     if current:
         paragraphs.append(current)
     return paragraphs

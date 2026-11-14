@@ -72,6 +72,20 @@ def test_cleanup_joins_wrapped_subtitle_without_merging_articles() -> None:
     assert clean_legal_markdown(cleaned) == cleaned
 
 
+def test_cleanup_preserves_complete_appendix_forms_after_main_signature() -> None:
+    appendix = (
+        "**PHỤ LỤC I. BIỂU MẪU**\n\nMẫu số 01/ABC\n\n"
+        "| Cơ quan | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM |\n| --- | --- |\n\n"
+        "Họ tên: ...\n\n**Nơi nhận:**\n\nĐơn vị: ...\n\n**CHỦ TỊCH**\n\n"
+        "(Ký, ghi rõ họ tên)\n\nMẫu số 02/ABC\n\n| Hạng | Giá |\n| --- | --- |\n| A | 10 |\n"
+    )
+    source = "**QUYẾT ĐỊNH**\n\n**Điều 1.** Ban hành.\n\n**KT. CHỦ TỊCH**\n\nNgười ký\n\n" + appendix
+    cleaned = clean_legal_markdown(source)
+    assert "Người ký" not in cleaned
+    assert cleaned.endswith(appendix)
+    assert clean_legal_markdown(cleaned) == cleaned
+
+
 def test_converts_vbpl_document_body_to_markdown() -> None:
     html = """
     <!doctype html>

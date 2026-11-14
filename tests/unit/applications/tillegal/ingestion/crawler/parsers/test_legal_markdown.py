@@ -33,6 +33,23 @@ def test_appendix_forms_do_not_inherit_main_chapter_or_previous_form_article() -
     assert markdown[target.start_offset:target.end_offset] == "**Về việc cử Trưởng đoàn**"
 
 
+def test_named_appendices_and_form_codes_preserve_scope_across_mastheads() -> None:
+    markdown = (
+        "**Chương VII**\n\n**Điều 22. Thi hành**\n\n**PHỤ LỤC I. BIỂU MẪU**\n"
+        "Mẫu số 01/ABC\n\n| Cơ quan | Quốc hiệu |\n| --- | --- |\n\n"
+        "**QUYẾT ĐỊNH**\n\n**Điều 1.** Nội dung mẫu một.\n\n"
+        "**PHỤ LỤC II: DANH MỤC**\n\nMẫu số 02/ABC\n\nNội dung mẫu hai."
+    )
+    parsed = parse_legal_markdown(markdown, source_document_id=_SOURCE_DOCUMENT_ID, title="Thông tư")
+    containers = [node for node in parsed.nodes if node.kind in {"appendix", "attachment"}]
+    assert [node.label for node in containers] == [
+        "PHỤ LỤC I. BIỂU MẪU", "Mẫu số 01/ABC", "PHỤ LỤC II: DANH MỤC", "Mẫu số 02/ABC",
+    ]
+    article = next(node for node in parsed.nodes if node.node_id.endswith("article-1"))
+    assert article.parent_node_id == "appendix-1-attachment-1"
+    assert next(b for b in parsed.blocks if b.content == "Nội dung mẫu hai.").node_id == "appendix-2-attachment-1"
+
+
 def test_wrapped_points_keep_continuations_tables_and_chunk_context() -> None:
     markdown = (
         "**Điều 4. Phân bổ vốn**\n1. Tiêu chí:\na) Nội dung\n"

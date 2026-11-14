@@ -37,9 +37,20 @@ def clean_legal_markdown(markdown: str) -> str:
         start = first_title
     result: list[str] = []
     in_footer = False
+    in_appendix = False
     for index in range(start, len(groups)):
         group, value = groups[index], texts[index]
         first_line = value.splitlines()[0] if value else ""
+        if re.fullmatch(
+            r"PHỤ LỤC(?:\s+(?:[IVXLCDM]+|\d+[a-z]?))?(?:\s*[.:–—-]\s*\S.*)?", first_line, re.IGNORECASE
+        ) or re.fullmatch(r"Mẫu số\s+\d+[a-zA-Z]?(?:[/.-][\w-]+)*(?:\s*[:.–-]\s*.*)?", first_line, re.IGNORECASE):
+            in_appendix = True
+        # Signature/recipient fields and mastheads are part of a reusable form.
+        # Preserve the appendix verbatim rather than applying main-document footer rules.
+        if in_appendix:
+            in_footer = False
+            result.append(group.strip())
+            continue
         resumes = title.fullmatch(first_line) is not None or boundary.match(first_line) is not None
         if resumes:
             in_footer = False
