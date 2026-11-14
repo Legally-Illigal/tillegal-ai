@@ -7,6 +7,50 @@ from src.applications.tillegal.ingestion.crawler.parsers.legal_markdown import _
 _SOURCE_DOCUMENT_ID = UUID("00000000-0000-0000-0000-000000000001")
 
 
+def test_signature_table_chunks_remove_layout_but_preserve_source_block() -> None:
+    table = (
+        "| ĐẠI DIỆN BÊN CUNG CẤP<br>DỊCH VỤ ĐÀO TẠO<br>[ký tên, đóng dấu (nếu có)] | | "
+        "ĐẠI DIỆN CƠ QUAN<br/>HỖ TRỢ<BR />[ký tên, đóng dấu] |\n| --- | --- | --- |"
+    )
+    parsed = parse_legal_markdown(table, source_document_id=_SOURCE_DOCUMENT_ID, title="Mẫu")
+    assert parsed.blocks[0].content == table
+    assert parsed.blocks[0].block_type == "table"
+    assert len(parsed.chunks) == 1
+    chunk = parsed.chunks[0]
+    assert chunk.chunk_type == "table"
+    assert chunk.block_id == parsed.blocks[0].block_id
+    assert "ĐẠI DIỆN BÊN CUNG CẤP DỊCH VỤ ĐÀO TẠO [ký tên, đóng dấu (nếu có)]" in chunk.content
+    assert "ĐẠI DIỆN CƠ QUAN HỖ TRỢ [ký tên, đóng dấu]" in chunk.content
+    assert all(marker not in chunk.content for marker in ("<br", "<BR", "---", "|"))
+    assert chunk.metadata["table_headers"] == []
+
+
+def test_data_table_chunks_keep_headers_literal_pipes_and_token_limit() -> None:
+    table = "| Loại | Mô tả |\n| :--- | ---: |\n| | |\n| A\\|B | " + "nội dung " * 60 + " |"
+    parsed = parse_legal_markdown(
+        table, source_document_id=_SOURCE_DOCUMENT_ID, title="Bảng",
+        token_counter=lambda s: len(s.split()), max_chunk_tokens=32,
+    )
+    assert len(parsed.chunks) > 1
+    assert all(len(c.content.split()) <= 32 for c in parsed.chunks)
+    assert all("Cột: Loại; Mô tả" in c.content for c in parsed.chunks)
+    assert "Loại: A|B" in parsed.chunks[0].content
+    assert all("---" not in c.content and c.chunk_type == "table" for c in parsed.chunks)
+    bodies = [c.content.split("Cột: Loại; Mô tả\n", 1)[1] for c in parsed.chunks]
+    assert " ".join(bodies).split() == ("Loại: A|B; Mô tả: " + "nội dung " * 60).split()
+    assert all(c.metadata["block_ids"] == [parsed.blocks[0].block_id] for c in parsed.chunks)
+
+
+def test_empty_and_separator_only_tables_do_not_create_chunks() -> None:
+    parsed = parse_legal_markdown(
+        "Nội dung thật.\n\n|----|\n\n| | |\n| --- | --- |",
+        source_document_id=_SOURCE_DOCUMENT_ID, title="Văn bản",
+    )
+    assert len(parsed.chunks) == 1
+    assert parsed.chunks[0].content.endswith("Nội dung thật.")
+    assert len(parsed.blocks) == 3
+
+
 def test_chunks_merge_point_blocks_and_include_parent_lead_without_crossing_points() -> None:
     parsed = parse_legal_markdown(
         "**Điều 1. Hệ số**\n\n1. Các hệ số:\n\na) Hệ số gốc:\n\n"

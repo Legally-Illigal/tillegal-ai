@@ -6,6 +6,7 @@ import hashlib
 import re
 from collections.abc import Callable
 from dataclasses import dataclass
+from html import unescape
 from uuid import UUID
 
 from src.integrations.database.repositories.parsed_document_repository import (
@@ -17,7 +18,7 @@ from src.integrations.database.repositories.parsed_document_repository import (
 )
 
 SCHEMA_VERSION = "legal-structure-v1"
-PARSER_VERSION = "vbpl-markdown-v6"
+PARSER_VERSION = "vbpl-markdown-v7"
 DEFAULT_MAX_CHUNK_TOKENS = 480
 _SECTION_HEADING = re.compile(
     r"^(?:#{1,6}\s*)?(Chương|Phần|Mục|Tiểu mục)\s+"
@@ -482,6 +483,9 @@ def _make_chunks(
         path.reverse()
         breadcrumb = " > ".join([title, *path])
         prefix = f"{breadcrumb} > "
+        if block.block_type == "table":
+            chunks.extend(_table_chunks(block, prefix, breadcrumb, token_counter, max_tokens, len(chunks)))
+            continue
         context_blocks: list[str] = []
         node = nodes[block.node_id] if block.node_id is not None else None
         if node is not None and node.kind in {"point", "clause"}:
@@ -534,6 +538,64 @@ def _make_chunks(
                 )
             )
     return chunks
+
+
+def _table_chunks(
+    block: DocumentBlockWrite, prefix: str, breadcrumb: str,
+    token_counter: Callable[[str], int], max_tokens: int, ordinal: int,
+) -> list[RetrievalChunkWrite]:
+    """Render searchable table rows without changing the persisted source block."""
+    rows: list[tuple[int, int, list[str]]] = []
+    separators: list[int] = []
+    offset = 0
+    for raw in block.content.splitlines(keepends=True):
+        line = raw.strip()
+        start, end = offset, offset + len(raw.rstrip("\r\n"))
+        offset += len(raw)
+        cells = re.split(r"(?<!\\)\|", line)
+        if cells and not cells[0].strip():
+            cells = cells[1:]
+        if cells and not cells[-1].strip():
+            cells = cells[:-1]
+        if cells and all(re.fullmatch(r":?-+:?", cell.strip()) for cell in cells):
+            separators.append(len(rows))
+            continue
+        cells = [re.sub(r"\s+", " ", unescape(re.sub(
+            r"<br\s*/?>", " ", cell, flags=re.IGNORECASE
+        )).replace(r"\|", "|")).strip() for cell in cells]
+        if any(cells):
+            rows.append((start, end, cells))
+    if not rows:
+        return []
+    # A single-row layout (e.g. signatures) is content, never a column header.
+    has_header = len(rows) > 1 and 1 in separators and all(rows[0][2])
+    if has_header and ("<br" in block.content[:rows[0][1]].lower()
+                       or any(len(cell) > 80 for cell in rows[0][2])):
+        has_header = False
+    headers = rows[0][2] if has_header else []
+    result: list[RetrievalChunkWrite] = []
+    for row_index, (start, end, cells) in enumerate(rows[1:] if has_header else rows):
+        row_prefix = prefix
+        if headers:
+            row_prefix += "Cột: " + "; ".join(headers) + "\n"
+        body = "; ".join(
+            f"{headers[index]}: {cell}" if index < len(headers) else f"Cột {index + 1}: {cell}"
+            for index, cell in enumerate(cells) if cell
+        ) if headers else "\n\n".join(cell for cell in cells if cell)
+        for part in _split_content(row_prefix, body, token_counter, max_tokens):
+            content = row_prefix + part
+            result.append(RetrievalChunkWrite(
+                chunk_key=f"legal-v3-{block.block_id}-{len(result) + 1}",
+                content=content, content_sha256=hashlib.sha256(content.encode("utf-8")).hexdigest(),
+                node_id=block.node_id, block_id=block.block_id, chunk_type="table",
+                ordinal=ordinal + len(result), start_offset=block.start_offset, end_offset=block.end_offset,
+                metadata={"block_ids": [block.block_id], "breadcrumb": breadcrumb,
+                          "table_row": row_index + (2 if has_header else 1), "table_headers": headers,
+                          "block_spans": [{"block_id": block.block_id, "content_start": start,
+                                           "content_end": end}],
+                          "header_span": [rows[0][0], rows[0][1]] if has_header else None},
+            ))
+    return result
 
 
 def _split_content(
