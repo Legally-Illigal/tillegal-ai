@@ -2,9 +2,40 @@ from uuid import UUID
 
 import pytest
 
-from src.applications.tillegal.ingestion.crawler.parsers.legal_markdown import parse_legal_markdown
+from src.applications.tillegal.ingestion.crawler.parsers.legal_markdown import _split_content, parse_legal_markdown
 
 _SOURCE_DOCUMENT_ID = UUID("00000000-0000-0000-0000-000000000001")
+
+
+def test_chunks_merge_point_blocks_and_include_parent_lead_without_crossing_points() -> None:
+    parsed = parse_legal_markdown(
+        "**Điều 1. Hệ số**\n\n1. Các hệ số:\n\na) Hệ số gốc:\n\n"
+        "Loại I: 3.\n\nLoại II: 2.\n\nb) Hệ số khác.\n\n**Điều 2. Khác**\n\nNội dung.",
+        source_document_id=_SOURCE_DOCUMENT_ID, title="Quyết định",
+    )
+    chunks = [c for c in parsed.chunks if c.node_id == "article-1-clause-1-point-a"]
+    assert len(chunks) == 1
+    chunk = chunks[0]
+    assert "1. Các hệ số:" in chunk.content
+    assert "a) Hệ số gốc:\n\nLoại I: 3.\n\nLoại II: 2." in chunk.content
+    assert "b)" not in chunk.content
+    assert len(chunk.metadata["block_ids"]) == 3
+    assert len(chunk.metadata["context_block_ids"]) == 1
+    assert chunk.block_id == chunk.metadata["block_ids"][0]
+    assert len(parsed.blocks) > len(parsed.chunks)
+
+
+def test_split_prefers_complete_sentences_and_preserves_all_words() -> None:
+    sentences = ["Alpha " + "word " * 8 + ".", "Beta " + "word " * 8 + ".", "Gamma " + "word " * 8 + "."]
+    text = " ".join(sentences)
+    parts = _split_content("Title > ", text, lambda s: len(s.split()), 24)
+    assert parts == [" ".join(sentences[:2]), sentences[2]]
+    long_sentence = " ".join(f"word{i}" for i in range(55))
+    parts = _split_content("Title > ", long_sentence, lambda s: len(s.split()), 24)
+    assert " ".join(parts) == long_sentence
+    assert all(len(("Title > " + part).split()) <= 24 for part in parts)
+    with pytest.raises(ValueError, match="single word"):
+        _split_content("", "x" * 30, len, 24)
 
 
 def test_appendix_forms_do_not_inherit_main_chapter_or_previous_form_article() -> None:

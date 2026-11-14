@@ -17,7 +17,7 @@ from src.integrations.database.repositories.parsed_document_repository import (
 )
 
 SCHEMA_VERSION = "legal-structure-v1"
-PARSER_VERSION = "vbpl-markdown-v5"
+PARSER_VERSION = "vbpl-markdown-v6"
 DEFAULT_MAX_CHUNK_TOKENS = 480
 _SECTION_HEADING = re.compile(
     r"^(?:#{1,6}\s*)?(Chương|Phần|Mục|Tiểu mục)\s+"
@@ -458,9 +458,20 @@ def _make_chunks(
     max_tokens: int,
 ) -> list[RetrievalChunkWrite]:
     chunks: list[RetrievalChunkWrite] = []
+    groups: list[list[DocumentBlockWrite]] = []
     for block in blocks:
         if block.block_type == "heading" or not block.content.strip():
+            groups.append([])
             continue
+        if (not groups or not groups[-1] or groups[-1][-1].node_id != block.node_id
+                or block.block_type == "table" or groups[-1][-1].block_type == "table"):
+            groups.append([block])
+        else:
+            groups[-1].append(block)
+    for group in groups:
+        if not group:
+            continue
+        block = group[0]
         path: list[str] = []
         node_id: str | None = block.node_id
         while node_id is not None:
@@ -471,23 +482,55 @@ def _make_chunks(
         path.reverse()
         breadcrumb = " > ".join([title, *path])
         prefix = f"{breadcrumb} > "
-        parts = _split_content(prefix, block.content, token_counter, max_tokens)
+        context_blocks: list[str] = []
+        node = nodes[block.node_id] if block.node_id is not None else None
+        if node is not None and node.kind in {"point", "clause"}:
+            lead = next((item for item in reversed(blocks[:block.ordinal])
+                         if item.node_id == node.parent_node_id and item.block_type != "heading"), None)
+            if lead is not None and lead.content.rstrip().endswith(":"):
+                contextual_prefix = prefix + lead.content + "\n\n"
+                if token_counter(contextual_prefix + group[0].content) <= max_tokens:
+                    prefix = contextual_prefix
+                    context_blocks = [lead.block_id]
+        body = "\n\n".join(item.content for item in group)
+        spans: list[tuple[int, int, DocumentBlockWrite]] = []
+        offset = 0
+        for item in group:
+            spans.append((offset, offset + len(item.content), item))
+            offset += len(item.content) + 2
+        parts = _split_content(prefix, body, token_counter, max_tokens)
+        cursor = 0
         for part_index, part in enumerate(parts):
+            part_start = body.index(part, cursor)
+            part_end = part_start + len(part)
+            cursor = part_end
+            covered = [(start, end, item) for start, end, item in spans
+                       if start < part_end and end > part_start]
+            first, last = covered[0][2], covered[-1][2]
             content = f"{prefix}{part}"
             chunk_ordinal = len(chunks)
-            chunk_key = f"legal-v1-{block.block_id}-{part_index + 1}"
+            chunk_key = f"legal-v2-{block.block_id}-{part_index + 1}"
             chunks.append(
                 RetrievalChunkWrite(
                     chunk_key=chunk_key,
                     content=content,
                     content_sha256=hashlib.sha256(content.encode("utf-8")).hexdigest(),
                     node_id=block.node_id,
-                    block_id=block.block_id,
-                    chunk_type=block.block_type,
+                    block_id=first.block_id,
+                    chunk_type=first.block_type if len(covered) == 1 else "text",
                     ordinal=chunk_ordinal,
-                    start_offset=block.start_offset,
-                    end_offset=block.end_offset,
-                    metadata={"block_ids": [block.block_id], "breadcrumb": breadcrumb},
+                    start_offset=first.start_offset,
+                    end_offset=last.end_offset,
+                    metadata={
+                        "block_ids": [item.block_id for _, _, item in covered],
+                        "breadcrumb": breadcrumb,
+                        "context_block_ids": context_blocks,
+                        "block_spans": [
+                            {"block_id": item.block_id, "content_start": max(part_start - start, 0),
+                             "content_end": min(part_end, end) - start}
+                            for start, end, item in covered
+                        ],
+                    },
                 )
             )
     return chunks
@@ -504,21 +547,39 @@ def _split_content(
     if token_counter(prefix.rstrip()) >= max_tokens:
         raise ValueError("Legal breadcrumb exceeds the configured maximum chunk token count")
 
-    words = re.findall(r"\S+\s*", content)
-    parts: list[str] = []
-    current = ""
-    for word in words:
-        candidate = f"{current}{word}"
-        if current and token_counter(f"{prefix}{candidate}") > max_tokens:
-            parts.append(current.strip())
-            current = word
-            if token_counter(f"{prefix}{current}") > max_tokens:
-                raise ValueError("A single word exceeds the configured maximum chunk token count")
-        else:
-            current = candidate
-    if current.strip():
-        parts.append(current.strip())
-    return parts
+    def split(value: str, level: int = 0) -> list[str]:
+        if token_counter(f"{prefix}{value}") <= max_tokens:
+            return [value]
+        separators = (r"\n+", r"(?<=[.!?;])\s+(?=[A-ZÀ-ỸĐ])", r"\s+")
+        if level == len(separators):
+            raise ValueError("A single word exceeds the configured maximum chunk token count")
+        # Preserve exact substrings so each emitted piece can map back to its blocks.
+        boundaries = [0, *(match.end() for match in re.finditer(separators[level], value)), len(value)]
+        result: list[str] = []
+        pending_start: int | None = None
+        pending_end = 0
+        for start, end in zip(boundaries, boundaries[1:]):
+            unit = value[start:end].strip()
+            if not unit:
+                continue
+            candidate = value[pending_start if pending_start is not None else start:end].strip()
+            if token_counter(f"{prefix}{candidate}") <= max_tokens:
+                if pending_start is None:
+                    pending_start = start
+                pending_end = end
+                continue
+            if pending_start is not None:
+                result.append(value[pending_start:pending_end].strip())
+                pending_start = None
+            if token_counter(f"{prefix}{unit}") > max_tokens:
+                result.extend(split(unit, level + 1))
+            else:
+                pending_start, pending_end = start, end
+        if pending_start is not None:
+            result.append(value[pending_start:pending_end].strip())
+        return result
+
+    return split(content)
 
 
 def _estimate_tokens(text: str) -> int:
