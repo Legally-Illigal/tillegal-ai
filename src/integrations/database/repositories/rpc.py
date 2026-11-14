@@ -23,5 +23,5 @@ class SupabaseRpcRepository:
         try:
             response = await asyncio.to_thread(lambda: self._client.rpc(function_name, dict(parameters)).execute())
         except (APIError, httpx.HTTPError) as error:
-            raise DatabaseRepositoryError(f"Supabase RPC '{function_name}' failed") from error
+            raise DatabaseRepositoryError(f"Supabase RPC '{function_name}' failed: {error}") from error
         return response.data

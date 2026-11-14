@@ -84,12 +84,37 @@ class LangGraphSettings(StrictConfig):
     checkpointer_enabled: bool = False
 
 
+class VbplCrawlSettings(StrictConfig):
+    max_sitemap_size_mb: int = Field(default=10, ge=1)
+    max_sitemap_count: int = Field(default=100, ge=1)
+    sitemap_timeout_seconds: float = Field(default=45, gt=0)
+    request_pause_seconds: float = Field(default=0.25, ge=0)
+    max_page_size_mb: int = Field(default=5, ge=1)
+    max_bundle_size_mb: int = Field(default=5, ge=1)
+    max_attachment_size_mb: int = Field(default=100, ge=1)
+    page_timeout_seconds: float = Field(default=45, gt=0)
+    attachment_timeout_seconds: float = Field(default=90, gt=0)
+    doc_conversion_timeout_seconds: float = Field(default=60, gt=0)
+    worker_poll_interval_seconds: float = Field(default=5, gt=0)
+    worker_lease_seconds: int = Field(default=180, ge=1)
+    worker_heartbeat_interval_seconds: float = Field(default=45, gt=0)
+    chunk_max_tokens: int = Field(default=480, ge=16, le=512)
+    embedding_batch_size: int = Field(default=32, ge=1, le=256)
+
+    @model_validator(mode="after")
+    def validate_worker_lease(self) -> VbplCrawlSettings:
+        if self.worker_heartbeat_interval_seconds >= self.worker_lease_seconds:
+            raise ConfigurationError("VBPL worker heartbeat interval must be shorter than its lease")
+        return self
+
+
 class AppSettings(StrictConfig):
     app: ApplicationSettings = Field(default_factory=ApplicationSettings)
     api: APISettings = Field(default_factory=APISettings)
     security: SecuritySettings = Field(default_factory=SecuritySettings)
     supabase: SupabaseSettings = Field(default_factory=SupabaseSettings)
     langgraph: LangGraphSettings = Field(default_factory=LangGraphSettings)
+    vbpl: VbplCrawlSettings = Field(default_factory=VbplCrawlSettings)
 
     @model_validator(mode="after")
     def validate_checkpointer_settings(self) -> AppSettings:
@@ -109,9 +134,7 @@ def load_settings(
     else:
         env = environ
 
-    configured_path = config_path or (
-        Path(env["CONFIG_FILE"]) if env.get("CONFIG_FILE") else DEFAULT_CONFIG_PATH
-    )
+    configured_path = config_path or (Path(env["CONFIG_FILE"]) if env.get("CONFIG_FILE") else DEFAULT_CONFIG_PATH)
     raw_config = yaml.safe_load(configured_path.read_text(encoding="utf-8"))
     if raw_config is None:
         raw_config = {}
@@ -119,7 +142,7 @@ def load_settings(
         raise ConfigurationError(f"Configuration root in {configured_path} must be a YAML mapping")
 
     config = dict(raw_config)
-    for section in ("app", "api", "security", "supabase", "langgraph"):
+    for section in ("app", "api", "security", "supabase", "langgraph", "vbpl"):
         value = config.get(section, {})
         if not isinstance(value, dict):
             raise ConfigurationError(f"Configuration section '{section}' must be a YAML mapping")
@@ -161,6 +184,27 @@ def load_settings(
         if checkpointer_value not in {"true", "false"}:
             raise ConfigurationError("LANGGRAPH_CHECKPOINTER_ENABLED must be either 'true' or 'false'")
         config["langgraph"]["checkpointer_enabled"] = checkpointer_value == "true"
+
+    vbpl_overrides = {
+        "VBPL_MAX_SITEMAP_SIZE_MB": "max_sitemap_size_mb",
+        "VBPL_MAX_SITEMAP_COUNT": "max_sitemap_count",
+        "VBPL_SITEMAP_TIMEOUT_SECONDS": "sitemap_timeout_seconds",
+        "VBPL_REQUEST_PAUSE_SECONDS": "request_pause_seconds",
+        "VBPL_MAX_PAGE_SIZE_MB": "max_page_size_mb",
+        "VBPL_MAX_BUNDLE_SIZE_MB": "max_bundle_size_mb",
+        "VBPL_MAX_ATTACHMENT_SIZE_MB": "max_attachment_size_mb",
+        "VBPL_PAGE_TIMEOUT_SECONDS": "page_timeout_seconds",
+        "VBPL_ATTACHMENT_TIMEOUT_SECONDS": "attachment_timeout_seconds",
+        "VBPL_DOC_CONVERSION_TIMEOUT_SECONDS": "doc_conversion_timeout_seconds",
+        "VBPL_WORKER_POLL_INTERVAL_SECONDS": "worker_poll_interval_seconds",
+        "VBPL_WORKER_LEASE_SECONDS": "worker_lease_seconds",
+        "VBPL_WORKER_HEARTBEAT_INTERVAL_SECONDS": "worker_heartbeat_interval_seconds",
+        "VBPL_CHUNK_MAX_TOKENS": "chunk_max_tokens",
+        "VBPL_EMBEDDING_BATCH_SIZE": "embedding_batch_size",
+    }
+    for env_key, setting_key in vbpl_overrides.items():
+        if env_key in env:
+            config["vbpl"][setting_key] = env[env_key]
 
     if "SUPABASE_AUTO_MIGRATE" in env:
         auto_migrate_value = env["SUPABASE_AUTO_MIGRATE"].strip().lower()

@@ -1,9 +1,13 @@
 """FastAPI integration tests."""
 
+import asyncio
 import logging
+from datetime import UTC, date, datetime
+from uuid import UUID, uuid4
 
 from fastapi.testclient import TestClient
 
+from src.application.dto.crawl_job import CrawlJob
 from src.bootstrap import create_app
 from src.core.config import AppSettings
 from src.main import app as configured_app
@@ -29,6 +33,58 @@ def test_liveness_endpoint_reports_ok() -> None:
 
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
+
+
+def test_vbpl_crawl_api_defaults_to_vietnam_today(monkeypatch) -> None:
+    class FakeJobStore:
+        def __init__(self) -> None:
+            self.job = CrawlJob(
+                id=uuid4(),
+                source_id="vbpl",
+                crawl_date=date(2026, 11, 9),
+                status="PENDING",
+                result={},
+                error_message=None,
+                attempts=0,
+                max_attempts=3,
+                created_at=datetime.now(UTC),
+                started_at=None,
+                completed_at=None,
+                updated_at=datetime.now(UTC),
+            )
+
+        async def create(self, source_id: str, crawl_date: date) -> CrawlJob:
+            assert source_id == "vbpl"
+            assert crawl_date == self.job.crawl_date
+            return self.job
+
+        async def get(self, job_id: UUID) -> CrawlJob | None:
+            return self.job if job_id == self.job.id else None
+
+    monkeypatch.setattr(
+        "src.application.services.vbpl_crawl_service.current_vietnam_date",
+        lambda: date(2026, 11, 9),
+    )
+    app = create_app(AppSettings())
+    app.state.crawl_job_store = FakeJobStore()
+
+    with TestClient(app) as client:
+        created = client.post("/ingestion/vbpl/crawl")
+        fetched = client.get(f"/ingestion/vbpl/jobs/{created.json()['id']}")
+
+    assert created.status_code == 202
+    assert created.json()["status"] == "PENDING"
+    assert created.json()["crawl_date"] == "2026-11-09"
+    assert fetched.status_code == 200
+    assert fetched.json()["id"] == created.json()["id"]
+
+
+def test_vbpl_crawl_api_requires_database_configuration() -> None:
+    app = create_app(AppSettings())
+
+    response = TestClient(app).post("/ingestion/vbpl/crawl", json={})
+
+    assert response.status_code == 503
 
 
 def test_request_context_is_logged_and_echoed(caplog) -> None:
@@ -108,10 +164,14 @@ def test_app_runs_without_supabase_configuration() -> None:
 def test_app_runs_supabase_migrations_on_startup_when_enabled(monkeypatch) -> None:
     migration_calls: list[str] = []
 
+    async def wait_for_shutdown(self, owner: str) -> None:
+        await asyncio.Event().wait()
+
     async def fake_run_migrations(database_url) -> None:
         migration_calls.append(database_url.get_secret_value())
 
     monkeypatch.setattr("src.bootstrap.run_supabase_migrations", fake_run_migrations)
+    monkeypatch.setattr("src.bootstrap.VbplCrawlWorker.run_forever", wait_for_shutdown)
     app = create_app(
         AppSettings(
             supabase={
@@ -142,7 +202,11 @@ def test_app_opens_and_closes_langgraph_checkpointer_when_enabled(monkeypatch) -
         async def close(self) -> None:
             lifecycle_calls.append("close")
 
+    async def wait_for_shutdown(self, owner: str) -> None:
+        await asyncio.Event().wait()
+
     monkeypatch.setattr("src.bootstrap.PostgresCheckpointer", FakeCheckpointer)
+    monkeypatch.setattr("src.bootstrap.VbplCrawlWorker.run_forever", wait_for_shutdown)
     app = create_app(
         AppSettings(
             supabase={"database_url": "******db.example.supabase.co:5432/postgres"},

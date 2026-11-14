@@ -45,3 +45,20 @@ def test_json_formatter_emits_valid_json() -> None:
     formatted = JsonLogFormatter().format(record)
 
     assert json.loads(formatted) == {"event": "request_completed", "status_code": 200}
+
+
+def test_json_formatter_includes_crawl_failure_diagnostics() -> None:
+    record = logging.LogRecord("test", logging.ERROR, "", 0, "crawl failed", (), None)
+    record.crawl_job_id = "job-123"
+    record.crawl_date = "2026-11-09"
+    record.error_category = "DatabaseRepositoryError"
+    record.error_message = "PostgreSQL JSON serialization failed"
+
+    payload = json.loads(JsonLogFormatter().format(record))
+
+    assert payload["level"] == "ERROR"
+    assert payload["message"] == "crawl failed"
+    assert payload["crawl_job_id"] == "job-123"
+    assert payload["crawl_date"] == "2026-11-09"
+    assert payload["error_category"] == "DatabaseRepositoryError"
+    assert payload["error_message"] == "PostgreSQL JSON serialization failed"

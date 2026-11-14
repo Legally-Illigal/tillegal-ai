@@ -1,11 +1,14 @@
 """Unit tests for separated RAG database repositories."""
 
+from __future__ import annotations
+
 import asyncio
 from datetime import date
 from uuid import UUID
 
 import httpx
 import pytest
+from postgrest.exceptions import APIError
 from pydantic import ValidationError
 
 from src.integrations.database.repositories.dense_index_repository import (
@@ -64,6 +67,32 @@ class _FakeClient:
         return _FakeQuery(self.response)
 
 
+class _FakeTableQuery:
+    def __init__(self, response: _FakeResponse) -> None:
+        self.response = response
+
+    def select(self, columns: str) -> _FakeTableQuery:
+        return self
+
+    def eq(self, column: str, value: str) -> _FakeTableQuery:
+        return self
+
+    def limit(self, count: int) -> _FakeTableQuery:
+        return self
+
+    def execute(self) -> _FakeResponse:
+        return self.response
+
+
+class _FakeTableClient(_FakeClient):
+    def __init__(self, response: _FakeResponse) -> None:
+        super().__init__(response)
+        self.query = _FakeTableQuery(response)
+
+    def table(self, name: str) -> _FakeTableQuery:
+        return self.query
+
+
 def test_source_document_repository_serializes_typed_upsert() -> None:
     client = _FakeClient(_FakeResponse({"id": "source-id"}))
     repository = SourceDocumentRepository(client)  # type: ignore[arg-type]
@@ -72,6 +101,8 @@ def test_source_document_repository_serializes_typed_upsert() -> None:
         source_record_id="record-1",
         title="Legal document",
         issued_on=date(2026, 1, 2),
+        raw_file_ref="vbpl-raw/path/document.pdf",
+        raw_file_sha256="file-hash",
     )
 
     result = asyncio.run(repository.upsert(document))
@@ -82,6 +113,27 @@ def test_source_document_repository_serializes_typed_upsert() -> None:
     payload = parameters["p_document"]
     assert isinstance(payload, dict)
     assert payload["issued_on"] == "2026-01-02"
+    assert payload["raw_file_ref"] == "vbpl-raw/path/document.pdf"
+    assert payload["raw_file_sha256"] == "file-hash"
+
+
+def test_source_document_repository_returns_none_for_empty_lookup() -> None:
+    client = _FakeTableClient(_FakeResponse([]))
+    repository = SourceDocumentRepository(client)  # type: ignore[arg-type]
+
+    result = asyncio.run(repository.get_by_source_record_id("vbpl", "175384"))
+
+    assert result is None
+
+
+def test_source_document_repository_returns_matching_lookup_row() -> None:
+    row = {"id": "source-id", "raw_metadata": {}}
+    client = _FakeTableClient(_FakeResponse([row]))
+    repository = SourceDocumentRepository(client)  # type: ignore[arg-type]
+
+    result = asyncio.run(repository.get_by_source_record_id("vbpl", "175384"))
+
+    assert result == row
 
 
 def test_parsed_document_repository_uses_atomic_save_rpc() -> None:
@@ -138,13 +190,13 @@ def test_dense_index_repository_writes_indexed_embeddings() -> None:
     assert len(embedding_rows[0]["embedding"]) == 1536
 
 
-def test_dense_index_contract_rejects_mismatched_embedding_dimension() -> None:
+def test_dense_index_contract_rejects_invalid_embedding_dimension() -> None:
     with pytest.raises(ValidationError):
         DenseIndexWrite(
             index_name="legal-v1",
             provider="test",
             model_name="embed-v1",
-            embedding_dimension=768,
+            embedding_dimension=0,
         )
 
 
@@ -225,3 +277,23 @@ def test_repository_surfaces_transport_errors() -> None:
 
     with pytest.raises(DatabaseRepositoryError, match="get_sparse_index"):
         asyncio.run(repository.get_index("bm25-vi"))
+
+
+def test_repository_preserves_postgres_rpc_error_details() -> None:
+    api_error = APIError(
+        {
+            "code": "23503",
+            "message": "insert or update violates foreign key constraint",
+            "details": "Key (source_document_id) is not present.",
+            "hint": "Check the source document record.",
+        }
+    )
+    repository = SparseIndexRepository(_FakeClient(api_error))  # type: ignore[arg-type]
+
+    with pytest.raises(DatabaseRepositoryError) as raised:
+        asyncio.run(repository.get_index("bm25-vi"))
+
+    assert "23503" in str(raised.value)
+    assert "foreign key constraint" in str(raised.value)
+    assert "Check the source document record." in str(raised.value)
+    assert raised.value.__cause__ is api_error

@@ -7,7 +7,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 COPY . /app
 
-RUN pip install --no-cache-dir uv && \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends antiword && \
+    rm -rf /var/lib/apt/lists/* && \
+    pip install --no-cache-dir uv && \
     uv sync --frozen --no-dev && \
     rm -rf /root/.cache
 

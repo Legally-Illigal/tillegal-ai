@@ -16,3 +16,20 @@ security:
 
 langgraph:
   checkpointer_enabled: false
+
+vbpl:
+  max_sitemap_size_mb: 10
+  max_sitemap_count: 100
+  sitemap_timeout_seconds: 45
+  request_pause_seconds: 0.25
+  max_page_size_mb: 5
+  max_bundle_size_mb: 5
+  max_attachment_size_mb: 100
+  page_timeout_seconds: 45
+  attachment_timeout_seconds: 90
+  doc_conversion_timeout_seconds: 60
+  worker_poll_interval_seconds: 5
+  worker_lease_seconds: 180
+  worker_heartbeat_interval_seconds: 45
+  chunk_max_tokens: 480
+  embedding_batch_size: 32

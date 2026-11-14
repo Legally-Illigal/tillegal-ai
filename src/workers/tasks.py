@@ -1,1 +1,153 @@
-"""tasks.py."""
+"""Background tasks for durable legal-source ingestion."""
+
+import asyncio
+import logging
+from collections.abc import Awaitable, Callable
+from uuid import UUID
+
+from src.application.interfaces.crawl_job_store import CrawlJobStore
+from src.applications.tillegal.ingestion.crawler.vbpl_sitemap import VbplDocumentUrl, scan_vbpl_sitemaps
+from src.core.config import VbplCrawlSettings
+
+logger = logging.getLogger("tillegal.ingestion")
+
+
+class VbplCrawlWorker:
+    """Claim durable VBPL jobs, discover candidates, and ingest selected documents."""
+
+    def __init__(
+        self,
+        jobs: CrawlJobStore,
+        *,
+        document_ingestor: Callable[[VbplDocumentUrl], Awaitable[dict[str, object]]] | None = None,
+        poll_interval_seconds: float | None = None,
+        lease_seconds: int | None = None,
+        heartbeat_interval_seconds: float | None = None,
+        settings: VbplCrawlSettings | None = None,
+    ) -> None:
+        if poll_interval_seconds is None:
+            poll_interval_seconds = settings.worker_poll_interval_seconds if settings else 5
+        if lease_seconds is None:
+            lease_seconds = settings.worker_lease_seconds if settings else 180
+        if heartbeat_interval_seconds is None:
+            heartbeat_interval_seconds = settings.worker_heartbeat_interval_seconds if settings else 45
+        if poll_interval_seconds <= 0 or lease_seconds <= 0 or heartbeat_interval_seconds <= 0:
+            raise ValueError("Worker polling and lease intervals must be positive")
+        if heartbeat_interval_seconds >= lease_seconds:
+            raise ValueError("Heartbeat interval must be shorter than the job lease")
+        self._jobs = jobs
+        self._document_ingestor = document_ingestor
+        self._settings = settings
+        self._poll_interval_seconds = poll_interval_seconds
+        self._lease_seconds = lease_seconds
+        self._heartbeat_interval_seconds = heartbeat_interval_seconds
+
+    async def run_once(self, owner: str) -> bool:
+        """Claim and execute at most one job; return whether a job was claimed."""
+        job = await self._jobs.claim(owner, self._lease_seconds)
+        if job is None:
+            return False
+
+        heartbeat = asyncio.create_task(self._keep_lease(job.id, owner))
+        try:
+            if self._settings is None:
+                result = await asyncio.to_thread(scan_vbpl_sitemaps, job.crawl_date)
+            else:
+                result = await asyncio.to_thread(scan_vbpl_sitemaps, job.crawl_date, settings=self._settings)
+            if result.selected and self._document_ingestor is None:
+                raise RuntimeError("VBPL document ingestion requires SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY")
+            ingested_documents: list[dict[str, object]] = []
+            if self._document_ingestor is not None:
+                for document in result.selected:
+                    ingested_documents.append(await self._document_ingestor(document))
+            await self._jobs.succeed(
+                job.id,
+                owner,
+                {
+                    "target_date": result.target_date.isoformat(),
+                    "sitemap_count": result.sitemap_count,
+                    "document_url_count": result.document_url_count,
+                    "selected_count": len(result.selected),
+                    "shards": [
+                        {
+                            "url": shard.url,
+                            "document_url_count": shard.document_url_count,
+                            "selected_count": shard.selected_count,
+                        }
+                        for shard in result.shards
+                    ],
+                    "selected": [
+                        {
+                            "url": document.url,
+                            "sitemap_lastmod": document.lastmod.isoformat(),
+                            "sitemap_url": document.sitemap_url,
+                        }
+                        for document in result.selected
+                    ],
+                    "document_ingestion": {
+                        "created_count": sum(item.get("action") == "created" for item in ingested_documents),
+                        "files_backfilled_count": sum(
+                            item.get("action") == "files_backfilled" for item in ingested_documents
+                        ),
+                        "metadata_updated_count": sum(
+                            item.get("action") == "metadata_updated" for item in ingested_documents
+                        ),
+                        "attachment_count": sum(int(item.get("attachment_count", 0)) for item in ingested_documents),
+                        "downloaded_attachment_count": sum(
+                            int(item.get("downloaded_attachment_count", 0)) for item in ingested_documents
+                        ),
+                        "markdown_created_count": sum(
+                            item.get("markdown_created") is True for item in ingested_documents
+                        ),
+                        "chunk_count": sum(
+                            int(_mapping(item.get("markdown_indexing")).get("chunk_count", 0))
+                            for item in ingested_documents
+                        ),
+                        "embedding_count": sum(
+                            int(_mapping(item.get("markdown_indexing")).get("embedding_count", 0))
+                            for item in ingested_documents
+                        ),
+                        "documents": ingested_documents,
+                    },
+                },
+            )
+        except Exception as error:
+            logger.exception(
+                "VBPL crawl attempt failed",
+                extra={
+                    "crawl_job_id": str(job.id),
+                    "crawl_date": job.crawl_date.isoformat(),
+                    "error_category": type(error).__name__,
+                    "error_message": str(error),
+                },
+            )
+            await self._jobs.fail(job.id, owner, f"{type(error).__name__}: {error}")
+        finally:
+            heartbeat.cancel()
+            try:
+                await heartbeat
+            except asyncio.CancelledError:
+                pass
+
+        return True
+
+    async def run_forever(self, owner: str) -> None:
+        """Poll continuously; persisted jobs survive application restarts."""
+        while True:
+            try:
+                claimed = await self.run_once(owner)
+            except Exception:
+                logger.exception("VBPL crawl worker iteration failed")
+                claimed = False
+            if not claimed:
+                await asyncio.sleep(self._poll_interval_seconds)
+
+    async def _keep_lease(self, job_id: UUID, owner: str) -> None:
+        while True:
+            await asyncio.sleep(self._heartbeat_interval_seconds)
+            if not await self._jobs.renew(job_id, owner, self._lease_seconds):
+                raise RuntimeError(f"Lost lease for crawl job {job_id}")
+
+
+def _mapping(value: object) -> dict[str, object]:
+    return value if isinstance(value, dict) else {}

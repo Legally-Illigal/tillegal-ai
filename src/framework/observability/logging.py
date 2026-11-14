@@ -22,6 +22,14 @@ class JsonLogFormatter(logging.Formatter):
                 "logger": record.name,
                 "message": record.getMessage(),
             }
+            for key in ("crawl_job_id", "crawl_date", "error_category", "error_message"):
+                value = getattr(record, key, None)
+                if value is not None:
+                    payload[key] = value
+            if record.exc_info is not None:
+                error = record.exc_info[1]
+                if error is not None:
+                    payload["exception"] = f"{type(error).__name__}: {error}"
         return json.dumps(payload, ensure_ascii=True, separators=(",", ":"))
 
 
