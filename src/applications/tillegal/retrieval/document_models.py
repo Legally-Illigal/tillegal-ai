@@ -83,3 +83,42 @@ class RetrievedEvidence(BaseModel):
     effect_status_reported: str | None
     usage_policy: str
     source_metadata: dict[str, object]
+
+
+class SparseSearchRequest(BaseModel):
+    """Search terms and mandatory source-governance filters for sparse retrieval."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    sparse_index_name: str = Field(min_length=1)
+    terms: tuple[StrictStr, ...] = Field(min_length=1)
+    top_k: int = Field(default=10, ge=1, le=50)
+    as_of_date: date
+    allowed_usage_policies: tuple[StrictStr, ...] = Field(min_length=1)
+
+    @field_validator(
+        "terms",
+        "allowed_usage_policies",
+    )
+    @classmethod
+    def reject_blank_values(cls, values: tuple[str, ...]) -> tuple[str, ...]:
+        if any(not value.strip() for value in values):
+            raise ValueError("Search terms and source status allowlists must not contain blank values")
+        return tuple(dict.fromkeys(value.strip() for value in values))
+
+    @field_validator("sparse_index_name")
+    @classmethod
+    def reject_blank_index_name(cls, value: str) -> str:
+        value = value.strip()
+        if not value:
+            raise ValueError("sparse_index_name must not be blank")
+        return value
+
+
+class SparseSearchHit(BaseModel):
+    """Ranked chunk identifier from inverted-index retrieval."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True, allow_inf_nan=False)
+
+    retrieval_chunk_id: UUID
+    score: float
