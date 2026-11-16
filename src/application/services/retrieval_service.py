@@ -10,6 +10,7 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, TypeAdapter, ValidationError, model_validator
 
 from src.application.services.hybrid_retrieval import search_hybrid
+from src.application.services.reranking import search_reranked
 from src.applications.tillegal.retrieval.contracts import (
     IndexIdentity,
     RetrievalMode,
@@ -33,10 +34,12 @@ from src.applications.tillegal.retrieval.hybrid_models import HybridConfig, Hybr
 from src.applications.tillegal.retrieval.ports import (
     ChunkReader,
     IndexReader,
+    PairScorer,
     QueryEmbedder,
     SourceReader,
     SparseRetriever,
 )
+from src.applications.tillegal.retrieval.reranking_models import RerankConfig
 from src.applications.tillegal.retrieval.retriever import LegalRetriever, RetrievalError
 from src.applications.tillegal.retrieval.vector_validation import validate_query_vector
 from src.core.clock import utc_now
@@ -166,6 +169,8 @@ class RetrievalService:
         dense_indexes: IndexReader | None = None,
         dense_index_name: str = DEFAULT_DENSE_INDEX,
         hybrid_config: HybridConfig | None = None,
+        rerank_config: RerankConfig | None = None,
+        pair_scorer: PairScorer | None = None,
     ) -> None:
         if not sparse_index_name.strip() or not 0 < timeout_seconds < float("inf"):
             raise ValueError("index name and finite positive timeout are required")
@@ -181,22 +186,38 @@ class RetrievalService:
         self._dense_indexes = dense_indexes
         self._dense_index_name = dense_index_name
         self._hybrid_config = hybrid_config or HybridConfig()
+        self._rerank_config = rerank_config or RerankConfig()
+        self._pair_scorer = pair_scorer
 
     async def search(self, request: RetrievalRequest) -> RetrievalResponse | HybridRetrievalResponse:
         """Return a classified outcome; malformed requests never invoke dependencies."""
         request = RetrievalRequest.model_validate(request)
         if request.mode == RetrievalMode.HYBRID:
-            return await search_hybrid(
-                request,
-                run_branch=self.search,
-                sparse_indexes=self._indexes,
-                dense_indexes=self._dense_indexes,
-                sparse_index_name=self._index_name,
-                dense_index_name=self._dense_index_name,
-                dense_configured=self._dense is not None and self._query_embedder is not None,
-                config=self._hybrid_config,
-                timeout_seconds=self._timeout,
-            )
+
+            async def run_hybrid(branch_request: RetrievalRequest) -> HybridRetrievalResponse:
+                return await search_hybrid(
+                    branch_request,
+                    run_branch=self.search,
+                    sparse_indexes=self._indexes,
+                    dense_indexes=self._dense_indexes,
+                    sparse_index_name=self._index_name,
+                    dense_index_name=self._dense_index_name,
+                    dense_configured=self._dense is not None and self._query_embedder is not None,
+                    config=self._hybrid_config,
+                    timeout_seconds=self._timeout,
+                )
+
+            if self._rerank_config.enabled:
+                return await search_reranked(
+                    request,
+                    run_hybrid=run_hybrid,
+                    scorer=self._pair_scorer,
+                    config=self._rerank_config,
+                    sparse_indexes=self._indexes,
+                    dense_indexes=self._dense_indexes,
+                    hybrid_config=self._hybrid_config,
+                )
+            return await run_hybrid(request)
         request_id = new_id()
         index: _SparseIndex | _DenseIndex | None = None
         evidence: tuple[UnifiedEvidence, ...] = ()

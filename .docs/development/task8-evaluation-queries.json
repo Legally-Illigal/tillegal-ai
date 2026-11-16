@@ -1,0 +1,41 @@
+{
+  "corpus_manifest": "UNPINNED_ANNOTATION_REQUIRED",
+  "queries": [
+    {
+      "id": "civil-contract-01",
+      "text": "Điều kiện để hợp đồng dân sự có hiệu lực là gì?",
+      "as_of_date": "2026-11-16",
+      "allowed_usage_policies": [
+        "EXPERIMENTAL_ONLY"
+      ],
+      "judgment_status": "UNVERIFIED",
+      "annotator": null,
+      "judgment_scope": null,
+      "qrels": null
+    },
+    {
+      "id": "labor-termination-01",
+      "text": "Người lao động được đơn phương chấm dứt hợp đồng trong trường hợp nào?",
+      "as_of_date": "2026-11-16",
+      "allowed_usage_policies": [
+        "EXPERIMENTAL_ONLY"
+      ],
+      "judgment_status": "UNVERIFIED",
+      "annotator": null,
+      "judgment_scope": null,
+      "qrels": null
+    },
+    {
+      "id": "land-transfer-01",
+      "text": "Điều kiện chuyển nhượng quyền sử dụng đất là gì?",
+      "as_of_date": "2026-11-16",
+      "allowed_usage_policies": [
+        "EXPERIMENTAL_ONLY"
+      ],
+      "judgment_status": "UNVERIFIED",
+      "annotator": null,
+      "judgment_scope": null,
+      "qrels": null
+    }
+  ]
+}

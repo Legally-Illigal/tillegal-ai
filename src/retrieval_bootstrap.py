@@ -8,6 +8,7 @@ from src.application.services.retrieval_service import DEFAULT_SPARSE_INDEX, Ret
 from src.application.services.vbpl_markdown_indexing_service import tokenize_sparse_text
 from src.applications.tillegal.retrieval.hybrid_models import HybridConfig
 from src.applications.tillegal.retrieval.ports import IndexReader, QueryEmbedder
+from src.applications.tillegal.retrieval.reranking_models import RerankConfig
 from src.applications.tillegal.retrieval.retriever import LegalRetriever
 from src.core.config import SupabaseSettings
 from src.integrations.database.repositories.chunk_repository import ChunkRepository
@@ -23,6 +24,7 @@ def create_retrieval_service(
     *,
     dense_model_path: Path | None = None,
     hybrid_config: HybridConfig | None = None,
+    rerank_config: RerankConfig | None = None,
 ) -> RetrievalService:
     """Create read adapters only. Credentials are never rendered or logged here.
 
@@ -45,6 +47,11 @@ def create_retrieval_service(
         dense_retriever = SupabaseVectorRepository(client)
         dense_indexes = DenseIndexRepository(client)
         query_embedder = E5QueryEncoder(dense_model_path)
+    scorer = None
+    if rerank_config is not None and rerank_config.enabled:
+        from src.integrations.embeddings.cross_encoder_reranker import LocalCrossEncoder
+
+        scorer = LocalCrossEncoder(rerank_config)
     return RetrievalService(
         SparseRetrievalRepository(client),
         ChunkRepository(client),
@@ -56,4 +63,6 @@ def create_retrieval_service(
         dense_indexes=dense_indexes,
         query_embedder=query_embedder,
         hybrid_config=hybrid_config,
+        rerank_config=rerank_config,
+        pair_scorer=scorer,
     )

@@ -4,6 +4,7 @@ from typing import Protocol
 from uuid import UUID
 
 from src.applications.tillegal.retrieval.document_models import SparseSearchHit, SparseSearchRequest
+from src.applications.tillegal.retrieval.reranking_models import PairScores
 
 
 class SparseRetriever(Protocol):
@@ -26,3 +27,7 @@ class QueryEmbedder(Protocol):
     """Reserved for Task 5; no encoder implementation or model loading here."""
 
     async def encode_query(self, query: str) -> tuple[float, ...]: ...
+
+
+class PairScorer(Protocol):
+    async def score_pairs(self, query: str, passages: tuple[str, ...]) -> PairScores: ...
