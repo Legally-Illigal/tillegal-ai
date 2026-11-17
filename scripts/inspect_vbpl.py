@@ -196,10 +196,7 @@ def main(argv: list[str] | None = None) -> int:
         if "error" in record:
             print(f"ERROR {record['requested_url']}: {record['error']}", file=sys.stderr)
         else:
-            print(
-                f"OK {record['status']} {record['final_url']} "
-                f"title={ascii(record['title'])} bytes={record['bytes']}"
-            )
+            print(f"OK {record['status']} {record['final_url']} title={ascii(record['title'])} bytes={record['bytes']}")
     print(f"Manifest: {manifest_path}")
     return int(any("error" in record for record in records))
 

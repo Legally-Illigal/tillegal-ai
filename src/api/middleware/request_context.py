@@ -37,9 +37,7 @@ class RequestContextMiddleware:
             if message["type"] == "http.response.start":
                 status_code = message["status"]
                 headers = [
-                    (name, value)
-                    for name, value in message.get("headers", [])
-                    if name.lower() != _REQUEST_ID_HEADER
+                    (name, value) for name, value in message.get("headers", []) if name.lower() != _REQUEST_ID_HEADER
                 ]
                 headers.append((_REQUEST_ID_HEADER, request_id.encode("ascii")))
                 message["headers"] = headers

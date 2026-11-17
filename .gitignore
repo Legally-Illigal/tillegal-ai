@@ -218,3 +218,14 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local secrets, model weights and execution evidence
+.env.*
+!.env.example
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+.huggingface/
+.docs/development/task8-execution-evidence.json

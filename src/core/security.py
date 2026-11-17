@@ -60,9 +60,7 @@ def redact_fields(fields: Mapping[str, object]) -> dict[str, object]:
 
 def _redact_value(key: str, value: object) -> object:
     normalized_key = re.sub(r"[^a-z0-9]+", "_", key.lower()).strip("_")
-    if normalized_key in _SENSITIVE_FIELD_NAMES or any(
-        part in normalized_key for part in _SENSITIVE_FIELD_PARTS
-    ):
+    if normalized_key in _SENSITIVE_FIELD_NAMES or any(part in normalized_key for part in _SENSITIVE_FIELD_PARTS):
         return REDACTED_VALUE
     if isinstance(value, Mapping):
         return redact_fields({str(nested_key): nested_value for nested_key, nested_value in value.items()})

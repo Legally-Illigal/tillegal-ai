@@ -50,12 +50,38 @@ Apply all migrations before running the worker. In particular, `20261109220000_v
 persists stored file refs/hashes, `20261111130000_multilingual_e5_embeddings.sql` supports 384-dimensional E5 vectors
 while retaining existing 1536-dimensional embeddings, and `20261111135000_create_vbpl_storage_bucket.sql` provisions
 the private VBPL Storage bucket. `dense_indexes.status` becomes `READY` only when every stored chunk has an indexed
-vector for that index. BM25 indexing is not yet part of this ingestion step.
+vector for that index. The current bootstrap also wires BM25 sparse indexing; the earlier statement that BM25 was
+not part of ingestion was outdated. Deployed index readiness still needs separate verification.
 
 Sitemap `lastmod` remains a discovery signal, not proof that legal content changed.
 
 For manual source research, `scripts\crawl_vbpl_sitemap.py` can write a local JSON scan report and
 `scripts\inspect_vbpl.py` can capture individual raw HTML pages; neither script is the production crawl entry point.
+
+## Retrieval CLI
+
+The text-to-BM25 application service reuses the existing read RPCs, hydrates chunk/source metadata, and preserves
+ranking. It does not start the API, crawl worker or indexing. BM25-only search never loads an embedding model.
+Configuration must already be present in the process environment; this CLI does not read `.env`.
+
+```powershell
+.venv/Scripts/python.exe scripts/search_legal_chunks.py --query "Thuế thu nhập" --mode bm25 --top-k 5 --as-of-date 2026-11-10 --allowed-policy EXPERIMENTAL_ONLY
+```
+
+Dense retrieval is opt-in: pass `--mode dense --dense-model-path <existing-local-E5-checkpoint-directory>`
+with the same query/date/policy arguments. The query encoder uses a local E5 checkpoint on CPU, forbids model
+downloads, and verifies returned evidence against stored chunk content and hashes.
+
+Hybrid retrieval uses `--mode hybrid` and the same local model path. It runs BM25 and Dense sequentially,
+then applies RRF. Defaults are `--rrf-k 60 --bm25-candidates 20 --dense-candidates 20`.
+Backend or integrity failures fail the entire attempt without partial-result fallback.
+
+The [saved E2E evidence](.docs/development/retrieval-e2e-evidence.json) records six live service scenarios
+and CLI BM25/Dense runs under read-only GET instrumentation. It does not contain CLI Hybrid or live fault
+scenario records. Checkpoint compatibility with historical corpus weights and retrieval quality remain
+unverified. See the [verification report](.docs/development/retrieval-live-integration-verification.md)
+and [known issues](.docs/development/known_issues.md). The verification scripts require separately authorized
+live access and write their evidence output; do not run them as offline tests.
 
 ## Shared core
 

@@ -42,9 +42,7 @@ class PostgresExecutionStore(ExecutionStore):
         )
 
     async def mark_outbox_published(self, event_id: UUID, owner: str) -> None:
-        await self._transactions.run(
-            lambda connection: OutboxRepository(connection).mark_published(event_id, owner)
-        )
+        await self._transactions.run(lambda connection: OutboxRepository(connection).mark_published(event_id, owner))
 
     async def retry_outbox_event(
         self,

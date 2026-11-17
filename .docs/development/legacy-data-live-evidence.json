@@ -1,0 +1,2411 @@
+{
+  "configuration_loaded": true,
+  "connection_verified": true,
+  "queries": [
+    {
+      "number": 1,
+      "rows": [
+        {
+          "database_name": "postgres",
+          "executing_role": "postgres",
+          "postgres_version": "17.11",
+          "transaction_read_only": "on",
+          "observed_at": "2026-11-14 15:53:22.000965+00:00"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "rows": [
+        {
+          "schema_name": "public",
+          "relation_name": "crawl_jobs",
+          "relkind": "r",
+          "estimated_rows_not_exact": -1,
+          "relrowsecurity": true,
+          "can_select": true
+        },
+        {
+          "schema_name": "public",
+          "relation_name": "dense_chunk_embeddings",
+          "relkind": "r",
+          "estimated_rows_not_exact": 2609,
+          "relrowsecurity": true,
+          "can_select": true
+        },
+        {
+          "schema_name": "public",
+          "relation_name": "dense_indexes",
+          "relkind": "r",
+          "estimated_rows_not_exact": 1,
+          "relrowsecurity": true,
+          "can_select": true
+        },
+        {
+          "schema_name": "public",
+          "relation_name": "document_blocks",
+          "relkind": "r",
+          "estimated_rows_not_exact": 4052,
+          "relrowsecurity": true,
+          "can_select": true
+        },
+        {
+          "schema_name": "public",
+          "relation_name": "document_nodes",
+          "relkind": "r",
+          "estimated_rows_not_exact": 2534,
+          "relrowsecurity": true,
+          "can_select": true
+        },
+        {
+          "schema_name": "public",
+          "relation_name": "document_structures",
+          "relkind": "r",
+          "estimated_rows_not_exact": -1,
+          "relrowsecurity": true,
+          "can_select": true
+        },
+        {
+          "schema_name": "public",
+          "relation_name": "executions",
+          "relkind": "r",
+          "estimated_rows_not_exact": -1,
+          "relrowsecurity": true,
+          "can_select": true
+        },
+        {
+          "schema_name": "public",
+          "relation_name": "idempotency_records",
+          "relkind": "r",
+          "estimated_rows_not_exact": -1,
+          "relrowsecurity": true,
+          "can_select": true
+        },
+        {
+          "schema_name": "public",
+          "relation_name": "outbox_events",
+          "relkind": "r",
+          "estimated_rows_not_exact": -1,
+          "relrowsecurity": true,
+          "can_select": true
+        },
+        {
+          "schema_name": "public",
+          "relation_name": "retrieval_chunks",
+          "relkind": "r",
+          "estimated_rows_not_exact": 2609,
+          "relrowsecurity": true,
+          "can_select": true
+        },
+        {
+          "schema_name": "public",
+          "relation_name": "schema_migrations",
+          "relkind": "r",
+          "estimated_rows_not_exact": -1,
+          "relrowsecurity": false,
+          "can_select": true
+        },
+        {
+          "schema_name": "public",
+          "relation_name": "source_documents",
+          "relkind": "r",
+          "estimated_rows_not_exact": 51,
+          "relrowsecurity": true,
+          "can_select": true
+        },
+        {
+          "schema_name": "public",
+          "relation_name": "sparse_chunk_documents",
+          "relkind": "r",
+          "estimated_rows_not_exact": 2609,
+          "relrowsecurity": true,
+          "can_select": true
+        },
+        {
+          "schema_name": "public",
+          "relation_name": "sparse_indexes",
+          "relkind": "r",
+          "estimated_rows_not_exact": 1,
+          "relrowsecurity": true,
+          "can_select": true
+        },
+        {
+          "schema_name": "public",
+          "relation_name": "sparse_postings",
+          "relkind": "r",
+          "estimated_rows_not_exact": 159111,
+          "relrowsecurity": true,
+          "can_select": true
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "rows": [
+        {
+          "table_schema": "public",
+          "table_name": "crawl_jobs",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "crawl_jobs",
+          "column_name": "source_id",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "crawl_jobs",
+          "column_name": "crawl_date",
+          "data_type": "date",
+          "udt_name": "date"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "crawl_jobs",
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "crawl_jobs",
+          "column_name": "result",
+          "data_type": "jsonb",
+          "udt_name": "jsonb"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "crawl_jobs",
+          "column_name": "error_message",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "crawl_jobs",
+          "column_name": "owner",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "crawl_jobs",
+          "column_name": "lease_until",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "crawl_jobs",
+          "column_name": "attempts",
+          "data_type": "integer",
+          "udt_name": "int4"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "crawl_jobs",
+          "column_name": "max_attempts",
+          "data_type": "integer",
+          "udt_name": "int4"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "crawl_jobs",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "crawl_jobs",
+          "column_name": "started_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "crawl_jobs",
+          "column_name": "completed_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "crawl_jobs",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_chunk_embeddings",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_chunk_embeddings",
+          "column_name": "dense_index_id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_chunk_embeddings",
+          "column_name": "retrieval_chunk_id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_chunk_embeddings",
+          "column_name": "embedding",
+          "data_type": "USER-DEFINED",
+          "udt_name": "vector"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_chunk_embeddings",
+          "column_name": "embedded_text_sha256",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_chunk_embeddings",
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_chunk_embeddings",
+          "column_name": "embedded_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_chunk_embeddings",
+          "column_name": "error_message",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_chunk_embeddings",
+          "column_name": "metadata",
+          "data_type": "jsonb",
+          "udt_name": "jsonb"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_chunk_embeddings",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_chunk_embeddings",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_indexes",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_indexes",
+          "column_name": "index_name",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_indexes",
+          "column_name": "provider",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_indexes",
+          "column_name": "model_name",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_indexes",
+          "column_name": "embedding_dimension",
+          "data_type": "integer",
+          "udt_name": "int4"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_indexes",
+          "column_name": "distance_metric",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_indexes",
+          "column_name": "index_version",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_indexes",
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_indexes",
+          "column_name": "metadata",
+          "data_type": "jsonb",
+          "udt_name": "jsonb"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_indexes",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "dense_indexes",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_blocks",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_blocks",
+          "column_name": "document_structure_id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_blocks",
+          "column_name": "block_id",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_blocks",
+          "column_name": "node_id",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_blocks",
+          "column_name": "block_type",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_blocks",
+          "column_name": "content",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_blocks",
+          "column_name": "ordinal",
+          "data_type": "integer",
+          "udt_name": "int4"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_blocks",
+          "column_name": "start_offset",
+          "data_type": "integer",
+          "udt_name": "int4"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_blocks",
+          "column_name": "end_offset",
+          "data_type": "integer",
+          "udt_name": "int4"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_blocks",
+          "column_name": "metadata",
+          "data_type": "jsonb",
+          "udt_name": "jsonb"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_blocks",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_nodes",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_nodes",
+          "column_name": "document_structure_id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_nodes",
+          "column_name": "node_id",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_nodes",
+          "column_name": "parent_node_id",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_nodes",
+          "column_name": "kind",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_nodes",
+          "column_name": "label",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_nodes",
+          "column_name": "scope",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_nodes",
+          "column_name": "heading_block_id",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_nodes",
+          "column_name": "ordinal",
+          "data_type": "integer",
+          "udt_name": "int4"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_nodes",
+          "column_name": "metadata",
+          "data_type": "jsonb",
+          "udt_name": "jsonb"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_nodes",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_structures",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_structures",
+          "column_name": "source_document_id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_structures",
+          "column_name": "schema_version",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_structures",
+          "column_name": "parser_version",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_structures",
+          "column_name": "content_sha256",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_structures",
+          "column_name": "max_chars",
+          "data_type": "integer",
+          "udt_name": "int4"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_structures",
+          "column_name": "issues",
+          "data_type": "jsonb",
+          "udt_name": "jsonb"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_structures",
+          "column_name": "parsed_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "document_structures",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "executions",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "executions",
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "executions",
+          "column_name": "input",
+          "data_type": "jsonb",
+          "udt_name": "jsonb"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "executions",
+          "column_name": "result",
+          "data_type": "jsonb",
+          "udt_name": "jsonb"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "executions",
+          "column_name": "error_message",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "executions",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "executions",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "executions",
+          "column_name": "started_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "executions",
+          "column_name": "completed_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "idempotency_records",
+          "column_name": "key_hash",
+          "data_type": "bytea",
+          "udt_name": "bytea"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "idempotency_records",
+          "column_name": "request_hash",
+          "data_type": "bytea",
+          "udt_name": "bytea"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "idempotency_records",
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "idempotency_records",
+          "column_name": "result",
+          "data_type": "jsonb",
+          "udt_name": "jsonb"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "idempotency_records",
+          "column_name": "lease_owner",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "idempotency_records",
+          "column_name": "lease_expires_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "idempotency_records",
+          "column_name": "expires_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "idempotency_records",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "idempotency_records",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "outbox_events",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "outbox_events",
+          "column_name": "aggregate_type",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "outbox_events",
+          "column_name": "aggregate_id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "outbox_events",
+          "column_name": "event_type",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "outbox_events",
+          "column_name": "payload",
+          "data_type": "jsonb",
+          "udt_name": "jsonb"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "outbox_events",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "outbox_events",
+          "column_name": "available_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "outbox_events",
+          "column_name": "attempts",
+          "data_type": "integer",
+          "udt_name": "int4"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "outbox_events",
+          "column_name": "locked_by",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "outbox_events",
+          "column_name": "locked_until",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "outbox_events",
+          "column_name": "published_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "outbox_events",
+          "column_name": "last_error",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "retrieval_chunks",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "retrieval_chunks",
+          "column_name": "source_document_id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "retrieval_chunks",
+          "column_name": "document_structure_id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "retrieval_chunks",
+          "column_name": "chunk_key",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "retrieval_chunks",
+          "column_name": "content",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "retrieval_chunks",
+          "column_name": "content_sha256",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "retrieval_chunks",
+          "column_name": "node_id",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "retrieval_chunks",
+          "column_name": "block_id",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "retrieval_chunks",
+          "column_name": "chunk_type",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "retrieval_chunks",
+          "column_name": "ordinal",
+          "data_type": "integer",
+          "udt_name": "int4"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "retrieval_chunks",
+          "column_name": "start_offset",
+          "data_type": "integer",
+          "udt_name": "int4"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "retrieval_chunks",
+          "column_name": "end_offset",
+          "data_type": "integer",
+          "udt_name": "int4"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "retrieval_chunks",
+          "column_name": "metadata",
+          "data_type": "jsonb",
+          "udt_name": "jsonb"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "retrieval_chunks",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "retrieval_chunks",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "schema_migrations",
+          "column_name": "version",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "schema_migrations",
+          "column_name": "applied_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "source_id",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "source_record_id",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "source_snapshot_id",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "document_number",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "title",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "document_type",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "issuing_authority",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "language",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "source_url",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "raw_content_format",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "raw_content",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "issued_on",
+          "data_type": "date",
+          "udt_name": "date"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "effective_from",
+          "data_type": "date",
+          "udt_name": "date"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "effective_to",
+          "data_type": "date",
+          "udt_name": "date"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "effect_status_reported",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "raw_file_ref",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "raw_content_ref",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "raw_file_sha256",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "raw_content_sha256",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "raw_metadata",
+          "data_type": "jsonb",
+          "udt_name": "jsonb"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "usage_policy",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "collected_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "source_documents",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_chunk_documents",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_chunk_documents",
+          "column_name": "sparse_index_id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_chunk_documents",
+          "column_name": "retrieval_chunk_id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_chunk_documents",
+          "column_name": "token_count",
+          "data_type": "integer",
+          "udt_name": "int4"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_chunk_documents",
+          "column_name": "indexed_text_sha256",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_chunk_documents",
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_chunk_documents",
+          "column_name": "indexed_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_chunk_documents",
+          "column_name": "error_message",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_chunk_documents",
+          "column_name": "metadata",
+          "data_type": "jsonb",
+          "udt_name": "jsonb"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_chunk_documents",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_chunk_documents",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_indexes",
+          "column_name": "id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_indexes",
+          "column_name": "index_name",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_indexes",
+          "column_name": "algorithm",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_indexes",
+          "column_name": "tokenizer",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_indexes",
+          "column_name": "language_config",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_indexes",
+          "column_name": "k1",
+          "data_type": "double precision",
+          "udt_name": "float8"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_indexes",
+          "column_name": "b",
+          "data_type": "double precision",
+          "udt_name": "float8"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_indexes",
+          "column_name": "document_count",
+          "data_type": "bigint",
+          "udt_name": "int8"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_indexes",
+          "column_name": "total_token_count",
+          "data_type": "bigint",
+          "udt_name": "int8"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_indexes",
+          "column_name": "average_document_length",
+          "data_type": "double precision",
+          "udt_name": "float8"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_indexes",
+          "column_name": "index_version",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_indexes",
+          "column_name": "status",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_indexes",
+          "column_name": "metadata",
+          "data_type": "jsonb",
+          "udt_name": "jsonb"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_indexes",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_indexes",
+          "column_name": "updated_at",
+          "data_type": "timestamp with time zone",
+          "udt_name": "timestamptz"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_postings",
+          "column_name": "id",
+          "data_type": "bigint",
+          "udt_name": "int8"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_postings",
+          "column_name": "sparse_index_id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_postings",
+          "column_name": "sparse_chunk_document_id",
+          "data_type": "uuid",
+          "udt_name": "uuid"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_postings",
+          "column_name": "term",
+          "data_type": "text",
+          "udt_name": "text"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_postings",
+          "column_name": "term_frequency",
+          "data_type": "integer",
+          "udt_name": "int4"
+        },
+        {
+          "table_schema": "public",
+          "table_name": "sparse_postings",
+          "column_name": "positions",
+          "data_type": "ARRAY",
+          "udt_name": "_int4"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "rows": [
+        {
+          "extname": "pgcrypto",
+          "extversion": "1.3",
+          "extension_schema": "extensions"
+        },
+        {
+          "extname": "vector",
+          "extversion": "0.8.2",
+          "extension_schema": "public"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "rows": [
+        {
+          "count_select": "SELECT 'public.dense_chunk_embeddings' AS relation_name, count(*) AS exact_visible_rows FROM public.dense_chunk_embeddings;"
+        },
+        {
+          "count_select": "SELECT 'public.document_blocks' AS relation_name, count(*) AS exact_visible_rows FROM public.document_blocks;"
+        },
+        {
+          "count_select": "SELECT 'public.document_nodes' AS relation_name, count(*) AS exact_visible_rows FROM public.document_nodes;"
+        },
+        {
+          "count_select": "SELECT 'public.document_structures' AS relation_name, count(*) AS exact_visible_rows FROM public.document_structures;"
+        },
+        {
+          "count_select": "SELECT 'public.retrieval_chunks' AS relation_name, count(*) AS exact_visible_rows FROM public.retrieval_chunks;"
+        },
+        {
+          "count_select": "SELECT 'public.source_documents' AS relation_name, count(*) AS exact_visible_rows FROM public.source_documents;"
+        },
+        {
+          "count_select": "SELECT 'public.sparse_chunk_documents' AS relation_name, count(*) AS exact_visible_rows FROM public.sparse_chunk_documents;"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "rows": []
+    },
+    {
+      "number": 7,
+      "rows": [
+        {
+          "builtin_sha256_available": true,
+          "storage_catalog_exists": true
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "rows": [
+        {
+          "sources": 58,
+          "canonical_vbpl_sources": 58,
+          "additional_vbpl_url_candidates": 0,
+          "structures": 37,
+          "chunks": 2609,
+          "canonical_vbpl_chunks": 2609
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "rows": [
+        {
+          "source_id": "vbpl",
+          "sources": 58
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "rows": [
+        {
+          "canonical_vbpl": true,
+          "sources": 58,
+          "without_structure": 21,
+          "without_chunks": 21
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "rows": [
+        {
+          "schema_version": "legal-structure-v1",
+          "parser_version": "vbpl-markdown-v7",
+          "source_id": "vbpl",
+          "structures": 37,
+          "chunks": "2609",
+          "structures_without_chunks": 0
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "rows": []
+    },
+    {
+      "number": 13,
+      "rows": []
+    },
+    {
+      "number": 14,
+      "rows": [
+        {
+          "orphan_structures": 0,
+          "orphan_sparse_documents": 0,
+          "orphan_postings": 0,
+          "orphan_embeddings": 0
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "rows": [
+        {
+          "source_id": "vbpl",
+          "raw_content_format": null,
+          "sources": 58,
+          "with_inline_raw": 0,
+          "with_raw_content_ref": 5,
+          "with_raw_file_ref": 54,
+          "with_stored_files_array": 58,
+          "malformed_stored_files": 0
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "rows": [
+        {
+          "source_id": "vbpl",
+          "role": "normalized_markdown",
+          "reference_rows": 37,
+          "sources": 37,
+          "supported_ref_format": 37,
+          "catalog_matches": 37,
+          "catalog_not_visible_or_missing": 0,
+          "with_sha256_format": 37,
+          "recorded_hash_matches_structure": 37
+        },
+        {
+          "source_id": "vbpl",
+          "role": "raw_content",
+          "reference_rows": 5,
+          "sources": 5,
+          "supported_ref_format": 5,
+          "catalog_matches": 5,
+          "catalog_not_visible_or_missing": 0,
+          "with_sha256_format": 5,
+          "recorded_hash_matches_structure": 0
+        },
+        {
+          "source_id": "vbpl",
+          "role": "raw_file",
+          "reference_rows": 54,
+          "sources": 54,
+          "supported_ref_format": 54,
+          "catalog_matches": 54,
+          "catalog_not_visible_or_missing": 0,
+          "with_sha256_format": 54,
+          "recorded_hash_matches_structure": 0
+        },
+        {
+          "source_id": "vbpl",
+          "role": null,
+          "reference_rows": 127,
+          "sources": 58,
+          "supported_ref_format": 127,
+          "catalog_matches": 127,
+          "catalog_not_visible_or_missing": 0,
+          "with_sha256_format": 127,
+          "recorded_hash_matches_structure": 0
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "rows": [
+        {
+          "requested_index": "vbpl-bm25-unicode-v1",
+          "id": "2acb41da-84af-4e7b-95b6-00faa3f73528",
+          "status": "READY",
+          "algorithm": "BM25",
+          "tokenizer": "unicode-nfc-lower-v1",
+          "language_config": "simple",
+          "index_version": "v1",
+          "k1": 1.2,
+          "b": 0.75,
+          "updated_at": "2026-11-14 08:27:10.966337+00:00",
+          "document_count": 2609,
+          "total_token_count": 253964,
+          "average_document_length": 97.3415101571483,
+          "sparse_documents": 2609,
+          "recomputed_indexed_documents": 2609,
+          "recomputed_tokens": 253964,
+          "recomputed_average": 97.3415101571483,
+          "statistics_match": true
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "rows": [
+        {
+          "source_id": "vbpl",
+          "corpus_chunks": 2609,
+          "chunks_with_sparse_document": 2609,
+          "chunks_with_postings": 2609,
+          "indexed_with_postings_and_matching_hash": 2609,
+          "not_proven_ready": 0
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "rows": [
+        {
+          "status": "INDEXED",
+          "sparse_documents": 2609,
+          "posting_rows": "159111",
+          "token_count_tf_mismatch": 0,
+          "invalid_postings": "0"
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "rows": [
+        {
+          "term": "của",
+          "rpc_document_frequency": 2609,
+          "indexed_document_frequency": 2609,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "2026",
+          "rpc_document_frequency": 2408,
+          "indexed_document_frequency": 2408,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "điều",
+          "rpc_document_frequency": 2240,
+          "indexed_document_frequency": 2240,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "khoản",
+          "rpc_document_frequency": 2053,
+          "indexed_document_frequency": 2053,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "chương",
+          "rpc_document_frequency": 1775,
+          "indexed_document_frequency": 1775,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "định",
+          "rpc_document_frequency": 1753,
+          "indexed_document_frequency": 1753,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "quyết",
+          "rpc_document_frequency": 1471,
+          "indexed_document_frequency": 1471,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "và",
+          "rpc_document_frequency": 1454,
+          "indexed_document_frequency": 1454,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "các",
+          "rpc_document_frequency": 1334,
+          "indexed_document_frequency": 1334,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "hợp",
+          "rpc_document_frequency": 1292,
+          "indexed_document_frequency": 1292,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "nhân",
+          "rpc_document_frequency": 1270,
+          "indexed_document_frequency": 1270,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "văn",
+          "rpc_document_frequency": 1232,
+          "indexed_document_frequency": 1232,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "chính",
+          "rpc_document_frequency": 1186,
+          "indexed_document_frequency": 1186,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "công",
+          "rpc_document_frequency": 1169,
+          "indexed_document_frequency": 1169,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "tỉnh",
+          "rpc_document_frequency": 1155,
+          "indexed_document_frequency": 1155,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "quy",
+          "rpc_document_frequency": 1149,
+          "indexed_document_frequency": 1149,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "phòng",
+          "rpc_document_frequency": 1137,
+          "indexed_document_frequency": 1137,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "bản",
+          "rpc_document_frequency": 1130,
+          "indexed_document_frequency": 1130,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "có",
+          "rpc_document_frequency": 1106,
+          "indexed_document_frequency": 1106,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "điểm",
+          "rpc_document_frequency": 1025,
+          "indexed_document_frequency": 1025,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "theo",
+          "rpc_document_frequency": 1025,
+          "indexed_document_frequency": 1025,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "ubnd",
+          "rpc_document_frequency": 951,
+          "indexed_document_frequency": 951,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "quan",
+          "rpc_document_frequency": 942,
+          "indexed_document_frequency": 942,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "ii",
+          "rpc_document_frequency": 916,
+          "indexed_document_frequency": 916,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "qđ",
+          "rpc_document_frequency": 916,
+          "indexed_document_frequency": 916,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "2",
+          "rpc_document_frequency": 913,
+          "indexed_document_frequency": 913,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "với",
+          "rpc_document_frequency": 913,
+          "indexed_document_frequency": 913,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "ban",
+          "rpc_document_frequency": 912,
+          "indexed_document_frequency": 912,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "cơ",
+          "rpc_document_frequency": 901,
+          "indexed_document_frequency": 901,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "nhiệm",
+          "rpc_document_frequency": 897,
+          "indexed_document_frequency": 897,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "dân",
+          "rpc_document_frequency": 891,
+          "indexed_document_frequency": 891,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "được",
+          "rpc_document_frequency": 877,
+          "indexed_document_frequency": 877,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "hội",
+          "rpc_document_frequency": 829,
+          "indexed_document_frequency": 829,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "1",
+          "rpc_document_frequency": 828,
+          "indexed_document_frequency": 828,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "hiện",
+          "rpc_document_frequency": 821,
+          "indexed_document_frequency": 821,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "thực",
+          "rpc_document_frequency": 821,
+          "indexed_document_frequency": 821,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "quốc",
+          "rpc_document_frequency": 815,
+          "indexed_document_frequency": 815,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "bộ",
+          "rpc_document_frequency": 806,
+          "indexed_document_frequency": 806,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "nhất",
+          "rpc_document_frequency": 804,
+          "indexed_document_frequency": 804,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "nghị",
+          "rpc_document_frequency": 795,
+          "indexed_document_frequency": 795,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "đối",
+          "rpc_document_frequency": 785,
+          "indexed_document_frequency": 785,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "chức",
+          "rpc_document_frequency": 777,
+          "indexed_document_frequency": 777,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "cấp",
+          "rpc_document_frequency": 775,
+          "indexed_document_frequency": 775,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "3",
+          "rpc_document_frequency": 773,
+          "indexed_document_frequency": 773,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "ủy",
+          "rpc_document_frequency": 757,
+          "indexed_document_frequency": 757,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "thông",
+          "rpc_document_frequency": 744,
+          "indexed_document_frequency": 744,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "tư",
+          "rpc_document_frequency": 730,
+          "indexed_document_frequency": 730,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "việc",
+          "rpc_document_frequency": 721,
+          "indexed_document_frequency": 721,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "trong",
+          "rpc_document_frequency": 693,
+          "indexed_document_frequency": 693,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "hành",
+          "rpc_document_frequency": 687,
+          "indexed_document_frequency": 687,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "trình",
+          "rpc_document_frequency": 687,
+          "indexed_document_frequency": 687,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "vbhn",
+          "rpc_document_frequency": 687,
+          "indexed_document_frequency": 687,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "lý",
+          "rpc_document_frequency": 671,
+          "indexed_document_frequency": 671,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "tại",
+          "rpc_document_frequency": 662,
+          "indexed_document_frequency": 662,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "sau",
+          "rpc_document_frequency": 651,
+          "indexed_document_frequency": 651,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "vụ",
+          "rpc_document_frequency": 647,
+          "indexed_document_frequency": 647,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "số",
+          "rpc_document_frequency": 645,
+          "indexed_document_frequency": 645,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "này",
+          "rpc_document_frequency": 610,
+          "indexed_document_frequency": 610,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "chủ",
+          "rpc_document_frequency": 601,
+          "indexed_document_frequency": 601,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "tổ",
+          "rpc_document_frequency": 598,
+          "indexed_document_frequency": 598,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "trách",
+          "rpc_document_frequency": 577,
+          "indexed_document_frequency": 577,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "thẩm",
+          "rpc_document_frequency": 563,
+          "indexed_document_frequency": 563,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "chế",
+          "rpc_document_frequency": 560,
+          "indexed_document_frequency": 560,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "pháp",
+          "rpc_document_frequency": 554,
+          "indexed_document_frequency": 554,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "quyền",
+          "rpc_document_frequency": 553,
+          "indexed_document_frequency": 553,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "thành",
+          "rpc_document_frequency": 539,
+          "indexed_document_frequency": 539,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "tt",
+          "rpc_document_frequency": 535,
+          "indexed_document_frequency": 535,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "địa",
+          "rpc_document_frequency": 533,
+          "indexed_document_frequency": 533,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "người",
+          "rpc_document_frequency": 530,
+          "indexed_document_frequency": 530,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "luật",
+          "rpc_document_frequency": 521,
+          "indexed_document_frequency": 521,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "trường",
+          "rpc_document_frequency": 519,
+          "indexed_document_frequency": 519,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "tài",
+          "rpc_document_frequency": 518,
+          "indexed_document_frequency": 518,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "về",
+          "rpc_document_frequency": 515,
+          "indexed_document_frequency": 515,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "quản",
+          "rpc_document_frequency": 509,
+          "indexed_document_frequency": 509,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "sở",
+          "rpc_document_frequency": 506,
+          "indexed_document_frequency": 506,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "động",
+          "rpc_document_frequency": 504,
+          "indexed_document_frequency": 504,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "dụng",
+          "rpc_document_frequency": 500,
+          "indexed_document_frequency": 500,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "nđ",
+          "rpc_document_frequency": 499,
+          "indexed_document_frequency": 499,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "sách",
+          "rpc_document_frequency": 499,
+          "indexed_document_frequency": 499,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "yên",
+          "rpc_document_frequency": 496,
+          "indexed_document_frequency": 496,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "4",
+          "rpc_document_frequency": 495,
+          "indexed_document_frequency": 495,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "hưng",
+          "rpc_document_frequency": 494,
+          "indexed_document_frequency": 494,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "phụ",
+          "rpc_document_frequency": 492,
+          "indexed_document_frequency": 492,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "58",
+          "rpc_document_frequency": 489,
+          "indexed_document_frequency": 489,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "độ",
+          "rpc_document_frequency": 472,
+          "indexed_document_frequency": 472,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "mục",
+          "rpc_document_frequency": 471,
+          "indexed_document_frequency": 471,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "nước",
+          "rpc_document_frequency": 467,
+          "indexed_document_frequency": 467,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "hoặc",
+          "rpc_document_frequency": 464,
+          "indexed_document_frequency": 464,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "ngày",
+          "rpc_document_frequency": 461,
+          "indexed_document_frequency": 461,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "liên",
+          "rpc_document_frequency": 447,
+          "indexed_document_frequency": 447,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "nội",
+          "rpc_document_frequency": 443,
+          "indexed_document_frequency": 443,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "phạm",
+          "rpc_document_frequency": 435,
+          "indexed_document_frequency": 435,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "bảo",
+          "rpc_document_frequency": 434,
+          "indexed_document_frequency": 434,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "phủ",
+          "rpc_document_frequency": 432,
+          "indexed_document_frequency": 432,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "xã",
+          "rpc_document_frequency": 429,
+          "indexed_document_frequency": 429,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "lục",
+          "rpc_document_frequency": 416,
+          "indexed_document_frequency": 416,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "thuộc",
+          "rpc_document_frequency": 416,
+          "indexed_document_frequency": 416,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "hoạt",
+          "rpc_document_frequency": 413,
+          "indexed_document_frequency": 413,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "vi",
+          "rpc_document_frequency": 403,
+          "indexed_document_frequency": 403,
+          "stale_or_orphan_postings": 0
+        },
+        {
+          "term": "tịch",
+          "rpc_document_frequency": 400,
+          "indexed_document_frequency": 400,
+          "stale_or_orphan_postings": 0
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "rows": [
+        {
+          "target_dense_index_exists": true
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "rows": [
+        {
+          "id": "0fe7b3a9-d051-41c5-ae61-257790c997f9",
+          "index_name": "vbpl-multilingual-e5-small-v1",
+          "status": "READY",
+          "provider": "sentence-transformers",
+          "model_name": "intfloat/multilingual-e5-small",
+          "embedding_dimension": 384,
+          "distance_metric": "cosine",
+          "index_version": "v1",
+          "updated_at": "2026-11-14 08:27:44.253063+00:00",
+          "normalized": true,
+          "passage_prefix": "passage: ",
+          "query_prefix": "query: ",
+          "revision": null,
+          "model_revision": null,
+          "checkpoint_revision": null,
+          "pooling": null,
+          "max_seq_length": null
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "rows": [
+        {
+          "index_name": "vbpl-multilingual-e5-small-v1",
+          "status": "INDEXED",
+          "actual_dimension": 384,
+          "vector_model": "intfloat/multilingual-e5-small",
+          "vector_revision": null,
+          "vector_model_revision": null,
+          "vector_checkpoint_revision": null,
+          "vector_prefix": "passage:",
+          "embeddings": 2609
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "rows": [
+        {
+          "source_id": "vbpl",
+          "corpus_chunks": 2609,
+          "chunks_with_target_index_present": 2609,
+          "chunks_with_target_embedding": 2609,
+          "numerically_compatible_and_hash_matching_not_revision_verified": 2609,
+          "missing_or_numerically_incompatible": 0,
+          "min_norm": 0.999999908852863,
+          "max_norm": 1.00000012895924
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "rows": [
+        {
+          "source_id": "vbpl",
+          "usage_policy": "EXPERIMENTAL_ONLY",
+          "sources": 58,
+          "null_start": 2,
+          "null_end": 54,
+          "invalid_date_ranges": 0,
+          "earliest_start": "2015-10-29",
+          "latest_end": "2026-11-11"
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "rows": [
+        {
+          "proname": "get_dense_index",
+          "identity_arguments": "p_index_name text",
+          "provolatile": "s",
+          "prosecdef": false,
+          "result_type": "jsonb",
+          "executing_role_can_execute": true,
+          "service_role_can_execute": true,
+          "anon_can_execute": false
+        },
+        {
+          "proname": "get_retrieval_chunks",
+          "identity_arguments": "p_chunk_ids uuid[]",
+          "provolatile": "s",
+          "prosecdef": false,
+          "result_type": "SETOF jsonb",
+          "executing_role_can_execute": true,
+          "service_role_can_execute": true,
+          "anon_can_execute": false
+        },
+        {
+          "proname": "get_source_document",
+          "identity_arguments": "p_source_document_id uuid",
+          "provolatile": "s",
+          "prosecdef": false,
+          "result_type": "jsonb",
+          "executing_role_can_execute": true,
+          "service_role_can_execute": true,
+          "anon_can_execute": false
+        },
+        {
+          "proname": "get_sparse_index",
+          "identity_arguments": "p_index_name text",
+          "provolatile": "s",
+          "prosecdef": false,
+          "result_type": "jsonb",
+          "executing_role_can_execute": true,
+          "service_role_can_execute": true,
+          "anon_can_execute": false
+        },
+        {
+          "proname": "search_legal_chunks",
+          "identity_arguments": "p_query_embedding vector, p_dense_index_name text, p_top_k integer, p_as_of_date date, p_usage_policies text[]",
+          "provolatile": "s",
+          "prosecdef": false,
+          "result_type": "TABLE(retrieval_chunk_id uuid, source_document_id uuid, document_structure_id uuid, dense_index_id uuid, chunk_key text, content text, similarity double precision, node_id text, block_id text, chunk_type text, start_offset integer, end_offset integer, chunk_metadata jsonb, source_id text, source_record_id text, source_snapshot_id text, title text, language text, source_url text, issued_on date, effective_from date, effective_to date, effect_status_reported text, usage_policy text, source_metadata jsonb)",
+          "executing_role_can_execute": true,
+          "service_role_can_execute": true,
+          "anon_can_execute": false
+        },
+        {
+          "proname": "search_sparse_legal_chunks",
+          "identity_arguments": "p_terms text[], p_sparse_index_name text, p_top_k integer, p_as_of_date date, p_usage_policies text[]",
+          "provolatile": "s",
+          "prosecdef": false,
+          "result_type": "TABLE(retrieval_chunk_id uuid, score double precision)",
+          "executing_role_can_execute": true,
+          "service_role_can_execute": true,
+          "anon_can_execute": false
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "rows": [
+        {
+          "referencing_table": "dense_chunk_embeddings",
+          "conname": "dense_chunk_embeddings_dense_index_id_fkey",
+          "referenced_table": "dense_indexes",
+          "definition": "FOREIGN KEY (dense_index_id) REFERENCES dense_indexes(id) ON DELETE CASCADE"
+        },
+        {
+          "referencing_table": "dense_chunk_embeddings",
+          "conname": "dense_chunk_embeddings_retrieval_chunk_id_fkey",
+          "referenced_table": "retrieval_chunks",
+          "definition": "FOREIGN KEY (retrieval_chunk_id) REFERENCES retrieval_chunks(id) ON DELETE CASCADE"
+        },
+        {
+          "referencing_table": "document_blocks",
+          "conname": "document_blocks_document_structure_id_fkey",
+          "referenced_table": "document_structures",
+          "definition": "FOREIGN KEY (document_structure_id) REFERENCES document_structures(id) ON DELETE CASCADE"
+        },
+        {
+          "referencing_table": "document_blocks",
+          "conname": "fk_document_block_node",
+          "referenced_table": "document_nodes",
+          "definition": "FOREIGN KEY (document_structure_id, node_id) REFERENCES document_nodes(document_structure_id, node_id)"
+        },
+        {
+          "referencing_table": "document_nodes",
+          "conname": "document_nodes_document_structure_id_fkey",
+          "referenced_table": "document_structures",
+          "definition": "FOREIGN KEY (document_structure_id) REFERENCES document_structures(id) ON DELETE CASCADE"
+        },
+        {
+          "referencing_table": "document_nodes",
+          "conname": "fk_document_node_parent",
+          "referenced_table": "document_nodes",
+          "definition": "FOREIGN KEY (document_structure_id, parent_node_id) REFERENCES document_nodes(document_structure_id, node_id) DEFERRABLE INITIALLY DEFERRED"
+        },
+        {
+          "referencing_table": "document_structures",
+          "conname": "document_structures_source_document_id_fkey",
+          "referenced_table": "source_documents",
+          "definition": "FOREIGN KEY (source_document_id) REFERENCES source_documents(id) ON DELETE CASCADE"
+        },
+        {
+          "referencing_table": "retrieval_chunks",
+          "conname": "fk_chunk_block",
+          "referenced_table": "document_blocks",
+          "definition": "FOREIGN KEY (document_structure_id, block_id) REFERENCES document_blocks(document_structure_id, block_id)"
+        },
+        {
+          "referencing_table": "retrieval_chunks",
+          "conname": "fk_chunk_node",
+          "referenced_table": "document_nodes",
+          "definition": "FOREIGN KEY (document_structure_id, node_id) REFERENCES document_nodes(document_structure_id, node_id)"
+        },
+        {
+          "referencing_table": "retrieval_chunks",
+          "conname": "fk_chunk_structure_source",
+          "referenced_table": "document_structures",
+          "definition": "FOREIGN KEY (document_structure_id, source_document_id) REFERENCES document_structures(id, source_document_id) ON DELETE CASCADE"
+        },
+        {
+          "referencing_table": "sparse_chunk_documents",
+          "conname": "sparse_chunk_documents_retrieval_chunk_id_fkey",
+          "referenced_table": "retrieval_chunks",
+          "definition": "FOREIGN KEY (retrieval_chunk_id) REFERENCES retrieval_chunks(id) ON DELETE CASCADE"
+        },
+        {
+          "referencing_table": "sparse_chunk_documents",
+          "conname": "sparse_chunk_documents_sparse_index_id_fkey",
+          "referenced_table": "sparse_indexes",
+          "definition": "FOREIGN KEY (sparse_index_id) REFERENCES sparse_indexes(id) ON DELETE CASCADE"
+        },
+        {
+          "referencing_table": "sparse_postings",
+          "conname": "fk_sparse_posting_chunk_index",
+          "referenced_table": "sparse_chunk_documents",
+          "definition": "FOREIGN KEY (sparse_chunk_document_id, sparse_index_id) REFERENCES sparse_chunk_documents(id, sparse_index_id) ON DELETE CASCADE"
+        }
+      ]
+    }
+  ],
+  "project_configuration_matches": true,
+  "read_only": "on"
+}

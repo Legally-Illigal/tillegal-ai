@@ -1,0 +1,998 @@
+{
+  "tests": [
+    {
+      "id": "bm25_hits",
+      "kind": "actual_service",
+      "response": {
+        "request_id": "49563cb1-86b6-4faa-ba4c-79b323b24241",
+        "query_used": "văn bản hợp nhất 60 2026 vbhn nđ",
+        "mode": "bm25",
+        "index": {
+          "id": "2acb41da-84af-4e7b-95b6-00faa3f73528",
+          "index_name": "vbpl-bm25-unicode-v1",
+          "index_version": "v1",
+          "status": "READY",
+          "updated_at": "2026-11-14T08:27:10.966337Z",
+          "algorithm": "BM25",
+          "tokenizer": "unicode-nfc-lower-v1"
+        },
+        "status": "OK",
+        "warnings": [
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "4bf655a2-a1f7-427e-aea9-ddb952b18b85"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "09982b9b-cfc7-4b57-a656-9ca8daa369fc"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "69019f42-d59c-45ce-9313-9c4c9153b1b2"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "4e25db41-5d45-49b3-bce5-978dfa7a7385"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "46ccc6eb-69e4-4926-90ba-3fafc3b4440e"
+          }
+        ],
+        "error": null,
+        "evidence": [
+          {
+            "retrieval_chunk_id": "4bf655a2-a1f7-427e-aea9-ddb952b18b85",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000009-1",
+            "content_sha256": "d34c7e5f48b7b77fc664a7c1f6f703c30cd751cd2e8a4ec16bcb1aacd45ead74",
+            "hash_check": "MATCHED_STORED",
+            "rank": 1,
+            "raw_score": 13.9595546836106,
+            "score_kind": "BM25",
+            "retrieval_method": "bm25",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "09982b9b-cfc7-4b57-a656-9ca8daa369fc",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000184-1",
+            "content_sha256": "870adad4d8a01ced89bb52d7c5ab5b9ef11567aaf0196e1ef803a019516b622e",
+            "hash_check": "MATCHED_STORED",
+            "rank": 2,
+            "raw_score": 13.7857169260629,
+            "score_kind": "BM25",
+            "retrieval_method": "bm25",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "69019f42-d59c-45ce-9313-9c4c9153b1b2",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000137-1",
+            "content_sha256": "252342074c2d6d2d773f7fcdb4e6fb43410f0f1851789a5cf3546763f8019c77",
+            "hash_check": "MATCHED_STORED",
+            "rank": 3,
+            "raw_score": 13.4507145414879,
+            "score_kind": "BM25",
+            "retrieval_method": "bm25",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "4e25db41-5d45-49b3-bce5-978dfa7a7385",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000045-1",
+            "content_sha256": "21cba84f09e9fda83f05d3a634187612f9e15c9c06880af16d0ef191f007f87f",
+            "hash_check": "MATCHED_STORED",
+            "rank": 4,
+            "raw_score": 12.9776652791903,
+            "score_kind": "BM25",
+            "retrieval_method": "bm25",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "46ccc6eb-69e4-4926-90ba-3fafc3b4440e",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000225-1",
+            "content_sha256": "51edd2b889d0e47e4f8841419ebf0d38118f2d4b3cf2c8c1f40cc1f9051c47c6",
+            "hash_check": "MATCHED_STORED",
+            "rank": 5,
+            "raw_score": 12.6803608581204,
+            "score_kind": "BM25",
+            "retrieval_method": "bm25",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          }
+        ]
+      },
+      "rpc_calls": [
+        "get_sparse_index",
+        "search_sparse_legal_chunks",
+        "get_retrieval_chunks",
+        "get_source_document",
+        "get_sparse_index"
+      ],
+      "elapsed_seconds": 3.125,
+      "expected_status_match": true,
+      "sql_hydration_identity_matches": true
+    },
+    {
+      "id": "bm25_filter_no_match",
+      "kind": "actual_service",
+      "response": {
+        "request_id": "bd535bb8-e73c-40a4-8843-ab7d36f4b6f3",
+        "query_used": "văn bản hợp nhất 60 2026 vbhn nđ",
+        "mode": "bm25",
+        "index": {
+          "id": "2acb41da-84af-4e7b-95b6-00faa3f73528",
+          "index_name": "vbpl-bm25-unicode-v1",
+          "index_version": "v1",
+          "status": "READY",
+          "updated_at": "2026-11-14T08:27:10.966337Z",
+          "algorithm": "BM25",
+          "tokenizer": "unicode-nfc-lower-v1"
+        },
+        "status": "NO_MATCH",
+        "warnings": [],
+        "error": null,
+        "evidence": []
+      },
+      "rpc_calls": [
+        "get_sparse_index",
+        "search_sparse_legal_chunks",
+        "get_sparse_index"
+      ],
+      "elapsed_seconds": 0.4839999999999236,
+      "expected_status_match": true,
+      "sql_hydration_identity_matches": true
+    },
+    {
+      "id": "dense_hits",
+      "kind": "actual_service",
+      "response": {
+        "request_id": "53970875-4460-4cf0-8e65-42f1a488e9f4",
+        "query_used": "văn bản hợp nhất 60 2026 vbhn nđ",
+        "mode": "dense",
+        "index": {
+          "id": "0fe7b3a9-d051-41c5-ae61-257790c997f9",
+          "index_name": "vbpl-multilingual-e5-small-v1",
+          "index_version": "v1",
+          "status": "READY",
+          "updated_at": "2026-11-14T08:27:44.253063Z",
+          "algorithm": null,
+          "tokenizer": null
+        },
+        "status": "OK",
+        "warnings": [
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "e72ce95a-258b-4f3b-9cba-18c9117a1d3c"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "2244d304-77d2-4796-b843-548bea0a3c0e"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "67c18b69-c5c5-4ab9-abac-0294b5b7ba0f"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "09982b9b-cfc7-4b57-a656-9ca8daa369fc"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "4bf655a2-a1f7-427e-aea9-ddb952b18b85"
+          }
+        ],
+        "error": null,
+        "evidence": [
+          {
+            "retrieval_chunk_id": "e72ce95a-258b-4f3b-9cba-18c9117a1d3c",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000190-2",
+            "content_sha256": "9966ae09b146b56cbd971da32d96276e663c21ad022fcfbc5496f9b62a0524cb",
+            "hash_check": "MATCHED_STORED",
+            "rank": 1,
+            "raw_score": 0.899065381344238,
+            "score_kind": "COSINE_SIMILARITY",
+            "retrieval_method": "dense",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "2244d304-77d2-4796-b843-548bea0a3c0e",
+            "source_document_id": "1632d7cb-fb66-4389-b91b-820809e1432d",
+            "document_structure_id": "703271b3-8b51-4b11-bf7e-02401ab83566",
+            "chunk_key": "legal-v3-block-000138-1",
+            "content_sha256": "ec5a5161b4155f99ef4cf83c2b4143432a44ebe76110129fa7e23d19e479b35f",
+            "hash_check": "MATCHED_STORED",
+            "rank": 2,
+            "raw_score": 0.898479169697813,
+            "score_kind": "COSINE_SIMILARITY",
+            "retrieval_method": "dense",
+            "title": "Văn bản hợp nhất 01/2026/VBHN-NĐ-BNG của Văn phòng Chính phủ",
+            "effective_from": null,
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "67c18b69-c5c5-4ab9-abac-0294b5b7ba0f",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000190-1",
+            "content_sha256": "60ed43a29a5559c357d18fbb2f05473d0162700b762c3e6fe0ac2ebaa985d822",
+            "hash_check": "MATCHED_STORED",
+            "rank": 3,
+            "raw_score": 0.897835916409737,
+            "score_kind": "COSINE_SIMILARITY",
+            "retrieval_method": "dense",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "09982b9b-cfc7-4b57-a656-9ca8daa369fc",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000184-1",
+            "content_sha256": "870adad4d8a01ced89bb52d7c5ab5b9ef11567aaf0196e1ef803a019516b622e",
+            "hash_check": "MATCHED_STORED",
+            "rank": 4,
+            "raw_score": 0.896894467247198,
+            "score_kind": "COSINE_SIMILARITY",
+            "retrieval_method": "dense",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "4bf655a2-a1f7-427e-aea9-ddb952b18b85",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000009-1",
+            "content_sha256": "d34c7e5f48b7b77fc664a7c1f6f703c30cd751cd2e8a4ec16bcb1aacd45ead74",
+            "hash_check": "MATCHED_STORED",
+            "rank": 5,
+            "raw_score": 0.891103393369712,
+            "score_kind": "COSINE_SIMILARITY",
+            "retrieval_method": "dense",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          }
+        ]
+      },
+      "rpc_calls": [
+        "get_dense_index",
+        "search_legal_chunks",
+        "get_retrieval_chunks",
+        "get_dense_index"
+      ],
+      "elapsed_seconds": 0.9220000000000255,
+      "expected_status_match": true,
+      "sql_hydration_identity_matches": true
+    },
+    {
+      "id": "dense_filter_no_match",
+      "kind": "actual_service",
+      "response": {
+        "request_id": "4e549314-7a66-4e05-86f8-60aac9d22498",
+        "query_used": "văn bản hợp nhất 60 2026 vbhn nđ",
+        "mode": "dense",
+        "index": {
+          "id": "0fe7b3a9-d051-41c5-ae61-257790c997f9",
+          "index_name": "vbpl-multilingual-e5-small-v1",
+          "index_version": "v1",
+          "status": "READY",
+          "updated_at": "2026-11-14T08:27:44.253063Z",
+          "algorithm": null,
+          "tokenizer": null
+        },
+        "status": "NO_MATCH",
+        "warnings": [],
+        "error": null,
+        "evidence": []
+      },
+      "rpc_calls": [
+        "get_dense_index",
+        "search_legal_chunks",
+        "get_dense_index"
+      ],
+      "elapsed_seconds": 0.45299999999997453,
+      "expected_status_match": true,
+      "sql_hydration_identity_matches": true
+    },
+    {
+      "id": "hybrid_hits",
+      "kind": "actual_service",
+      "response": {
+        "request_id": "fb721fd9-bbb8-4fc4-9e9c-9fff16df575b",
+        "query_used": "văn bản hợp nhất 60 2026 vbhn nđ",
+        "mode": "hybrid",
+        "index": null,
+        "status": "OK",
+        "warnings": [
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "4bf655a2-a1f7-427e-aea9-ddb952b18b85"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "09982b9b-cfc7-4b57-a656-9ca8daa369fc"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "e72ce95a-258b-4f3b-9cba-18c9117a1d3c"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "2244d304-77d2-4796-b843-548bea0a3c0e"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "67c18b69-c5c5-4ab9-abac-0294b5b7ba0f"
+          }
+        ],
+        "error": null,
+        "fusion": {
+          "algorithm": "RRF",
+          "failure_policy": "STRICT",
+          "execution": "SEQUENTIAL",
+          "config": {
+            "rrf_k": 60,
+            "bm25_candidates": 5,
+            "dense_candidates": 5
+          },
+          "branches": [
+            {
+              "backend": "bm25",
+              "status": "OK",
+              "requested_candidates": 5,
+              "returned_candidates": 5,
+              "index": {
+                "id": "2acb41da-84af-4e7b-95b6-00faa3f73528",
+                "index_name": "vbpl-bm25-unicode-v1",
+                "index_version": "v1",
+                "status": "READY",
+                "updated_at": "2026-11-14T08:27:10.966337Z",
+                "algorithm": "BM25",
+                "tokenizer": "unicode-nfc-lower-v1"
+              },
+              "error": null
+            },
+            {
+              "backend": "dense",
+              "status": "OK",
+              "requested_candidates": 5,
+              "returned_candidates": 5,
+              "index": {
+                "id": "0fe7b3a9-d051-41c5-ae61-257790c997f9",
+                "index_name": "vbpl-multilingual-e5-small-v1",
+                "index_version": "v1",
+                "status": "READY",
+                "updated_at": "2026-11-14T08:27:44.253063Z",
+                "algorithm": null,
+                "tokenizer": null
+              },
+              "error": null
+            }
+          ],
+          "ranking": [
+            {
+              "retrieval_chunk_id": "4bf655a2-a1f7-427e-aea9-ddb952b18b85",
+              "contributions": [
+                {
+                  "backend": "bm25",
+                  "rank": 1,
+                  "raw_score": 13.9595546836106,
+                  "score_kind": "BM25"
+                },
+                {
+                  "backend": "dense",
+                  "rank": 5,
+                  "raw_score": 0.891103393369712,
+                  "score_kind": "COSINE_SIMILARITY"
+                }
+              ]
+            },
+            {
+              "retrieval_chunk_id": "09982b9b-cfc7-4b57-a656-9ca8daa369fc",
+              "contributions": [
+                {
+                  "backend": "bm25",
+                  "rank": 2,
+                  "raw_score": 13.7857169260629,
+                  "score_kind": "BM25"
+                },
+                {
+                  "backend": "dense",
+                  "rank": 4,
+                  "raw_score": 0.896894467247198,
+                  "score_kind": "COSINE_SIMILARITY"
+                }
+              ]
+            },
+            {
+              "retrieval_chunk_id": "e72ce95a-258b-4f3b-9cba-18c9117a1d3c",
+              "contributions": [
+                {
+                  "backend": "dense",
+                  "rank": 1,
+                  "raw_score": 0.899065381344238,
+                  "score_kind": "COSINE_SIMILARITY"
+                }
+              ]
+            },
+            {
+              "retrieval_chunk_id": "2244d304-77d2-4796-b843-548bea0a3c0e",
+              "contributions": [
+                {
+                  "backend": "dense",
+                  "rank": 2,
+                  "raw_score": 0.898479169697813,
+                  "score_kind": "COSINE_SIMILARITY"
+                }
+              ]
+            },
+            {
+              "retrieval_chunk_id": "67c18b69-c5c5-4ab9-abac-0294b5b7ba0f",
+              "contributions": [
+                {
+                  "backend": "dense",
+                  "rank": 3,
+                  "raw_score": 0.897835916409737,
+                  "score_kind": "COSINE_SIMILARITY"
+                }
+              ]
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "retrieval_chunk_id": "4bf655a2-a1f7-427e-aea9-ddb952b18b85",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000009-1",
+            "content_sha256": "d34c7e5f48b7b77fc664a7c1f6f703c30cd751cd2e8a4ec16bcb1aacd45ead74",
+            "hash_check": "MATCHED_STORED",
+            "rank": 1,
+            "raw_score": 0.03177805800756621,
+            "score_kind": "RRF",
+            "retrieval_method": "hybrid",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "09982b9b-cfc7-4b57-a656-9ca8daa369fc",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000184-1",
+            "content_sha256": "870adad4d8a01ced89bb52d7c5ab5b9ef11567aaf0196e1ef803a019516b622e",
+            "hash_check": "MATCHED_STORED",
+            "rank": 2,
+            "raw_score": 0.031754032258064516,
+            "score_kind": "RRF",
+            "retrieval_method": "hybrid",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "e72ce95a-258b-4f3b-9cba-18c9117a1d3c",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000190-2",
+            "content_sha256": "9966ae09b146b56cbd971da32d96276e663c21ad022fcfbc5496f9b62a0524cb",
+            "hash_check": "MATCHED_STORED",
+            "rank": 3,
+            "raw_score": 0.01639344262295082,
+            "score_kind": "RRF",
+            "retrieval_method": "hybrid",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "2244d304-77d2-4796-b843-548bea0a3c0e",
+            "source_document_id": "1632d7cb-fb66-4389-b91b-820809e1432d",
+            "document_structure_id": "703271b3-8b51-4b11-bf7e-02401ab83566",
+            "chunk_key": "legal-v3-block-000138-1",
+            "content_sha256": "ec5a5161b4155f99ef4cf83c2b4143432a44ebe76110129fa7e23d19e479b35f",
+            "hash_check": "MATCHED_STORED",
+            "rank": 4,
+            "raw_score": 0.016129032258064516,
+            "score_kind": "RRF",
+            "retrieval_method": "hybrid",
+            "title": "Văn bản hợp nhất 01/2026/VBHN-NĐ-BNG của Văn phòng Chính phủ",
+            "effective_from": null,
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "67c18b69-c5c5-4ab9-abac-0294b5b7ba0f",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000190-1",
+            "content_sha256": "60ed43a29a5559c357d18fbb2f05473d0162700b762c3e6fe0ac2ebaa985d822",
+            "hash_check": "MATCHED_STORED",
+            "rank": 5,
+            "raw_score": 0.015873015873015872,
+            "score_kind": "RRF",
+            "retrieval_method": "hybrid",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          }
+        ]
+      },
+      "rpc_calls": [
+        "get_sparse_index",
+        "search_sparse_legal_chunks",
+        "get_retrieval_chunks",
+        "get_source_document",
+        "get_sparse_index",
+        "get_dense_index",
+        "search_legal_chunks",
+        "get_retrieval_chunks",
+        "get_dense_index",
+        "get_sparse_index",
+        "get_dense_index"
+      ],
+      "elapsed_seconds": 1.594000000000051,
+      "expected_status_match": true,
+      "sql_hydration_identity_matches": true
+    },
+    {
+      "id": "hybrid_filter_no_match",
+      "kind": "actual_service",
+      "response": {
+        "request_id": "510f8a95-f047-471d-8350-2454c5bf8667",
+        "query_used": "văn bản hợp nhất 60 2026 vbhn nđ",
+        "mode": "hybrid",
+        "index": null,
+        "status": "NO_MATCH",
+        "warnings": [],
+        "error": null,
+        "fusion": {
+          "algorithm": "RRF",
+          "failure_policy": "STRICT",
+          "execution": "SEQUENTIAL",
+          "config": {
+            "rrf_k": 60,
+            "bm25_candidates": 5,
+            "dense_candidates": 5
+          },
+          "branches": [
+            {
+              "backend": "bm25",
+              "status": "NO_MATCH",
+              "requested_candidates": 5,
+              "returned_candidates": 0,
+              "index": {
+                "id": "2acb41da-84af-4e7b-95b6-00faa3f73528",
+                "index_name": "vbpl-bm25-unicode-v1",
+                "index_version": "v1",
+                "status": "READY",
+                "updated_at": "2026-11-14T08:27:10.966337Z",
+                "algorithm": "BM25",
+                "tokenizer": "unicode-nfc-lower-v1"
+              },
+              "error": null
+            },
+            {
+              "backend": "dense",
+              "status": "NO_MATCH",
+              "requested_candidates": 5,
+              "returned_candidates": 0,
+              "index": {
+                "id": "0fe7b3a9-d051-41c5-ae61-257790c997f9",
+                "index_name": "vbpl-multilingual-e5-small-v1",
+                "index_version": "v1",
+                "status": "READY",
+                "updated_at": "2026-11-14T08:27:44.253063Z",
+                "algorithm": null,
+                "tokenizer": null
+              },
+              "error": null
+            }
+          ],
+          "ranking": []
+        },
+        "evidence": []
+      },
+      "rpc_calls": [
+        "get_sparse_index",
+        "search_sparse_legal_chunks",
+        "get_sparse_index",
+        "get_dense_index",
+        "search_legal_chunks",
+        "get_dense_index",
+        "get_sparse_index",
+        "get_dense_index"
+      ],
+      "elapsed_seconds": 1.25,
+      "expected_status_match": true,
+      "sql_hydration_identity_matches": true
+    },
+    {
+      "id": "cli_bm25",
+      "kind": "actual_cli_entrypoint_secure_dotenv_launcher",
+      "command": [
+        ".venv/Scripts/python.exe",
+        ".docs/development/retrieval-e2e-verifier.py",
+        "--cli-child",
+        "--query",
+        "văn bản hợp nhất 60 2026 vbhn nđ",
+        "--mode",
+        "bm25",
+        "--top-k",
+        "5",
+        "--as-of-date",
+        "2026-11-14",
+        "--allowed-policy",
+        "EXPERIMENTAL_ONLY",
+        "--bm25-candidates",
+        "5",
+        "--dense-candidates",
+        "5"
+      ],
+      "exit_code": 0,
+      "response": {
+        "request_id": "680274bd-2fc1-404a-aec3-f4953405dd6f",
+        "query_used": "văn bản hợp nhất 60 2026 vbhn nđ",
+        "mode": "bm25",
+        "index": {
+          "id": "2acb41da-84af-4e7b-95b6-00faa3f73528",
+          "index_name": "vbpl-bm25-unicode-v1",
+          "index_version": "v1",
+          "status": "READY",
+          "updated_at": "2026-11-14T08:27:10.966337Z",
+          "algorithm": "BM25",
+          "tokenizer": "unicode-nfc-lower-v1"
+        },
+        "status": "OK",
+        "warnings": [
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "4bf655a2-a1f7-427e-aea9-ddb952b18b85"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "09982b9b-cfc7-4b57-a656-9ca8daa369fc"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "69019f42-d59c-45ce-9313-9c4c9153b1b2"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "4e25db41-5d45-49b3-bce5-978dfa7a7385"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "46ccc6eb-69e4-4926-90ba-3fafc3b4440e"
+          }
+        ],
+        "error": null,
+        "evidence": [
+          {
+            "retrieval_chunk_id": "4bf655a2-a1f7-427e-aea9-ddb952b18b85",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000009-1",
+            "content_sha256": "d34c7e5f48b7b77fc664a7c1f6f703c30cd751cd2e8a4ec16bcb1aacd45ead74",
+            "hash_check": "MATCHED_STORED",
+            "rank": 1,
+            "raw_score": 13.9595546836106,
+            "score_kind": "BM25",
+            "retrieval_method": "bm25",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "09982b9b-cfc7-4b57-a656-9ca8daa369fc",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000184-1",
+            "content_sha256": "870adad4d8a01ced89bb52d7c5ab5b9ef11567aaf0196e1ef803a019516b622e",
+            "hash_check": "MATCHED_STORED",
+            "rank": 2,
+            "raw_score": 13.7857169260629,
+            "score_kind": "BM25",
+            "retrieval_method": "bm25",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "69019f42-d59c-45ce-9313-9c4c9153b1b2",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000137-1",
+            "content_sha256": "252342074c2d6d2d773f7fcdb4e6fb43410f0f1851789a5cf3546763f8019c77",
+            "hash_check": "MATCHED_STORED",
+            "rank": 3,
+            "raw_score": 13.4507145414879,
+            "score_kind": "BM25",
+            "retrieval_method": "bm25",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "4e25db41-5d45-49b3-bce5-978dfa7a7385",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000045-1",
+            "content_sha256": "21cba84f09e9fda83f05d3a634187612f9e15c9c06880af16d0ef191f007f87f",
+            "hash_check": "MATCHED_STORED",
+            "rank": 4,
+            "raw_score": 12.9776652791903,
+            "score_kind": "BM25",
+            "retrieval_method": "bm25",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "46ccc6eb-69e4-4926-90ba-3fafc3b4440e",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000225-1",
+            "content_sha256": "51edd2b889d0e47e4f8841419ebf0d38118f2d4b3cf2c8c1f40cc1f9051c47c6",
+            "hash_check": "MATCHED_STORED",
+            "rank": 5,
+            "raw_score": 12.6803608581204,
+            "score_kind": "BM25",
+            "retrieval_method": "bm25",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          }
+        ]
+      },
+      "service_ids_scores_match": true
+    },
+    {
+      "id": "cli_dense",
+      "kind": "actual_cli_entrypoint_secure_dotenv_launcher",
+      "command": [
+        ".venv/Scripts/python.exe",
+        ".docs/development/retrieval-e2e-verifier.py",
+        "--cli-child",
+        "--query",
+        "văn bản hợp nhất 60 2026 vbhn nđ",
+        "--mode",
+        "dense",
+        "--top-k",
+        "5",
+        "--as-of-date",
+        "2026-11-14",
+        "--allowed-policy",
+        "EXPERIMENTAL_ONLY",
+        "--bm25-candidates",
+        "5",
+        "--dense-candidates",
+        "5",
+        "--dense-model-path",
+        "<LOCAL_E5_CHECKPOINT>"
+      ],
+      "exit_code": 0,
+      "response": {
+        "request_id": "ffedb5b7-f264-40c3-9c5c-bd1e7b97b3d8",
+        "query_used": "văn bản hợp nhất 60 2026 vbhn nđ",
+        "mode": "dense",
+        "index": {
+          "id": "0fe7b3a9-d051-41c5-ae61-257790c997f9",
+          "index_name": "vbpl-multilingual-e5-small-v1",
+          "index_version": "v1",
+          "status": "READY",
+          "updated_at": "2026-11-14T08:27:44.253063Z",
+          "algorithm": null,
+          "tokenizer": null
+        },
+        "status": "OK",
+        "warnings": [
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "e72ce95a-258b-4f3b-9cba-18c9117a1d3c"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "2244d304-77d2-4796-b843-548bea0a3c0e"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "67c18b69-c5c5-4ab9-abac-0294b5b7ba0f"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "09982b9b-cfc7-4b57-a656-9ca8daa369fc"
+          },
+          {
+            "code": "TEMPORAL_METADATA_INCOMPLETE",
+            "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+            "retrieval_chunk_id": "4bf655a2-a1f7-427e-aea9-ddb952b18b85"
+          }
+        ],
+        "error": null,
+        "evidence": [
+          {
+            "retrieval_chunk_id": "e72ce95a-258b-4f3b-9cba-18c9117a1d3c",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000190-2",
+            "content_sha256": "9966ae09b146b56cbd971da32d96276e663c21ad022fcfbc5496f9b62a0524cb",
+            "hash_check": "MATCHED_STORED",
+            "rank": 1,
+            "raw_score": 0.899065381344238,
+            "score_kind": "COSINE_SIMILARITY",
+            "retrieval_method": "dense",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "2244d304-77d2-4796-b843-548bea0a3c0e",
+            "source_document_id": "1632d7cb-fb66-4389-b91b-820809e1432d",
+            "document_structure_id": "703271b3-8b51-4b11-bf7e-02401ab83566",
+            "chunk_key": "legal-v3-block-000138-1",
+            "content_sha256": "ec5a5161b4155f99ef4cf83c2b4143432a44ebe76110129fa7e23d19e479b35f",
+            "hash_check": "MATCHED_STORED",
+            "rank": 2,
+            "raw_score": 0.898479169697813,
+            "score_kind": "COSINE_SIMILARITY",
+            "retrieval_method": "dense",
+            "title": "Văn bản hợp nhất 01/2026/VBHN-NĐ-BNG của Văn phòng Chính phủ",
+            "effective_from": null,
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "67c18b69-c5c5-4ab9-abac-0294b5b7ba0f",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000190-1",
+            "content_sha256": "60ed43a29a5559c357d18fbb2f05473d0162700b762c3e6fe0ac2ebaa985d822",
+            "hash_check": "MATCHED_STORED",
+            "rank": 3,
+            "raw_score": 0.897835916409737,
+            "score_kind": "COSINE_SIMILARITY",
+            "retrieval_method": "dense",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "09982b9b-cfc7-4b57-a656-9ca8daa369fc",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000184-1",
+            "content_sha256": "870adad4d8a01ced89bb52d7c5ab5b9ef11567aaf0196e1ef803a019516b622e",
+            "hash_check": "MATCHED_STORED",
+            "rank": 4,
+            "raw_score": 0.896894467247198,
+            "score_kind": "COSINE_SIMILARITY",
+            "retrieval_method": "dense",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          },
+          {
+            "retrieval_chunk_id": "4bf655a2-a1f7-427e-aea9-ddb952b18b85",
+            "source_document_id": "8f9ea55b-ae3e-4dfa-9736-6c5e1b834ef4",
+            "document_structure_id": "07100053-3331-4a67-8cb0-ae590208f468",
+            "chunk_key": "legal-v2-block-000009-1",
+            "content_sha256": "d34c7e5f48b7b77fc664a7c1f6f703c30cd751cd2e8a4ec16bcb1aacd45ead74",
+            "hash_check": "MATCHED_STORED",
+            "rank": 5,
+            "raw_score": 0.891103393369712,
+            "score_kind": "COSINE_SIMILARITY",
+            "retrieval_method": "dense",
+            "title": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+            "effective_from": "2026-10-16",
+            "effective_to": null,
+            "usage_policy": "EXPERIMENTAL_ONLY"
+          }
+        ]
+      },
+      "service_ids_scores_match": true
+    }
+  ],
+  "rpc_transport": "SDK get=True / HTTP GET only / PostgREST read-only transactions",
+  "baseline": "legacy-data-live-evidence.json",
+  "model_revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+  "project_matches_existing_config": true,
+  "sql_read_only": "on",
+  "indexes": [
+    {
+      "index_name": "vbpl-bm25-unicode-v1",
+      "status": "READY",
+      "updated_at": "2026-11-14 08:27:10.966337+00:00"
+    },
+    {
+      "index_name": "vbpl-multilingual-e5-small-v1",
+      "status": "READY",
+      "updated_at": "2026-11-14 08:27:44.253063+00:00"
+    }
+  ],
+  "seed_chunk_id": "0029f385-4290-4359-bf32-87aea3da43cc",
+  "query": "văn bản hợp nhất 60 2026 vbhn nđ",
+  "as_of_date": "2026-11-14",
+  "allowed_policies": [
+    "EXPERIMENTAL_ONLY"
+  ],
+  "checkpoint_files_present": true,
+  "encoder": {
+    "dimension": 384,
+    "finite": true,
+    "norm": 1.0000000200572066,
+    "prefix": "query: ",
+    "actual_local_inference": true
+  },
+  "bm25_sql_compare": true,
+  "independent_rrf_match": true
+}

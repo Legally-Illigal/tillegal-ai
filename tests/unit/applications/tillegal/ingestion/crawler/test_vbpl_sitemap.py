@@ -35,11 +35,7 @@ def test_parse_sitemap_index_returns_vbpl_children() -> None:
     ],
 )
 def test_parse_sitemap_index_rejects_non_vbpl_locations(location: str) -> None:
-    xml = (
-        '<sitemapindex><sitemap><loc>'
-        f"{location}"
-        "</loc></sitemap></sitemapindex>"
-    ).encode()
+    xml = (f"<sitemapindex><sitemap><loc>{location}</loc></sitemap></sitemapindex>").encode()
 
     with pytest.raises(SitemapFetchError, match="outside https://vbpl.vn"):
         parse_sitemap_index(xml)
@@ -100,9 +96,7 @@ def test_scan_reads_all_sitemaps_and_deduplicates_selected_urls() -> None:
 
     assert result.sitemap_count == 2
     assert result.document_url_count == 2
-    assert [item.url for item in result.selected] == [
-        "https://vbpl.vn/van-ban/chi-tiet/doc-a"
-    ]
+    assert [item.url for item in result.selected] == ["https://vbpl.vn/van-ban/chi-tiet/doc-a"]
 
 
 def test_scan_surfaces_missing_child_sitemap_response() -> None:

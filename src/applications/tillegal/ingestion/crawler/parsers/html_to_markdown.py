@@ -28,11 +28,10 @@ def clean_legal_markdown(markdown: str) -> str:
     # Only trim a leading administrative region when a standalone document title exists.
     first_title = next((i for i, value in enumerate(texts) if title.fullmatch(value)), None)
     start = 0
-    if first_title is not None and not any(
-        boundary.match(value) or value.startswith("Căn cứ ") for value in texts[:first_title]
-    ) and any(
-        re.search(r"CỘNG HÒA|Độc lập\s*[-–]|\bSố\s*:", value, re.IGNORECASE)
-        for value in texts[:first_title]
+    if (
+        first_title is not None
+        and not any(boundary.match(value) or value.startswith("Căn cứ ") for value in texts[:first_title])
+        and any(re.search(r"CỘNG HÒA|Độc lập\s*[-–]|\bSố\s*:", value, re.IGNORECASE) for value in texts[:first_title])
     ):
         start = first_title
     result: list[str] = []
@@ -80,10 +79,14 @@ def clean_legal_markdown(markdown: str) -> str:
         while subtitle + 1 < len(result):
             left, right = result[subtitle], result[subtitle + 1]
             fully_bold = r"(?:\s*\*\*[^*]+\*\*\s*)+"
-            if (not re.fullmatch(fully_bold, left) or not re.fullmatch(fully_bold, right)
-                    or boundary.match(plain(right)) or title.fullmatch(plain(right))):
+            if (
+                not re.fullmatch(fully_bold, left)
+                or not re.fullmatch(fully_bold, right)
+                or boundary.match(plain(right))
+                or title.fullmatch(plain(right))
+            ):
                 break
-            result[subtitle:subtitle + 2] = [left + " " + right]
+            result[subtitle : subtitle + 2] = [left + " " + right]
     cleaned = "\n\n".join(result).strip()
     if not cleaned:
         raise ValueError("Administrative cleanup produced empty legal Markdown")
