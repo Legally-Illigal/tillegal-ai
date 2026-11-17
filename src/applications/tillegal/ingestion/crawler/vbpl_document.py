@@ -359,8 +359,14 @@ def fetch_vbpl_document_page(
         _FILE_LIST_ACTION_ID = action_id
 
     return VbplDocumentPage(
-        document_id, title, metadata, attachments,
-        issued_on, effective_from, effective_to, status_name,
+        document_id,
+        title,
+        metadata,
+        attachments,
+        issued_on,
+        effective_from,
+        effective_to,
+        status_name,
         document_number=_attribute_text(attributes, "docNum"),
         document_type=_attribute_text(attributes, "docType", named=True),
         issuing_authority=_attribute_text(attributes, "agencyName"),

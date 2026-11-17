@@ -95,11 +95,7 @@ def test_request_context_is_logged_and_echoed(caplog) -> None:
 
     assert response.status_code == 200
     assert response.headers["X-Request-ID"] == "backend-request-123"
-    events = [
-        record.event_data
-        for record in caplog.records
-        if record.name == "tillegal.observability"
-    ]
+    events = [record.event_data for record in caplog.records if record.name == "tillegal.observability"]
     assert [event["event"] for event in events] == ["request_started", "request_completed"]
     assert all(event["request_id"] == "backend-request-123" for event in events)
     assert events[-1]["route"] == "/health/live"

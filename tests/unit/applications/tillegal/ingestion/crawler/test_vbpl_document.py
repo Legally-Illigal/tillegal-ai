@@ -22,18 +22,20 @@ from src.applications.tillegal.ingestion.crawler.vbpl_document import (
 
 def test_document_attributes_are_read_from_matching_initial_doc_across_chunks() -> None:
     document = {
-        "id": "175384", "issueDate": "2026-10-22T00:00:00",
-        "effFrom": "2026-11-01T00:00:00", "effTo": None,
+        "id": "175384",
+        "issueDate": "2026-10-22T00:00:00",
+        "effFrom": "2026-11-01T00:00:00",
+        "effTo": None,
         "effStatus": {"code": "CHL", "name": "Còn hiệu lực"},
         "docNum": "58/2026/QĐ-UBND",
         "docType": {"name": "Quyết định", "code": "QĐ"},
         "agencyName": "UBND Tỉnh Hưng Yên",
     }
     payload = json.dumps({"initialDoc": document}, ensure_ascii=False)
-    html = '<head><title>Document</title></head><body>'
+    html = "<head><title>Document</title></head><body>"
     for part in (payload[:35], payload[35:]):
-        html += f'<script>self.__next_f.push({json.dumps([1, part])})</script>'
-    response = httpx.Response(200, text=html + '</body>')
+        html += f"<script>self.__next_f.push({json.dumps([1, part])})</script>"
+    response = httpx.Response(200, text=html + "</body>")
     attributes = _parse_document_attributes(_read_document_page(response, 10000), "175384")
     assert _attribute_date(attributes, "issueDate") == date(2026, 10, 22)
     assert _attribute_date(attributes, "effFrom") == date(2026, 11, 1)
@@ -64,7 +66,7 @@ def test_attribute_text_rejects_malformed_named_attributes(value) -> None:
 def test_document_attributes_reject_missing_or_wrong_document(document) -> None:
     payload = json.dumps([1, json.dumps({"initialDoc": document})])
     with pytest.raises(VbplDocumentFetchError, match="requested document"):
-        _parse_document_attributes(f'<script>self.__next_f.push({payload})</script>', "175384")
+        _parse_document_attributes(f"<script>self.__next_f.push({payload})</script>", "175384")
 
 
 @pytest.mark.parametrize("value", ["2026-02-30", "unknown", 20261022])
@@ -81,7 +83,7 @@ def test_attribute_date_preserves_expiry_and_missing_dates() -> None:
 
 def test_read_document_page_enforces_body_size_limit() -> None:
     with pytest.raises(VbplDocumentFetchError, match="page exceeds"):
-        _read_document_page(httpx.Response(200, content=b'<head></head>' + b'x' * 100), 50)
+        _read_document_page(httpx.Response(200, content=b"<head></head>" + b"x" * 100), 50)
 
 
 def test_parse_document_id_from_vbpl_detail_url() -> None:

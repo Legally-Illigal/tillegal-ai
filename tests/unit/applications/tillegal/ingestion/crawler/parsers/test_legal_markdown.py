@@ -28,8 +28,11 @@ def test_signature_table_chunks_remove_layout_but_preserve_source_block() -> Non
 def test_data_table_chunks_keep_headers_literal_pipes_and_token_limit() -> None:
     table = "| Loại | Mô tả |\n| :--- | ---: |\n| | |\n| A\\|B | " + "nội dung " * 60 + " |"
     parsed = parse_legal_markdown(
-        table, source_document_id=_SOURCE_DOCUMENT_ID, title="Bảng",
-        token_counter=lambda s: len(s.split()), max_chunk_tokens=32,
+        table,
+        source_document_id=_SOURCE_DOCUMENT_ID,
+        title="Bảng",
+        token_counter=lambda s: len(s.split()),
+        max_chunk_tokens=32,
     )
     assert len(parsed.chunks) > 1
     assert all(len(c.content.split()) <= 32 for c in parsed.chunks)
@@ -44,7 +47,8 @@ def test_data_table_chunks_keep_headers_literal_pipes_and_token_limit() -> None:
 def test_empty_and_separator_only_tables_do_not_create_chunks() -> None:
     parsed = parse_legal_markdown(
         "Nội dung thật.\n\n|----|\n\n| | |\n| --- | --- |",
-        source_document_id=_SOURCE_DOCUMENT_ID, title="Văn bản",
+        source_document_id=_SOURCE_DOCUMENT_ID,
+        title="Văn bản",
     )
     assert len(parsed.chunks) == 1
     assert parsed.chunks[0].content.endswith("Nội dung thật.")
@@ -55,7 +59,8 @@ def test_chunks_merge_point_blocks_and_include_parent_lead_without_crossing_poin
     parsed = parse_legal_markdown(
         "**Điều 1. Hệ số**\n\n1. Các hệ số:\n\na) Hệ số gốc:\n\n"
         "Loại I: 3.\n\nLoại II: 2.\n\nb) Hệ số khác.\n\n**Điều 2. Khác**\n\nNội dung.",
-        source_document_id=_SOURCE_DOCUMENT_ID, title="Quyết định",
+        source_document_id=_SOURCE_DOCUMENT_ID,
+        title="Quyết định",
     )
     chunks = [c for c in parsed.chunks if c.node_id == "article-1-clause-1-point-a"]
     assert len(chunks) == 1
@@ -95,7 +100,8 @@ def test_appendix_forms_do_not_inherit_main_chapter_or_previous_form_article() -
     parsed = parse_legal_markdown(markdown, source_document_id=_SOURCE_DOCUMENT_ID, title="Thông tư")
     nodes = {node.node_id: node for node in parsed.nodes}
     assert {node.label for node in parsed.nodes if node.parent_node_id == "chapter-vii"} == {
-        "Điều 21: Hiệu lực", "Điều 22: Thi hành",
+        "Điều 21: Hiệu lực",
+        "Điều 22: Thi hành",
     }
     assert nodes["appendix-1-attachment-1"].label == "Mẫu số 1"
     target = next(block for block in parsed.blocks if block.content == "Về việc cử Trưởng đoàn")
@@ -105,7 +111,7 @@ def test_appendix_forms_do_not_inherit_main_chapter_or_previous_form_article() -
     assert "PHỤ LỤC" in chunk.content and "QUYẾT ĐỊNH" in chunk.content
     assert "Chương VII" not in chunk.content and "Điều 3" not in chunk.content
     assert nodes["appendix-2-attachment-1-chapter-i"].parent_node_id == "appendix-2-attachment-1"
-    assert markdown[target.start_offset:target.end_offset] == "**Về việc cử Trưởng đoàn**"
+    assert markdown[target.start_offset : target.end_offset] == "**Về việc cử Trưởng đoàn**"
 
 
 def test_named_appendices_and_form_codes_preserve_scope_across_mastheads() -> None:
@@ -118,7 +124,10 @@ def test_named_appendices_and_form_codes_preserve_scope_across_mastheads() -> No
     parsed = parse_legal_markdown(markdown, source_document_id=_SOURCE_DOCUMENT_ID, title="Thông tư")
     containers = [node for node in parsed.nodes if node.kind in {"appendix", "attachment"}]
     assert [node.label for node in containers] == [
-        "PHỤ LỤC I. BIỂU MẪU", "Mẫu số 01/ABC", "PHỤ LỤC II: DANH MỤC", "Mẫu số 02/ABC",
+        "PHỤ LỤC I. BIỂU MẪU",
+        "Mẫu số 01/ABC",
+        "PHỤ LỤC II: DANH MỤC",
+        "Mẫu số 02/ABC",
     ]
     article = next(node for node in parsed.nodes if node.node_id.endswith("article-1"))
     assert article.parent_node_id == "appendix-1-attachment-1"
@@ -135,7 +144,7 @@ def test_wrapped_points_keep_continuations_tables_and_chunk_context() -> None:
     )
     parsed = parse_legal_markdown(markdown, source_document_id=_SOURCE_DOCUMENT_ID, title="Nghị quyết")
     wrapped = next(block for block in parsed.blocks if block.content == "a) Nội dung tiếp nối.")
-    assert markdown[wrapped.start_offset:wrapped.end_offset] == "a) Nội dung\ntiếp nối."
+    assert markdown[wrapped.start_offset : wrapped.end_offset] == "a) Nội dung\ntiếp nối."
     for content in ("Hệ số gốc:", "Xã loại I: 3,0."):
         block = next(block for block in parsed.blocks if block.content == content)
         assert block.node_id == "article-4-clause-1-point-a"
@@ -161,8 +170,8 @@ def test_article_number_only_heading_preserves_searchable_body(marker: str, sepa
     assert paragraph.content == body + " Dòng tiếp nối."
     assert paragraph.node_id == article.node_id
     assert article.heading_block_id == heading.block_id
-    assert markdown[heading.start_offset:heading.end_offset] == f"{marker}Điều 1.{marker}"
-    assert markdown[paragraph.start_offset:paragraph.end_offset] == body + "\nDòng tiếp nối."
+    assert markdown[heading.start_offset : heading.end_offset] == f"{marker}Điều 1.{marker}"
+    assert markdown[paragraph.start_offset : paragraph.end_offset] == body + "\nDòng tiếp nối."
     assert any(chunk.block_id == paragraph.block_id and body in chunk.content for chunk in parsed.chunks)
 
 

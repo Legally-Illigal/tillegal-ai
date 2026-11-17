@@ -32,9 +32,7 @@ _ARTICLE_INLINE_BODY = re.compile(
 )
 _CLAUSE = re.compile(r"^(\d+)\.\s+(.+)$")
 _POINT = re.compile(r"^([a-zđ])\)\s*(.*)$", re.IGNORECASE)
-_APPENDIX = re.compile(
-    r"^PHỤ LỤC(?:\s+(?:[IVXLCDM]+|\d+[a-z]?))?(?:\s*[.:–—-]\s*\S.*)?$", re.IGNORECASE
-)
+_APPENDIX = re.compile(r"^PHỤ LỤC(?:\s+(?:[IVXLCDM]+|\d+[a-z]?))?(?:\s*[.:–—-]\s*\S.*)?$", re.IGNORECASE)
 _FORM = re.compile(r"^Mẫu số\s+\d+[a-zA-Z]?(?:[/.-][\w-]+)*(?:\s*[:.–-]\s*.*)?$", re.IGNORECASE)
 _ATTACHED_TITLE = re.compile(r"^(?:QUYẾT ĐỊNH|NGHỊ QUYẾT|QUY CHẾ|QUY ĐỊNH)$")
 _INLINE_MARKDOWN = re.compile(r"\[([^\]]+)\]\([^)]+\)|\*\*|__|~~|`|\*|_")
@@ -125,12 +123,20 @@ def parse_legal_markdown(
             node_id = _unique_node_id(f"{kind}-{ordinal}", parent.node_id, used_node_ids)
             block_id = _next_block_id(len(blocks))
             context = _NodeContext(node_id, kind, cleaned, parent.node_id)
-            nodes.append(DocumentNodeWrite(
-                node_id=node_id, parent_node_id=parent.node_id, kind=kind, label=cleaned,
-                scope=cleaned, heading_block_id=block_id, ordinal=ordinal,
-            ))
-            _append_block(blocks, cleaned, node_id, "heading", rendered_lines[0].start,
-                          rendered_lines[-1].end, block_id=block_id)
+            nodes.append(
+                DocumentNodeWrite(
+                    node_id=node_id,
+                    parent_node_id=parent.node_id,
+                    kind=kind,
+                    label=cleaned,
+                    scope=cleaned,
+                    heading_block_id=block_id,
+                    ordinal=ordinal,
+                )
+            )
+            _append_block(
+                blocks, cleaned, node_id, "heading", rendered_lines[0].start, rendered_lines[-1].end, block_id=block_id
+            )
             if appendix_heading:
                 current_appendix = context
                 current_attachment = None
@@ -298,7 +304,9 @@ def parse_legal_markdown(
                 continue
 
             owner = (
-                current_point or current_clause or current_article
+                current_point
+                or current_clause
+                or current_article
                 or (current_sections[-1] if current_sections else root)
             )
             block_type = "list_item" if re.match(r"^(?:[-*+]|\d+[.)])\s+", cleaned_line) else "paragraph"
@@ -348,10 +356,15 @@ def _paragraphs(markdown: str) -> list[list[_SourceLine]]:
                 current = []
             continue
         cleaned = _clean_line(content)
-        if current and (_APPENDIX.fullmatch(cleaned) or _FORM.fullmatch(cleaned)
-                        or _ATTACHED_TITLE.fullmatch(cleaned)
-                        or _ARTICLE_HEADING.match(cleaned) or _SECTION_HEADING.match(cleaned)
-                        or _CLAUSE.match(cleaned) or _POINT.match(cleaned)):
+        if current and (
+            _APPENDIX.fullmatch(cleaned)
+            or _FORM.fullmatch(cleaned)
+            or _ATTACHED_TITLE.fullmatch(cleaned)
+            or _ARTICLE_HEADING.match(cleaned)
+            or _SECTION_HEADING.match(cleaned)
+            or _CLAUSE.match(cleaned)
+            or _POINT.match(cleaned)
+        ):
             paragraphs.append(current)
             current = []
         current.append(_SourceLine(content, start, end))
@@ -464,8 +477,13 @@ def _make_chunks(
         if block.block_type == "heading" or not block.content.strip():
             groups.append([])
             continue
-        if (not groups or not groups[-1] or groups[-1][-1].node_id != block.node_id
-                or block.block_type == "table" or groups[-1][-1].block_type == "table"):
+        if (
+            not groups
+            or not groups[-1]
+            or groups[-1][-1].node_id != block.node_id
+            or block.block_type == "table"
+            or groups[-1][-1].block_type == "table"
+        ):
             groups.append([block])
         else:
             groups[-1].append(block)
@@ -489,8 +507,14 @@ def _make_chunks(
         context_blocks: list[str] = []
         node = nodes[block.node_id] if block.node_id is not None else None
         if node is not None and node.kind in {"point", "clause"}:
-            lead = next((item for item in reversed(blocks[:block.ordinal])
-                         if item.node_id == node.parent_node_id and item.block_type != "heading"), None)
+            lead = next(
+                (
+                    item
+                    for item in reversed(blocks[: block.ordinal])
+                    if item.node_id == node.parent_node_id and item.block_type != "heading"
+                ),
+                None,
+            )
             if lead is not None and lead.content.rstrip().endswith(":"):
                 contextual_prefix = prefix + lead.content + "\n\n"
                 if token_counter(contextual_prefix + group[0].content) <= max_tokens:
@@ -508,8 +532,7 @@ def _make_chunks(
             part_start = body.index(part, cursor)
             part_end = part_start + len(part)
             cursor = part_end
-            covered = [(start, end, item) for start, end, item in spans
-                       if start < part_end and end > part_start]
+            covered = [(start, end, item) for start, end, item in spans if start < part_end and end > part_start]
             first, last = covered[0][2], covered[-1][2]
             content = f"{prefix}{part}"
             chunk_ordinal = len(chunks)
@@ -530,8 +553,11 @@ def _make_chunks(
                         "breadcrumb": breadcrumb,
                         "context_block_ids": context_blocks,
                         "block_spans": [
-                            {"block_id": item.block_id, "content_start": max(part_start - start, 0),
-                             "content_end": min(part_end, end) - start}
+                            {
+                                "block_id": item.block_id,
+                                "content_start": max(part_start - start, 0),
+                                "content_end": min(part_end, end) - start,
+                            }
                             for start, end, item in covered
                         ],
                     },
@@ -541,8 +567,12 @@ def _make_chunks(
 
 
 def _table_chunks(
-    block: DocumentBlockWrite, prefix: str, breadcrumb: str,
-    token_counter: Callable[[str], int], max_tokens: int, ordinal: int,
+    block: DocumentBlockWrite,
+    prefix: str,
+    breadcrumb: str,
+    token_counter: Callable[[str], int],
+    max_tokens: int,
+    ordinal: int,
 ) -> list[RetrievalChunkWrite]:
     """Render searchable table rows without changing the persisted source block."""
     rows: list[tuple[int, int, list[str]]] = []
@@ -560,17 +590,19 @@ def _table_chunks(
         if cells and all(re.fullmatch(r":?-+:?", cell.strip()) for cell in cells):
             separators.append(len(rows))
             continue
-        cells = [re.sub(r"\s+", " ", unescape(re.sub(
-            r"<br\s*/?>", " ", cell, flags=re.IGNORECASE
-        )).replace(r"\|", "|")).strip() for cell in cells]
+        cells = [
+            re.sub(
+                r"\s+", " ", unescape(re.sub(r"<br\s*/?>", " ", cell, flags=re.IGNORECASE)).replace(r"\|", "|")
+            ).strip()
+            for cell in cells
+        ]
         if any(cells):
             rows.append((start, end, cells))
     if not rows:
         return []
     # A single-row layout (e.g. signatures) is content, never a column header.
     has_header = len(rows) > 1 and 1 in separators and all(rows[0][2])
-    if has_header and ("<br" in block.content[:rows[0][1]].lower()
-                       or any(len(cell) > 80 for cell in rows[0][2])):
+    if has_header and ("<br" in block.content[: rows[0][1]].lower() or any(len(cell) > 80 for cell in rows[0][2])):
         has_header = False
     headers = rows[0][2] if has_header else []
     result: list[RetrievalChunkWrite] = []
@@ -578,23 +610,38 @@ def _table_chunks(
         row_prefix = prefix
         if headers:
             row_prefix += "Cột: " + "; ".join(headers) + "\n"
-        body = "; ".join(
-            f"{headers[index]}: {cell}" if index < len(headers) else f"Cột {index + 1}: {cell}"
-            for index, cell in enumerate(cells) if cell
-        ) if headers else "\n\n".join(cell for cell in cells if cell)
+        body = (
+            "; ".join(
+                f"{headers[index]}: {cell}" if index < len(headers) else f"Cột {index + 1}: {cell}"
+                for index, cell in enumerate(cells)
+                if cell
+            )
+            if headers
+            else "\n\n".join(cell for cell in cells if cell)
+        )
         for part in _split_content(row_prefix, body, token_counter, max_tokens):
             content = row_prefix + part
-            result.append(RetrievalChunkWrite(
-                chunk_key=f"legal-v3-{block.block_id}-{len(result) + 1}",
-                content=content, content_sha256=hashlib.sha256(content.encode("utf-8")).hexdigest(),
-                node_id=block.node_id, block_id=block.block_id, chunk_type="table",
-                ordinal=ordinal + len(result), start_offset=block.start_offset, end_offset=block.end_offset,
-                metadata={"block_ids": [block.block_id], "breadcrumb": breadcrumb,
-                          "table_row": row_index + (2 if has_header else 1), "table_headers": headers,
-                          "block_spans": [{"block_id": block.block_id, "content_start": start,
-                                           "content_end": end}],
-                          "header_span": [rows[0][0], rows[0][1]] if has_header else None},
-            ))
+            result.append(
+                RetrievalChunkWrite(
+                    chunk_key=f"legal-v3-{block.block_id}-{len(result) + 1}",
+                    content=content,
+                    content_sha256=hashlib.sha256(content.encode("utf-8")).hexdigest(),
+                    node_id=block.node_id,
+                    block_id=block.block_id,
+                    chunk_type="table",
+                    ordinal=ordinal + len(result),
+                    start_offset=block.start_offset,
+                    end_offset=block.end_offset,
+                    metadata={
+                        "block_ids": [block.block_id],
+                        "breadcrumb": breadcrumb,
+                        "table_row": row_index + (2 if has_header else 1),
+                        "table_headers": headers,
+                        "block_spans": [{"block_id": block.block_id, "content_start": start, "content_end": end}],
+                        "header_span": [rows[0][0], rows[0][1]] if has_header else None,
+                    },
+                )
+            )
     return result
 
 
@@ -624,7 +671,7 @@ def _split_content(
             unit = value[start:end].strip()
             if not unit:
                 continue
-            candidate = value[pending_start if pending_start is not None else start:end].strip()
+            candidate = value[pending_start if pending_start is not None else start : end].strip()
             if token_counter(f"{prefix}{candidate}") <= max_tokens:
                 if pending_start is None:
                     pending_start = start
