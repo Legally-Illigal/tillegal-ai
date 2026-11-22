@@ -25,6 +25,7 @@ def create_retrieval_service(
     dense_model_path: Path | None = None,
     hybrid_config: HybridConfig | None = None,
     rerank_config: RerankConfig | None = None,
+    timeout_seconds: float = 30,
 ) -> RetrievalService:
     """Create read adapters only. Credentials are never rendered or logged here.
 
@@ -65,4 +66,5 @@ def create_retrieval_service(
         hybrid_config=hybrid_config,
         rerank_config=rerank_config,
         pair_scorer=scorer,
+        timeout_seconds=timeout_seconds,
     )
