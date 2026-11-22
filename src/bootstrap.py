@@ -52,7 +52,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
             application.state.langgraph_checkpointer = await checkpointer.open()
 
         worker_task: asyncio.Task[None] | None = None
-        if app_settings.supabase.database_url is not None:
+        if app_settings.supabase.database_url is not None and app_settings.vbpl.api_worker_enabled:
             supabase_client = application.state.supabase_client
             document_ingestor = (
                 _create_vbpl_document_ingestor(supabase_client, app_settings) if supabase_client is not None else None

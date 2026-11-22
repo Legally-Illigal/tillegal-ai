@@ -85,6 +85,8 @@ class LangGraphSettings(StrictConfig):
 
 
 class VbplCrawlSettings(StrictConfig):
+    api_worker_enabled: bool = True
+    search_action_id: str = Field(default="c529d164f28418e5898a834422629e64c6816af1", pattern=r"^[a-f0-9]{40}$")
     max_sitemap_size_mb: int = Field(default=10, ge=1)
     max_sitemap_count: int = Field(default=100, ge=1)
     sitemap_timeout_seconds: float = Field(default=45, gt=0)
@@ -186,6 +188,8 @@ def load_settings(
         config["langgraph"]["checkpointer_enabled"] = checkpointer_value == "true"
 
     vbpl_overrides = {
+        "VBPL_API_WORKER_ENABLED": "api_worker_enabled",
+        "VBPL_SEARCH_ACTION_ID": "search_action_id",
         "VBPL_MAX_SITEMAP_SIZE_MB": "max_sitemap_size_mb",
         "VBPL_MAX_SITEMAP_COUNT": "max_sitemap_count",
         "VBPL_SITEMAP_TIMEOUT_SECONDS": "sitemap_timeout_seconds",

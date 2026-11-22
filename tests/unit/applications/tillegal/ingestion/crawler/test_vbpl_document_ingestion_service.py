@@ -7,6 +7,7 @@ from storage3.exceptions import StorageApiError
 
 from src.application.services.vbpl_document_ingestion_service import (
     VBPL_STORAGE_BUCKET,
+    SearchDocumentUrl,
     VbplDocumentIngestionService,
     _storage_key,
 )
@@ -34,6 +35,19 @@ class FakeDocuments:
             "raw_file_ref": document.raw_file_ref,
             "raw_content_ref": document.raw_content_ref,
         }
+
+
+def test_search_discovery_provenance_does_not_invent_lastmod(monkeypatch):
+    page = VbplDocumentPage(document_id="123", title="Example", metadata={}, attachments=())
+    monkeypatch.setattr(
+        "src.application.services.vbpl_document_ingestion_service.fetch_vbpl_document_page",
+        lambda url: page,
+    )
+    documents = FakeDocuments()
+    service = VbplDocumentIngestionService(documents, FakeStorage())
+    asyncio.run(service.ingest(SearchDocumentUrl("https://vbpl.vn/van-ban/chi-tiet/123", "job-123")))
+    assert documents.saved.raw_metadata["search_job_id"] == "job-123"
+    assert "sitemap_lastmod" not in documents.saved.raw_metadata
 
 
 class FakeStorage:
@@ -564,3 +578,30 @@ def test_storage_key_uses_ascii_name_for_unicode_vbpl_file_names() -> None:
         "vbpl/659e0ef0-dc14-11f1-853e-e5ac88a55ccb/"
         "9d8065b4c51f99586750642d077c389e8fee57976be6f5b4fa85a6a95d531f80/origin.pdf"
     )
+
+
+def test_empty_markdown_is_an_explicit_document_error(monkeypatch):
+    import pytest
+
+    from src.application.services.vbpl_document_ingestion_service import EmptyMarkdownError
+
+    monkeypatch.setattr(
+        "src.application.services.vbpl_document_ingestion_service.fetch_vbpl_document_page",
+        lambda url: _page(),
+    )
+    monkeypatch.setattr(
+        "src.application.services.vbpl_document_ingestion_service.download_vbpl_attachment",
+        lambda *args: b"source",
+    )
+    monkeypatch.setattr(
+        "src.application.services.vbpl_document_ingestion_service._convert_markdown_source",
+        lambda *args: "  ",
+    )
+    storage = FakeStorage()
+    with pytest.raises(EmptyMarkdownError):
+        asyncio.run(
+            VbplDocumentIngestionService(FakeDocuments(), storage).ingest(
+                SearchDocumentUrl("https://vbpl.vn/van-ban/chi-tiet/175384", "job"),
+            )
+        )
+    assert not any(key.endswith("origin.md") for _, key, _, _ in storage.uploads)

@@ -5,6 +5,7 @@ import hashlib
 import mimetypes
 import re
 from collections.abc import Awaitable, Callable
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from uuid import UUID
 
@@ -34,6 +35,18 @@ SOURCE_ID = "vbpl"
 MARKDOWN_CONTENT_TYPE = "text/markdown; charset=utf-8"
 
 
+class EmptyMarkdownError(ValueError):
+    """Source conversion returned no usable Markdown."""
+
+
+@dataclass(frozen=True)
+class SearchDocumentUrl:
+    """Discovery provenance without inventing a sitemap modification date."""
+
+    url: str
+    search_job_id: str
+
+
 class VbplDocumentIngestionService:
     """Fetch VBPL source metadata/files and upsert the stable document record."""
 
@@ -54,7 +67,7 @@ class VbplDocumentIngestionService:
         self._settings = settings
         self._markdown_indexer = markdown_indexer
 
-    async def ingest(self, document_url: VbplDocumentUrl) -> dict[str, object]:
+    async def ingest(self, document_url: VbplDocumentUrl | SearchDocumentUrl) -> dict[str, object]:
         """Ingest one discovered document, retaining previously stored file versions."""
         if self._settings is None:
             page = await asyncio.to_thread(fetch_vbpl_document_page, document_url.url)
@@ -212,6 +225,8 @@ class VbplDocumentIngestionService:
             except LegacyDocConverterUnavailableError:
                 markdown_skipped_reason = "antiword_unavailable"
             else:
+                if not markdown.strip():
+                    raise EmptyMarkdownError("HTML/Word conversion produced empty Markdown")
                 markdown_content = markdown.encode("utf-8")
                 markdown_digest = hashlib.sha256(markdown_content).hexdigest()
                 markdown_key = _storage_key(page.document_id, markdown_digest, "origin.md")
@@ -236,11 +251,13 @@ class VbplDocumentIngestionService:
 
         metadata: dict[str, object] = {
             **page.metadata,
-            "sitemap_lastmod": document_url.lastmod.isoformat(),
-            "sitemap_url": document_url.sitemap_url,
             "source_files": [_attachment_metadata(item, page.document_id) for item in page.attachments],
             "stored_files_refreshed": downloaded_count > 0,
         }
+        if isinstance(document_url, VbplDocumentUrl):
+            metadata.update(sitemap_lastmod=document_url.lastmod.isoformat(), sitemap_url=document_url.sitemap_url)
+        else:
+            metadata.update(discovery_method="issued_date_search", search_job_id=document_url.search_job_id)
         if markdown_skipped_reason is not None:
             metadata["markdown_skipped_reason"] = markdown_skipped_reason
         if existing is None or needs_file_backfill or "stored_files" in previous_metadata or markdown_created:
@@ -308,6 +325,7 @@ class VbplDocumentIngestionService:
         self._storage.upload(self._bucket, object_key, content, content_type)
 
     async def _download_attachment(self, document_id: str, attachment: VbplAttachment) -> bytes:
+        await asyncio.sleep(self._settings.request_pause_seconds if self._settings else 0.25)
         if self._settings is None:
             return await asyncio.to_thread(download_vbpl_attachment, document_id, attachment)
         return await asyncio.to_thread(download_vbpl_attachment, document_id, attachment, self._settings)

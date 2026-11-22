@@ -33,6 +33,11 @@ _FILE_LIST_ACTION_ID: str | None = None
 class VbplDocumentFetchError(RuntimeError):
     """Raised when VBPL metadata or source files cannot be fetched safely."""
 
+    def __init__(self, message: str, *, status_code: int | None = None, retry_after: str | None = None):
+        super().__init__(message)
+        self.status_code = status_code
+        self.retry_after = retry_after
+
 
 @dataclass(frozen=True)
 class VbplAttachment:
@@ -109,7 +114,8 @@ def parse_document_id(document_url: str) -> str:
     parsed = urlsplit(document_url)
     if parsed.scheme != "https" or parsed.hostname != VBPL_HOST or parsed.username or parsed.password:
         raise VbplDocumentFetchError(f"Refusing VBPL URL outside https://{VBPL_HOST}: {document_url}")
-    match = _DOCUMENT_ID.search(parsed.path.rstrip("/"))
+    path = parsed.path.rstrip("/")
+    match = _DOCUMENT_ID.search(path) or re.fullmatch(r"/van-ban/chi-tiet/([0-9]+|[a-fA-F0-9-]{36})", path)
     if match is None:
         raise VbplDocumentFetchError(f"VBPL document URL has no supported record ID: {document_url}")
     record_id = match.group(1)
@@ -315,7 +321,11 @@ def fetch_vbpl_document_page(
     ) as client:
         with client.stream("GET", document_url) as response:
             if response.status_code != 200:
-                raise VbplDocumentFetchError(f"VBPL detail page returned HTTP {response.status_code}: {document_url}")
+                raise VbplDocumentFetchError(
+                    "VBPL detail page HTTP failure",
+                    status_code=response.status_code,
+                    retry_after=response.headers.get("Retry-After"),
+                )
             page_head = _read_document_page(response, max_page_bytes)
         title, metadata = _parse_metadata(page_head)
         attributes = _parse_document_attributes(page_head, document_id)
@@ -359,8 +369,14 @@ def fetch_vbpl_document_page(
         _FILE_LIST_ACTION_ID = action_id
 
     return VbplDocumentPage(
-        document_id, title, metadata, attachments,
-        issued_on, effective_from, effective_to, status_name,
+        document_id,
+        title,
+        metadata,
+        attachments,
+        issued_on,
+        effective_from,
+        effective_to,
+        status_name,
         document_number=_attribute_text(attributes, "docNum"),
         document_type=_attribute_text(attributes, "docType", named=True),
         issuing_authority=_attribute_text(attributes, "agencyName"),
@@ -387,7 +403,9 @@ def _request_attachments(
     )
     if action_response.status_code != 200:
         raise VbplDocumentFetchError(
-            f"VBPL file-list action returned HTTP {action_response.status_code}: {document_url}"
+            "VBPL file-list action HTTP failure",
+            status_code=action_response.status_code,
+            retry_after=action_response.headers.get("Retry-After"),
         )
     if len(action_response.content) > max_page_bytes:
         raise VbplDocumentFetchError("VBPL file-list response exceeded the size limit")
@@ -411,7 +429,9 @@ def download_vbpl_attachment(
         response = client.get(url)
     if response.status_code != 200:
         raise VbplDocumentFetchError(
-            f"VBPL attachment download returned HTTP {response.status_code}: {attachment.file_name}"
+            "VBPL attachment download HTTP failure",
+            status_code=response.status_code,
+            retry_after=response.headers.get("Retry-After"),
         )
     if len(response.content) > max_attachment_bytes:
         raise VbplDocumentFetchError(f"VBPL attachment exceeds {max_attachment_bytes} bytes: {attachment.file_name}")
