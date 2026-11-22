@@ -9,12 +9,15 @@ from datetime import date
 from uuid import UUID
 
 import httpx
+import psycopg
 from postgrest.exceptions import APIError
+from storage3.exceptions import StorageApiError
 
 from src.application.dto.crawl_job import normalize_indexing_report
 from src.application.interfaces.crawl_job_store import CrawlJobStore
 from src.application.services.vbpl_document_ingestion_service import SearchDocumentUrl
 from src.applications.tillegal.ingestion.crawler import vbpl_sitemap as sitemap
+from src.applications.tillegal.ingestion.crawler.vbpl_document import DIAGNOSTIC_STAGES
 from src.applications.tillegal.ingestion.crawler.vbpl_search import fetch_search_page
 from src.applications.tillegal.ingestion.crawler.vbpl_sitemap import VbplDocumentUrl
 from src.core.config import VbplCrawlSettings
@@ -23,23 +26,40 @@ from src.integrations.database.repositories.rpc import DatabaseRepositoryError
 logger = logging.getLogger("tillegal.ingestion")
 
 
+class CrawlLeaseLostError(RuntimeError):
+    """Ownership was lost; stop without checkpointing document failure."""
+
+
 def _error_details(error: Exception) -> dict[str, object]:
     """Extract allowlisted diagnostics; never persist exception messages or URLs."""
-    details: dict[str, object] = {"type": type(error).__name__}
+    stage = getattr(error, "ingestion_stage", None)
+    stage = stage if stage in DIAGNOSTIC_STAGES else "ingestion"
+    reason = getattr(error, "ingestion_reason", None)
+    reason = reason if reason in {f"{item}_failed" for item in DIAGNOSTIC_STAGES} else f"{stage}_failed"
+    details: dict[str, object] = {
+        "type": type(error).__name__,
+        "stage": stage,
+        "reason": reason,
+        "message": f"Operation failed at {stage}.",
+    }
     current = error
     seen = set()
     while id(current) not in seen:
         seen.add(id(current))
-        if isinstance(current, APIError):
-            code = str(current.code)
-            if re.fullmatch(r"[A-Z0-9]{5,12}", code):
+        if isinstance(current, (APIError, psycopg.Error)):
+            code = current.code if isinstance(current, APIError) else current.sqlstate
+            if isinstance(code, str) and re.fullmatch(r"[A-Z0-9]{5,12}", code):
                 details["database_code"] = code
             details["retryable"] = False
             break
         status = getattr(current, "status_code", None)
+        if isinstance(current, StorageApiError):
+            status = current.status
+            if isinstance(status, str) and re.fullmatch(r"[1-5][0-9]{2}", status):
+                status = int(status)
         if isinstance(current, httpx.HTTPStatusError):
             status = current.response.status_code
-        if isinstance(status, int):
+        if type(status) is int and 100 <= status <= 599:
             details["http_status"] = status
             details["retryable"] = status in (408, 429, 500, 502, 503, 504)
             break
@@ -125,14 +145,17 @@ class VbplCrawlWorker:
         pause = self._settings.request_pause_seconds if self._settings else 0.25
         consecutive_system_errors = 0
 
-        async def with_retry(operation, stage):
+        async def with_retry(operation, stage, document_item=None):
             for attempt in range(3):
                 if not await self._jobs.renew(job.id, owner, self._lease_seconds):
-                    raise RuntimeError("Lost crawl lease")
+                    raise CrawlLeaseLostError("Lost crawl lease")
                 try:
                     return await operation()
                 except Exception as error:
                     details = _error_details(error)
+                    saved_id = getattr(error, "stored_source_document_id", None)
+                    if document_item is not None and saved_id:
+                        document_item.update(stored=True, source_document_id=str(saved_id))
                     if not details.get("retryable") or attempt == 2:
                         raise
                     delay = max(pause, 2 ** (attempt + 1))
@@ -154,17 +177,20 @@ class VbplCrawlWorker:
             successes = sum(item.get("status") == "SUCCEEDED" for item in values)
             failures = sum(item.get("status") == "FAILED" for item in values)
             result["summary"] = {
+                **result.get("summary", {}),
                 "discovered": len(values),
                 "succeeded": successes,
                 "failed": failures,
                 "pending": len(values) - successes - failures,
                 "partial_failure": failures > 0,
                 "stored": sum(item.get("stored") is True for item in values),
+                "stored_unknown": sum(item.get("stored") is not True for item in values),
+                "stored_evidence": "confirmed_only; historical missing/false does not prove source absence",
             }
             normalized = normalize_indexing_report(result)
             result.update(normalized)
             if not await self._jobs.checkpoint(job.id, owner, result):
-                raise RuntimeError("Lost crawl lease")
+                raise CrawlLeaseLostError("Lost crawl lease")
             logger.info("Checkpoint job %s phase=%s summary=%s", job.id, phase, result["summary"])
 
         async def ingest_pending():
@@ -174,7 +200,7 @@ class VbplCrawlWorker:
                 raise RuntimeError("VBPL document ingestion requires configured Storage")
             for item in pending:
                 if not await self._jobs.renew(job.id, owner, self._lease_seconds):
-                    raise RuntimeError("Lost crawl lease")
+                    raise CrawlLeaseLostError("Lost crawl lease")
                 logger.info("Processing job %s document %s", job.id, item["url"])
                 item["attempts"] = item.get("attempts", 0) + 1
                 try:
@@ -183,7 +209,7 @@ class VbplCrawlWorker:
                         if job.crawl_mode == "LASTMOD"
                         else SearchDocumentUrl(item["url"], str(job.id))
                     )
-                    outcome = await with_retry(lambda: self._document_ingestor(document), "ingestion")
+                    outcome = await with_retry(lambda: self._document_ingestor(document), "ingestion", item)
                     consecutive_system_errors = 0
                     indexing = _mapping(outcome.get("markdown_indexing"))
                     # Store only resume/observability metadata, never document text or vectors.
@@ -191,15 +217,21 @@ class VbplCrawlWorker:
                         status="SUCCEEDED",
                         stored=True,
                         error=None,
+                        error_details=None,
                         source_document_id=str(outcome.get("source_document_id", "")),
                         markdown_skipped_reason=outcome.get("markdown_skipped_reason"),
                         chunk_count=indexing.get("chunk_count", 0),
                         embedding_count=indexing.get("embedding_count", 0),
                         sparse_chunk_count=indexing.get("sparse_chunk_count"),
                     )
+                except CrawlLeaseLostError:
+                    raise
                 except Exception as error:
                     details = _error_details(error)
                     item.update(status="FAILED", error=type(error).__name__, error_details=details)
+                    saved_id = getattr(error, "stored_source_document_id", None)
+                    if saved_id:
+                        item.update(stored=True, source_document_id=str(saved_id))
                     logger.warning("Document failed job=%s error=%s", job.id, details)
                     systemic = isinstance(error, DatabaseRepositoryError) or details.get("http_status") in (
                         401,
@@ -317,7 +349,7 @@ class VbplCrawlWorker:
         while True:
             await asyncio.sleep(self._heartbeat_interval_seconds)
             if not await self._jobs.renew(job_id, owner, self._lease_seconds):
-                raise RuntimeError(f"Lost lease for crawl job {job_id}")
+                raise CrawlLeaseLostError("Lost crawl lease")
 
 
 def _mapping(value: object) -> dict[str, object]:

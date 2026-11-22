@@ -170,3 +170,43 @@ def test_sparse_partial_write_does_not_mark_index_ready() -> None:
     with pytest.raises(RuntimeError, match="stored 0 of 1"):
         asyncio.run(VbplSparseIndexingService(indexes).backfill())
     assert indexes.status != "READY"
+
+
+@pytest.mark.parametrize("failure_stage", ["parse_chunk", "load_chunks", "sparse_index", "dense_index"])
+def test_indexing_failures_report_actual_stage_and_never_succeed(monkeypatch, failure_stage):
+    from types import SimpleNamespace
+
+    from src.workers.tasks import _error_details
+
+    parsed = FakeParsedDocuments()
+    chunks = FakeChunks()
+    dense = FakeDenseIndexes()
+    sparse = FakeSparseIndexes()
+
+    def parse(*args, **kwargs):
+        if failure_stage == "parse_chunk":
+            raise ValueError("SECRET full document")
+        return SimpleNamespace(chunks=(1, 2))
+
+    async def fail(*args):
+        raise RuntimeError("SECRET Authorization cookie signed URL")
+
+    async def incomplete(*args):
+        return ()
+
+    monkeypatch.setattr("src.application.services.vbpl_markdown_indexing_service.parse_legal_markdown", parse)
+    if failure_stage == "load_chunks":
+        chunks.list_for_document = incomplete
+    elif failure_stage == "sparse_index":
+        sparse.upsert_chunk_documents = fail
+    elif failure_stage == "dense_index":
+        dense.upsert_embeddings = fail
+    service = VbplMarkdownIndexingService(
+        parsed, chunks, dense, VbplCrawlSettings(), embedder=FakeEmbedder(), sparse_indexes=sparse
+    )
+    with pytest.raises((ValueError, RuntimeError)) as caught:
+        asyncio.run(service.index(_SOURCE_DOCUMENT_ID, "Title", "Markdown"))
+    details = _error_details(caught.value)
+    assert details["stage"] == failure_stage
+    assert "SECRET" not in str(details)
+    assert not dense.embedding_batches

@@ -113,6 +113,8 @@ def test_lastmod_partial_success_and_restart_skip(monkeypatch):
         "pending": 0,
         "partial_failure": True,
         "stored": 1,
+        "stored_unknown": 1,
+        "stored_evidence": "confirmed_only; historical missing/false does not prove source absence",
         "document_indexing_complete": 0,
         "document_indexing_unknown": 2,
     }
@@ -266,7 +268,14 @@ def test_http_diagnostics_never_include_secret_urls():
     response = httpx.Response(429, request=httpx.Request("GET", "https://example.com/?token=SECRET"))
     error = httpx.HTTPStatusError("SECRET", request=response.request, response=response)
     details = _error_details(error)
-    assert details == {"type": "HTTPStatusError", "http_status": 429, "retryable": True}
+    assert details == {
+        "type": "HTTPStatusError",
+        "http_status": 429,
+        "retryable": True,
+        "stage": "ingestion",
+        "reason": "ingestion_failed",
+        "message": "Operation failed at ingestion.",
+    }
     assert "SECRET" not in str(details)
 
 
@@ -384,3 +393,81 @@ def test_legacy_checkpoint_without_sparse_evidence_is_unknown():
     assert report["ingestion"]["documents"]["b"]["document_indexing_complete"] is False
     assert report["ingestion"]["documents"]["c"]["document_indexing_complete"] is False
     assert "retrieval_ready" not in str(report)
+
+
+def test_stored_failure_then_retry_clears_diagnostics(monkeypatch):
+    from src.applications.tillegal.ingestion.crawler.vbpl_document import diagnostic_stage
+
+    setup_sitemap(monkeypatch)
+    store = FakeJobStore()
+    broken = True
+    calls = []
+
+    async def ingest(document):
+        calls.append(document.url)
+        if document.url.endswith("a") and broken:
+            with diagnostic_stage("dense_index") as progress:
+                progress["source_document_id"] = str(uuid4())
+                raise ValueError("Authorization: SECRET cookie=SECRET https://host/?signed=SECRET full text")
+        return {"source_document_id": str(uuid4())}
+
+    asyncio.run(worker(store, ingest).run_once("owner"))
+    failed = next(item for item in store.completed["ingestion"]["documents"].values() if item["status"] == "FAILED")
+    assert failed["stored"] is True and failed["source_document_id"]
+    assert failed["error_details"]["stage"] == "dense_index"
+    assert failed["error_details"]["reason"] == "dense_index_failed"
+    assert "SECRET" not in str(store.completed)
+    assert store.completed["summary"]["stored"] == 2
+    assert store.completed["summary"]["failed"] == 1
+    for item in store.job.result["ingestion"]["documents"].values():
+        if item["status"] == "FAILED":
+            item["status"] = "PENDING"
+            item["unrelated"] = "keep"
+    broken = False
+    asyncio.run(worker(store, ingest).run_once("owner"))
+    retried = next(item for item in store.completed["ingestion"]["documents"].values() if "unrelated" in item)
+    assert retried["status"] == "SUCCEEDED"
+    assert retried["error"] is None and retried["error_details"] is None
+    assert retried["unrelated"] == "keep"
+    assert len(calls) == 3
+
+
+@pytest.mark.parametrize(
+    "stage",
+    [
+        "fetch_page",
+        "metadata",
+        "file_list",
+        "attachment",
+        "convert_html",
+        "convert_word",
+        "save_source",
+        "parse_chunk",
+        "dense_index",
+        "sparse_index",
+    ],
+)
+def test_controlled_stage_diagnostics_preserve_exception(stage):
+    from src.applications.tillegal.ingestion.crawler.vbpl_document import diagnostic_stage
+    from src.workers.tasks import _error_details
+
+    original = ValueError("Authorization cookie signed URL response body SECRET")
+    with pytest.raises(ValueError) as caught:
+        with diagnostic_stage(stage):
+            raise original
+    assert caught.value is original
+    details = _error_details(original)
+    assert details["stage"] == stage and details["reason"] == stage + "_failed"
+    assert "SECRET" not in str(details)
+
+
+def test_storage_and_postgres_diagnostics_are_sanitized():
+    import psycopg
+    from storage3.exceptions import StorageApiError
+
+    from src.workers.tasks import _error_details
+
+    assert _error_details(StorageApiError("SECRET", "forbidden", 403))["http_status"] == 403
+    details = _error_details(psycopg.errors.InsufficientPrivilege("SECRET"))
+    assert details["database_code"] == "42501"
+    assert "SECRET" not in str(details)

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 import re
+from collections.abc import Iterator
+from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import date, datetime
 from html.parser import HTMLParser
@@ -28,6 +30,42 @@ _ACTION_EXPORT = re.compile(r"ny\s*:\s*function\s*\(\)\s*\{\s*return\s+([\w$]+)\
 _ACTION_REFERENCE = re.compile(r"\b([\w$]+)\s*=\s*\(0,\s*[\w$]+\.\$\)\s*\(\s*\"([a-f0-9]{40})\"\s*\)")
 _DOCUMENT_ID = re.compile(r"--([^/]+)$")
 _FILE_LIST_ACTION_ID: str | None = None
+
+DIAGNOSTIC_STAGES = frozenset(
+    {
+        "fetch_page",
+        "metadata",
+        "file_list",
+        "attachment",
+        "convert_html",
+        "convert_word",
+        "source_lookup",
+        "storage",
+        "save_source",
+        "parse_chunk",
+        "load_chunks",
+        "dense_index",
+        "sparse_index",
+    }
+)
+
+
+@contextmanager
+def diagnostic_stage(stage: str) -> Iterator[dict[str, object]]:
+    """Annotate the original exception without changing retry/type semantics or exposing its text."""
+    progress: dict[str, object] = {"stage": stage}
+    try:
+        yield progress
+    except Exception as error:
+        selected = progress["stage"]
+        if selected not in DIAGNOSTIC_STAGES:
+            selected = stage
+        if not hasattr(error, "ingestion_stage"):
+            error.ingestion_stage = selected
+            error.ingestion_reason = f"{selected}_failed"
+        if progress.get("source_document_id"):
+            error.stored_source_document_id = progress["source_document_id"]
+        raise
 
 
 class VbplDocumentFetchError(RuntimeError):
@@ -127,6 +165,7 @@ def parse_document_id(document_url: str) -> str:
         raise VbplDocumentFetchError(f"VBPL document URL must end with a numeric ID or UUID: {document_url}") from error
 
 
+@diagnostic_stage("metadata")
 def _parse_metadata(html: str) -> tuple[str, dict[str, object]]:
     parser = _PageMetadataParser()
     parser.feed(html)
@@ -164,6 +203,7 @@ def _read_document_page(response: httpx.Response, max_page_bytes: int) -> str:
     return content.decode(response.encoding or "utf-8", errors="replace")
 
 
+@diagnostic_stage("metadata")
 def _parse_document_attributes(html: str, document_id: str) -> dict[str, object]:
     """Extract only the requested initialDoc, never related documents or UI labels."""
     parts: list[str] = []
@@ -189,6 +229,7 @@ def _parse_document_attributes(html: str, document_id: str) -> dict[str, object]
     raise VbplDocumentFetchError("VBPL page did not expose attributes for the requested document")
 
 
+@diagnostic_stage("metadata")
 def _attribute_date(attributes: dict[str, object], key: str) -> date | None:
     value = attributes.get(key)
     if value is None or value == "":
@@ -201,6 +242,7 @@ def _attribute_date(attributes: dict[str, object], key: str) -> date | None:
     raise VbplDocumentFetchError(f"VBPL document has an invalid {key}: {value!r}")
 
 
+@diagnostic_stage("metadata")
 def _attribute_text(attributes: dict[str, object], key: str, *, named: bool = False) -> str | None:
     value = attributes.get(key)
     if value is None:
@@ -227,6 +269,7 @@ def _script_urls(html: str, page_url: str) -> tuple[str, ...]:
     return tuple(dict.fromkeys(urls))
 
 
+@diagnostic_stage("file_list")
 def _find_file_list_action(
     client: httpx.Client,
     html: str,
@@ -383,6 +426,7 @@ def fetch_vbpl_document_page(
     )
 
 
+@diagnostic_stage("file_list")
 def _request_attachments(
     client: httpx.Client,
     document_url: str,
@@ -412,6 +456,7 @@ def _request_attachments(
     return _parse_action_attachments(action_response.text)
 
 
+@diagnostic_stage("attachment")
 def download_vbpl_attachment(
     document_id: str,
     attachment: VbplAttachment,

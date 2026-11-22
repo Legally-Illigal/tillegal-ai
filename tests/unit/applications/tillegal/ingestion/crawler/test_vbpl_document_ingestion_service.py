@@ -605,3 +605,43 @@ def test_empty_markdown_is_an_explicit_document_error(monkeypatch):
             )
         )
     assert not any(key.endswith("origin.md") for _, key, _, _ in storage.uploads)
+
+
+def test_saved_source_survives_indexing_exception_and_preserves_metadata(monkeypatch):
+    from uuid import uuid4
+
+    import pytest
+
+    from src.applications.tillegal.ingestion.crawler.vbpl_document import diagnostic_stage
+    from src.workers.tasks import _error_details
+
+    saved_id = str(uuid4())
+    ref = "vbpl-raw/existing/origin.md"
+    documents = FakeDocuments(
+        existing={
+            "raw_metadata": {
+                "unrelated": {"keep": True},
+                "stored_files": [{"role": "normalized_markdown", "storage_ref": ref, "file_name": "origin.md"}],
+            }
+        },
+        saved_id=saved_id,
+    )
+    storage = FakeStorage()
+    storage.objects[("vbpl-raw", "existing/origin.md")] = b"Markdown"
+    monkeypatch.setattr(
+        "src.application.services.vbpl_document_ingestion_service.fetch_vbpl_document_page",
+        lambda url: VbplDocumentPage("123", "Title", {}, ()),
+    )
+
+    async def index(*args):
+        with diagnostic_stage("sparse_index"):
+            raise RuntimeError("SECRET body")
+
+    service = VbplDocumentIngestionService(documents, storage, markdown_indexer=index)
+    with pytest.raises(RuntimeError) as caught:
+        asyncio.run(service.ingest(SearchDocumentUrl("https://vbpl.vn/van-ban/chi-tiet/123", "job")))
+    assert documents.saved.raw_metadata["unrelated"] == {"keep": True}
+    assert caught.value.stored_source_document_id == saved_id
+    details = _error_details(caught.value)
+    assert details["stage"] == "sparse_index"
+    assert "SECRET" not in str(details)

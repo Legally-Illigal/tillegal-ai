@@ -215,7 +215,11 @@ class CrawlJobRepository:
             for item in failed:
                 item.update(status="PENDING")
             ingestion["documents"] = documents
-            result.update(phase="ingestion", ingestion=ingestion, summary={"retry_pending": len(failed)})
+            result.update(
+                phase="ingestion",
+                ingestion=ingestion,
+                summary={**result.get("summary", {}), "retry_pending": len(failed)},
+            )
             try:
                 saved = connection.execute(
                     """UPDATE public.crawl_jobs SET status='PENDING', result=%s, attempts=0,
