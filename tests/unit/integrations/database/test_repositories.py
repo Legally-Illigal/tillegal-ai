@@ -297,3 +297,115 @@ def test_repository_preserves_postgres_rpc_error_details() -> None:
     assert "foreign key constraint" in str(raised.value)
     assert "Check the source document record." in str(raised.value)
     assert raised.value.__cause__ is api_error
+
+
+@pytest.mark.parametrize("total", [0, 1, 1000, 1250, 1562, 2498])
+def test_chunk_document_pagination_reads_all_rows(total):
+    from types import SimpleNamespace
+
+    from src.integrations.database.repositories.chunk_repository import ChunkRepository
+
+    document_id = UUID(int=99999)
+    rows = [
+        dict(id=str(UUID(int=i + 1)), ordinal=i // 2, source_document_id=str(document_id), content="text")
+        for i in range(total)
+    ]
+
+    class Query:
+        def __init__(self):
+            self.starts = []
+            self.orders = []
+
+        def table(self, name):
+            assert name == "retrieval_chunks"
+            self.orders = []
+            return self
+
+        def select(self, columns, count):
+            assert columns == "*" and count == "exact"
+            return self
+
+        def eq(self, column, value):
+            assert column == "source_document_id" and value == str(document_id)
+            return self
+
+        def order(self, column):
+            self.orders.append(column)
+            return self
+
+        def range(self, start, end):
+            assert self.orders == ["ordinal", "id"] and end - start == 249
+            self.starts.append(start)
+            self.start, self.end = start, end
+            return self
+
+        def execute(self):
+            return SimpleNamespace(data=rows[self.start : self.end + 1], count=total)
+
+    client = Query()
+    assert asyncio.run(ChunkRepository(client).list_for_document(document_id)) == tuple(rows)
+    assert client.starts == list(range(0, max(total, 1), 250))
+
+
+@pytest.mark.parametrize("bad", ["repeated", "empty", "not_list", "bad_id", "bad_order", "changed_count"])
+def test_chunk_pagination_rejects_invalid_or_nonprogressing_pages(bad):
+    from types import SimpleNamespace
+
+    from src.integrations.database.repositories.chunk_repository import ChunkRepository
+
+    document_id = UUID(int=99999)
+
+    class Query:
+        def __getattr__(self, name):
+            return lambda *args, **kwargs: self
+
+        def range(self, start, end):
+            self.start = start
+            return self
+
+        def execute(self):
+            rows = [dict(id=str(UUID(int=i + 1)), ordinal=i, source_document_id=str(document_id)) for i in range(250)]
+            count = 500
+            if self.start:
+                if bad == "empty":
+                    rows = []
+                elif bad == "not_list":
+                    rows = {}
+                elif bad == "bad_id":
+                    rows[0]["id"] = "invalid"
+                elif bad == "bad_order":
+                    rows.reverse()
+                elif bad == "changed_count":
+                    count = 501
+            return SimpleNamespace(data=rows, count=count)
+
+    with pytest.raises(DatabaseRepositoryError):
+        asyncio.run(ChunkRepository(Query()).list_for_document(document_id))
+
+
+def test_chunk_pagination_uses_installed_postgrest_client_offline():
+    from postgrest import SyncPostgrestClient
+
+    from src.integrations.database.repositories.chunk_repository import ChunkRepository
+
+    document_id = UUID(int=99999)
+    starts = []
+
+    def handle(request):
+        assert request.url.path == "/retrieval_chunks"
+        assert request.url.params["order"] == "ordinal.asc,id.asc"
+        assert request.url.params["source_document_id"] == "eq." + str(document_id)
+        assert request.headers["prefer"] == "count=exact"
+        start = int(request.url.params["offset"])
+        size = int(request.url.params["limit"])
+        starts.append(start)
+        rows = [
+            dict(id=str(UUID(int=i + 1)), ordinal=i, source_document_id=str(document_id))
+            for i in range(start, min(start + size, 1562))
+        ]
+        return httpx.Response(206, json=rows, headers={"Content-Range": f"{start}-{start + len(rows) - 1}/1562"})
+
+    with httpx.Client(transport=httpx.MockTransport(handle)) as http:
+        client = SyncPostgrestClient("https://offline.invalid", http_client=http)
+        assert len(asyncio.run(ChunkRepository(client).list_for_document(document_id))) == 1562
+    assert starts == [0, 250, 500, 750, 1000, 1250, 1500]

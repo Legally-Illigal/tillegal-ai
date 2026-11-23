@@ -2,12 +2,54 @@
 
 from uuid import UUID
 
-from fastapi import APIRouter, HTTPException, Request, status
+from fastapi import APIRouter, HTTPException, Query, Request, status
 
-from src.api.schemas.crawl import CrawlJobResponse, VbplCrawlRequest
+from src.api.schemas.crawl import CrawlJobResponse, VbplCrawlRequest, VbplIssuedSearchRequest
 from src.application.services.vbpl_crawl_service import VbplCrawlService
 
 router = APIRouter(prefix="/ingestion/vbpl", tags=["ingestion"])
+
+
+@router.post("/search", response_model=CrawlJobResponse, status_code=202)
+async def request_issued_search(body: VbplIssuedSearchRequest, request: Request):
+    job = await _service(request).request_crawl(
+        crawl_mode="ISSUED_RANGE",
+        issued_from=body.issued_from,
+        issued_to=body.issued_to,
+    )
+    return CrawlJobResponse.from_job(job)
+
+
+@router.get("/search/jobs/{job_id}", response_model=CrawlJobResponse)
+async def get_issued_search(job_id: UUID, request: Request):
+    return await get_vbpl_crawl_job(job_id, request)
+
+
+@router.get("/search/jobs/{job_id}/items")
+async def get_issued_search_items(
+    job_id: UUID,
+    request: Request,
+    after: str = Query(default="", max_length=2048),
+    limit: int = Query(default=50, ge=1, le=100),
+):
+    job = await get_vbpl_crawl_job(job_id, request)
+    documents = job.result.get("ingestion", {}).get("documents", {})
+    keys = sorted(key for key in documents if key > after)[: limit + 1]
+    return {
+        "items": [documents[key] for key in keys[:limit]],
+        "next_after": keys[limit - 1] if len(keys) > limit else None,
+    }
+
+
+@router.post("/jobs/{job_id}/retry-failed", response_model=CrawlJobResponse, status_code=202)
+async def retry_failed_documents(job_id: UUID, request: Request):
+    try:
+        job = await _service(request).retry_failed(job_id)
+    except ValueError as error:
+        raise HTTPException(409, str(error)) from error
+    if job is None:
+        raise HTTPException(404, "Crawl job not found")
+    return CrawlJobResponse.from_job(job)
 
 
 def _service(request: Request) -> VbplCrawlService:
@@ -31,7 +73,13 @@ async def request_vbpl_crawl(
     body: VbplCrawlRequest | None = None,
 ) -> CrawlJobResponse:
     """Queue a durable sitemap scan for the requested or current Vietnam date."""
-    job = await _service(request).request_crawl(body.crawl_date if body is not None else None)
+    body = body or VbplCrawlRequest()
+    job = await _service(request).request_crawl(
+        body.crawl_date,
+        crawl_mode=body.crawl_mode,
+        issued_from=body.issued_from,
+        issued_to=body.issued_to,
+    )
     return CrawlJobResponse.from_job(job)
 
 

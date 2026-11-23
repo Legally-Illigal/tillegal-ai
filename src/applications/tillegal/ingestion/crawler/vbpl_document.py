@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 import re
+from collections.abc import Iterator
+from contextlib import contextmanager
 from dataclasses import dataclass
 from datetime import date, datetime
 from html.parser import HTMLParser
@@ -29,9 +31,50 @@ _ACTION_REFERENCE = re.compile(r"\b([\w$]+)\s*=\s*\(0,\s*[\w$]+\.\$\)\s*\(\s*\"(
 _DOCUMENT_ID = re.compile(r"--([^/]+)$")
 _FILE_LIST_ACTION_ID: str | None = None
 
+DIAGNOSTIC_STAGES = frozenset(
+    {
+        "fetch_page",
+        "metadata",
+        "file_list",
+        "attachment",
+        "convert_html",
+        "convert_word",
+        "source_lookup",
+        "storage",
+        "save_source",
+        "parse_chunk",
+        "load_chunks",
+        "dense_index",
+        "sparse_index",
+    }
+)
+
+
+@contextmanager
+def diagnostic_stage(stage: str) -> Iterator[dict[str, object]]:
+    """Annotate the original exception without changing retry/type semantics or exposing its text."""
+    progress: dict[str, object] = {"stage": stage}
+    try:
+        yield progress
+    except Exception as error:
+        selected = progress["stage"]
+        if selected not in DIAGNOSTIC_STAGES:
+            selected = stage
+        if not hasattr(error, "ingestion_stage"):
+            error.ingestion_stage = selected
+            error.ingestion_reason = f"{selected}_failed"
+        if progress.get("source_document_id"):
+            error.stored_source_document_id = progress["source_document_id"]
+        raise
+
 
 class VbplDocumentFetchError(RuntimeError):
     """Raised when VBPL metadata or source files cannot be fetched safely."""
+
+    def __init__(self, message: str, *, status_code: int | None = None, retry_after: str | None = None):
+        super().__init__(message)
+        self.status_code = status_code
+        self.retry_after = retry_after
 
 
 @dataclass(frozen=True)
@@ -109,7 +152,8 @@ def parse_document_id(document_url: str) -> str:
     parsed = urlsplit(document_url)
     if parsed.scheme != "https" or parsed.hostname != VBPL_HOST or parsed.username or parsed.password:
         raise VbplDocumentFetchError(f"Refusing VBPL URL outside https://{VBPL_HOST}: {document_url}")
-    match = _DOCUMENT_ID.search(parsed.path.rstrip("/"))
+    path = parsed.path.rstrip("/")
+    match = _DOCUMENT_ID.search(path) or re.fullmatch(r"/van-ban/chi-tiet/([0-9]+|[a-fA-F0-9-]{36})", path)
     if match is None:
         raise VbplDocumentFetchError(f"VBPL document URL has no supported record ID: {document_url}")
     record_id = match.group(1)
@@ -121,6 +165,7 @@ def parse_document_id(document_url: str) -> str:
         raise VbplDocumentFetchError(f"VBPL document URL must end with a numeric ID or UUID: {document_url}") from error
 
 
+@diagnostic_stage("metadata")
 def _parse_metadata(html: str) -> tuple[str, dict[str, object]]:
     parser = _PageMetadataParser()
     parser.feed(html)
@@ -158,6 +203,7 @@ def _read_document_page(response: httpx.Response, max_page_bytes: int) -> str:
     return content.decode(response.encoding or "utf-8", errors="replace")
 
 
+@diagnostic_stage("metadata")
 def _parse_document_attributes(html: str, document_id: str) -> dict[str, object]:
     """Extract only the requested initialDoc, never related documents or UI labels."""
     parts: list[str] = []
@@ -183,6 +229,7 @@ def _parse_document_attributes(html: str, document_id: str) -> dict[str, object]
     raise VbplDocumentFetchError("VBPL page did not expose attributes for the requested document")
 
 
+@diagnostic_stage("metadata")
 def _attribute_date(attributes: dict[str, object], key: str) -> date | None:
     value = attributes.get(key)
     if value is None or value == "":
@@ -195,6 +242,7 @@ def _attribute_date(attributes: dict[str, object], key: str) -> date | None:
     raise VbplDocumentFetchError(f"VBPL document has an invalid {key}: {value!r}")
 
 
+@diagnostic_stage("metadata")
 def _attribute_text(attributes: dict[str, object], key: str, *, named: bool = False) -> str | None:
     value = attributes.get(key)
     if value is None:
@@ -221,6 +269,7 @@ def _script_urls(html: str, page_url: str) -> tuple[str, ...]:
     return tuple(dict.fromkeys(urls))
 
 
+@diagnostic_stage("file_list")
 def _find_file_list_action(
     client: httpx.Client,
     html: str,
@@ -315,7 +364,11 @@ def fetch_vbpl_document_page(
     ) as client:
         with client.stream("GET", document_url) as response:
             if response.status_code != 200:
-                raise VbplDocumentFetchError(f"VBPL detail page returned HTTP {response.status_code}: {document_url}")
+                raise VbplDocumentFetchError(
+                    "VBPL detail page HTTP failure",
+                    status_code=response.status_code,
+                    retry_after=response.headers.get("Retry-After"),
+                )
             page_head = _read_document_page(response, max_page_bytes)
         title, metadata = _parse_metadata(page_head)
         attributes = _parse_document_attributes(page_head, document_id)
@@ -373,6 +426,7 @@ def fetch_vbpl_document_page(
     )
 
 
+@diagnostic_stage("file_list")
 def _request_attachments(
     client: httpx.Client,
     document_url: str,
@@ -393,13 +447,16 @@ def _request_attachments(
     )
     if action_response.status_code != 200:
         raise VbplDocumentFetchError(
-            f"VBPL file-list action returned HTTP {action_response.status_code}: {document_url}"
+            "VBPL file-list action HTTP failure",
+            status_code=action_response.status_code,
+            retry_after=action_response.headers.get("Retry-After"),
         )
     if len(action_response.content) > max_page_bytes:
         raise VbplDocumentFetchError("VBPL file-list response exceeded the size limit")
     return _parse_action_attachments(action_response.text)
 
 
+@diagnostic_stage("attachment")
 def download_vbpl_attachment(
     document_id: str,
     attachment: VbplAttachment,
@@ -417,7 +474,9 @@ def download_vbpl_attachment(
         response = client.get(url)
     if response.status_code != 200:
         raise VbplDocumentFetchError(
-            f"VBPL attachment download returned HTTP {response.status_code}: {attachment.file_name}"
+            "VBPL attachment download HTTP failure",
+            status_code=response.status_code,
+            retry_after=response.headers.get("Retry-After"),
         )
     if len(response.content) > max_attachment_bytes:
         raise VbplDocumentFetchError(f"VBPL attachment exceeds {max_attachment_bytes} bytes: {attachment.file_name}")

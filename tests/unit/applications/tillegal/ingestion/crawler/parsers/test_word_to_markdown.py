@@ -132,3 +132,18 @@ def test_rejects_invalid_docx_and_unknown_extensions() -> None:
 
     with pytest.raises(ValueError, match="Unsupported"):
         convert_word_to_markdown(b"content", "source.rtf")
+
+
+@pytest.mark.parametrize("content", [b"not a Word file", b"<html><body> </body></html>"])
+def test_invalid_or_empty_doc_fails(content):
+    with pytest.raises(ValueError):
+        convert_word_to_markdown(content, "source.doc")
+
+
+def test_legacy_doc_timeout_is_reported(monkeypatch):
+    def timeout(command, **kwargs):
+        raise subprocess.TimeoutExpired(command, kwargs["timeout"])
+
+    monkeypatch.setattr(subprocess, "run", timeout)
+    with pytest.raises(RuntimeError, match="timed out"):
+        convert_word_to_markdown(bytes.fromhex("D0CF11E0A1B11AE1"), "source.doc", timeout_seconds=1)

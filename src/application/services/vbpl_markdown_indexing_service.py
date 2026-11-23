@@ -17,6 +17,7 @@ from src.applications.tillegal.ingestion.crawler.embeddings.sentence_transformer
     SentenceTransformerPassageEmbedder,
 )
 from src.applications.tillegal.ingestion.crawler.parsers.legal_markdown import parse_legal_markdown
+from src.applications.tillegal.ingestion.crawler.vbpl_document import diagnostic_stage
 from src.core.config import VbplCrawlSettings
 from src.integrations.database.repositories.chunk_repository import ChunkRepository
 from src.integrations.database.repositories.dense_index_repository import (
@@ -135,78 +136,86 @@ class VbplMarkdownIndexingService:
 
     async def index(self, source_document_id: UUID, title: str, markdown: str) -> dict[str, object]:
         """Parse one Markdown document and persist chunks and their dense embeddings."""
-        parsed = await asyncio.to_thread(
-            parse_legal_markdown,
-            markdown,
-            source_document_id=source_document_id,
-            title=title,
-            token_counter=self._embedder.count_tokens,
-            max_chunk_tokens=self._settings.chunk_max_tokens,
-        )
-        existing_index = await self._dense_indexes.get_index(DENSE_INDEX_NAME)
-        index_status = "STALE" if existing_index is not None else "BUILDING"
-        index = DenseIndexWrite(
-            index_name=DENSE_INDEX_NAME,
-            provider="sentence-transformers",
-            model_name=MODEL_NAME,
-            embedding_dimension=EMBEDDING_DIMENSION,
-            distance_metric="cosine",
-            index_version="v1",
-            status=index_status,
-            metadata={
-                "normalized": True,
-                "passage_prefix": "passage: ",
-                "query_prefix": "query: ",
-            },
-        )
-        await self._dense_indexes.upsert_index(index)
-        structure_id = await self._parsed_documents.save(parsed)
-        document_chunks = await self._chunks.list_for_document(source_document_id)
-        if len(document_chunks) != len(parsed.chunks):
-            raise RuntimeError(
-                f"Parsed-document persistence returned {len(document_chunks)} chunks; expected {len(parsed.chunks)}"
+        with diagnostic_stage("parse_chunk") as progress:
+            parsed = await asyncio.to_thread(
+                parse_legal_markdown,
+                markdown,
+                source_document_id=source_document_id,
+                title=title,
+                token_counter=self._embedder.count_tokens,
+                max_chunk_tokens=self._settings.chunk_max_tokens,
             )
-        embedding_count = 0
-        sparse_result = await self._sparse.index_chunks(document_chunks) if self._sparse is not None else {}
-
-        for start in range(0, len(document_chunks), self._settings.embedding_batch_size):
-            batch = document_chunks[start : start + self._settings.embedding_batch_size]
-            texts = [_required_string(chunk, "content") for chunk in batch]
-            vectors = await asyncio.to_thread(
-                self._embedder.embed_passages,
-                texts,
-                self._settings.embedding_batch_size,
+            progress["stage"] = "dense_index"
+            existing_index = await self._dense_indexes.get_index(DENSE_INDEX_NAME)
+            index_status = "STALE" if existing_index is not None else "BUILDING"
+            index = DenseIndexWrite(
+                index_name=DENSE_INDEX_NAME,
+                provider="sentence-transformers",
+                model_name=MODEL_NAME,
+                embedding_dimension=EMBEDDING_DIMENSION,
+                distance_metric="cosine",
+                index_version="v1",
+                status=index_status,
+                metadata={
+                    "normalized": True,
+                    "passage_prefix": "passage: ",
+                    "query_prefix": "query: ",
+                },
             )
-            if len(vectors) != len(batch):
-                raise RuntimeError(f"Embedding model returned {len(vectors)} vectors for {len(batch)} VBPL chunks")
-            embeddings = tuple(
-                DenseEmbeddingWrite(
-                    retrieval_chunk_id=UUID(_required_string(chunk, "id")),
-                    embedding=vector,
-                    embedded_text_sha256=hashlib.sha256(
-                        f"{PASSAGE_PREFIX}{_required_string(chunk, 'content')}".encode()
-                    ).hexdigest(),
-                    metadata={"prefix": PASSAGE_PREFIX.strip(), "model": MODEL_NAME},
+            await self._dense_indexes.upsert_index(index)
+            progress["stage"] = "parse_chunk"
+            structure_id = await self._parsed_documents.save(parsed)
+            progress["stage"] = "load_chunks"
+            document_chunks = await self._chunks.list_for_document(source_document_id)
+            if len(document_chunks) != len(parsed.chunks):
+                raise RuntimeError(
+                    f"Parsed-document persistence returned {len(document_chunks)} chunks; expected {len(parsed.chunks)}"
                 )
-                for chunk, vector in zip(batch, vectors, strict=True)
-            )
-            persisted_count = await self._dense_indexes.upsert_embeddings(DENSE_INDEX_NAME, embeddings)
-            if persisted_count != len(batch):
-                raise RuntimeError(f"Embedding persistence stored {persisted_count} of {len(batch)} VBPL chunk vectors")
-            embedding_count += persisted_count
+            embedding_count = 0
+            progress["stage"] = "sparse_index"
+            sparse_result = await self._sparse.index_chunks(document_chunks) if self._sparse is not None else {}
 
-        final_status = await self._dense_indexes.refresh_index_status(DENSE_INDEX_NAME)
-        return {
-            **sparse_result,
-            "document_structure_id": str(structure_id),
-            "block_count": len(parsed.blocks),
-            "node_count": len(parsed.nodes),
-            "chunk_count": len(parsed.chunks),
-            "embedding_count": embedding_count,
-            "dense_index_name": DENSE_INDEX_NAME,
-            "dense_index_status": final_status,
-            "content_sha256": parsed.structure.content_sha256,
-        }
+            progress["stage"] = "dense_index"
+            for start in range(0, len(document_chunks), self._settings.embedding_batch_size):
+                batch = document_chunks[start : start + self._settings.embedding_batch_size]
+                texts = [_required_string(chunk, "content") for chunk in batch]
+                vectors = await asyncio.to_thread(
+                    self._embedder.embed_passages,
+                    texts,
+                    self._settings.embedding_batch_size,
+                )
+                if len(vectors) != len(batch):
+                    raise RuntimeError(f"Embedding model returned {len(vectors)} vectors for {len(batch)} VBPL chunks")
+                embeddings = tuple(
+                    DenseEmbeddingWrite(
+                        retrieval_chunk_id=UUID(_required_string(chunk, "id")),
+                        embedding=vector,
+                        embedded_text_sha256=hashlib.sha256(
+                            f"{PASSAGE_PREFIX}{_required_string(chunk, 'content')}".encode()
+                        ).hexdigest(),
+                        metadata={"prefix": PASSAGE_PREFIX.strip(), "model": MODEL_NAME},
+                    )
+                    for chunk, vector in zip(batch, vectors, strict=True)
+                )
+                persisted_count = await self._dense_indexes.upsert_embeddings(DENSE_INDEX_NAME, embeddings)
+                if persisted_count != len(batch):
+                    raise RuntimeError(
+                        f"Embedding persistence stored {persisted_count} of {len(batch)} VBPL chunk vectors"
+                    )
+                embedding_count += persisted_count
+
+            final_status = await self._dense_indexes.refresh_index_status(DENSE_INDEX_NAME)
+            return {
+                **sparse_result,
+                "document_structure_id": str(structure_id),
+                "block_count": len(parsed.blocks),
+                "node_count": len(parsed.nodes),
+                "chunk_count": len(parsed.chunks),
+                "embedding_count": embedding_count,
+                "dense_index_name": DENSE_INDEX_NAME,
+                "dense_index_status": final_status,
+                "content_sha256": parsed.structure.content_sha256,
+            }
 
 
 def _required_string(row: dict[str, object], key: str) -> str:
