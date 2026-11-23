@@ -1,0 +1,4774 @@
+{
+  "understand_signature": "(question: str) -> dict",
+  "case_count": 42,
+  "traces": [
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [
+        {
+          "group": "ngh\u1ec9 ph\u00e9p",
+          "span": [
+            20,
+            29
+          ]
+        }
+      ],
+      "post_validation": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y?",
+      "post_normalization": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y?",
+      "final_locals": {
+        "text": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y?",
+        "parts": [
+          "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "topic"
+          }
+        ],
+        "seen": [
+          "ngh\u1ec9 ph\u00e9p",
+          "ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y"
+        ]
+      },
+      "plan": {
+        "original": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y?",
+        "intent": "legal_question",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "topic"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y?",
+      "id": "ordinary",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y?",
+          "intent": "legal_question",
+          "domain": "labour",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y",
+              "purpose": "question_part"
+            },
+            {
+              "text": "ngh\u1ec9 ph\u00e9p",
+              "purpose": "topic"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 2,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "post_validation": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+      "post_normalization": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+      "final_locals": {
+        "text": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+        "parts": [
+          "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i"
+        ],
+        "prefix": {
+          "group": "Tr\u00edch d\u1eabn: ",
+          "span": [
+            0,
+            11
+          ]
+        },
+        "topic": "\u0111\u1ed1i tho\u1ea1i",
+        "quote_only": true,
+        "queries": [
+          "\u0111\u1ed1i tho\u1ea1i"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "\u0111\u1ed1i tho\u1ea1i",
+            "purpose": "lookup"
+          }
+        ]
+      },
+      "plan": {
+        "original": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+        "intent": "quote_lookup",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "\u0111\u1ed1i tho\u1ea1i",
+            "purpose": "lookup"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+      "id": "lookup",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+          "intent": "quote_lookup",
+          "domain": "unknown",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "\u0111\u1ed1i tho\u1ea1i",
+              "purpose": "lookup"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        71,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "post_validation": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng?",
+      "post_normalization": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng?",
+      "final_locals": {
+        "text": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng?",
+        "parts": [
+          "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": "B\u1ea1n c\u1ea7n tra c\u1ee9u quy \u0111\u1ecbnh ho\u1eb7c t\u00ecnh hu\u1ed1ng c\u1ee5 th\u1ec3 n\u00e0o?",
+        "subqueries": [
+          {
+            "text": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "c\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng"
+        ]
+      },
+      "plan": {
+        "original": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng?",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": "B\u1ea1n c\u1ea7n tra c\u1ee9u quy \u0111\u1ecbnh ho\u1eb7c t\u00ecnh hu\u1ed1ng c\u1ee5 th\u1ec3 n\u00e0o?"
+      },
+      "input": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng?",
+      "id": "ambiguous",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "CLARIFICATION_REQUIRED",
+        "plan": {
+          "original": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng?",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": "B\u1ea1n c\u1ea7n tra c\u1ee9u quy \u0111\u1ecbnh ho\u1eb7c t\u00ecnh hu\u1ed1ng c\u1ee5 th\u1ec3 n\u00e0o?"
+        },
+        "retrieval_calls": 0,
+        "handoff_status": null
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [
+        {
+          "group": "31/02/2024",
+          "span": [
+            14,
+            24
+          ]
+        }
+      ],
+      "raw_topic_matches": [],
+      "post_validation": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+      "post_normalization": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+      "final_locals": {
+        "text": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+        "parts": [
+          "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024"
+        ],
+        "dates": [],
+        "invalid_date": true,
+        "clarification": "Ng\u00e0y \u0111\u01b0\u1ee3c n\u00eau kh\u00f4ng h\u1ee3p l\u1ec7. B\u1ea1n vui l\u00f2ng ki\u1ec3m tra l\u1ea1i ng\u00e0y, th\u00e1ng v\u00e0 n\u0103m.",
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "quy \u0111\u1ecbnh ng\u00e0y 31/02/2024"
+        ]
+      },
+      "plan": {
+        "original": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": "Ng\u00e0y \u0111\u01b0\u1ee3c n\u00eau kh\u00f4ng h\u1ee3p l\u1ec7. B\u1ea1n vui l\u00f2ng ki\u1ec3m tra l\u1ea1i ng\u00e0y, th\u00e1ng v\u00e0 n\u0103m."
+      },
+      "input": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+      "id": "invalid_date",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "CLARIFICATION_REQUIRED",
+        "plan": {
+          "original": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": "Ng\u00e0y \u0111\u01b0\u1ee3c n\u00eau kh\u00f4ng h\u1ee3p l\u1ec7. B\u1ea1n vui l\u00f2ng ki\u1ec3m tra l\u1ea1i ng\u00e0y, th\u00e1ng v\u00e0 n\u0103m."
+        },
+        "retrieval_calls": 0,
+        "handoff_status": null
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        54,
+        55,
+        56,
+        57,
+        58,
+        62,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [
+        {
+          "group": "29/02/2024",
+          "span": [
+            14,
+            24
+          ]
+        }
+      ],
+      "raw_topic_matches": [],
+      "post_validation": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+      "post_normalization": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+      "final_locals": {
+        "text": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+        "parts": [
+          "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024"
+        ],
+        "dates": [
+          "29/02/2024"
+        ],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "quy \u0111\u1ecbnh ng\u00e0y 29/02/2024"
+        ]
+      },
+      "plan": {
+        "original": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [
+          "29/02/2024"
+        ],
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+      "id": "leap_date",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [
+            "29/02/2024"
+          ],
+          "subqueries": [
+            {
+              "text": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        54,
+        55,
+        62,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [
+        {
+          "group": "2024",
+          "span": [
+            13,
+            17
+          ]
+        }
+      ],
+      "raw_topic_matches": [],
+      "post_validation": "Quy \u0111\u1ecbnh n\u0103m 2024",
+      "post_normalization": "Quy \u0111\u1ecbnh n\u0103m 2024",
+      "final_locals": {
+        "text": "Quy \u0111\u1ecbnh n\u0103m 2024",
+        "parts": [
+          "Quy \u0111\u1ecbnh n\u0103m 2024"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Quy \u0111\u1ecbnh n\u0103m 2024"
+        ],
+        "dates": [
+          "2024"
+        ],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh n\u0103m 2024",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "quy \u0111\u1ecbnh n\u0103m 2024"
+        ]
+      },
+      "plan": {
+        "original": "Quy \u0111\u1ecbnh n\u0103m 2024",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [
+          "2024"
+        ],
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh n\u0103m 2024",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "Quy \u0111\u1ecbnh n\u0103m 2024",
+      "id": "year",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "Quy \u0111\u1ecbnh n\u0103m 2024",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [
+            "2024"
+          ],
+          "subqueries": [
+            {
+              "text": "Quy \u0111\u1ecbnh n\u0103m 2024",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [
+        {
+          "group": "ngh\u1ec9 ph\u00e9p",
+          "span": [
+            20,
+            29
+          ]
+        }
+      ],
+      "post_validation": "  Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y?  ",
+      "post_normalization": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y?",
+      "final_locals": {
+        "text": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y?",
+        "parts": [
+          "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "topic"
+          }
+        ],
+        "seen": [
+          "ngh\u1ec9 ph\u00e9p",
+          "ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y"
+        ]
+      },
+      "plan": {
+        "original": "  Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y?  ",
+        "intent": "legal_question",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "topic"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "  Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y?  ",
+      "id": "nfc",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "  Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y?  ",
+          "intent": "legal_question",
+          "domain": "labour",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y",
+              "purpose": "question_part"
+            },
+            {
+              "text": "ngh\u1ec9 ph\u00e9p",
+              "purpose": "topic"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 2,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [
+        {
+          "group": "ngh\u1ec9 ph\u00e9p",
+          "span": [
+            20,
+            29
+          ]
+        }
+      ],
+      "post_validation": "  Ngu\u031bo\u031b\u0300i lao \u0111o\u0323\u0302ng \u0111u\u031bo\u031b\u0323c nghi\u0309 phe\u0301p bao nhie\u0302u nga\u0300y?  ",
+      "post_normalization": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y?",
+      "final_locals": {
+        "text": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y?",
+        "parts": [
+          "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "topic"
+          }
+        ],
+        "seen": [
+          "ngh\u1ec9 ph\u00e9p",
+          "ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y"
+        ]
+      },
+      "plan": {
+        "original": "  Ngu\u031bo\u031b\u0300i lao \u0111o\u0323\u0302ng \u0111u\u031bo\u031b\u0323c nghi\u0309 phe\u0301p bao nhie\u0302u nga\u0300y?  ",
+        "intent": "legal_question",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "topic"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "  Ngu\u031bo\u031b\u0300i lao \u0111o\u0323\u0302ng \u0111u\u031bo\u031b\u0323c nghi\u0309 phe\u0301p bao nhie\u0302u nga\u0300y?  ",
+      "id": "nfd",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "  Ngu\u031bo\u031b\u0300i lao \u0111o\u0323\u0302ng \u0111u\u031bo\u031b\u0323c nghi\u0309 phe\u0301p bao nhie\u0302u nga\u0300y?  ",
+          "intent": "legal_question",
+          "domain": "labour",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng \u0111\u01b0\u1ee3c ngh\u1ec9 ph\u00e9p bao nhi\u00eau ng\u00e0y",
+              "purpose": "question_part"
+            },
+            {
+              "text": "ngh\u1ec9 ph\u00e9p",
+              "purpose": "topic"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 2,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        84,
+        85,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [
+        {
+          "group": "\u0110\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3",
+          "span": [
+            0,
+            17
+          ]
+        },
+        {
+          "group": "Ngh\u1ec9 ph\u00e9p",
+          "span": [
+            19,
+            28
+          ]
+        },
+        {
+          "group": "Ti\u1ec1n l\u01b0\u01a1ng",
+          "span": [
+            30,
+            40
+          ]
+        }
+      ],
+      "post_validation": "\u0110\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3? Ngh\u1ec9 ph\u00e9p; Ti\u1ec1n l\u01b0\u01a1ng",
+      "post_normalization": "\u0110\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3? Ngh\u1ec9 ph\u00e9p; Ti\u1ec1n l\u01b0\u01a1ng",
+      "final_locals": {
+        "text": "\u0110\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3? Ngh\u1ec9 ph\u00e9p; Ti\u1ec1n l\u01b0\u01a1ng",
+        "parts": [
+          "\u0110\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3",
+          "Ngh\u1ec9 ph\u00e9p",
+          "Ti\u1ec1n l\u01b0\u01a1ng"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "\u0110\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3",
+          "Ngh\u1ec9 ph\u00e9p",
+          "Ti\u1ec1n l\u01b0\u01a1ng"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "\u0110\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3",
+            "purpose": "question_part"
+          },
+          {
+            "text": "Ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          },
+          {
+            "text": "Ti\u1ec1n l\u01b0\u01a1ng",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "ngh\u1ec9 ph\u00e9p",
+          "ti\u1ec1n l\u01b0\u01a1ng",
+          "\u0111\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3"
+        ]
+      },
+      "plan": {
+        "original": "\u0110\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3? Ngh\u1ec9 ph\u00e9p; Ti\u1ec1n l\u01b0\u01a1ng",
+        "intent": "legal_question",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "\u0110\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3",
+            "purpose": "question_part"
+          },
+          {
+            "text": "Ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          },
+          {
+            "text": "Ti\u1ec1n l\u01b0\u01a1ng",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "\u0110\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3? Ngh\u1ec9 ph\u00e9p; Ti\u1ec1n l\u01b0\u01a1ng",
+      "id": "multiple",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "\u0110\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3? Ngh\u1ec9 ph\u00e9p; Ti\u1ec1n l\u01b0\u01a1ng",
+          "intent": "legal_question",
+          "domain": "labour",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "\u0110\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3",
+              "purpose": "question_part"
+            },
+            {
+              "text": "Ngh\u1ec9 ph\u00e9p",
+              "purpose": "question_part"
+            },
+            {
+              "text": "Ti\u1ec1n l\u01b0\u01a1ng",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 3,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        73,
+        74,
+        75,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [
+        {
+          "group": "31/02/2024",
+          "span": [
+            27,
+            37
+          ]
+        }
+      ],
+      "raw_topic_matches": [],
+      "post_validation": "Tr\u00edch d\u1eabn: ti\u1ec1n l\u01b0\u01a1ng ng\u00e0y 31/02/2024",
+      "post_normalization": "Tr\u00edch d\u1eabn: ti\u1ec1n l\u01b0\u01a1ng ng\u00e0y 31/02/2024",
+      "final_locals": {
+        "text": "Tr\u00edch d\u1eabn: ti\u1ec1n l\u01b0\u01a1ng ng\u00e0y 31/02/2024",
+        "parts": [
+          "Tr\u00edch d\u1eabn: ti\u1ec1n l\u01b0\u01a1ng ng\u00e0y 31/02/2024"
+        ],
+        "prefix": {
+          "group": "Tr\u00edch d\u1eabn: ",
+          "span": [
+            0,
+            11
+          ]
+        },
+        "topic": "ti\u1ec1n l\u01b0\u01a1ng ng\u00e0y 31/02/2024",
+        "quote_only": true,
+        "queries": [
+          "ti\u1ec1n l\u01b0\u01a1ng ng\u00e0y 31/02/2024"
+        ],
+        "dates": [],
+        "invalid_date": true,
+        "clarification": "Ng\u00e0y \u0111\u01b0\u1ee3c n\u00eau kh\u00f4ng h\u1ee3p l\u1ec7. B\u1ea1n vui l\u00f2ng ki\u1ec3m tra l\u1ea1i ng\u00e0y, th\u00e1ng v\u00e0 n\u0103m.",
+        "subqueries": [
+          {
+            "text": "ti\u1ec1n l\u01b0\u01a1ng ng\u00e0y 31/02/2024",
+            "purpose": "lookup"
+          }
+        ]
+      },
+      "plan": {
+        "original": "Tr\u00edch d\u1eabn: ti\u1ec1n l\u01b0\u01a1ng ng\u00e0y 31/02/2024",
+        "intent": "quote_lookup",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "ti\u1ec1n l\u01b0\u01a1ng ng\u00e0y 31/02/2024",
+            "purpose": "lookup"
+          }
+        ],
+        "clarification": "Ng\u00e0y \u0111\u01b0\u1ee3c n\u00eau kh\u00f4ng h\u1ee3p l\u1ec7. B\u1ea1n vui l\u00f2ng ki\u1ec3m tra l\u1ea1i ng\u00e0y, th\u00e1ng v\u00e0 n\u0103m."
+      },
+      "input": "Tr\u00edch d\u1eabn: ti\u1ec1n l\u01b0\u01a1ng ng\u00e0y 31/02/2024",
+      "id": "multi_rule",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "CLARIFICATION_REQUIRED",
+        "plan": {
+          "original": "Tr\u00edch d\u1eabn: ti\u1ec1n l\u01b0\u01a1ng ng\u00e0y 31/02/2024",
+          "intent": "quote_lookup",
+          "domain": "labour",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "ti\u1ec1n l\u01b0\u01a1ng ng\u00e0y 31/02/2024",
+              "purpose": "lookup"
+            }
+          ],
+          "clarification": "Ng\u00e0y \u0111\u01b0\u1ee3c n\u00eau kh\u00f4ng h\u1ee3p l\u1ec7. B\u1ea1n vui l\u00f2ng ki\u1ec3m tra l\u1ea1i ng\u00e0y, th\u00e1ng v\u00e0 n\u0103m."
+        },
+        "retrieval_calls": 0,
+        "handoff_status": null
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        65,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        84,
+        85,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [
+        {
+          "group": "ngh\u1ec9 ph\u00e9p",
+          "span": [
+            6,
+            15
+          ]
+        },
+        {
+          "group": "ti\u1ec1n l\u01b0\u01a1ng",
+          "span": [
+            17,
+            27
+          ]
+        },
+        {
+          "group": "l\u00e0m th\u00eam gi\u1edd",
+          "span": [
+            29,
+            41
+          ]
+        }
+      ],
+      "post_validation": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng; l\u00e0m th\u00eam gi\u1edd; h\u1ee3p \u0111\u1ed3ng",
+      "post_normalization": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng; l\u00e0m th\u00eam gi\u1edd; h\u1ee3p \u0111\u1ed3ng",
+      "final_locals": {
+        "text": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng; l\u00e0m th\u00eam gi\u1edd; h\u1ee3p \u0111\u1ed3ng",
+        "parts": [
+          "thu\u1ebf",
+          "ngh\u1ec9 ph\u00e9p",
+          "ti\u1ec1n l\u01b0\u01a1ng",
+          "l\u00e0m th\u00eam gi\u1edd",
+          "h\u1ee3p \u0111\u1ed3ng"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "thu\u1ebf",
+          "ngh\u1ec9 ph\u00e9p",
+          "ti\u1ec1n l\u01b0\u01a1ng",
+          "l\u00e0m th\u00eam gi\u1edd"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": "Vui l\u00f2ng chia c\u00e2u h\u1ecfi th\u00e0nh t\u1ed1i \u0111a b\u1ed1n ph\u1ea7n.",
+        "subqueries": [
+          {
+            "text": "thu\u1ebf",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ti\u1ec1n l\u01b0\u01a1ng",
+            "purpose": "question_part"
+          },
+          {
+            "text": "l\u00e0m th\u00eam gi\u1edd",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "l\u00e0m th\u00eam gi\u1edd",
+          "ngh\u1ec9 ph\u00e9p",
+          "thu\u1ebf",
+          "ti\u1ec1n l\u01b0\u01a1ng"
+        ]
+      },
+      "plan": {
+        "original": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng; l\u00e0m th\u00eam gi\u1edd; h\u1ee3p \u0111\u1ed3ng",
+        "intent": "legal_question",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "thu\u1ebf",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ti\u1ec1n l\u01b0\u01a1ng",
+            "purpose": "question_part"
+          },
+          {
+            "text": "l\u00e0m th\u00eam gi\u1edd",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": "Vui l\u00f2ng chia c\u00e2u h\u1ecfi th\u00e0nh t\u1ed1i \u0111a b\u1ed1n ph\u1ea7n."
+      },
+      "input": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng; l\u00e0m th\u00eam gi\u1edd; h\u1ee3p \u0111\u1ed3ng",
+      "id": "too_many",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "CLARIFICATION_REQUIRED",
+        "plan": {
+          "original": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng; l\u00e0m th\u00eam gi\u1edd; h\u1ee3p \u0111\u1ed3ng",
+          "intent": "legal_question",
+          "domain": "labour",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "thu\u1ebf",
+              "purpose": "question_part"
+            },
+            {
+              "text": "ngh\u1ec9 ph\u00e9p",
+              "purpose": "question_part"
+            },
+            {
+              "text": "ti\u1ec1n l\u01b0\u01a1ng",
+              "purpose": "question_part"
+            },
+            {
+              "text": "l\u00e0m th\u00eam gi\u1edd",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": "Vui l\u00f2ng chia c\u00e2u h\u1ecfi th\u00e0nh t\u1ed1i \u0111a b\u1ed1n ph\u1ea7n."
+        },
+        "retrieval_calls": 0,
+        "handoff_status": null
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        63,
+        64,
+        65,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        84,
+        85,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [
+        {
+          "group": "31/02/2024",
+          "span": [
+            40,
+            50
+          ]
+        }
+      ],
+      "raw_topic_matches": [
+        {
+          "group": "ngh\u1ec9 ph\u00e9p",
+          "span": [
+            6,
+            15
+          ]
+        },
+        {
+          "group": "ti\u1ec1n l\u01b0\u01a1ng",
+          "span": [
+            17,
+            27
+          ]
+        }
+      ],
+      "post_validation": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng; \u0111i\u1ec1u ki\u1ec7n; 31/02/2024",
+      "post_normalization": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng; \u0111i\u1ec1u ki\u1ec7n; 31/02/2024",
+      "final_locals": {
+        "text": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng; \u0111i\u1ec1u ki\u1ec7n; 31/02/2024",
+        "parts": [
+          "thu\u1ebf",
+          "ngh\u1ec9 ph\u00e9p",
+          "ti\u1ec1n l\u01b0\u01a1ng",
+          "\u0111i\u1ec1u ki\u1ec7n",
+          "31/02/2024"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "thu\u1ebf",
+          "ngh\u1ec9 ph\u00e9p",
+          "ti\u1ec1n l\u01b0\u01a1ng",
+          "\u0111i\u1ec1u ki\u1ec7n"
+        ],
+        "dates": [],
+        "invalid_date": true,
+        "clarification": "Ng\u00e0y \u0111\u01b0\u1ee3c n\u00eau kh\u00f4ng h\u1ee3p l\u1ec7. B\u1ea1n vui l\u00f2ng ki\u1ec3m tra l\u1ea1i ng\u00e0y, th\u00e1ng v\u00e0 n\u0103m.",
+        "subqueries": [
+          {
+            "text": "thu\u1ebf",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ti\u1ec1n l\u01b0\u01a1ng",
+            "purpose": "question_part"
+          },
+          {
+            "text": "\u0111i\u1ec1u ki\u1ec7n",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "ngh\u1ec9 ph\u00e9p",
+          "thu\u1ebf",
+          "ti\u1ec1n l\u01b0\u01a1ng",
+          "\u0111i\u1ec1u ki\u1ec7n"
+        ]
+      },
+      "plan": {
+        "original": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng; \u0111i\u1ec1u ki\u1ec7n; 31/02/2024",
+        "intent": "legal_question",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "thu\u1ebf",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ti\u1ec1n l\u01b0\u01a1ng",
+            "purpose": "question_part"
+          },
+          {
+            "text": "\u0111i\u1ec1u ki\u1ec7n",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": "Ng\u00e0y \u0111\u01b0\u1ee3c n\u00eau kh\u00f4ng h\u1ee3p l\u1ec7. B\u1ea1n vui l\u00f2ng ki\u1ec3m tra l\u1ea1i ng\u00e0y, th\u00e1ng v\u00e0 n\u0103m."
+      },
+      "input": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng; \u0111i\u1ec1u ki\u1ec7n; 31/02/2024",
+      "id": "override",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "CLARIFICATION_REQUIRED",
+        "plan": {
+          "original": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng; \u0111i\u1ec1u ki\u1ec7n; 31/02/2024",
+          "intent": "legal_question",
+          "domain": "labour",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "thu\u1ebf",
+              "purpose": "question_part"
+            },
+            {
+              "text": "ngh\u1ec9 ph\u00e9p",
+              "purpose": "question_part"
+            },
+            {
+              "text": "ti\u1ec1n l\u01b0\u01a1ng",
+              "purpose": "question_part"
+            },
+            {
+              "text": "\u0111i\u1ec1u ki\u1ec7n",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": "Ng\u00e0y \u0111\u01b0\u1ee3c n\u00eau kh\u00f4ng h\u1ee3p l\u1ec7. B\u1ea1n vui l\u00f2ng ki\u1ec3m tra l\u1ea1i ng\u00e0y, th\u00e1ng v\u00e0 n\u0103m."
+        },
+        "retrieval_calls": 0,
+        "handoff_status": null
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        71,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "post_validation": "Tr\u00edch d\u1eabn:",
+      "post_normalization": "Tr\u00edch d\u1eabn:",
+      "final_locals": {
+        "text": "Tr\u00edch d\u1eabn:",
+        "parts": [
+          "Tr\u00edch d\u1eabn:"
+        ],
+        "prefix": {
+          "group": "Tr\u00edch d\u1eabn:",
+          "span": [
+            0,
+            10
+          ]
+        },
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Tr\u00edch d\u1eabn:"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": "B\u1ea1n c\u1ea7n tra c\u1ee9u quy \u0111\u1ecbnh ho\u1eb7c t\u00ecnh hu\u1ed1ng c\u1ee5 th\u1ec3 n\u00e0o?",
+        "subqueries": [
+          {
+            "text": "Tr\u00edch d\u1eabn:",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "tr\u00edch d\u1eabn:"
+        ]
+      },
+      "plan": {
+        "original": "Tr\u00edch d\u1eabn:",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Tr\u00edch d\u1eabn:",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": "B\u1ea1n c\u1ea7n tra c\u1ee9u quy \u0111\u1ecbnh ho\u1eb7c t\u00ecnh hu\u1ed1ng c\u1ee5 th\u1ec3 n\u00e0o?"
+      },
+      "input": "Tr\u00edch d\u1eabn:",
+      "id": "prefix_empty",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "CLARIFICATION_REQUIRED",
+        "plan": {
+          "original": "Tr\u00edch d\u1eabn:",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "Tr\u00edch d\u1eabn:",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": "B\u1ea1n c\u1ea7n tra c\u1ee9u quy \u0111\u1ecbnh ho\u1eb7c t\u00ecnh hu\u1ed1ng c\u1ee5 th\u1ec3 n\u00e0o?"
+        },
+        "retrieval_calls": 0,
+        "handoff_status": null
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        71,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "post_validation": "thu\u1ebf",
+      "post_normalization": "thu\u1ebf",
+      "final_locals": {
+        "text": "thu\u1ebf",
+        "parts": [
+          "thu\u1ebf"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "thu\u1ebf"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": "B\u1ea1n c\u1ea7n tra c\u1ee9u quy \u0111\u1ecbnh ho\u1eb7c t\u00ecnh hu\u1ed1ng c\u1ee5 th\u1ec3 n\u00e0o?",
+        "subqueries": [
+          {
+            "text": "thu\u1ebf",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "thu\u1ebf"
+        ]
+      },
+      "plan": {
+        "original": "thu\u1ebf",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "thu\u1ebf",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": "B\u1ea1n c\u1ea7n tra c\u1ee9u quy \u0111\u1ecbnh ho\u1eb7c t\u00ecnh hu\u1ed1ng c\u1ee5 th\u1ec3 n\u00e0o?"
+      },
+      "input": "thu\u1ebf",
+      "id": "single_word",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "CLARIFICATION_REQUIRED",
+        "plan": {
+          "original": "thu\u1ebf",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "thu\u1ebf",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": "B\u1ea1n c\u1ea7n tra c\u1ee9u quy \u0111\u1ecbnh ho\u1eb7c t\u00ecnh hu\u1ed1ng c\u1ee5 th\u1ec3 n\u00e0o?"
+        },
+        "retrieval_calls": 0,
+        "handoff_status": null
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "post_validation": "Tr\u00edch d\u1eabn",
+      "post_normalization": "Tr\u00edch d\u1eabn",
+      "final_locals": {
+        "text": "Tr\u00edch d\u1eabn",
+        "parts": [
+          "Tr\u00edch d\u1eabn"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Tr\u00edch d\u1eabn"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "Tr\u00edch d\u1eabn",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "tr\u00edch d\u1eabn"
+        ]
+      },
+      "plan": {
+        "original": "Tr\u00edch d\u1eabn",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Tr\u00edch d\u1eabn",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "Tr\u00edch d\u1eabn",
+      "id": "bare_prefix",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "Tr\u00edch d\u1eabn",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "Tr\u00edch d\u1eabn",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        54,
+        55,
+        62,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [
+        {
+          "group": "HI\u1ec6N NAY",
+          "span": [
+            9,
+            17
+          ]
+        }
+      ],
+      "raw_topic_matches": [],
+      "post_validation": "Quy \u0111\u1ecbnh HI\u1ec6N NAY",
+      "post_normalization": "Quy \u0111\u1ecbnh HI\u1ec6N NAY",
+      "final_locals": {
+        "text": "Quy \u0111\u1ecbnh HI\u1ec6N NAY",
+        "parts": [
+          "Quy \u0111\u1ecbnh HI\u1ec6N NAY"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Quy \u0111\u1ecbnh HI\u1ec6N NAY"
+        ],
+        "dates": [
+          "HI\u1ec6N NAY"
+        ],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh HI\u1ec6N NAY",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "quy \u0111\u1ecbnh hi\u1ec7n nay"
+        ]
+      },
+      "plan": {
+        "original": "Quy \u0111\u1ecbnh HI\u1ec6N NAY",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [
+          "HI\u1ec6N NAY"
+        ],
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh HI\u1ec6N NAY",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "Quy \u0111\u1ecbnh HI\u1ec6N NAY",
+      "id": "relative",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "Quy \u0111\u1ecbnh HI\u1ec6N NAY",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [
+            "HI\u1ec6N NAY"
+          ],
+          "subqueries": [
+            {
+              "text": "Quy \u0111\u1ecbnh HI\u1ec6N NAY",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "post_validation": "Quy \u0111\u1ecbnh ng\u00e0y mai",
+      "post_normalization": "Quy \u0111\u1ecbnh ng\u00e0y mai",
+      "final_locals": {
+        "text": "Quy \u0111\u1ecbnh ng\u00e0y mai",
+        "parts": [
+          "Quy \u0111\u1ecbnh ng\u00e0y mai"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Quy \u0111\u1ecbnh ng\u00e0y mai"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh ng\u00e0y mai",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "quy \u0111\u1ecbnh ng\u00e0y mai"
+        ]
+      },
+      "plan": {
+        "original": "Quy \u0111\u1ecbnh ng\u00e0y mai",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh ng\u00e0y mai",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "Quy \u0111\u1ecbnh ng\u00e0y mai",
+      "id": "unsupported_relative",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "Quy \u0111\u1ecbnh ng\u00e0y mai",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "Quy \u0111\u1ecbnh ng\u00e0y mai",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "post_validation": "Quy \u0111\u1ecbnh th\u00e1ng 02/2024",
+      "post_normalization": "Quy \u0111\u1ecbnh th\u00e1ng 02/2024",
+      "final_locals": {
+        "text": "Quy \u0111\u1ecbnh th\u00e1ng 02/2024",
+        "parts": [
+          "Quy \u0111\u1ecbnh th\u00e1ng 02/2024"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Quy \u0111\u1ecbnh th\u00e1ng 02/2024"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh th\u00e1ng 02/2024",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "quy \u0111\u1ecbnh th\u00e1ng 02/2024"
+        ]
+      },
+      "plan": {
+        "original": "Quy \u0111\u1ecbnh th\u00e1ng 02/2024",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh th\u00e1ng 02/2024",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "Quy \u0111\u1ecbnh th\u00e1ng 02/2024",
+      "id": "partial_month",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "Quy \u0111\u1ecbnh th\u00e1ng 02/2024",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "Quy \u0111\u1ecbnh th\u00e1ng 02/2024",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "post_validation": "Quy \u0111\u1ecbnh ng\u00e0y 29/02",
+      "post_normalization": "Quy \u0111\u1ecbnh ng\u00e0y 29/02",
+      "final_locals": {
+        "text": "Quy \u0111\u1ecbnh ng\u00e0y 29/02",
+        "parts": [
+          "Quy \u0111\u1ecbnh ng\u00e0y 29/02"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Quy \u0111\u1ecbnh ng\u00e0y 29/02"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh ng\u00e0y 29/02",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "quy \u0111\u1ecbnh ng\u00e0y 29/02"
+        ]
+      },
+      "plan": {
+        "original": "Quy \u0111\u1ecbnh ng\u00e0y 29/02",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh ng\u00e0y 29/02",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "Quy \u0111\u1ecbnh ng\u00e0y 29/02",
+      "id": "partial_day",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "Quy \u0111\u1ecbnh ng\u00e0y 29/02",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "Quy \u0111\u1ecbnh ng\u00e0y 29/02",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        54,
+        55,
+        62,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [
+        {
+          "group": "2024",
+          "span": [
+            14,
+            18
+          ]
+        }
+      ],
+      "raw_topic_matches": [],
+      "post_validation": "Quy \u0111\u1ecbnh ng\u00e0y 2024-02-29",
+      "post_normalization": "Quy \u0111\u1ecbnh ng\u00e0y 2024-02-29",
+      "final_locals": {
+        "text": "Quy \u0111\u1ecbnh ng\u00e0y 2024-02-29",
+        "parts": [
+          "Quy \u0111\u1ecbnh ng\u00e0y 2024-02-29"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Quy \u0111\u1ecbnh ng\u00e0y 2024-02-29"
+        ],
+        "dates": [
+          "2024"
+        ],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh ng\u00e0y 2024-02-29",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "quy \u0111\u1ecbnh ng\u00e0y 2024-02-29"
+        ]
+      },
+      "plan": {
+        "original": "Quy \u0111\u1ecbnh ng\u00e0y 2024-02-29",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [
+          "2024"
+        ],
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh ng\u00e0y 2024-02-29",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "Quy \u0111\u1ecbnh ng\u00e0y 2024-02-29",
+      "id": "iso_date",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "Quy \u0111\u1ecbnh ng\u00e0y 2024-02-29",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [
+            "2024"
+          ],
+          "subqueries": [
+            {
+              "text": "Quy \u0111\u1ecbnh ng\u00e0y 2024-02-29",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        54,
+        55,
+        62,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [
+        {
+          "group": "2024",
+          "span": [
+            4,
+            8
+          ]
+        },
+        {
+          "group": "2024",
+          "span": [
+            16,
+            20
+          ]
+        }
+      ],
+      "raw_topic_matches": [],
+      "post_validation": "N\u0103m 2024 v\u00e0 n\u0103m 2024 \u00e1p d\u1ee5ng th\u1ebf n\u00e0o?",
+      "post_normalization": "N\u0103m 2024 v\u00e0 n\u0103m 2024 \u00e1p d\u1ee5ng th\u1ebf n\u00e0o?",
+      "final_locals": {
+        "text": "N\u0103m 2024 v\u00e0 n\u0103m 2024 \u00e1p d\u1ee5ng th\u1ebf n\u00e0o?",
+        "parts": [
+          "N\u0103m 2024 v\u00e0 n\u0103m 2024 \u00e1p d\u1ee5ng th\u1ebf n\u00e0o"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "N\u0103m 2024 v\u00e0 n\u0103m 2024 \u00e1p d\u1ee5ng th\u1ebf n\u00e0o"
+        ],
+        "dates": [
+          "2024",
+          "2024"
+        ],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "N\u0103m 2024 v\u00e0 n\u0103m 2024 \u00e1p d\u1ee5ng th\u1ebf n\u00e0o",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "n\u0103m 2024 v\u00e0 n\u0103m 2024 \u00e1p d\u1ee5ng th\u1ebf n\u00e0o"
+        ]
+      },
+      "plan": {
+        "original": "N\u0103m 2024 v\u00e0 n\u0103m 2024 \u00e1p d\u1ee5ng th\u1ebf n\u00e0o?",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [
+          "2024",
+          "2024"
+        ],
+        "subqueries": [
+          {
+            "text": "N\u0103m 2024 v\u00e0 n\u0103m 2024 \u00e1p d\u1ee5ng th\u1ebf n\u00e0o",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "N\u0103m 2024 v\u00e0 n\u0103m 2024 \u00e1p d\u1ee5ng th\u1ebf n\u00e0o?",
+      "id": "repeated_year",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "N\u0103m 2024 v\u00e0 n\u0103m 2024 \u00e1p d\u1ee5ng th\u1ebf n\u00e0o?",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [
+            "2024",
+            "2024"
+          ],
+          "subqueries": [
+            {
+              "text": "N\u0103m 2024 v\u00e0 n\u0103m 2024 \u00e1p d\u1ee5ng th\u1ebf n\u00e0o",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        84,
+        85,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [
+        {
+          "group": "ngh\u1ec9 ph\u00e9p",
+          "span": [
+            0,
+            9
+          ]
+        },
+        {
+          "group": "ngh\u1ec9 ph\u00e9p",
+          "span": [
+            11,
+            20
+          ]
+        }
+      ],
+      "post_validation": "ngh\u1ec9 ph\u00e9p; ngh\u1ec9 ph\u00e9p",
+      "post_normalization": "ngh\u1ec9 ph\u00e9p; ngh\u1ec9 ph\u00e9p",
+      "final_locals": {
+        "text": "ngh\u1ec9 ph\u00e9p; ngh\u1ec9 ph\u00e9p",
+        "parts": [
+          "ngh\u1ec9 ph\u00e9p",
+          "ngh\u1ec9 ph\u00e9p"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "ngh\u1ec9 ph\u00e9p",
+          "ngh\u1ec9 ph\u00e9p"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "ngh\u1ec9 ph\u00e9p"
+        ]
+      },
+      "plan": {
+        "original": "ngh\u1ec9 ph\u00e9p; ngh\u1ec9 ph\u00e9p",
+        "intent": "legal_question",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "ngh\u1ec9 ph\u00e9p; ngh\u1ec9 ph\u00e9p",
+      "id": "base_duplicates",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "ngh\u1ec9 ph\u00e9p; ngh\u1ec9 ph\u00e9p",
+          "intent": "legal_question",
+          "domain": "labour",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "ngh\u1ec9 ph\u00e9p",
+              "purpose": "question_part"
+            },
+            {
+              "text": "ngh\u1ec9 ph\u00e9p",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 2,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [
+        {
+          "group": "ngh\u1ec9 ph\u00e9p",
+          "span": [
+            4,
+            13
+          ]
+        }
+      ],
+      "post_validation": "T\u00f4i ngh\u1ec9 ph\u00e9p v\u00e0 th\u1ee7 t\u1ee5c xin ngh\u1ec9 nh\u01b0 th\u1ebf n\u00e0o?",
+      "post_normalization": "T\u00f4i ngh\u1ec9 ph\u00e9p v\u00e0 th\u1ee7 t\u1ee5c xin ngh\u1ec9 nh\u01b0 th\u1ebf n\u00e0o?",
+      "final_locals": {
+        "text": "T\u00f4i ngh\u1ec9 ph\u00e9p v\u00e0 th\u1ee7 t\u1ee5c xin ngh\u1ec9 nh\u01b0 th\u1ebf n\u00e0o?",
+        "parts": [
+          "T\u00f4i ngh\u1ec9 ph\u00e9p",
+          "th\u1ee7 t\u1ee5c xin ngh\u1ec9 nh\u01b0 th\u1ebf n\u00e0o"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "T\u00f4i ngh\u1ec9 ph\u00e9p",
+          "th\u1ee7 t\u1ee5c xin ngh\u1ec9 nh\u01b0 th\u1ebf n\u00e0o"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "T\u00f4i ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          },
+          {
+            "text": "th\u1ee7 t\u1ee5c xin ngh\u1ec9 nh\u01b0 th\u1ebf n\u00e0o",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "topic"
+          }
+        ],
+        "seen": [
+          "ngh\u1ec9 ph\u00e9p",
+          "th\u1ee7 t\u1ee5c xin ngh\u1ec9 nh\u01b0 th\u1ebf n\u00e0o",
+          "t\u00f4i ngh\u1ec9 ph\u00e9p"
+        ]
+      },
+      "plan": {
+        "original": "T\u00f4i ngh\u1ec9 ph\u00e9p v\u00e0 th\u1ee7 t\u1ee5c xin ngh\u1ec9 nh\u01b0 th\u1ebf n\u00e0o?",
+        "intent": "legal_question",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "T\u00f4i ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          },
+          {
+            "text": "th\u1ee7 t\u1ee5c xin ngh\u1ec9 nh\u01b0 th\u1ebf n\u00e0o",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "topic"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "T\u00f4i ngh\u1ec9 ph\u00e9p v\u00e0 th\u1ee7 t\u1ee5c xin ngh\u1ec9 nh\u01b0 th\u1ebf n\u00e0o?",
+      "id": "guarded_and",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "T\u00f4i ngh\u1ec9 ph\u00e9p v\u00e0 th\u1ee7 t\u1ee5c xin ngh\u1ec9 nh\u01b0 th\u1ebf n\u00e0o?",
+          "intent": "legal_question",
+          "domain": "labour",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "T\u00f4i ngh\u1ec9 ph\u00e9p",
+              "purpose": "question_part"
+            },
+            {
+              "text": "th\u1ee7 t\u1ee5c xin ngh\u1ec9 nh\u01b0 th\u1ebf n\u00e0o",
+              "purpose": "question_part"
+            },
+            {
+              "text": "ngh\u1ec9 ph\u00e9p",
+              "purpose": "topic"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 3,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [
+        {
+          "group": "Ngh\u1ec9 ph\u00e9p",
+          "span": [
+            0,
+            9
+          ]
+        },
+        {
+          "group": "ti\u1ec1n l\u01b0\u01a1ng",
+          "span": [
+            13,
+            23
+          ]
+        }
+      ],
+      "post_validation": "Ngh\u1ec9 ph\u00e9p v\u00e0 ti\u1ec1n l\u01b0\u01a1ng \u0111\u01b0\u1ee3c t\u00ednh th\u1ebf n\u00e0o?",
+      "post_normalization": "Ngh\u1ec9 ph\u00e9p v\u00e0 ti\u1ec1n l\u01b0\u01a1ng \u0111\u01b0\u1ee3c t\u00ednh th\u1ebf n\u00e0o?",
+      "final_locals": {
+        "text": "Ngh\u1ec9 ph\u00e9p v\u00e0 ti\u1ec1n l\u01b0\u01a1ng \u0111\u01b0\u1ee3c t\u00ednh th\u1ebf n\u00e0o?",
+        "parts": [
+          "Ngh\u1ec9 ph\u00e9p v\u00e0 ti\u1ec1n l\u01b0\u01a1ng \u0111\u01b0\u1ee3c t\u00ednh th\u1ebf n\u00e0o"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Ngh\u1ec9 ph\u00e9p v\u00e0 ti\u1ec1n l\u01b0\u01a1ng \u0111\u01b0\u1ee3c t\u00ednh th\u1ebf n\u00e0o"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "Ngh\u1ec9 ph\u00e9p v\u00e0 ti\u1ec1n l\u01b0\u01a1ng \u0111\u01b0\u1ee3c t\u00ednh th\u1ebf n\u00e0o",
+            "purpose": "question_part"
+          },
+          {
+            "text": "Ngh\u1ec9 ph\u00e9p",
+            "purpose": "topic"
+          },
+          {
+            "text": "ti\u1ec1n l\u01b0\u01a1ng",
+            "purpose": "topic"
+          }
+        ],
+        "seen": [
+          "ngh\u1ec9 ph\u00e9p",
+          "ngh\u1ec9 ph\u00e9p v\u00e0 ti\u1ec1n l\u01b0\u01a1ng \u0111\u01b0\u1ee3c t\u00ednh th\u1ebf n\u00e0o",
+          "ti\u1ec1n l\u01b0\u01a1ng"
+        ]
+      },
+      "plan": {
+        "original": "Ngh\u1ec9 ph\u00e9p v\u00e0 ti\u1ec1n l\u01b0\u01a1ng \u0111\u01b0\u1ee3c t\u00ednh th\u1ebf n\u00e0o?",
+        "intent": "legal_question",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Ngh\u1ec9 ph\u00e9p v\u00e0 ti\u1ec1n l\u01b0\u01a1ng \u0111\u01b0\u1ee3c t\u00ednh th\u1ebf n\u00e0o",
+            "purpose": "question_part"
+          },
+          {
+            "text": "Ngh\u1ec9 ph\u00e9p",
+            "purpose": "topic"
+          },
+          {
+            "text": "ti\u1ec1n l\u01b0\u01a1ng",
+            "purpose": "topic"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "Ngh\u1ec9 ph\u00e9p v\u00e0 ti\u1ec1n l\u01b0\u01a1ng \u0111\u01b0\u1ee3c t\u00ednh th\u1ebf n\u00e0o?",
+      "id": "plain_and",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "Ngh\u1ec9 ph\u00e9p v\u00e0 ti\u1ec1n l\u01b0\u01a1ng \u0111\u01b0\u1ee3c t\u00ednh th\u1ebf n\u00e0o?",
+          "intent": "legal_question",
+          "domain": "labour",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "Ngh\u1ec9 ph\u00e9p v\u00e0 ti\u1ec1n l\u01b0\u01a1ng \u0111\u01b0\u1ee3c t\u00ednh th\u1ebf n\u00e0o",
+              "purpose": "question_part"
+            },
+            {
+              "text": "Ngh\u1ec9 ph\u00e9p",
+              "purpose": "topic"
+            },
+            {
+              "text": "ti\u1ec1n l\u01b0\u01a1ng",
+              "purpose": "topic"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 3,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [
+        {
+          "group": "ti\u1ec1n l\u01b0\u01a1ng",
+          "span": [
+            8,
+            18
+          ]
+        },
+        {
+          "group": "ngh\u1ec9 ph\u00e9p",
+          "span": [
+            20,
+            29
+          ]
+        },
+        {
+          "group": "l\u00e0m th\u00eam gi\u1edd",
+          "span": [
+            31,
+            43
+          ]
+        },
+        {
+          "group": "\u0111\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3",
+          "span": [
+            45,
+            62
+          ]
+        },
+        {
+          "group": "th\u1eddi gi\u1edd l\u00e0m vi\u1ec7c",
+          "span": [
+            66,
+            83
+          ]
+        }
+      ],
+      "post_validation": "T\u00f4i h\u1ecfi ti\u1ec1n l\u01b0\u01a1ng, ngh\u1ec9 ph\u00e9p, l\u00e0m th\u00eam gi\u1edd, \u0111\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3 v\u00e0 th\u1eddi gi\u1edd l\u00e0m vi\u1ec7c?",
+      "post_normalization": "T\u00f4i h\u1ecfi ti\u1ec1n l\u01b0\u01a1ng, ngh\u1ec9 ph\u00e9p, l\u00e0m th\u00eam gi\u1edd, \u0111\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3 v\u00e0 th\u1eddi gi\u1edd l\u00e0m vi\u1ec7c?",
+      "final_locals": {
+        "text": "T\u00f4i h\u1ecfi ti\u1ec1n l\u01b0\u01a1ng, ngh\u1ec9 ph\u00e9p, l\u00e0m th\u00eam gi\u1edd, \u0111\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3 v\u00e0 th\u1eddi gi\u1edd l\u00e0m vi\u1ec7c?",
+        "parts": [
+          "T\u00f4i h\u1ecfi ti\u1ec1n l\u01b0\u01a1ng, ngh\u1ec9 ph\u00e9p, l\u00e0m th\u00eam gi\u1edd, \u0111\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3 v\u00e0 th\u1eddi gi\u1edd l\u00e0m vi\u1ec7c"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "T\u00f4i h\u1ecfi ti\u1ec1n l\u01b0\u01a1ng, ngh\u1ec9 ph\u00e9p, l\u00e0m th\u00eam gi\u1edd, \u0111\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3 v\u00e0 th\u1eddi gi\u1edd l\u00e0m vi\u1ec7c"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "T\u00f4i h\u1ecfi ti\u1ec1n l\u01b0\u01a1ng, ngh\u1ec9 ph\u00e9p, l\u00e0m th\u00eam gi\u1edd, \u0111\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3 v\u00e0 th\u1eddi gi\u1edd l\u00e0m vi\u1ec7c",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ti\u1ec1n l\u01b0\u01a1ng",
+            "purpose": "topic"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "topic"
+          },
+          {
+            "text": "l\u00e0m th\u00eam gi\u1edd",
+            "purpose": "topic"
+          }
+        ],
+        "seen": [
+          "l\u00e0m th\u00eam gi\u1edd",
+          "ngh\u1ec9 ph\u00e9p",
+          "ti\u1ec1n l\u01b0\u01a1ng",
+          "t\u00f4i h\u1ecfi ti\u1ec1n l\u01b0\u01a1ng, ngh\u1ec9 ph\u00e9p, l\u00e0m th\u00eam gi\u1edd, \u0111\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3 v\u00e0 th\u1eddi gi\u1edd l\u00e0m vi\u1ec7c"
+        ]
+      },
+      "plan": {
+        "original": "T\u00f4i h\u1ecfi ti\u1ec1n l\u01b0\u01a1ng, ngh\u1ec9 ph\u00e9p, l\u00e0m th\u00eam gi\u1edd, \u0111\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3 v\u00e0 th\u1eddi gi\u1edd l\u00e0m vi\u1ec7c?",
+        "intent": "legal_question",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "T\u00f4i h\u1ecfi ti\u1ec1n l\u01b0\u01a1ng, ngh\u1ec9 ph\u00e9p, l\u00e0m th\u00eam gi\u1edd, \u0111\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3 v\u00e0 th\u1eddi gi\u1edd l\u00e0m vi\u1ec7c",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ti\u1ec1n l\u01b0\u01a1ng",
+            "purpose": "topic"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "topic"
+          },
+          {
+            "text": "l\u00e0m th\u00eam gi\u1edd",
+            "purpose": "topic"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "T\u00f4i h\u1ecfi ti\u1ec1n l\u01b0\u01a1ng, ngh\u1ec9 ph\u00e9p, l\u00e0m th\u00eam gi\u1edd, \u0111\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3 v\u00e0 th\u1eddi gi\u1edd l\u00e0m vi\u1ec7c?",
+      "id": "topic_cap",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "T\u00f4i h\u1ecfi ti\u1ec1n l\u01b0\u01a1ng, ngh\u1ec9 ph\u00e9p, l\u00e0m th\u00eam gi\u1edd, \u0111\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3 v\u00e0 th\u1eddi gi\u1edd l\u00e0m vi\u1ec7c?",
+          "intent": "legal_question",
+          "domain": "labour",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "T\u00f4i h\u1ecfi ti\u1ec1n l\u01b0\u01a1ng, ngh\u1ec9 ph\u00e9p, l\u00e0m th\u00eam gi\u1edd, \u0111\u1ed1i tho\u1ea1i \u0111\u1ecbnh k\u1ef3 v\u00e0 th\u1eddi gi\u1edd l\u00e0m vi\u1ec7c",
+              "purpose": "question_part"
+            },
+            {
+              "text": "ti\u1ec1n l\u01b0\u01a1ng",
+              "purpose": "topic"
+            },
+            {
+              "text": "ngh\u1ec9 ph\u00e9p",
+              "purpose": "topic"
+            },
+            {
+              "text": "l\u00e0m th\u00eam gi\u1edd",
+              "purpose": "topic"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 4,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "post_validation": "? ;",
+      "post_normalization": "? ;",
+      "final_locals": {
+        "text": "? ;",
+        "parts": [],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "? ;"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "? ;",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "? ;"
+        ]
+      },
+      "plan": {
+        "original": "? ;",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "? ;",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "? ;",
+      "id": "punctuation",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "? ;",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "? ;",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        84,
+        85,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [
+        {
+          "group": "ngh\u1ec9 ph\u00e9p",
+          "span": [
+            18,
+            27
+          ]
+        }
+      ],
+      "post_validation": "Quy \u0111\u1ecbnh thu\u1ebf; \t ;ngh\u1ec9 ph\u00e9p",
+      "post_normalization": "Quy \u0111\u1ecbnh thu\u1ebf; \t ;ngh\u1ec9 ph\u00e9p",
+      "final_locals": {
+        "text": "Quy \u0111\u1ecbnh thu\u1ebf; \t ;ngh\u1ec9 ph\u00e9p",
+        "parts": [
+          "Quy \u0111\u1ecbnh thu\u1ebf",
+          "\t",
+          "ngh\u1ec9 ph\u00e9p"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Quy \u0111\u1ecbnh thu\u1ebf",
+          "\t",
+          "ngh\u1ec9 ph\u00e9p"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh thu\u1ebf",
+            "purpose": "question_part"
+          },
+          {
+            "text": "\t",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "\t",
+          "ngh\u1ec9 ph\u00e9p",
+          "quy \u0111\u1ecbnh thu\u1ebf"
+        ]
+      },
+      "plan": {
+        "original": "Quy \u0111\u1ecbnh thu\u1ebf; \t ;ngh\u1ec9 ph\u00e9p",
+        "intent": "legal_question",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh thu\u1ebf",
+            "purpose": "question_part"
+          },
+          {
+            "text": "\t",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "Quy \u0111\u1ecbnh thu\u1ebf; \t ;ngh\u1ec9 ph\u00e9p",
+      "id": "tab_part",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "exception_type": "ValidationError",
+        "error_code": null,
+        "retrieval_calls": 0
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "post_validation": "T\u00f4i kh\u00f4ng h\u1ecfi v\u1ec1 lao \u0111\u1ed9ng, ch\u1ec9 h\u1ecfi thu\u1ebf",
+      "post_normalization": "T\u00f4i kh\u00f4ng h\u1ecfi v\u1ec1 lao \u0111\u1ed9ng, ch\u1ec9 h\u1ecfi thu\u1ebf",
+      "final_locals": {
+        "text": "T\u00f4i kh\u00f4ng h\u1ecfi v\u1ec1 lao \u0111\u1ed9ng, ch\u1ec9 h\u1ecfi thu\u1ebf",
+        "parts": [
+          "T\u00f4i kh\u00f4ng h\u1ecfi v\u1ec1 lao \u0111\u1ed9ng, ch\u1ec9 h\u1ecfi thu\u1ebf"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "T\u00f4i kh\u00f4ng h\u1ecfi v\u1ec1 lao \u0111\u1ed9ng, ch\u1ec9 h\u1ecfi thu\u1ebf"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "T\u00f4i kh\u00f4ng h\u1ecfi v\u1ec1 lao \u0111\u1ed9ng, ch\u1ec9 h\u1ecfi thu\u1ebf",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "t\u00f4i kh\u00f4ng h\u1ecfi v\u1ec1 lao \u0111\u1ed9ng, ch\u1ec9 h\u1ecfi thu\u1ebf"
+        ]
+      },
+      "plan": {
+        "original": "T\u00f4i kh\u00f4ng h\u1ecfi v\u1ec1 lao \u0111\u1ed9ng, ch\u1ec9 h\u1ecfi thu\u1ebf",
+        "intent": "legal_question",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "T\u00f4i kh\u00f4ng h\u1ecfi v\u1ec1 lao \u0111\u1ed9ng, ch\u1ec9 h\u1ecfi thu\u1ebf",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "T\u00f4i kh\u00f4ng h\u1ecfi v\u1ec1 lao \u0111\u1ed9ng, ch\u1ec9 h\u1ecfi thu\u1ebf",
+      "id": "negated_domain",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "T\u00f4i kh\u00f4ng h\u1ecfi v\u1ec1 lao \u0111\u1ed9ng, ch\u1ec9 h\u1ecfi thu\u1ebf",
+          "intent": "legal_question",
+          "domain": "labour",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "T\u00f4i kh\u00f4ng h\u1ecfi v\u1ec1 lao \u0111\u1ed9ng, ch\u1ec9 h\u1ecfi thu\u1ebf",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "post_validation": "B\u1ea3o hi\u1ec3m x\u00e3 h\u1ed9i c\u00f3 b\u1eaft bu\u1ed9c kh\u00f4ng?",
+      "post_normalization": "B\u1ea3o hi\u1ec3m x\u00e3 h\u1ed9i c\u00f3 b\u1eaft bu\u1ed9c kh\u00f4ng?",
+      "final_locals": {
+        "text": "B\u1ea3o hi\u1ec3m x\u00e3 h\u1ed9i c\u00f3 b\u1eaft bu\u1ed9c kh\u00f4ng?",
+        "parts": [
+          "B\u1ea3o hi\u1ec3m x\u00e3 h\u1ed9i c\u00f3 b\u1eaft bu\u1ed9c kh\u00f4ng"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "B\u1ea3o hi\u1ec3m x\u00e3 h\u1ed9i c\u00f3 b\u1eaft bu\u1ed9c kh\u00f4ng"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "B\u1ea3o hi\u1ec3m x\u00e3 h\u1ed9i c\u00f3 b\u1eaft bu\u1ed9c kh\u00f4ng",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "b\u1ea3o hi\u1ec3m x\u00e3 h\u1ed9i c\u00f3 b\u1eaft bu\u1ed9c kh\u00f4ng"
+        ]
+      },
+      "plan": {
+        "original": "B\u1ea3o hi\u1ec3m x\u00e3 h\u1ed9i c\u00f3 b\u1eaft bu\u1ed9c kh\u00f4ng?",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "B\u1ea3o hi\u1ec3m x\u00e3 h\u1ed9i c\u00f3 b\u1eaft bu\u1ed9c kh\u00f4ng",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "B\u1ea3o hi\u1ec3m x\u00e3 h\u1ed9i c\u00f3 b\u1eaft bu\u1ed9c kh\u00f4ng?",
+      "id": "domain_miss",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "B\u1ea3o hi\u1ec3m x\u00e3 h\u1ed9i c\u00f3 b\u1eaft bu\u1ed9c kh\u00f4ng?",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "B\u1ea3o hi\u1ec3m x\u00e3 h\u1ed9i c\u00f3 b\u1eaft bu\u1ed9c kh\u00f4ng",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "post_validation": "\u0110i\u1ec1u 3 lu\u1eadt 45/2019/QH14 quy \u0111\u1ecbnh g\u00ec?",
+      "post_normalization": "\u0110i\u1ec1u 3 lu\u1eadt 45/2019/QH14 quy \u0111\u1ecbnh g\u00ec?",
+      "final_locals": {
+        "text": "\u0110i\u1ec1u 3 lu\u1eadt 45/2019/QH14 quy \u0111\u1ecbnh g\u00ec?",
+        "parts": [
+          "\u0110i\u1ec1u 3 lu\u1eadt 45/2019/QH14 quy \u0111\u1ecbnh g\u00ec"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "\u0110i\u1ec1u 3 lu\u1eadt 45/2019/QH14 quy \u0111\u1ecbnh g\u00ec"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "\u0110i\u1ec1u 3 lu\u1eadt 45/2019/QH14 quy \u0111\u1ecbnh g\u00ec",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "\u0111i\u1ec1u 3 lu\u1eadt 45/2019/qh14 quy \u0111\u1ecbnh g\u00ec"
+        ]
+      },
+      "plan": {
+        "original": "\u0110i\u1ec1u 3 lu\u1eadt 45/2019/QH14 quy \u0111\u1ecbnh g\u00ec?",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "\u0110i\u1ec1u 3 lu\u1eadt 45/2019/QH14 quy \u0111\u1ecbnh g\u00ec",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "\u0110i\u1ec1u 3 lu\u1eadt 45/2019/QH14 quy \u0111\u1ecbnh g\u00ec?",
+      "id": "law_number",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "\u0110i\u1ec1u 3 lu\u1eadt 45/2019/QH14 quy \u0111\u1ecbnh g\u00ec?",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "\u0110i\u1ec1u 3 lu\u1eadt 45/2019/QH14 quy \u0111\u1ecbnh g\u00ec",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        84,
+        85,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [
+        {
+          "group": "ngh\u1ec9 ph\u00e9p",
+          "span": [
+            22,
+            31
+          ]
+        }
+      ],
+      "post_validation": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i? ngh\u1ec9 ph\u00e9p?",
+      "post_normalization": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i? ngh\u1ec9 ph\u00e9p?",
+      "final_locals": {
+        "text": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i? ngh\u1ec9 ph\u00e9p?",
+        "parts": [
+          "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+          "ngh\u1ec9 ph\u00e9p"
+        ],
+        "prefix": {
+          "group": "Tr\u00edch d\u1eabn: ",
+          "span": [
+            0,
+            11
+          ]
+        },
+        "topic": "\u0111\u1ed1i tho\u1ea1i? ngh\u1ec9 ph\u00e9p",
+        "quote_only": false,
+        "queries": [
+          "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+          "ngh\u1ec9 ph\u00e9p"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "ngh\u1ec9 ph\u00e9p",
+          "tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i"
+        ]
+      },
+      "plan": {
+        "original": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i? ngh\u1ec9 ph\u00e9p?",
+        "intent": "legal_question",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i? ngh\u1ec9 ph\u00e9p?",
+      "id": "lookup_multi",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i? ngh\u1ec9 ph\u00e9p?",
+          "intent": "legal_question",
+          "domain": "labour",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+              "purpose": "question_part"
+            },
+            {
+              "text": "ngh\u1ec9 ph\u00e9p",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 2,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "post_validation": "Tr\u00edch  d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+      "post_normalization": "Tr\u00edch  d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+      "final_locals": {
+        "text": "Tr\u00edch  d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+        "parts": [
+          "Tr\u00edch  d\u1eabn: \u0111\u1ed1i tho\u1ea1i"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Tr\u00edch  d\u1eabn: \u0111\u1ed1i tho\u1ea1i"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "Tr\u00edch  d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "tr\u00edch  d\u1eabn: \u0111\u1ed1i tho\u1ea1i"
+        ]
+      },
+      "plan": {
+        "original": "Tr\u00edch  d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Tr\u00edch  d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "Tr\u00edch  d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+      "id": "extra_space_prefix",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "Tr\u00edch  d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "Tr\u00edch  d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "post_validation": "Tr\u00edch nguy\u00ean v\u0103n: \u201c\u0110i\u1ec1u 1.\u201d",
+      "post_normalization": "Tr\u00edch nguy\u00ean v\u0103n: \u201c\u0110i\u1ec1u 1.\u201d",
+      "final_locals": {
+        "text": "Tr\u00edch nguy\u00ean v\u0103n: \u201c\u0110i\u1ec1u 1.\u201d",
+        "parts": [
+          "Tr\u00edch nguy\u00ean v\u0103n: \u201c\u0110i\u1ec1u 1.\u201d"
+        ],
+        "prefix": {
+          "group": "Tr\u00edch nguy\u00ean v\u0103n: ",
+          "span": [
+            0,
+            18
+          ]
+        },
+        "topic": "\u0110i\u1ec1u 1",
+        "quote_only": true,
+        "queries": [
+          "\u0110i\u1ec1u 1"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "\u0110i\u1ec1u 1",
+            "purpose": "lookup"
+          }
+        ]
+      },
+      "plan": {
+        "original": "Tr\u00edch nguy\u00ean v\u0103n: \u201c\u0110i\u1ec1u 1.\u201d",
+        "intent": "quote_lookup",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "\u0110i\u1ec1u 1",
+            "purpose": "lookup"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "Tr\u00edch nguy\u00ean v\u0103n: \u201c\u0110i\u1ec1u 1.\u201d",
+      "id": "quoted_lookup",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "Tr\u00edch nguy\u00ean v\u0103n: \u201c\u0110i\u1ec1u 1.\u201d",
+          "intent": "quote_lookup",
+          "domain": "unknown",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "\u0110i\u1ec1u 1",
+              "purpose": "lookup"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [
+        {
+          "group": "29/02/1900",
+          "span": [
+            14,
+            24
+          ]
+        }
+      ],
+      "raw_topic_matches": [],
+      "post_validation": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/1900",
+      "post_normalization": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/1900",
+      "final_locals": {
+        "text": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/1900",
+        "parts": [
+          "Quy \u0111\u1ecbnh ng\u00e0y 29/02/1900"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Quy \u0111\u1ecbnh ng\u00e0y 29/02/1900"
+        ],
+        "dates": [],
+        "invalid_date": true,
+        "clarification": "Ng\u00e0y \u0111\u01b0\u1ee3c n\u00eau kh\u00f4ng h\u1ee3p l\u1ec7. B\u1ea1n vui l\u00f2ng ki\u1ec3m tra l\u1ea1i ng\u00e0y, th\u00e1ng v\u00e0 n\u0103m.",
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/1900",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "quy \u0111\u1ecbnh ng\u00e0y 29/02/1900"
+        ]
+      },
+      "plan": {
+        "original": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/1900",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/1900",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": "Ng\u00e0y \u0111\u01b0\u1ee3c n\u00eau kh\u00f4ng h\u1ee3p l\u1ec7. B\u1ea1n vui l\u00f2ng ki\u1ec3m tra l\u1ea1i ng\u00e0y, th\u00e1ng v\u00e0 n\u0103m."
+      },
+      "input": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/1900",
+      "id": "old_leap_invalid",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "CLARIFICATION_REQUIRED",
+        "plan": {
+          "original": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/1900",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/1900",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": "Ng\u00e0y \u0111\u01b0\u1ee3c n\u00eau kh\u00f4ng h\u1ee3p l\u1ec7. B\u1ea1n vui l\u00f2ng ki\u1ec3m tra l\u1ea1i ng\u00e0y, th\u00e1ng v\u00e0 n\u0103m."
+        },
+        "retrieval_calls": 0,
+        "handoff_status": null
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        54,
+        55,
+        62,
+        63,
+        64,
+        67,
+        68,
+        69,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [
+        {
+          "group": "hi\u1ec7n h\u00e0nh",
+          "span": [
+            9,
+            18
+          ]
+        }
+      ],
+      "raw_topic_matches": [],
+      "post_validation": "Quy \u0111\u1ecbnh hi\u1ec7n h\u00e0nh",
+      "post_normalization": "Quy \u0111\u1ecbnh hi\u1ec7n h\u00e0nh",
+      "final_locals": {
+        "text": "Quy \u0111\u1ecbnh hi\u1ec7n h\u00e0nh",
+        "parts": [
+          "Quy \u0111\u1ecbnh hi\u1ec7n h\u00e0nh"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "Quy \u0111\u1ecbnh hi\u1ec7n h\u00e0nh"
+        ],
+        "dates": [
+          "hi\u1ec7n h\u00e0nh"
+        ],
+        "invalid_date": false,
+        "clarification": null,
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh hi\u1ec7n h\u00e0nh",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "quy \u0111\u1ecbnh hi\u1ec7n h\u00e0nh"
+        ]
+      },
+      "plan": {
+        "original": "Quy \u0111\u1ecbnh hi\u1ec7n h\u00e0nh",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [
+          "hi\u1ec7n h\u00e0nh"
+        ],
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh hi\u1ec7n h\u00e0nh",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "input": "Quy \u0111\u1ecbnh hi\u1ec7n h\u00e0nh",
+      "id": "relative_current",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "NO_MATCH",
+        "plan": {
+          "original": "Quy \u0111\u1ecbnh hi\u1ec7n h\u00e0nh",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [
+            "hi\u1ec7n h\u00e0nh"
+          ],
+          "subqueries": [
+            {
+              "text": "Quy \u0111\u1ecbnh hi\u1ec7n h\u00e0nh",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": null
+        },
+        "retrieval_calls": 1,
+        "handoff_status": "NO_MATCH"
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        63,
+        64,
+        67,
+        68,
+        71,
+        72,
+        74,
+        75,
+        76,
+        77,
+        79,
+        80,
+        82,
+        83,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "post_validation": "\u200b",
+      "post_normalization": "\u200b",
+      "final_locals": {
+        "text": "\u200b",
+        "parts": [
+          "\u200b"
+        ],
+        "prefix": null,
+        "topic": "",
+        "quote_only": false,
+        "queries": [
+          "\u200b"
+        ],
+        "dates": [],
+        "invalid_date": false,
+        "clarification": "B\u1ea1n c\u1ea7n tra c\u1ee9u quy \u0111\u1ecbnh ho\u1eb7c t\u00ecnh hu\u1ed1ng c\u1ee5 th\u1ec3 n\u00e0o?",
+        "subqueries": [
+          {
+            "text": "\u200b",
+            "purpose": "question_part"
+          }
+        ],
+        "seen": [
+          "\u200b"
+        ]
+      },
+      "plan": {
+        "original": "\u200b",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "\u200b",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": "B\u1ea1n c\u1ea7n tra c\u1ee9u quy \u0111\u1ecbnh ho\u1eb7c t\u00ecnh hu\u1ed1ng c\u1ee5 th\u1ec3 n\u00e0o?"
+      },
+      "input": "\u200b",
+      "id": "zero_width",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "status": "CLARIFICATION_REQUIRED",
+        "plan": {
+          "original": "\u200b",
+          "intent": "legal_question",
+          "domain": "unknown",
+          "temporal_scope": [],
+          "subqueries": [
+            {
+              "text": "\u200b",
+              "purpose": "question_part"
+            }
+          ],
+          "clarification": "B\u1ea1n c\u1ea7n tra c\u1ee9u quy \u0111\u1ecbnh ho\u1eb7c t\u00ecnh hu\u1ed1ng c\u1ee5 th\u1ec3 n\u00e0o?"
+        },
+        "retrieval_calls": 0,
+        "handoff_status": null
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        34
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "final_locals": {},
+      "exception_type": "QueryInputError",
+      "error_code": "QUERY_INPUT_LENGTH",
+      "input": "",
+      "id": "empty",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "exception_type": "QueryInputError",
+        "error_code": "QUERY_INPUT_LENGTH",
+        "retrieval_calls": 0
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        37,
+        38,
+        39
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "post_validation": " \t\n\r",
+      "post_normalization": "",
+      "final_locals": {
+        "text": ""
+      },
+      "exception_type": "QueryInputError",
+      "error_code": "QUERY_INPUT_EMPTY",
+      "input": " \t\n\r",
+      "id": "whitespace",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "exception_type": "QueryInputError",
+        "error_code": "QUERY_INPUT_EMPTY",
+        "retrieval_calls": 0
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        32
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "final_locals": {},
+      "exception_type": "QueryInputError",
+      "error_code": "QUERY_INPUT_TYPE",
+      "input": null,
+      "id": "non_string",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "exception_type": "QueryInputError",
+        "error_code": "QUERY_INPUT_TYPE",
+        "retrieval_calls": 0
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        34
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "final_locals": {},
+      "exception_type": "QueryInputError",
+      "error_code": "QUERY_INPUT_LENGTH",
+      "input": {
+        "construction": "'x' * 10001",
+        "observed_length": 10001
+      },
+      "id": "length",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "exception_type": "QueryInputError",
+        "error_code": "QUERY_INPUT_LENGTH",
+        "retrieval_calls": 0
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        36
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "final_locals": {},
+      "exception_type": "QueryInputError",
+      "error_code": "QUERY_INPUT_CHARACTER",
+      "input": "ngh\u1ec9 ph\u00e9p\u0000",
+      "id": "control",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "exception_type": "QueryInputError",
+        "error_code": "QUERY_INPUT_CHARACTER",
+        "retrieval_calls": 0
+      }
+    },
+    {
+      "label": "OBSERVED",
+      "visited_lines": [
+        31,
+        33,
+        35,
+        36
+      ],
+      "raw_temporal_matches": [],
+      "raw_topic_matches": [],
+      "final_locals": {},
+      "exception_type": "QueryInputError",
+      "error_code": "QUERY_INPUT_CHARACTER",
+      "input": "ngh\u1ec9 ph\u00e9p\ud800",
+      "id": "surrogate",
+      "graph": {
+        "label": "OBSERVED_WITH_FAKE_RETRIEVAL",
+        "exception_type": "QueryInputError",
+        "error_code": "QUERY_INPUT_CHARACTER",
+        "retrieval_calls": 0
+      }
+    }
+  ],
+  "visited_understand_lines": [
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    67,
+    68,
+    69,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    79,
+    80,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95
+  ],
+  "schema_probes": {
+    "missing_clarification": {
+      "status": "REJECTED",
+      "errors": [
+        {
+          "type": "missing",
+          "loc": [
+            "clarification"
+          ]
+        }
+      ]
+    },
+    "extra_ignored": {
+      "status": "ACCEPTED",
+      "output": {
+        "original": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+        "intent": "quote_lookup",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "\u0111\u1ed1i tho\u1ea1i",
+            "purpose": "lookup"
+          }
+        ],
+        "clarification": null
+      }
+    },
+    "unsupported_intent": {
+      "status": "REJECTED",
+      "errors": [
+        {
+          "type": "literal_error",
+          "loc": [
+            "intent"
+          ]
+        }
+      ]
+    },
+    "empty_subqueries": {
+      "status": "REJECTED",
+      "errors": [
+        {
+          "type": "too_short",
+          "loc": [
+            "subqueries"
+          ]
+        }
+      ]
+    },
+    "schema_accepts_invalid_date_string": {
+      "status": "ACCEPTED",
+      "output": {
+        "original": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+        "intent": "quote_lookup",
+        "domain": "unknown",
+        "temporal_scope": [
+          "31/02/2024"
+        ],
+        "subqueries": [
+          {
+            "text": "\u0111\u1ed1i tho\u1ea1i",
+            "purpose": "lookup"
+          }
+        ],
+        "clarification": null
+      }
+    },
+    "subquery_whitespace": {
+      "text": " ",
+      "purpose": "topic"
+    }
+  }
+}

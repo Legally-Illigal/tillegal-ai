@@ -1,0 +1,95 @@
+{
+  "blocks": [
+    {
+      "file": "05_INTEGRATION_GUIDE.md",
+      "block": 0,
+      "status": "SYNTAX_PASS",
+      "executed": true
+    },
+    {
+      "file": "05_INTEGRATION_GUIDE.md",
+      "block": 1,
+      "status": "SYNTAX_PASS",
+      "executed": false
+    },
+    {
+      "file": "05_INTEGRATION_GUIDE.md",
+      "block": 2,
+      "status": "SYNTAX_PASS",
+      "executed": false
+    },
+    {
+      "file": "05_INTEGRATION_GUIDE.md",
+      "block": 3,
+      "status": "SYNTAX_PASS",
+      "executed": false
+    }
+  ],
+  "offline_example_result": {
+    "plan": {
+      "original": "Điều kiện để hợp đồng dân sự có hiệu lực là gì?",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "Điều kiện để hợp đồng dân sự có hiệu lực là gì",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "deterministic",
+      "analysis_model": null,
+      "facts": [],
+      "issues": [],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [],
+      "search_objectives": [],
+      "planning_warnings": []
+    },
+    "requests": [
+      {
+        "query": "Điều kiện để hợp đồng dân sự có hiệu lực là gì",
+        "mode": "bm25",
+        "top_k": 3,
+        "as_of_date": "2026-11-23",
+        "allowed_usage_policies": [
+          "EXPERIMENTAL_ONLY"
+        ]
+      }
+    ],
+    "responses": [
+      {
+        "schema_version": "1",
+        "request_id": "a7c76c97-a3b5-4e8e-b2b0-80adb98c436e",
+        "query": "Điều kiện để hợp đồng dân sự có hiệu lực là gì",
+        "query_used": "Điều kiện để hợp đồng dân sự có hiệu lực là gì",
+        "mode": "bm25",
+        "top_k": 3,
+        "as_of_date": "2026-11-23",
+        "allowed_usage_policies": [
+          "EXPERIMENTAL_ONLY"
+        ],
+        "selected_index_name": "controlled-fixture",
+        "index": null,
+        "status": "NO_MATCH",
+        "evidence": [],
+        "warnings": [],
+        "error": null,
+        "retrieved_at": "2026-11-23T12:15:57.507228Z",
+        "consistency": "BEST_EFFORT"
+      }
+    ],
+    "status": "COMPLETED",
+    "completeness": "COMPLETE",
+    "evidence": [],
+    "warnings": [
+      "NO_MATCH:0"
+    ],
+    "errors": [],
+    "skipped_subqueries": [],
+    "executed_searches": 1
+  },
+  "new_network_calls": 0
+}

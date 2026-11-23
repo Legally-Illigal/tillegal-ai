@@ -1,0 +1,38 @@
+[
+  {
+    "command": ".\\.venv\\Scripts\\python.exe -m ruff check --fix --no-cache src/applications/tillegal/agents/query src/applications/tillegal/agents/search scripts/validate_query_semantics.py scripts/evaluate_query_relevance.py tests/unit/applications/tillegal/test_semantic_correctness.py tests/unit/applications/tillegal/test_relevance_labels.py tests/unit/applications/tillegal/test_query_hardening.py tests/unit/applications/tillegal/test_query_search_semantic.py",
+    "status": "PASS",
+    "exit_code": 0,
+    "output": "All checks passed!\n"
+  },
+  {
+    "command": ".\\.venv\\Scripts\\python.exe -m ruff format src/applications/tillegal/agents/query src/applications/tillegal/agents/search scripts/validate_query_semantics.py scripts/evaluate_query_relevance.py tests/unit/applications/tillegal/test_semantic_correctness.py tests/unit/applications/tillegal/test_relevance_labels.py tests/unit/applications/tillegal/test_query_hardening.py tests/unit/applications/tillegal/test_query_search_semantic.py",
+    "status": "PASS",
+    "exit_code": 0,
+    "output": "17 files left unchanged\n"
+  },
+  {
+    "command": ".\\.venv\\Scripts\\python.exe -m pytest tests/unit/applications/tillegal tests/graph/test_query_search_workflow.py -q -p no:cacheprovider -o faulthandler_timeout=30",
+    "status": "PASS",
+    "exit_code": 0,
+    "output": "........................................................................ [ 12%]\n........................................................................ [ 25%]\n........................................................................ [ 38%]\n........................................................................ [ 50%]\n........................................................................ [ 63%]\n........................................................................ [ 76%]\n........................................................................ [ 88%]\n................................................................         [100%]\n568 passed in 11.94s\n"
+  },
+  {
+    "command": ".\\.venv\\Scripts\\python.exe -m pytest -q -p no:cacheprovider -o faulthandler_timeout=30",
+    "status": "PASS",
+    "exit_code": 0,
+    "output": "........................................................................ [ 10%]\n........................................................................ [ 21%]\n........................................................................ [ 32%]\n........................................................................ [ 43%]\n........................................................................ [ 54%]\n........................................................................ [ 65%]\n........................................................................ [ 76%]\n........................................................................ [ 87%]\n........................................................................ [ 98%]\n.........                                                                [100%]\n657 passed in 14.25s\n"
+  },
+  {
+    "command": ".\\.venv\\Scripts\\python.exe -m ruff check --no-cache src/applications/tillegal/agents/query src/applications/tillegal/agents/search scripts/validate_query_semantics.py scripts/evaluate_query_relevance.py tests/unit/applications/tillegal/test_semantic_correctness.py tests/unit/applications/tillegal/test_relevance_labels.py tests/unit/applications/tillegal/test_query_hardening.py tests/unit/applications/tillegal/test_query_search_semantic.py",
+    "status": "PASS",
+    "exit_code": 0,
+    "output": "All checks passed!\n"
+  },
+  {
+    "command": ".\\.venv\\Scripts\\python.exe -m ruff format --check src/applications/tillegal/agents/query src/applications/tillegal/agents/search scripts/validate_query_semantics.py scripts/evaluate_query_relevance.py tests/unit/applications/tillegal/test_semantic_correctness.py tests/unit/applications/tillegal/test_relevance_labels.py tests/unit/applications/tillegal/test_query_hardening.py tests/unit/applications/tillegal/test_query_search_semantic.py",
+    "status": "PASS",
+    "exit_code": 0,
+    "output": "17 files already formatted\n"
+  }
+]

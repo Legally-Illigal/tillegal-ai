@@ -1,0 +1,1952 @@
+[
+  {
+    "run": "gemini-before.json",
+    "id": "Q001",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Điều kiện để hợp đồng dân sự có hiệu lực là gì?",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "Điều kiện có hiệu lực của hợp đồng dân sự",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [],
+      "issues": [
+        "Điều kiện có hiệu lực của hợp đồng dân sự"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-before.json",
+    "id": "Q004",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi ký hợp đồng lao động 2 năm, mới làm được 6 tháng nhưng muốn nghỉ việc. Tôi có phải báo trước không và có phải bồi thường không?",
+      "intent": "legal_question",
+      "domain": "labour",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "nghĩa vụ báo trước khi đơn phương chấm dứt hợp đồng lao động xác định thời hạn; tình huống người dùng: Tôi ký hợp đồng lao động 2 năm; mới làm được 6 tháng nhưng muốn nghỉ việc",
+          "purpose": "question_part"
+        },
+        {
+          "text": "bồi thường khi đơn phương chấm dứt hợp đồng lao động trái pháp luật chi phí đào tạo; tình huống người dùng: Tôi ký hợp đồng lao động 2 năm; mới làm được 6 tháng nhưng muốn nghỉ việc",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Tôi ký hợp đồng lao động 2 năm",
+          "source_quote": "Tôi ký hợp đồng lao động 2 năm"
+        },
+        {
+          "text": "mới làm được 6 tháng nhưng muốn nghỉ việc",
+          "source_quote": "mới làm được 6 tháng nhưng muốn nghỉ việc"
+        },
+        {
+          "text": "Tôi có phải báo trước không",
+          "source_quote": "Tôi có phải báo trước không"
+        },
+        {
+          "text": "có phải bồi thường không",
+          "source_quote": "có phải bồi thường không"
+        }
+      ],
+      "issues": [
+        "Nghĩa vụ báo trước khi người lao động đơn phương chấm dứt hợp đồng lao động xác định thời hạn",
+        "Nghĩa vụ bồi thường chi phí đào tạo và vi phạm thời hạn báo trước khi đơn phương chấm dứt hợp đồng lao động trái pháp luật"
+      ],
+      "missing_information": [
+        "Loại hợp đồng lao động có thỏa thuận gì đặc biệt không",
+        "Lý do cụ thể muốn nghỉ việc là gì",
+        "Có chi phí đào tạo hay thỏa thuận đền bù nào khác không"
+      ],
+      "citations": [],
+      "temporal_context": [
+        {
+          "text": "2 năm",
+          "start": 25,
+          "end": 30,
+          "role": "duration",
+          "iso_date": null,
+          "negated": false
+        },
+        {
+          "text": "6 tháng",
+          "start": 45,
+          "end": 52,
+          "role": "duration",
+          "iso_date": null,
+          "negated": false
+        }
+      ],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        },
+        {
+          "query_index": 1,
+          "issue_indices": [
+            1
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-before.json",
+    "id": "Q007",
+    "historical_status": "ERROR",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "ERROR",
+    "error_type": "QueryAnalysisError"
+  },
+  {
+    "run": "gemini-before.json",
+    "id": "Q010",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Mảnh đất nhà tôi đang sử dụng có được cấp giấy chứng nhận không?",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "Điều kiện cấp giấy chứng nhận quyền sử dụng đất",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Mảnh đất nhà tôi đang sử dụng có được cấp giấy chứng nhận không?",
+          "source_quote": "Mảnh đất nhà tôi đang sử dụng có được cấp giấy chứng nhận không?"
+        }
+      ],
+      "issues": [
+        "Điều kiện cấp giấy chứng nhận quyền sử dụng đất"
+      ],
+      "missing_information": [
+        "Thời điểm bắt đầu sử dụng đất",
+        "Nguồn gốc sử dụng đất",
+        "Tình trạng tranh chấp đất đai"
+      ],
+      "citations": [],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-before.json",
+    "id": "Q016",
+    "historical_status": "ERROR",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "ERROR",
+    "error_type": "QueryAnalysisError"
+  },
+  {
+    "run": "gemini-before.json",
+    "id": "Q019",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Việc mua bán đất của gia đình diễn ra năm 2010, tôi cần tra cứu điều kiện có hiệu lực tại thời điểm đó, không phải hiện nay.",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [
+        "2010",
+        "hiện nay",
+        "năm 2010",
+        "thời điểm đó"
+      ],
+      "subqueries": [
+        {
+          "text": "điều kiện có hiệu lực giao dịch mua bán đất năm 2010; tình huống người dùng: Việc mua bán đất của gia đình diễn ra năm 2010",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Việc mua bán đất của gia đình diễn ra năm 2010",
+          "source_quote": "Việc mua bán đất của gia đình diễn ra năm 2010"
+        }
+      ],
+      "issues": [
+        "Điều kiện có hiệu lực của giao dịch mua bán đất năm 2010"
+      ],
+      "missing_information": [
+        "Loại giấy tờ, chủ thể tham gia giao dịch, và hình thức của hợp đồng mua bán đất năm 2010 là gì?"
+      ],
+      "citations": [],
+      "temporal_context": [
+        {
+          "text": "2010",
+          "start": 42,
+          "end": 46,
+          "role": "event_date",
+          "iso_date": null,
+          "negated": false
+        },
+        {
+          "text": "thời điểm đó",
+          "start": 90,
+          "end": 102,
+          "role": "historical_reference",
+          "iso_date": null,
+          "negated": false
+        },
+        {
+          "text": "hiện nay",
+          "start": 115,
+          "end": 123,
+          "role": "current_reference",
+          "iso_date": null,
+          "negated": true
+        }
+      ],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-before.json",
+    "id": "Q025",
+    "historical_status": "ERROR",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "ERROR",
+    "error_type": "QueryAnalysisError"
+  },
+  {
+    "run": "gemini-before.json",
+    "id": "Q028",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Trong trường hợp nào người lao động được nghỉ việc không phải báo trước?",
+      "intent": "legal_question",
+      "domain": "labour",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "người lao động đơn phương chấm dứt hợp đồng lao động không cần báo trước",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [],
+      "issues": [
+        "Các trường hợp người lao động được nghỉ việc mà không phải báo trước"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-before.json",
+    "id": "Q031",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi làm ở xưởng may, hợp đồng lao động 2 năm, đã làm 6 tháng. Tôi muốn nghỉ vì chuyển chỗ ở, công ty nói phải đền toàn bộ lương đã nhận. Tôi chưa ký thỏa thuận đào tạo. Tôi muốn tìm quy định về báo trước và trách nhiệm bồi thường, chưa cần bạn kết luận tôi đúng hay sai.",
+      "intent": "legal_question",
+      "domain": "labour",
+      "temporal_scope": [
+        "2 năm",
+        "6 tháng"
+      ],
+      "subqueries": [
+        {
+          "text": "thời hạn báo trước khi người lao động đơn phương chấm dứt hợp đồng lao động theo Bộ luật Lao động; tình huống người dùng: Tôi làm ở xưởng may, hợp đồng lao động 2 năm, đã làm 6 tháng.; Tôi muốn nghỉ vì chuyển chỗ ở, công ty nói phải đền toàn bộ lương đã nhận.; Tôi chưa ký thỏa thuận đào tạo.",
+          "purpose": "question_part"
+        },
+        {
+          "text": "nghĩa vụ bồi thường khi đơn phương chấm dứt hợp đồng lao động và chi phí đào tạo; tình huống người dùng: Tôi làm ở xưởng may, hợp đồng lao động 2 năm, đã làm 6 tháng.; Tôi muốn nghỉ vì chuyển chỗ ở, công ty nói phải đền toàn bộ lương đã nhận.; Tôi chưa ký thỏa thuận đào tạo.",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Tôi làm ở xưởng may, hợp đồng lao động 2 năm, đã làm 6 tháng.",
+          "source_quote": "Tôi làm ở xưởng may, hợp đồng lao động 2 năm, đã làm 6 tháng."
+        },
+        {
+          "text": "Tôi muốn nghỉ vì chuyển chỗ ở, công ty nói phải đền toàn bộ lương đã nhận.",
+          "source_quote": "Tôi muốn nghỉ vì chuyển chỗ ở, công ty nói phải đền toàn bộ lương đã nhận."
+        },
+        {
+          "text": "Tôi chưa ký thỏa thuận đào tạo.",
+          "source_quote": "Tôi chưa ký thỏa thuận đào tạo."
+        }
+      ],
+      "issues": [
+        "Quy định về thời hạn báo trước khi người lao động đơn phương chấm dứt hợp đồng lao động",
+        "Trách nhiệm bồi thường chi phí đào tạo và nghĩa vụ tài chính khi người lao động đơn phương chấm dứt hợp đồng lao động trái pháp luật"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [
+        {
+          "text": "2 năm",
+          "start": 39,
+          "end": 44,
+          "role": "duration",
+          "iso_date": null,
+          "negated": false
+        },
+        {
+          "text": "6 tháng",
+          "start": 53,
+          "end": 60,
+          "role": "duration",
+          "iso_date": null,
+          "negated": false
+        }
+      ],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        },
+        {
+          "query_index": 1,
+          "issue_indices": [
+            1
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-before.json",
+    "id": "Q034",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi thích điện thoại màu xanh, hôm mua trời mưa và quán bên cạnh rất đông. Điện thoại mới mua bị lỗi màn hình. Tôi muốn đổi hàng thì tra cứu quy định nào?",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "quy định đổi trả hàng hàng hóa lỗi bảo hành; tình huống người dùng: Điện thoại mới mua bị lỗi màn hình.",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Điện thoại mới mua bị lỗi màn hình.",
+          "source_quote": "Điện thoại mới mua bị lỗi màn hình."
+        },
+        {
+          "text": "Tôi muốn đổi hàng thì tra cứu quy định nào?",
+          "source_quote": "Tôi muốn đổi hàng thì tra cứu quy định nào?"
+        }
+      ],
+      "issues": [
+        "Quy định về việc đổi hàng đối với điện thoại mới mua bị lỗi"
+      ],
+      "missing_information": [
+        "Loại hợp đồng mua bán là gì?",
+        "Người bán là doanh nghiệp, hộ kinh doanh hay cá nhân?",
+        "Sản phẩm có chính sách bảo hành hoặc đổi trả riêng của cửa hàng không?"
+      ],
+      "citations": [],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-before.json",
+    "id": "Q037",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi cho bạn vay 50 triệu đồng, thời hạn 6 tháng, có giấy vay. Đến hạn bạn chưa trả thì đòi tiền thế nào?",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [
+        "6 tháng"
+      ],
+      "subqueries": [
+        {
+          "text": "đòi nợ hợp đồng vay tài sản khi đến hạn trả; tình huống người dùng: cho bạn vay 50 triệu đồng; thời hạn 6 tháng; có giấy vay; Đến hạn bạn chưa trả",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "cho bạn vay 50 triệu đồng",
+          "source_quote": "cho bạn vay 50 triệu đồng"
+        },
+        {
+          "text": "thời hạn 6 tháng",
+          "source_quote": "thời hạn 6 tháng"
+        },
+        {
+          "text": "có giấy vay",
+          "source_quote": "có giấy vay"
+        },
+        {
+          "text": "Đến hạn bạn chưa trả",
+          "source_quote": "Đến hạn bạn chưa trả"
+        }
+      ],
+      "issues": [
+        "Thủ tục và phương thức đòi tiền khi đến hạn trả nợ hợp đồng vay tài sản"
+      ],
+      "missing_information": [
+        "Hợp đồng vay có thỏa thuận về lãi suất hay phạt vi phạm không?",
+        "Các bên đã tiến hành thương lượng hoặc hòa giải chưa?"
+      ],
+      "citations": [],
+      "temporal_context": [
+        {
+          "text": "6 tháng",
+          "start": 40,
+          "end": 47,
+          "role": "duration",
+          "iso_date": null,
+          "negated": false
+        }
+      ],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-before.json",
+    "id": "Q040",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi cho A vay tiền, B ký bảo lãnh, A không trả. Tôi có thể yêu cầu A và B thực hiện nghĩa vụ gì?",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "nghĩa vụ trả nợ của bên vay tài sản hợp đồng vay tài sản; tình huống người dùng: Tôi cho A vay tiền; B ký bảo lãnh; A không trả",
+          "purpose": "question_part"
+        },
+        {
+          "text": "trách nhiệm của bên bảo lãnh khi bên được bảo lãnh không thực hiện nghĩa vụ; tình huống người dùng: Tôi cho A vay tiền; B ký bảo lãnh; A không trả",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Tôi cho A vay tiền",
+          "source_quote": "Tôi cho A vay tiền"
+        },
+        {
+          "text": "B ký bảo lãnh",
+          "source_quote": "B ký bảo lãnh"
+        },
+        {
+          "text": "A không trả",
+          "source_quote": "A không trả"
+        }
+      ],
+      "issues": [
+        "Nghĩa vụ trả nợ của bên vay khi đến hạn",
+        "Trách nhiệm thực hiện nghĩa vụ bảo lãnh của bên bảo lãnh"
+      ],
+      "missing_information": [
+        "Hợp đồng vay tiền có thỏa thuận về thời hạn trả nợ hay lãi suất không?",
+        "Hợp đồng bảo lãnh được lập thành văn bản riêng hay trong hợp đồng vay và có thỏa thuận bảo lãnh thay thế hay liên đới không?"
+      ],
+      "citations": [],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        },
+        {
+          "query_index": 1,
+          "issue_indices": [
+            1
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-before.json",
+    "id": "Q043",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi ký hợp đồng lao động xác định thời hạn 24 tháng, muốn nghỉ vì chuyển nhà và không có thỏa thuận đào tạo. Cần tìm quy định báo trước và bồi thường nào?",
+      "intent": "legal_question",
+      "domain": "labour",
+      "temporal_scope": [
+        "24 tháng"
+      ],
+      "subqueries": [
+        {
+          "text": "người lao động đơn phương chấm dứt hợp đồng lao động thời hạn báo trước hợp đồng lao động xác định thời hạn; tình huống người dùng: Tôi ký hợp đồng lao động xác định thời hạn 24 tháng; muốn nghỉ vì chuyển nhà; không có thỏa thuận đào tạo; muốn nghỉ vì chuyển nhà và không có thỏa thuận đào tạo",
+          "purpose": "question_part"
+        },
+        {
+          "text": "bồi thường chi phí đào tạo khi chấm dứt hợp đồng lao động trái pháp luật hoặc không có thỏa thuận đào tạo; tình huống người dùng: Tôi ký hợp đồng lao động xác định thời hạn 24 tháng; muốn nghỉ vì chuyển nhà; muốn nghỉ vì chuyển nhà và không có thỏa thuận đào tạo",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Tôi ký hợp đồng lao động xác định thời hạn 24 tháng",
+          "source_quote": "Tôi ký hợp đồng lao động xác định thời hạn 24 tháng"
+        },
+        {
+          "text": "muốn nghỉ vì chuyển nhà",
+          "source_quote": "muốn nghỉ vì chuyển nhà"
+        },
+        {
+          "text": "không có thỏa thuận đào tạo",
+          "source_quote": "không có thỏa thuận đào tạo"
+        }
+      ],
+      "issues": [
+        "Quy định về thời hạn báo trước khi người lao động đơn phương chấm dứt hợp đồng lao động",
+        "Quy định về nghĩa vụ bồi thường chi phí đào tạo khi chấm dứt hợp đồng lao động"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [
+        {
+          "text": "24 tháng",
+          "start": 43,
+          "end": 51,
+          "role": "duration",
+          "iso_date": null,
+          "negated": false
+        }
+      ],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        },
+        {
+          "query_index": 1,
+          "issue_indices": [
+            1
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q001",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Điều kiện để hợp đồng dân sự có hiệu lực là gì?",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "điều kiện có hiệu lực của hợp đồng dân sự",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [],
+      "issues": [
+        "Điều kiện có hiệu lực của hợp đồng dân sự"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q002",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi mua một chiếc máy giặt mới nhưng bị lỗi, tôi có quyền yêu cầu đổi hàng không?",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "mua máy giặt mới bị lỗi quyền yêu cầu đổi hàng; tình huống người dùng: Tôi mua một chiếc máy giặt mới nhưng bị lỗi",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Tôi mua một chiếc máy giặt mới nhưng bị lỗi",
+          "source_quote": "Tôi mua một chiếc máy giặt mới nhưng bị lỗi"
+        }
+      ],
+      "issues": [
+        "Quyền yêu cầu đổi hàng khi mua máy giặt mới bị lỗi"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q004",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi ký hợp đồng lao động 2 năm, mới làm được 6 tháng nhưng muốn nghỉ việc. Tôi có phải báo trước không và có phải bồi thường không?",
+      "intent": "legal_question",
+      "domain": "labour",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "người lao động đơn phương chấm dứt hợp đồng lao động nghĩa vụ báo trước; tình huống người dùng: Tôi ký hợp đồng lao động 2 năm; mới làm được 6 tháng nhưng muốn nghỉ việc",
+          "purpose": "question_part"
+        },
+        {
+          "text": "người lao động đơn phương chấm dứt hợp đồng lao động trái pháp luật bồi thường; tình huống người dùng: Tôi ký hợp đồng lao động 2 năm; mới làm được 6 tháng nhưng muốn nghỉ việc",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Tôi ký hợp đồng lao động 2 năm",
+          "source_quote": "Tôi ký hợp đồng lao động 2 năm"
+        },
+        {
+          "text": "mới làm được 6 tháng nhưng muốn nghỉ việc",
+          "source_quote": "mới làm được 6 tháng nhưng muốn nghỉ việc"
+        }
+      ],
+      "issues": [
+        "Nghĩa vụ báo trước khi người lao động đơn phương chấm dứt hợp đồng lao động",
+        "Nghĩa vụ bồi thường khi người lao động đơn phương chấm dứt hợp đồng lao động trái pháp luật"
+      ],
+      "missing_information": [
+        "Bạn muốn nghỉ việc vì lý do gì?",
+        "Có thỏa thuận đào tạo hoặc hoàn trả chi phí đào tạo không?"
+      ],
+      "citations": [],
+      "temporal_context": [
+        {
+          "text": "2 năm",
+          "start": 25,
+          "end": 30,
+          "role": "duration",
+          "iso_date": null,
+          "negated": false
+        },
+        {
+          "text": "6 tháng",
+          "start": 45,
+          "end": 52,
+          "role": "duration",
+          "iso_date": null,
+          "negated": false
+        }
+      ],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        },
+        {
+          "query_index": 1,
+          "issue_indices": [
+            1
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q005",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi muốn ly hôn, việc nuôi con và chia tài sản giải quyết thế nào?",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "giải quyết ly hôn quyền nuôi con chia tài sản",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Tôi muốn ly hôn, việc nuôi con và chia tài sản giải quyết thế nào?",
+          "source_quote": "Tôi muốn ly hôn, việc nuôi con và chia tài sản giải quyết thế nào?"
+        }
+      ],
+      "issues": [
+        "Giải quyết ly hôn, quyền nuôi con và chia tài sản khi ly hôn"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q007",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi đặt điện thoại trên mạng, đã chuyển tiền nhưng người bán không giao hàng và không trả lời tin nhắn. Tôi nên tìm hiểu quyền gì?",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "quyền của người mua hàng qua mạng đã chuyển tiền nhưng không nhận được hàng; tình huống người dùng: Tôi đặt điện thoại trên mạng, đã chuyển tiền nhưng người bán không giao hàng và không trả lời tin nhắn.",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Tôi đặt điện thoại trên mạng, đã chuyển tiền nhưng người bán không giao hàng và không trả lời tin nhắn.",
+          "source_quote": "Tôi đặt điện thoại trên mạng, đã chuyển tiền nhưng người bán không giao hàng và không trả lời tin nhắn."
+        }
+      ],
+      "issues": [
+        "Quyền và biện pháp bảo vệ khi mua hàng trên mạng đã thanh toán nhưng người bán không giao hàng"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q008",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Công ty giữ bản chính bằng đại học của tôi và nói nghỉ việc thì không trả. Tôi cần tra cứu gì?",
+      "intent": "legal_question",
+      "domain": "labour",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "người sử dụng lao động giữ bản chính văn bằng chứng chỉ của người lao động; tình huống người dùng: Công ty giữ bản chính bằng đại học của tôi và nói nghỉ việc thì không trả.",
+          "purpose": "question_part"
+        },
+        {
+          "text": "trả lại bản chính văn bằng chứng chỉ khi chấm dứt hợp đồng lao động; tình huống người dùng: Công ty giữ bản chính bằng đại học của tôi và nói nghỉ việc thì không trả.",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Công ty giữ bản chính bằng đại học của tôi và nói nghỉ việc thì không trả.",
+          "source_quote": "Công ty giữ bản chính bằng đại học của tôi và nói nghỉ việc thì không trả."
+        }
+      ],
+      "issues": [
+        "Hành vi giữ bản chính văn bằng của người lao động khi giao kết, thực hiện hợp đồng lao động",
+        "Nghĩa vụ trả lại giấy tờ, tài liệu khi người lao động chấm dứt hợp đồng lao động"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        },
+        {
+          "query_index": 1,
+          "issue_indices": [
+            1
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q010",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Mảnh đất nhà tôi đang sử dụng có được cấp giấy chứng nhận không?",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "điều kiện cấp giấy chứng nhận quyền sử dụng đất",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Mảnh đất nhà tôi đang sử dụng có được cấp giấy chứng nhận không?",
+          "source_quote": "Mảnh đất nhà tôi đang sử dụng có được cấp giấy chứng nhận không?"
+        }
+      ],
+      "issues": [
+        "Điều kiện cấp giấy chứng nhận quyền sử dụng đất"
+      ],
+      "missing_information": [
+        "Thông tin về nguồn gốc sử dụng đất",
+        "Thời điểm bắt đầu sử dụng đất",
+        "Tình trạng tranh chấp của thửa đất",
+        "Sự phù hợp với quy hoạch sử dụng đất"
+      ],
+      "citations": [],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q016",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi ký hợp đồng lao động 12 tháng vào ngày 15/03/2024, muốn nghỉ ngày 01/09/2024. Cần tra cứu quy định báo trước nào áp dụng?",
+      "intent": "legal_question",
+      "domain": "labour",
+      "temporal_scope": [
+        "15/03/2024",
+        "01/09/2024"
+      ],
+      "subqueries": [
+        {
+          "text": "thời hạn báo trước khi đơn phương chấm dứt hợp đồng lao động xác định thời hạn; tình huống người dùng: Tôi ký hợp đồng lao động 12 tháng vào ngày 15/03/2024; muốn nghỉ ngày 01/09/2024",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Tôi ký hợp đồng lao động 12 tháng vào ngày 15/03/2024",
+          "source_quote": "Tôi ký hợp đồng lao động 12 tháng vào ngày 15/03/2024"
+        },
+        {
+          "text": "muốn nghỉ ngày 01/09/2024",
+          "source_quote": "muốn nghỉ ngày 01/09/2024"
+        }
+      ],
+      "issues": [
+        "Quy định thời hạn báo trước khi người lao động đơn phương chấm dứt hợp đồng lao động xác định thời hạn"
+      ],
+      "missing_information": [
+        "Bạn muốn nghỉ việc vì lý do gì?",
+        "Có thỏa thuận đào tạo hoặc hoàn trả chi phí đào tạo không?"
+      ],
+      "citations": [],
+      "temporal_context": [
+        {
+          "text": "12 tháng",
+          "start": 25,
+          "end": 33,
+          "role": "duration",
+          "iso_date": null,
+          "negated": false
+        },
+        {
+          "text": "15/03/2024",
+          "start": 43,
+          "end": 53,
+          "role": "event_date",
+          "iso_date": "2024-03-15",
+          "negated": false
+        },
+        {
+          "text": "01/09/2024",
+          "start": 70,
+          "end": 80,
+          "role": "event_date",
+          "iso_date": "2024-09-01",
+          "negated": false
+        }
+      ],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q017",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Hợp đồng vay của tôi ký ngày 01/06/2022, đến hạn ngày 01/06/2023 nhưng chưa trả. Tôi muốn tra cứu thời hiệu khởi kiện.",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [
+        "01/06/2022",
+        "01/06/2023"
+      ],
+      "subqueries": [
+        {
+          "text": "thời hiệu khởi kiện hợp đồng vay tài sản Bộ luật Dân sự; tình huống người dùng: Hợp đồng vay của tôi ký ngày 01/06/2022, đến hạn ngày 01/06/2023 nhưng chưa trả.",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Hợp đồng vay của tôi ký ngày 01/06/2022, đến hạn ngày 01/06/2023 nhưng chưa trả.",
+          "source_quote": "Hợp đồng vay của tôi ký ngày 01/06/2022, đến hạn ngày 01/06/2023 nhưng chưa trả."
+        }
+      ],
+      "issues": [
+        "Thời hiệu khởi kiện hợp đồng vay tài sản"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [
+        {
+          "text": "01/06/2022",
+          "start": 29,
+          "end": 39,
+          "role": "event_date",
+          "iso_date": "2022-06-01",
+          "negated": false
+        },
+        {
+          "text": "01/06/2023",
+          "start": 54,
+          "end": 64,
+          "role": "event_date",
+          "iso_date": "2023-06-01",
+          "negated": false
+        }
+      ],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q019",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Việc mua bán đất của gia đình diễn ra năm 2010, tôi cần tra cứu điều kiện có hiệu lực tại thời điểm đó, không phải hiện nay.",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [
+        "2010",
+        "hiện nay",
+        "năm 2010"
+      ],
+      "subqueries": [
+        {
+          "text": "điều kiện có hiệu lực của hợp đồng chuyển nhượng quyền sử dụng đất năm 2010; tình huống người dùng: Việc mua bán đất của gia đình diễn ra năm 2010",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Việc mua bán đất của gia đình diễn ra năm 2010",
+          "source_quote": "Việc mua bán đất của gia đình diễn ra năm 2010"
+        }
+      ],
+      "issues": [
+        "Điều kiện có hiệu lực của việc mua bán đất năm 2010"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [
+        {
+          "text": "2010",
+          "start": 42,
+          "end": 46,
+          "role": "event_date",
+          "iso_date": null,
+          "negated": false
+        },
+        {
+          "text": "thời điểm đó",
+          "start": 90,
+          "end": 102,
+          "role": "historical_reference",
+          "iso_date": null,
+          "negated": false
+        },
+        {
+          "text": "hiện nay",
+          "start": 115,
+          "end": 123,
+          "role": "current_reference",
+          "iso_date": null,
+          "negated": true
+        }
+      ],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q025",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Một bài viết nói Điều 35 Bộ luật Lao động 45/2019/QH14 cho nghỉ ngay mọi trường hợp. Tôi muốn kiểm tra trích dẫn này có đúng không.",
+      "intent": "legal_question",
+      "domain": "labour",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "Điều 35 Bộ luật Lao động 2019 quyền đơn phương chấm dứt hợp đồng lao động của người lao động thời hạn báo trước 45/2019/QH14",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Điều 35 Bộ luật Lao động 45/2019/QH14 cho nghỉ ngay mọi trường hợp",
+          "source_quote": "Điều 35 Bộ luật Lao động 45/2019/QH14 cho nghỉ ngay mọi trường hợp"
+        }
+      ],
+      "issues": [
+        "Quyền đơn phương chấm dứt hợp đồng lao động của người lao động theo Điều 35 Bộ luật Lao động 2019 và thời hạn báo trước"
+      ],
+      "missing_information": [],
+      "citations": [
+        {
+          "kind": "article",
+          "text": "Điều 35",
+          "start": 17,
+          "end": 24,
+          "source": "user_supplied_unverified"
+        },
+        {
+          "kind": "document",
+          "text": "45/2019/QH14",
+          "start": 42,
+          "end": 54,
+          "source": "user_supplied_unverified"
+        }
+      ],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q026",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Người bán viện dẫn Điều 117 Bộ luật Dân sự 91/2015/QH13 để nói hợp đồng miệng luôn vô hiệu. Tôi muốn tra cứu nguồn để kiểm tra.",
+      "intent": "legal_question",
+      "domain": "labour",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "Điều 117 Bộ luật Dân sự 2015 điều kiện có hiệu lực của giao dịch dân sự hình thức hợp đồng 91/2015/QH13",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Người bán viện dẫn Điều 117 Bộ luật Dân sự 91/2015/QH13 để nói hợp đồng miệng luôn vô hiệu",
+          "source_quote": "Người bán viện dẫn Điều 117 Bộ luật Dân sự 91/2015/QH13 để nói hợp đồng miệng luôn vô hiệu"
+        }
+      ],
+      "issues": [
+        "Điều kiện có hiệu lực của giao dịch dân sự và hiệu lực của hợp đồng miệng theo Bộ luật Dân sự"
+      ],
+      "missing_information": [],
+      "citations": [
+        {
+          "kind": "article",
+          "text": "Điều 117",
+          "start": 19,
+          "end": 27,
+          "source": "user_supplied_unverified"
+        },
+        {
+          "kind": "document",
+          "text": "91/2015/QH13",
+          "start": 43,
+          "end": 55,
+          "source": "user_supplied_unverified"
+        }
+      ],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q028",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Trong trường hợp nào người lao động được nghỉ việc không phải báo trước?",
+      "intent": "legal_question",
+      "domain": "labour",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "người lao động được nghỉ việc không phải báo trước trường hợp nào",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [],
+      "issues": [
+        "Cac trường hợp người lao động được nghỉ việc không phải báo trước"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q031",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi làm ở xưởng may, hợp đồng lao động 2 năm, đã làm 6 tháng. Tôi muốn nghỉ vì chuyển chỗ ở, công ty nói phải đền toàn bộ lương đã nhận. Tôi chưa ký thỏa thuận đào tạo. Tôi muốn tìm quy định về báo trước và trách nhiệm bồi thường, chưa cần bạn kết luận tôi đúng hay sai.",
+      "intent": "legal_question",
+      "domain": "labour",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "quy định về thời hạn báo trước khi người lao động đơn phương chấm dứt hợp đồng lao động; tình huống người dùng: hợp đồng lao động 2 năm; đã làm 6 tháng; Tôi muốn nghỉ vì chuyển chỗ ở; công ty nói phải đền toàn bộ lương đã nhận; Tôi chưa ký thỏa thuận đào tạo; muốn nghỉ vì chuyển chỗ ở, công ty nói phải đền toàn bộ lương đã nhận",
+          "purpose": "question_part"
+        },
+        {
+          "text": "nghĩa vụ tài chính và trách nhiệm bồi thường khi chấm dứt hợp đồng lao động không có thỏa thuận đào tạo; tình huống người dùng: hợp đồng lao động 2 năm; đã làm 6 tháng; Tôi muốn nghỉ vì chuyển chỗ ở; công ty nói phải đền toàn bộ lương đã nhận; Tôi chưa ký thỏa thuận đào tạo; muốn nghỉ vì chuyển chỗ ở, công ty nói phải đền toàn bộ lương đã nhận",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "hợp đồng lao động 2 năm",
+          "source_quote": "hợp đồng lao động 2 năm"
+        },
+        {
+          "text": "đã làm 6 tháng",
+          "source_quote": "đã làm 6 tháng"
+        },
+        {
+          "text": "Tôi muốn nghỉ vì chuyển chỗ ở",
+          "source_quote": "Tôi muốn nghỉ vì chuyển chỗ ở"
+        },
+        {
+          "text": "công ty nói phải đền toàn bộ lương đã nhận",
+          "source_quote": "công ty nói phải đền toàn bộ lương đã nhận"
+        },
+        {
+          "text": "Tôi chưa ký thỏa thuận đào tạo",
+          "source_quote": "Tôi chưa ký thỏa thuận đào tạo"
+        }
+      ],
+      "issues": [
+        "Quy định về thời hạn báo trước khi người lao động đơn phương chấm dứt hợp đồng lao động",
+        "Trách nhiệm bồi thường chi phí đào tạo và nghĩa vụ tài chính khi người lao động chấm dứt hợp đồng lao động không có thỏa thuận đào tạo"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [
+        {
+          "text": "2 năm",
+          "start": 39,
+          "end": 44,
+          "role": "duration",
+          "iso_date": null,
+          "negated": false
+        },
+        {
+          "text": "6 tháng",
+          "start": 53,
+          "end": 60,
+          "role": "duration",
+          "iso_date": null,
+          "negated": false
+        }
+      ],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        },
+        {
+          "query_index": 1,
+          "issue_indices": [
+            1
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q034",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi thích điện thoại màu xanh, hôm mua trời mưa và quán bên cạnh rất đông. Điện thoại mới mua bị lỗi màn hình. Tôi muốn đổi hàng thì tra cứu quy định nào?",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "đổi hàng khi sản phẩm mới mua bị lỗi; tình huống người dùng: Điện thoại mới mua bị lỗi màn hình.",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Điện thoại mới mua bị lỗi màn hình.",
+          "source_quote": "Điện thoại mới mua bị lỗi màn hình."
+        }
+      ],
+      "issues": [
+        "Quy định về đổi hàng khi sản phẩm mới mua bị lỗi"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q037",
+    "historical_status": "ERROR",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "ERROR",
+    "error_type": "QueryAnalysisError"
+  },
+  {
+    "run": "gemini-after.json",
+    "id": "Q040",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi cho A vay tiền, B ký bảo lãnh, A không trả. Tôi có thể yêu cầu A và B thực hiện nghĩa vụ gì?",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "cho vay tiền bảo lãnh không trả nghĩa vụ của bên vay và bên bảo lãnh; tình huống người dùng: Tôi cho A vay tiền, B ký bảo lãnh, A không trả.",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Tôi cho A vay tiền, B ký bảo lãnh, A không trả.",
+          "source_quote": "Tôi cho A vay tiền, B ký bảo lãnh, A không trả."
+        }
+      ],
+      "issues": [
+        "Trách nhiệm trả nợ của bên vay và nghĩa vụ của bên bảo lãnh khi vi phạm nghĩa vụ trả nợ"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-final.json",
+    "id": "Q004",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi ký hợp đồng lao động 2 năm, mới làm được 6 tháng nhưng muốn nghỉ việc. Tôi có phải báo trước không và có phải bồi thường không?",
+      "intent": "legal_question",
+      "domain": "labour",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "người lao động đơn phương chấm dứt hợp đồng lao động thời hạn 2 năm phải báo trước bao nhiêu ngày; tình huống người dùng: Tôi ký hợp đồng lao động 2 năm; mới làm được 6 tháng nhưng muốn nghỉ việc",
+          "purpose": "question_part"
+        },
+        {
+          "text": "người lao động đơn phương chấm dứt hợp đồng lao động trái pháp luật phải bồi thường những gì; tình huống người dùng: Tôi ký hợp đồng lao động 2 năm; mới làm được 6 tháng nhưng muốn nghỉ việc",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Tôi ký hợp đồng lao động 2 năm",
+          "source_quote": "Tôi ký hợp đồng lao động 2 năm"
+        },
+        {
+          "text": "mới làm được 6 tháng nhưng muốn nghỉ việc",
+          "source_quote": "mới làm được 6 tháng nhưng muốn nghỉ việc"
+        }
+      ],
+      "issues": [
+        "Nghĩa vụ báo trước khi người lao động đơn phương chấm dứt hợp đồng lao động",
+        "Trách nhiệm bồi thường khi người lao động đơn phương chấm dứt hợp đồng lao động trái pháp luật"
+      ],
+      "missing_information": [
+        "Bạn muốn nghỉ việc vì lý do gì?",
+        "Có thỏa thuận đào tạo hoặc hoàn trả chi phí đào tạo không?"
+      ],
+      "citations": [],
+      "temporal_context": [
+        {
+          "text": "2 năm",
+          "start": 25,
+          "end": 30,
+          "role": "duration",
+          "iso_date": null,
+          "negated": false
+        },
+        {
+          "text": "6 tháng",
+          "start": 45,
+          "end": 52,
+          "role": "duration",
+          "iso_date": null,
+          "negated": false
+        }
+      ],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        },
+        {
+          "query_index": 1,
+          "issue_indices": [
+            1
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-final.json",
+    "id": "Q007",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi đặt điện thoại trên mạng, đã chuyển tiền nhưng người bán không giao hàng và không trả lời tin nhắn. Tôi nên tìm hiểu quyền gì?",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "quyền của người mua hàng trực tuyến khi chuyển tiền nhưng không nhận được hàng; tình huống người dùng: Tôi đặt điện thoại trên mạng, đã chuyển tiền nhưng người bán không giao hàng và không trả lời tin nhắn.",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Tôi đặt điện thoại trên mạng, đã chuyển tiền nhưng người bán không giao hàng và không trả lời tin nhắn.",
+          "source_quote": "Tôi đặt điện thoại trên mạng, đã chuyển tiền nhưng người bán không giao hàng và không trả lời tin nhắn."
+        }
+      ],
+      "issues": [
+        "Quyền và biện pháp bảo vệ người mua hàng trực tuyến khi người bán không giao hàng"
+      ],
+      "missing_information": [
+        "Người bán là cá nhân hay tổ chức/doanh nghiệp?",
+        "Trị giá của chiếc điện thoại là bao nhiêu?",
+        "Có thông tin gì về người bán như số điện thoại, địa chỉ hay tài khoản ngân hàng không?"
+      ],
+      "citations": [],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-final.json",
+    "id": "Q016",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi ký hợp đồng lao động 12 tháng vào ngày 15/03/2024, muốn nghỉ ngày 01/09/2024. Cần tra cứu quy định báo trước nào áp dụng?",
+      "intent": "legal_question",
+      "domain": "labour",
+      "temporal_scope": [
+        "15/03/2024",
+        "01/09/2024"
+      ],
+      "subqueries": [
+        {
+          "text": "quy định thời hạn báo trước khi người lao động đơn phương chấm dứt hợp đồng lao động theo Bộ luật Lao động; tình huống người dùng: Tôi ký hợp đồng lao động 12 tháng vào ngày 15/03/2024; muốn nghỉ ngày 01/09/2024",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Tôi ký hợp đồng lao động 12 tháng vào ngày 15/03/2024",
+          "source_quote": "Tôi ký hợp đồng lao động 12 tháng vào ngày 15/03/2024"
+        },
+        {
+          "text": "muốn nghỉ ngày 01/09/2024",
+          "source_quote": "muốn nghỉ ngày 01/09/2024"
+        }
+      ],
+      "issues": [
+        "Quy định thời hạn báo trước khi người lao động đơn phương chấm dứt hợp đồng lao động"
+      ],
+      "missing_information": [
+        "Bạn muốn nghỉ việc vì lý do gì?",
+        "Có thỏa thuận đào tạo hoặc hoàn trả chi phí đào tạo không?"
+      ],
+      "citations": [],
+      "temporal_context": [
+        {
+          "text": "12 tháng",
+          "start": 25,
+          "end": 33,
+          "role": "duration",
+          "iso_date": null,
+          "negated": false
+        },
+        {
+          "text": "15/03/2024",
+          "start": 43,
+          "end": 53,
+          "role": "event_date",
+          "iso_date": "2024-03-15",
+          "negated": false
+        },
+        {
+          "text": "01/09/2024",
+          "start": 70,
+          "end": 80,
+          "role": "event_date",
+          "iso_date": "2024-09-01",
+          "negated": false
+        }
+      ],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-final.json",
+    "id": "Q025",
+    "historical_status": "ERROR",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Một bài viết nói Điều 35 Bộ luật Lao động 45/2019/QH14 cho nghỉ ngay mọi trường hợp. Tôi muốn kiểm tra trích dẫn này có đúng không.",
+      "intent": "legal_question",
+      "domain": "labour",
+      "temporal_scope": [],
+      "subqueries": [
+        {
+          "text": "Điều 35 Bộ luật Lao động 2019 quyền đơn phương chấm dứt hợp đồng lao động của người lao động thời hạn báo trước 45/2019/QH14",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Điều 35 Bộ luật Lao động 45/2019/QH14 cho nghỉ ngay mọi trường hợp",
+          "source_quote": "Điều 35 Bộ luật Lao động 45/2019/QH14 cho nghỉ ngay mọi trường hợp"
+        }
+      ],
+      "issues": [
+        "Quy định về quyền đơn phương chấm dứt hợp đồng lao động của người lao động theo Điều 35 Bộ luật Lao động 2019"
+      ],
+      "missing_information": [],
+      "citations": [
+        {
+          "kind": "article",
+          "text": "Điều 35",
+          "start": 17,
+          "end": 24,
+          "source": "user_supplied_unverified"
+        },
+        {
+          "kind": "document",
+          "text": "45/2019/QH14",
+          "start": 42,
+          "end": 54,
+          "source": "user_supplied_unverified"
+        }
+      ],
+      "temporal_context": [],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": [
+        "MODEL_REFERENCE_RECLASSIFIED"
+      ]
+    }
+  },
+  {
+    "run": "gemini-final.json",
+    "id": "Q037",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi cho bạn vay 50 triệu đồng, thời hạn 6 tháng, có giấy vay. Đến hạn bạn chưa trả thì đòi tiền thế nào?",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [
+        "6 tháng"
+      ],
+      "subqueries": [
+        {
+          "text": "đòi nợ hợp đồng vay tài sản khi đến hạn; tình huống người dùng: cho bạn vay 50 triệu đồng; thời hạn 6 tháng; có giấy vay; Đến hạn bạn chưa trả",
+          "purpose": "question_part"
+        },
+        {
+          "text": "khởi kiện đòi tài sản hợp đồng vay tiền; tình huống người dùng: cho bạn vay 50 triệu đồng; thời hạn 6 tháng; có giấy vay; Đến hạn bạn chưa trả",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "cho bạn vay 50 triệu đồng",
+          "source_quote": "cho bạn vay 50 triệu đồng"
+        },
+        {
+          "text": "thời hạn 6 tháng",
+          "source_quote": "thời hạn 6 tháng"
+        },
+        {
+          "text": "có giấy vay",
+          "source_quote": "có giấy vay"
+        },
+        {
+          "text": "Đến hạn bạn chưa trả",
+          "source_quote": "Đến hạn bạn chưa trả"
+        }
+      ],
+      "issues": [
+        "Thủ tục và phương thức đòi tiền khi đến hạn trả nợ theo hợp đồng vay tài sản",
+        "Quyền khởi kiện dân sự đòi tài sản khi người vay không trả nợ"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [
+        {
+          "text": "6 tháng",
+          "start": 40,
+          "end": 47,
+          "role": "duration",
+          "iso_date": null,
+          "negated": false
+        }
+      ],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        },
+        {
+          "query_index": 1,
+          "issue_indices": [
+            1
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  },
+  {
+    "run": "gemini-final.json",
+    "id": "Q044",
+    "historical_status": "OK",
+    "execution": "SAVED_RAW_REPLAY_NO_API",
+    "status": "OK",
+    "plan": {
+      "original": "Tôi mua máy tính ngày 01/10/2026, còn bảo hành, đã báo lỗi cho cửa hàng. Tôi muốn biết thủ tục yêu cầu bảo hành.",
+      "intent": "legal_question",
+      "domain": "unknown",
+      "temporal_scope": [
+        "01/10/2026"
+      ],
+      "subqueries": [
+        {
+          "text": "thủ tục yêu cầu bảo hành hàng hóa; tình huống người dùng: Tôi mua máy tính ngày 01/10/2026; còn bảo hành; đã báo lỗi cho cửa hàng; Tôi muốn biết thủ tục yêu cầu bảo hành",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "recorded-response",
+      "facts": [
+        {
+          "text": "Tôi mua máy tính ngày 01/10/2026",
+          "source_quote": "Tôi mua máy tính ngày 01/10/2026"
+        },
+        {
+          "text": "còn bảo hành",
+          "source_quote": "còn bảo hành"
+        },
+        {
+          "text": "đã báo lỗi cho cửa hàng",
+          "source_quote": "đã báo lỗi cho cửa hàng"
+        },
+        {
+          "text": "Tôi muốn biết thủ tục yêu cầu bảo hành",
+          "source_quote": "Tôi muốn biết thủ tục yêu cầu bảo hành"
+        }
+      ],
+      "issues": [
+        "Thủ tục yêu cầu bảo hành hàng hóa"
+      ],
+      "missing_information": [],
+      "citations": [],
+      "temporal_context": [
+        {
+          "text": "01/10/2026",
+          "start": 22,
+          "end": 32,
+          "role": "event_date",
+          "iso_date": "2026-10-01",
+          "negated": false
+        }
+      ],
+      "search_objectives": [
+        {
+          "query_index": 0,
+          "issue_indices": [
+            0
+          ]
+        }
+      ],
+      "planning_warnings": []
+    }
+  }
+]

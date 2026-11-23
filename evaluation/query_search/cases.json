@@ -1,0 +1,1480 @@
+{
+  "schema_version": "1",
+  "cases": [
+    {
+      "id": "Q001",
+      "question": "Điều kiện để hợp đồng dân sự có hiệu lực là gì?",
+      "category": "single_issue",
+      "domain": "civil",
+      "expected_issues": [
+        "hiệu lực|điều kiện"
+      ],
+      "expected_preserved_facts": [],
+      "required_missing_information": [],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "hiệu lực|điều kiện"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": true,
+      "split": "development"
+    },
+    {
+      "id": "Q002",
+      "question": "Tôi mua một chiếc máy giặt mới nhưng bị lỗi, tôi có quyền yêu cầu đổi hàng không?",
+      "category": "single_issue",
+      "domain": "consumer",
+      "expected_issues": [
+        "đổi|đổi trả|bảo hành"
+      ],
+      "expected_preserved_facts": [
+        "máy giặt mới",
+        "bị lỗi"
+      ],
+      "required_missing_information": [
+        "thời điểm|ngày mua"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "đổi|đổi trả|bảo hành"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q003",
+      "question": "Thủ tục đăng ký hộ kinh doanh gồm những bước nào?",
+      "category": "single_issue",
+      "domain": "business",
+      "expected_issues": [
+        "đăng ký|thủ tục"
+      ],
+      "expected_preserved_facts": [],
+      "required_missing_information": [],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "đăng ký|thủ tục"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q004",
+      "question": "Tôi ký hợp đồng lao động 2 năm, mới làm được 6 tháng nhưng muốn nghỉ việc. Tôi có phải báo trước không và có phải bồi thường không?",
+      "category": "multi_issue",
+      "domain": "labour",
+      "expected_issues": [
+        "báo trước",
+        "bồi thường"
+      ],
+      "expected_preserved_facts": [
+        "hợp đồng lao động 2 năm",
+        "6 tháng"
+      ],
+      "required_missing_information": [
+        "lý do",
+        "đào tạo"
+      ],
+      "already_supplied_topics": [
+        "loại hợp đồng|xác định thời hạn|thời hạn hợp đồng"
+      ],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "báo trước",
+        "bồi thường"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": true,
+      "split": "development"
+    },
+    {
+      "id": "Q005",
+      "question": "Tôi muốn ly hôn, việc nuôi con và chia tài sản giải quyết thế nào?",
+      "category": "multi_issue",
+      "domain": "family",
+      "expected_issues": [
+        "ly hôn",
+        "nuôi con|quyền nuôi",
+        "tài sản"
+      ],
+      "expected_preserved_facts": [
+        "muốn ly hôn"
+      ],
+      "required_missing_information": [
+        "tuổi|bao nhiêu tuổi",
+        "tài sản"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "ly hôn",
+        "nuôi con|quyền nuôi",
+        "tài sản"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q006",
+      "question": "Tôi muốn chuyển nhượng đất, cần điều kiện gì và phải nộp những khoản phí nào?",
+      "category": "multi_issue",
+      "domain": "land",
+      "expected_issues": [
+        "chuyển nhượng|điều kiện",
+        "thuế|phí|tài chính"
+      ],
+      "expected_preserved_facts": [
+        "chuyển nhượng đất"
+      ],
+      "required_missing_information": [
+        "loại đất",
+        "giấy chứng nhận|sổ"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "chuyển nhượng|điều kiện",
+        "thuế|phí|tài chính"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q007",
+      "question": "Tôi đặt điện thoại trên mạng, đã chuyển tiền nhưng người bán không giao hàng và không trả lời tin nhắn. Tôi nên tìm hiểu quyền gì?",
+      "category": "implicit_issue",
+      "domain": "consumer",
+      "expected_issues": [
+        "giao hàng|hoàn tiền|đòi tiền",
+        "khiếu nại|tranh chấp|tố giác"
+      ],
+      "expected_preserved_facts": [
+        "đã chuyển tiền",
+        "không giao hàng"
+      ],
+      "required_missing_information": [
+        "thời hạn|thời điểm|ngày"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "giao hàng|hoàn tiền|đòi tiền",
+        "khiếu nại|tranh chấp|tố giác"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": true,
+      "split": "heldout"
+    },
+    {
+      "id": "Q008",
+      "question": "Công ty giữ bản chính bằng đại học của tôi và nói nghỉ việc thì không trả. Tôi cần tra cứu gì?",
+      "category": "implicit_issue",
+      "domain": "labour",
+      "expected_issues": [
+        "giữ|trả|giấy tờ|văn bằng"
+      ],
+      "expected_preserved_facts": [
+        "bản chính bằng đại học",
+        "không trả"
+      ],
+      "required_missing_information": [],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "giữ|trả|giấy tờ|văn bằng"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "heldout"
+    },
+    {
+      "id": "Q009",
+      "question": "Bạn tôi mượn xe rồi đem bán mà tôi không đồng ý. Tôi có thể đòi lại xe như thế nào?",
+      "category": "implicit_issue",
+      "domain": "civil",
+      "expected_issues": [
+        "đòi|hoàn trả|thu hồi",
+        "bồi thường|trách nhiệm"
+      ],
+      "expected_preserved_facts": [
+        "mượn xe",
+        "đem bán",
+        "không đồng ý"
+      ],
+      "required_missing_information": [
+        "người mua|ngay tình"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "đòi|hoàn trả|thu hồi",
+        "bồi thường|trách nhiệm"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "heldout"
+    },
+    {
+      "id": "Q010",
+      "question": "Mảnh đất nhà tôi đang sử dụng có được cấp giấy chứng nhận không?",
+      "category": "missing_information",
+      "domain": "land",
+      "expected_issues": [
+        "cấp|giấy chứng nhận"
+      ],
+      "expected_preserved_facts": [
+        "đang sử dụng"
+      ],
+      "required_missing_information": [
+        "nguồn gốc",
+        "thời điểm|thời gian",
+        "tranh chấp"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "cấp|giấy chứng nhận"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": true,
+      "split": "development"
+    },
+    {
+      "id": "Q011",
+      "question": "Công ty chấm dứt hợp đồng của tôi thì tôi được nhận những khoản nào?",
+      "category": "missing_information",
+      "domain": "labour",
+      "expected_issues": [
+        "chấm dứt",
+        "trợ cấp|quyền lợi|thanh toán"
+      ],
+      "expected_preserved_facts": [
+        "Công ty chấm dứt"
+      ],
+      "required_missing_information": [
+        "lý do",
+        "thời gian|thời điểm",
+        "hợp đồng"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "chấm dứt",
+        "trợ cấp|quyền lợi|thanh toán"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q012",
+      "question": "Tôi có thể khiếu nại quyết định xử phạt này không?",
+      "category": "missing_information",
+      "domain": "administrative",
+      "expected_issues": [
+        "khiếu nại|thời hiệu"
+      ],
+      "expected_preserved_facts": [
+        "quyết định xử phạt"
+      ],
+      "required_missing_information": [
+        "ngày|thời điểm",
+        "nội dung|hành vi|lý do"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "khiếu nại|thời hiệu"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q013",
+      "question": "Có được không?",
+      "category": "ambiguous_intent",
+      "domain": "unknown",
+      "expected_issues": [],
+      "expected_preserved_facts": [],
+      "required_missing_information": [
+        "tình huống|cụ thể|tra cứu|quy định"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": true,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": true,
+      "split": "development"
+    },
+    {
+      "id": "Q014",
+      "question": "Chuyện như hôm trước tôi kể thì làm sao?",
+      "category": "ambiguous_intent",
+      "domain": "unknown",
+      "expected_issues": [],
+      "expected_preserved_facts": [],
+      "required_missing_information": [
+        "tình huống|cụ thể|nội dung"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": true,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q015",
+      "question": "Hợp đồng?",
+      "category": "ambiguous_intent",
+      "domain": "unknown",
+      "expected_issues": [],
+      "expected_preserved_facts": [],
+      "required_missing_information": [
+        "loại|cụ thể|nội dung|vấn đề"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": true,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q016",
+      "question": "Tôi ký hợp đồng lao động 12 tháng vào ngày 15/03/2024, muốn nghỉ ngày 01/09/2024. Cần tra cứu quy định báo trước nào áp dụng?",
+      "category": "explicit_date",
+      "domain": "labour",
+      "expected_issues": [
+        "báo trước"
+      ],
+      "expected_preserved_facts": [
+        "12 tháng",
+        "15/03/2024",
+        "01/09/2024"
+      ],
+      "required_missing_information": [
+        "lý do"
+      ],
+      "already_supplied_topics": [
+        "ngày ký|ngày nghỉ|thời hạn hợp đồng"
+      ],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "báo trước"
+      ],
+      "temporal_expectations": [
+        "15/03/2024",
+        "01/09/2024"
+      ],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": true,
+      "split": "heldout"
+    },
+    {
+      "id": "Q017",
+      "question": "Hợp đồng vay của tôi ký ngày 01/06/2022, đến hạn ngày 01/06/2023 nhưng chưa trả. Tôi muốn tra cứu thời hiệu khởi kiện.",
+      "category": "explicit_date",
+      "domain": "civil",
+      "expected_issues": [
+        "thời hiệu|khởi kiện"
+      ],
+      "expected_preserved_facts": [
+        "01/06/2022",
+        "01/06/2023",
+        "chưa trả"
+      ],
+      "required_missing_information": [],
+      "already_supplied_topics": [
+        "ngày ký|ngày đến hạn"
+      ],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "thời hiệu|khởi kiện"
+      ],
+      "temporal_expectations": [
+        "01/06/2022",
+        "01/06/2023"
+      ],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "heldout"
+    },
+    {
+      "id": "Q018",
+      "question": "Tôi nhận quyết định xử phạt ngày 20/08/2025. Thời hạn khiếu nại được tính ra sao?",
+      "category": "explicit_date",
+      "domain": "administrative",
+      "expected_issues": [
+        "thời hạn|khiếu nại"
+      ],
+      "expected_preserved_facts": [
+        "20/08/2025"
+      ],
+      "required_missing_information": [],
+      "already_supplied_topics": [
+        "ngày nhận"
+      ],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "thời hạn|khiếu nại"
+      ],
+      "temporal_expectations": [
+        "20/08/2025"
+      ],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "heldout"
+    },
+    {
+      "id": "Q019",
+      "question": "Việc mua bán đất của gia đình diễn ra năm 2010, tôi cần tra cứu điều kiện có hiệu lực tại thời điểm đó, không phải hiện nay.",
+      "category": "historical_context",
+      "domain": "land",
+      "expected_issues": [
+        "hiệu lực|mua bán|chuyển nhượng"
+      ],
+      "expected_preserved_facts": [
+        "năm 2010"
+      ],
+      "required_missing_information": [
+        "giấy tờ|hình thức"
+      ],
+      "already_supplied_topics": [
+        "năm giao dịch|thời điểm giao dịch"
+      ],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "hiệu lực|mua bán|chuyển nhượng"
+      ],
+      "temporal_expectations": [
+        "2010"
+      ],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": true,
+      "split": "development"
+    },
+    {
+      "id": "Q020",
+      "question": "Tôi bị chấm dứt hợp đồng lao động vào năm 2018. Quy định báo trước khi đó khác hiện nay thế nào?",
+      "category": "historical_context",
+      "domain": "labour",
+      "expected_issues": [
+        "báo trước",
+        "2018|thời điểm|lịch sử"
+      ],
+      "expected_preserved_facts": [
+        "năm 2018"
+      ],
+      "required_missing_information": [
+        "loại hợp đồng|thời hạn"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "báo trước",
+        "2018|thời điểm|lịch sử"
+      ],
+      "temporal_expectations": [
+        "2018"
+      ],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q021",
+      "question": "Tài sản được vợ chồng tôi mua năm 2005 trước khi đăng ký kết hôn năm 2007. Tôi muốn tìm quy định áp dụng lúc mua.",
+      "category": "historical_context",
+      "domain": "family",
+      "expected_issues": [
+        "tài sản|sở hữu"
+      ],
+      "expected_preserved_facts": [
+        "năm 2005",
+        "năm 2007"
+      ],
+      "required_missing_information": [
+        "đóng góp|đứng tên|thỏa thuận"
+      ],
+      "already_supplied_topics": [
+        "năm mua|năm kết hôn"
+      ],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "tài sản|sở hữu"
+      ],
+      "temporal_expectations": [
+        "2005",
+        "2007"
+      ],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q022",
+      "question": "Tra cứu Điều 35 Bộ luật Lao động 45/2019/QH14.",
+      "category": "exact_citation",
+      "domain": "labour",
+      "expected_issues": [
+        "Điều 35"
+      ],
+      "expected_preserved_facts": [],
+      "required_missing_information": [],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "Điều 35"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [
+        "Điều 35",
+        "45/2019/QH14"
+      ],
+      "expected_intent": "quote_lookup",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": true,
+      "split": "development"
+    },
+    {
+      "id": "Q023",
+      "question": "Trích nguyên văn: khoản 1 Điều 117 Bộ luật Dân sự 91/2015/QH13.",
+      "category": "exact_citation",
+      "domain": "civil",
+      "expected_issues": [
+        "Điều 117"
+      ],
+      "expected_preserved_facts": [],
+      "required_missing_information": [],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "Điều 117"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [
+        "khoản 1",
+        "Điều 117",
+        "91/2015/QH13"
+      ],
+      "expected_intent": "quote_lookup",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q024",
+      "question": "Tìm khoản 2 Điều 45 Luật Đất đai 31/2024/QH15.",
+      "category": "exact_citation",
+      "domain": "land",
+      "expected_issues": [
+        "Điều 45"
+      ],
+      "expected_preserved_facts": [],
+      "required_missing_information": [],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "Điều 45"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [
+        "khoản 2",
+        "Điều 45",
+        "31/2024/QH15"
+      ],
+      "expected_intent": "quote_lookup",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q025",
+      "question": "Một bài viết nói Điều 35 Bộ luật Lao động 45/2019/QH14 cho nghỉ ngay mọi trường hợp. Tôi muốn kiểm tra trích dẫn này có đúng không.",
+      "category": "citation_verification",
+      "domain": "labour",
+      "expected_issues": [
+        "Điều 35",
+        "báo trước|ngoại lệ|nghỉ ngay|trường hợp"
+      ],
+      "expected_preserved_facts": [],
+      "required_missing_information": [],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "Điều 35",
+        "báo trước|ngoại lệ|nghỉ ngay|trường hợp"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [
+        "Điều 35",
+        "45/2019/QH14"
+      ],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": true,
+      "split": "heldout"
+    },
+    {
+      "id": "Q026",
+      "question": "Người bán viện dẫn Điều 117 Bộ luật Dân sự 91/2015/QH13 để nói hợp đồng miệng luôn vô hiệu. Tôi muốn tra cứu nguồn để kiểm tra.",
+      "category": "citation_verification",
+      "domain": "civil",
+      "expected_issues": [
+        "Điều 117",
+        "hình thức|miệng|vô hiệu"
+      ],
+      "expected_preserved_facts": [
+        "hợp đồng miệng"
+      ],
+      "required_missing_information": [],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "Điều 117",
+        "hình thức|miệng|vô hiệu"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [
+        "Điều 117",
+        "91/2015/QH13"
+      ],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "heldout"
+    },
+    {
+      "id": "Q027",
+      "question": "Cửa hàng đưa ra một số điều luật nhưng không ghi số hiệu văn bản để từ chối bảo hành. Tôi cần kiểm tra cơ sở này thế nào?",
+      "category": "citation_verification",
+      "domain": "consumer",
+      "expected_issues": [
+        "bảo hành",
+        "cơ sở|văn bản|trích dẫn"
+      ],
+      "expected_preserved_facts": [
+        "không ghi số hiệu"
+      ],
+      "required_missing_information": [
+        "nội dung|trích dẫn|điều luật"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "bảo hành",
+        "cơ sở|văn bản|trích dẫn"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "heldout"
+    },
+    {
+      "id": "Q028",
+      "question": "Trong trường hợp nào người lao động được nghỉ việc không phải báo trước?",
+      "category": "exceptions_conditions",
+      "domain": "labour",
+      "expected_issues": [
+        "không phải báo trước|miễn báo trước|không cần báo trước"
+      ],
+      "expected_preserved_facts": [],
+      "required_missing_information": [],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "không phải báo trước|miễn báo trước|không cần báo trước"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": true,
+      "split": "development"
+    },
+    {
+      "id": "Q029",
+      "question": "Tôi mua hàng giảm giá nhưng sản phẩm bị lỗi từ nhà sản xuất. Điều kiện nào cho phép từ chối bảo hành?",
+      "category": "exceptions_conditions",
+      "domain": "consumer",
+      "expected_issues": [
+        "bảo hành|từ chối",
+        "lỗi|giảm giá"
+      ],
+      "expected_preserved_facts": [
+        "hàng giảm giá",
+        "lỗi từ nhà sản xuất"
+      ],
+      "required_missing_information": [],
+      "already_supplied_topics": [
+        "có lỗi|giảm giá hay không"
+      ],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "bảo hành|từ chối",
+        "lỗi|giảm giá"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q030",
+      "question": "Hộ kinh doanh có phải tạm ngừng hoạt động khi chủ hộ ốm dài ngày không, có trường hợp được ủy quyền không?",
+      "category": "exceptions_conditions",
+      "domain": "business",
+      "expected_issues": [
+        "tạm ngừng",
+        "ủy quyền"
+      ],
+      "expected_preserved_facts": [
+        "ốm dài ngày"
+      ],
+      "required_missing_information": [],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "tạm ngừng",
+        "ủy quyền"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q031",
+      "question": "Tôi làm ở xưởng may, hợp đồng lao động 2 năm, đã làm 6 tháng. Tôi muốn nghỉ vì chuyển chỗ ở, công ty nói phải đền toàn bộ lương đã nhận. Tôi chưa ký thỏa thuận đào tạo. Tôi muốn tìm quy định về báo trước và trách nhiệm bồi thường, chưa cần bạn kết luận tôi đúng hay sai.",
+      "category": "long_conversation",
+      "domain": "labour",
+      "expected_issues": [
+        "báo trước",
+        "bồi thường"
+      ],
+      "expected_preserved_facts": [
+        "2 năm",
+        "6 tháng",
+        "chuyển chỗ ở",
+        "chưa ký thỏa thuận đào tạo"
+      ],
+      "required_missing_information": [],
+      "already_supplied_topics": [
+        "lý do nghỉ|loại hợp đồng|thời hạn hợp đồng|có thỏa thuận đào tạo"
+      ],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "báo trước",
+        "bồi thường"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": true,
+      "split": "development"
+    },
+    {
+      "id": "Q032",
+      "question": "Tôi thuê nhà để ở, có giấy thỏa thuận, đã đặt cọc 10 triệu đồng. Chủ nhà muốn lấy lại nhà sớm dù tôi vẫn trả tiền đúng hạn. Tôi chỉ muốn biết cần tìm quy định nào về chấm dứt hợp đồng thuê và hoàn trả tiền cọc.",
+      "category": "long_conversation",
+      "domain": "civil",
+      "expected_issues": [
+        "chấm dứt|thuê",
+        "đặt cọc|tiền cọc"
+      ],
+      "expected_preserved_facts": [
+        "10 triệu đồng",
+        "trả tiền đúng hạn"
+      ],
+      "required_missing_information": [
+        "thời hạn|điều khoản"
+      ],
+      "already_supplied_topics": [
+        "có đặt cọc|số tiền cọc"
+      ],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "chấm dứt|thuê",
+        "đặt cọc|tiền cọc"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q033",
+      "question": "Vợ chồng tôi đã sống riêng, con đang ở với mẹ. Chúng tôi chưa nộp đơn ly hôn, chưa thống nhất tiền cấp dưỡng. Tôi muốn tìm quy định về nghĩa vụ nuôi dưỡng khi chưa ly hôn và cách yêu cầu cấp dưỡng.",
+      "category": "long_conversation",
+      "domain": "family",
+      "expected_issues": [
+        "cấp dưỡng",
+        "chưa ly hôn|nuôi dưỡng"
+      ],
+      "expected_preserved_facts": [
+        "chưa nộp đơn ly hôn",
+        "chưa thống nhất tiền cấp dưỡng"
+      ],
+      "required_missing_information": [
+        "tuổi|thu nhập"
+      ],
+      "already_supplied_topics": [
+        "đã ly hôn|đã nộp đơn"
+      ],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "cấp dưỡng",
+        "chưa ly hôn|nuôi dưỡng"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q034",
+      "question": "Tôi thích điện thoại màu xanh, hôm mua trời mưa và quán bên cạnh rất đông. Điện thoại mới mua bị lỗi màn hình. Tôi muốn đổi hàng thì tra cứu quy định nào?",
+      "category": "irrelevant_details",
+      "domain": "consumer",
+      "expected_issues": [
+        "đổi|bảo hành"
+      ],
+      "expected_preserved_facts": [
+        "bị lỗi màn hình"
+      ],
+      "required_missing_information": [
+        "ngày mua|thời điểm|thời hạn"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "đổi|bảo hành"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": true,
+      "split": "heldout"
+    },
+    {
+      "id": "Q035",
+      "question": "Nhà tôi nuôi ba con mèo, hàng xóm hay mở nhạc. Tôi muốn biết thủ tục cấp bản sao giấy chứng nhận đất bị mất.",
+      "category": "irrelevant_details",
+      "domain": "land",
+      "expected_issues": [
+        "mất|cấp lại|giấy chứng nhận"
+      ],
+      "expected_preserved_facts": [
+        "giấy chứng nhận đất bị mất"
+      ],
+      "required_missing_information": [],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "mất|cấp lại|giấy chứng nhận"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "heldout"
+    },
+    {
+      "id": "Q036",
+      "question": "Tôi thích uống cà phê buổi sáng. Tôi muốn đổi địa chỉ trụ sở công ty thì cần hồ sơ gì?",
+      "category": "irrelevant_details",
+      "domain": "business",
+      "expected_issues": [
+        "địa chỉ|trụ sở",
+        "hồ sơ|đăng ký"
+      ],
+      "expected_preserved_facts": [
+        "đổi địa chỉ trụ sở"
+      ],
+      "required_missing_information": [
+        "địa chỉ mới|tỉnh|địa bàn"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "địa chỉ|trụ sở",
+        "hồ sơ|đăng ký"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "heldout"
+    },
+    {
+      "id": "Q037",
+      "question": "Tôi cho bạn vay 50 triệu đồng, thời hạn 6 tháng, có giấy vay. Đến hạn bạn chưa trả thì đòi tiền thế nào?",
+      "category": "numerical_facts",
+      "domain": "civil",
+      "expected_issues": [
+        "đòi|khởi kiện|hoàn trả"
+      ],
+      "expected_preserved_facts": [
+        "50 triệu đồng",
+        "6 tháng",
+        "có giấy vay"
+      ],
+      "required_missing_information": [
+        "ngày|thời điểm"
+      ],
+      "already_supplied_topics": [
+        "số tiền vay|thời hạn vay|có giấy vay"
+      ],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "đòi|khởi kiện|hoàn trả"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": true,
+      "split": "development"
+    },
+    {
+      "id": "Q038",
+      "question": "Tôi làm thêm 20 giờ trong tháng, lương thỏa thuận 8 triệu đồng mỗi tháng. Tôi muốn tìm cách xác định tiền làm thêm, không cần tính ngay.",
+      "category": "numerical_facts",
+      "domain": "labour",
+      "expected_issues": [
+        "làm thêm|tiền lương"
+      ],
+      "expected_preserved_facts": [
+        "20 giờ",
+        "8 triệu đồng"
+      ],
+      "required_missing_information": [
+        "ngày thường|ngày nghỉ|ban đêm"
+      ],
+      "already_supplied_topics": [
+        "số giờ làm thêm|mức lương"
+      ],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "làm thêm|tiền lương"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q039",
+      "question": "Con tôi 7 tuổi, bố mẹ đang tranh chấp quyền nuôi con. Cần tìm các tiêu chí nào?",
+      "category": "numerical_facts",
+      "domain": "family",
+      "expected_issues": [
+        "nuôi con|nguyện vọng|tiêu chí"
+      ],
+      "expected_preserved_facts": [
+        "7 tuổi"
+      ],
+      "required_missing_information": [
+        "điều kiện|thu nhập|nguyện vọng"
+      ],
+      "already_supplied_topics": [
+        "tuổi của con|con bao nhiêu tuổi"
+      ],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "nuôi con|nguyện vọng|tiêu chí"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q040",
+      "question": "Tôi cho A vay tiền, B ký bảo lãnh, A không trả. Tôi có thể yêu cầu A và B thực hiện nghĩa vụ gì?",
+      "category": "multiple_subjects",
+      "domain": "civil",
+      "expected_issues": [
+        "vay|trả nợ|A",
+        "bảo lãnh|B"
+      ],
+      "expected_preserved_facts": [
+        "B ký bảo lãnh",
+        "A không trả"
+      ],
+      "required_missing_information": [
+        "phạm vi|thỏa thuận"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "vay|trả nợ|A",
+        "bảo lãnh|B"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": true,
+      "split": "development"
+    },
+    {
+      "id": "Q041",
+      "question": "Tôi làm cho công ty A nhưng công ty B điều hành công việc và trả lương. Khi nợ lương tôi nên xác định bên có nghĩa vụ thế nào?",
+      "category": "multiple_subjects",
+      "domain": "labour",
+      "expected_issues": [
+        "chủ thể|người sử dụng lao động|trách nhiệm",
+        "nợ lương|trả lương"
+      ],
+      "expected_preserved_facts": [
+        "công ty A",
+        "công ty B",
+        "nợ lương"
+      ],
+      "required_missing_information": [
+        "hợp đồng"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "chủ thể|người sử dụng lao động|trách nhiệm",
+        "nợ lương|trả lương"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q042",
+      "question": "Tôi góp vốn với hai người khác, một người tự ký hợp đồng nhân danh công ty. Tôi muốn tìm quy định về đại diện và trách nhiệm của thành viên.",
+      "category": "multiple_subjects",
+      "domain": "business",
+      "expected_issues": [
+        "đại diện",
+        "trách nhiệm|thành viên"
+      ],
+      "expected_preserved_facts": [
+        "hai người khác",
+        "tự ký hợp đồng"
+      ],
+      "required_missing_information": [
+        "loại hình|điều lệ|ủy quyền"
+      ],
+      "already_supplied_topics": [],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "đại diện",
+        "trách nhiệm|thành viên"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "development"
+    },
+    {
+      "id": "Q043",
+      "question": "Tôi ký hợp đồng lao động xác định thời hạn 24 tháng, muốn nghỉ vì chuyển nhà và không có thỏa thuận đào tạo. Cần tìm quy định báo trước và bồi thường nào?",
+      "category": "already_supplied",
+      "domain": "labour",
+      "expected_issues": [
+        "báo trước",
+        "bồi thường"
+      ],
+      "expected_preserved_facts": [
+        "xác định thời hạn 24 tháng",
+        "chuyển nhà",
+        "không có thỏa thuận đào tạo"
+      ],
+      "required_missing_information": [],
+      "already_supplied_topics": [
+        "loại hợp đồng|thời hạn hợp đồng|lý do nghỉ|có thỏa thuận đào tạo"
+      ],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "báo trước",
+        "bồi thường"
+      ],
+      "temporal_expectations": [],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": true,
+      "split": "heldout"
+    },
+    {
+      "id": "Q044",
+      "question": "Tôi mua máy tính ngày 01/10/2026, còn bảo hành, đã báo lỗi cho cửa hàng. Tôi muốn biết thủ tục yêu cầu bảo hành.",
+      "category": "already_supplied",
+      "domain": "consumer",
+      "expected_issues": [
+        "bảo hành|thủ tục"
+      ],
+      "expected_preserved_facts": [
+        "01/10/2026",
+        "còn bảo hành",
+        "đã báo lỗi"
+      ],
+      "required_missing_information": [],
+      "already_supplied_topics": [
+        "ngày mua|còn bảo hành|đã báo lỗi"
+      ],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "bảo hành|thủ tục"
+      ],
+      "temporal_expectations": [
+        "01/10/2026"
+      ],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "heldout"
+    },
+    {
+      "id": "Q045",
+      "question": "Tôi và chồng đăng ký kết hôn năm 2015, có con 5 tuổi, đều đồng ý ly hôn. Tôi muốn tra cứu hồ sơ thuận tình ly hôn.",
+      "category": "already_supplied",
+      "domain": "family",
+      "expected_issues": [
+        "thuận tình|hồ sơ"
+      ],
+      "expected_preserved_facts": [
+        "năm 2015",
+        "5 tuổi",
+        "đều đồng ý ly hôn"
+      ],
+      "required_missing_information": [],
+      "already_supplied_topics": [
+        "năm kết hôn|tuổi của con|có đồng ý ly hôn"
+      ],
+      "forbidden_invented_facts": [
+        "đã được xác minh",
+        "chắc chắn vi phạm",
+        "chắc chắn thắng kiện"
+      ],
+      "expected_search_objectives": [
+        "thuận tình|hồ sơ"
+      ],
+      "temporal_expectations": [
+        "2015"
+      ],
+      "citation_constraints": [],
+      "expected_intent": "legal_question",
+      "clarification_expected": false,
+      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
+      "live_sample": false,
+      "split": "heldout"
+    }
+  ]
+}

@@ -1,0 +1,2315 @@
+--- a/src/applications/tillegal/agents/query/semantic.py
++++ b/src/applications/tillegal/agents/query/semantic.py
+@@ -44,13 +44,17 @@
+         if base["clarification"] or base["intent"] == "quote_lookup":
+             return base
+         text = unicodedata.normalize("NFC", question).strip()
++        # Exact lookup has already returned above. Constrain the provider to the
++        # only intent this semantic call can accept, rather than asking it to guess.
++        schema = SemanticAnalysis.model_json_schema()
++        schema["properties"]["intent"] = {"type": "string", "enum": ["legal_question"]}
+         try:
+             async with asyncio.timeout(self.timeout_seconds):
+                 raw = await self.complete(
+                     model=self.model,
+                     system=SYSTEM_PROMPT,
+                     user=json.dumps({"question": text}, ensure_ascii=False),
+-                    schema=SemanticAnalysis.model_json_schema(),
++                    schema=schema,
+                 )
+         except TimeoutError:
+             raise QueryAnalysisError("QUERY_ANALYSIS_TIMEOUT") from None
+@@ -79,6 +83,14 @@
+             if set(re.findall(r"\d+", generated)) - set(re.findall(r"\d+", text)):
+                 raise ValueError("Unsupported numeric fact or provision")
+             queries = list(dict.fromkeys(item.search_query.strip() for item in analysis.issues))
++            # One objective can safely retain all citation spans supplied in
++            # this question. Multiple objectives require semantic association,
++            # so never copy every citation into every unrelated search query.
++            if len(queries) == 1:
++                references = list(dict.fromkeys(match.group() for match in _CITATION.finditer(text)))
++                omitted = [reference for reference in references if reference.casefold() not in queries[0].casefold()]
++                if omitted:
++                    queries[0] += " " + " ".join(omitted)
+             if any(not query for query in queries):
+                 raise ValueError("Blank search objective")
+             return QueryPlan(
+--- a/scripts/evaluate_query_search.py
++++ b/scripts/evaluate_query_search.py
+@@ -0,0 +1,253 @@
++"""Reproducible Query understanding evaluation; heuristic scores are not legal judgments."""
++
++import argparse
++import asyncio
++import hashlib
++import json
++import re
++import statistics
++import time
++import unicodedata
++from collections import Counter
++from dataclasses import replace
++from pathlib import Path
++from unittest.mock import patch
++
++from src.applications.tillegal.agents.query.agent import QueryPlan, understand
++from src.applications.tillegal.agents.query.gemini import create_gemini_query_agent
++from src.applications.tillegal.agents.query.prompts import SYSTEM_PROMPT
++from src.applications.tillegal.agents.query.schemas import SemanticAnalysis
++from src.framework.llm.providers import gemini_adapter
++
++ROOT = Path(__file__).resolve().parents[1]
++DATASET = ROOT / "evaluation/query_search/cases.json"
++
++
++def matches(pattern: str, text: str) -> bool:
++    text = unicodedata.normalize("NFC", text).casefold()
++    return any(re.search(r"(?<!\w)" + re.escape(term.casefold()) + r"(?!\w)", text) for term in pattern.split("|"))
++
++
++def objective_assignment(expected: list[str], queries: list[str]) -> int:
++    """Maximum distinct objectives matched to distinct queries; max four queries."""
++
++    def visit(index, used):
++        if index == len(expected):
++            return 0
++        return max(
++            [visit(index + 1, used)]
++            + [
++                1 + visit(index + 1, used | {j})
++                for j, text in enumerate(queries)
++                if j not in used and matches(expected[index], text)
++            ]
++        )
++
++    return visit(0, set())
++
++
++def score(case: dict, plan: dict) -> dict:
++    queries = [item["text"] for item in plan["subqueries"]]
++    issue_text = " ".join(plan["issues"] + queries)
++    facts_text = " ".join(item["text"] for item in plan["facts"])
++    missing_text = " ".join(plan["missing_information"] + ([plan["clarification"]] if plan["clarification"] else []))
++    all_citations = " ".join(queries)
++    expected = case["expected_issues"]
++    return {
++        "schema_valid": True,
++        "original_preserved": plan["original"] == case["question"],
++        "intent_correct": plan["intent"] == case["expected_intent"],
++        "issue_matches": sum(matches(item, issue_text) for item in expected),
++        "issue_total": len(expected),
++        "distinct_objective_matches": objective_assignment(expected, queries),
++        "unmatched_issue_labels": sum(not any(matches(item, label) for item in expected) for label in plan["issues"]),
++        "fact_matches": sum(item in facts_text for item in case["expected_preserved_facts"]),
++        "fact_total": len(case["expected_preserved_facts"]),
++        "ungrounded_fact_spans": sum(
++            item["text"] not in unicodedata.normalize("NFC", case["question"]) for item in plan["facts"]
++        ),
++        "forbidden_claim_matches": sum(item in issue_text + facts_text for item in case["forbidden_invented_facts"]),
++        "missing_info_matches": sum(matches(item, missing_text) for item in case["required_missing_information"]),
++        "missing_info_total": len(case["required_missing_information"]),
++        "redundant_missing_topics": [item for item in case["already_supplied_topics"] if matches(item, missing_text)],
++        "clarification_correct": bool(plan["clarification"]) == case["clarification_expected"],
++        "temporal_matches": sum(
++            any(item in mention for mention in plan["temporal_scope"]) for item in case["temporal_expectations"]
++        ),
++        "temporal_total": len(case["temporal_expectations"]),
++        "citation_matches": sum(item.casefold() in all_citations.casefold() for item in case["citation_constraints"]),
++        "citation_total": len(case["citation_constraints"]),
++        "unique_queries": len(set(queries)) == len(queries),
++        "subquery_count": len(queries),
++        "human_review_required": True,
++    }
++
++
++def aggregate(rows: list[dict]) -> dict:
++    good = [row for row in rows if row["status"] == "OK"]
++    metrics = [row["metrics"] for row in good]
++
++    def ratio(numerator, denominator):
++        total = sum(item[denominator] for item in metrics)
++        return round(sum(item[numerator] for item in metrics) / total, 4) if total else None
++
++    latencies = sorted(row["latency_ms"] for row in rows)
++    return {
++        "cases": len(rows),
++        "successes": len(good),
++        "failures": len(rows) - len(good),
++        "schema_valid_plans": sum(item["schema_valid"] for item in metrics),
++        "raw_schema_valid_responses": sum(row.get("raw_schema_valid") is True for row in rows),
++        "live_model_calls": sum(row.get("api_calls", 0) for row in rows),
++        "analysis_methods": dict(Counter(row["plan"]["analysis_method"] for row in good)),
++        "issue_coverage_proxy": ratio("issue_matches", "issue_total"),
++        "distinct_objective_proxy": ratio("distinct_objective_matches", "issue_total"),
++        "fact_span_coverage": ratio("fact_matches", "fact_total"),
++        "missing_information_proxy": ratio("missing_info_matches", "missing_info_total"),
++        "temporal_span_coverage": ratio("temporal_matches", "temporal_total"),
++        "citation_identity_coverage": ratio("citation_matches", "citation_total"),
++        "redundant_missing_case_count": sum(bool(item["redundant_missing_topics"]) for item in metrics),
++        "unmatched_issue_labels_proxy": sum(item["unmatched_issue_labels"] for item in metrics),
++        "ungrounded_fact_spans": sum(item["ungrounded_fact_spans"] for item in metrics),
++        "clarification_correct_cases": sum(item["clarification_correct"] for item in metrics),
++        "intent_correct_cases": sum(item["intent_correct"] for item in metrics),
++        "errors": dict(Counter(row["error"]["code"] for row in rows if row.get("error"))),
++        "latency_ms": {
++            "median": round(statistics.median(latencies), 2),
++            "p95_nearest_rank": latencies[max(0, (95 * len(latencies) + 99) // 100 - 1)],
++        }
++        if rows
++        else {},
++        "tokens": {
++            key: sum(row.get("usage", {}).get(key, 0) or 0 for row in rows)
++            for key in ("prompt_tokens", "completion_tokens", "total_tokens")
++        },
++        "cost_usd": None,
++        "cost_note": "No independently verified price/account billing data; no estimated cost claimed.",
++        "semantic_grade": "HEURISTIC_REQUIRES_HUMAN_REVIEW",
++    }
++
++
++async def evaluate(args: argparse.Namespace) -> dict:
++    cases = json.loads(DATASET.read_text(encoding="utf-8"))["cases"]
++    if args.mode == "gemini" and not args.ids:
++        cases = [case for case in cases if case["live_sample"]]
++    if args.ids:
++        wanted = set(args.ids.split(","))
++        cases = [case for case in cases if case["id"] in wanted]
++    if args.mode == "gemini" and len(cases) > args.max_requests:
++        raise ValueError("Sample exceeds explicit maximum request budget")
++    args.output.parent.mkdir(parents=True, exist_ok=True)
++    if args.output.exists():
++        raise ValueError("Result file already exists; preserve prior runs")
++    agent = create_gemini_query_agent() if args.mode == "gemini" else None
++    report = {
++        "schema_version": "1",
++        "mode": args.mode,
++        "label": args.label,
++        "model": agent.model if agent else None,
++        "timeout_seconds": agent.timeout_seconds if agent else None,
++        "dataset_sha256": hashlib.sha256(DATASET.read_bytes()).hexdigest(),
++        "prompt_sha256": hashlib.sha256(SYSTEM_PROMPT.encode()).hexdigest(),
++        "prompt_text": SYSTEM_PROMPT,
++        "execution": "sequential",
++        "maximum_requests": args.max_requests,
++        "rows": [],
++    }
++    original_completion = gemini_adapter._acompletion
++    for case in cases:
++        started = time.perf_counter()
++        row = {
++            "id": case["id"],
++            "category": case["category"],
++            "split": case["split"],
++            "question": case["question"],
++            "api_calls": 0,
++            "usage": {},
++            "raw_response": None,
++        }
++
++        async def observed_sdk(**kwargs):
++            row["api_calls"] += 1
++            response = await original_completion(**kwargs)
++            usage = getattr(response, "usage", None)
++            row["usage"] = {
++                name: getattr(usage, name, None) for name in ("prompt_tokens", "completion_tokens", "total_tokens")
++            }
++            row["provider_model"] = getattr(response, "model", None)
++            return response
++
++        async def recorded(**kwargs):
++            raw = await agent.complete(**kwargs)
++            row["raw_response"] = raw
++            try:
++                SemanticAnalysis.model_validate_json(raw)
++                row["raw_schema_valid"] = True
++            except ValueError:
++                row["raw_schema_valid"] = False
++            return raw
++
++        try:
++            with patch.object(gemini_adapter, "_acompletion", observed_sdk):
++                plan = (
++                    await replace(agent, complete=recorded).understand(case["question"])
++                    if agent
++                    else understand(case["question"])
++                )
++            plan = QueryPlan.model_validate(plan).model_dump()
++            row.update(status="OK", plan=plan, metrics=score(case, plan))
++        except Exception as error:
++            from scripts.verify_gemini_query import safe_error
++
++            row.update(status="ERROR", error=safe_error(error))
++        row["latency_ms"] = round((time.perf_counter() - started) * 1000, 2)
++        report["rows"].append(row)
++        report["aggregate"] = aggregate(report["rows"])
++        report["by_category"] = {
++            category: aggregate([r for r in report["rows"] if r["category"] == category])
++            for category in sorted({r["category"] for r in report["rows"]})
++        }
++        # Write after each case so interrupted runs never lose the completed subset.
++        args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++        print(
++            json.dumps(
++                {
++                    "id": row["id"],
++                    "status": row["status"],
++                    "ms": row["latency_ms"],
++                    "api_calls": row["api_calls"],
++                    "error": row.get("error"),
++                }
++            ),
++            flush=True,
++        )
++        if (
++            row.get("error", {}).get("http_status") == 429
++            or row.get("error", {}).get("provider_code") == "GEMINI_RATE_LIMITED"
++        ):
++            report["stopped_reason"] = "RATE_LIMIT_NO_RETRY"
++            break
++        if args.mode == "gemini" and row["api_calls"]:
++            await asyncio.sleep(0.5)
++    report["aggregate"] = aggregate(report["rows"])
++    report["selected_cases"] = [case["id"] for case in cases]
++    args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++    return report
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--mode", choices=("deterministic", "gemini"), required=True)
++    parser.add_argument("--label", required=True)
++    parser.add_argument("--output", type=Path, required=True)
++    parser.add_argument("--max-requests", type=int, default=15)
++    parser.add_argument("--ids", help="Optional comma-separated fixed IDs for paired investigations")
++    args = parser.parse_args()
++    if not 1 <= args.max_requests <= 30:
++        parser.error("max-requests must be 1..30")
++    result = asyncio.run(evaluate(args))
++    print(json.dumps(result["aggregate"], ensure_ascii=True))
++
++
++if __name__ == "__main__":
++    main()
+--- a/scripts/evaluate_query_search_retrieval.py
++++ b/scripts/evaluate_query_search_retrieval.py
+@@ -0,0 +1,246 @@
++"""Read-only Query-plan replay against the real Supabase corpus; no model downloads."""
++
++import argparse
++import asyncio
++import hashlib
++import json
++import os
++import time
++from functools import wraps
++from pathlib import Path
++from unittest.mock import patch
++
++from dotenv import dotenv_values
++
++from scripts.evaluate_query_search import matches
++from src.applications.tillegal.agents.query.agent import QueryPlan
++from src.applications.tillegal.agents.search.agent import SearchOptions, search
++from src.applications.tillegal.retrieval.hybrid_models import HybridConfig
++from src.applications.tillegal.retrieval.reranking_models import RerankConfig
++from src.core.config import load_settings
++from src.integrations.embeddings.cross_encoder_reranker import LocalCrossEncoder
++from src.integrations.embeddings.e5_query_encoder import E5QueryEncoder
++from src.retrieval_bootstrap import create_retrieval_service
++
++ROOT = Path(__file__).resolve().parents[1]
++CACHE = Path.home() / ".cache/huggingface/hub"
++DENSE = CACHE / "models--intfloat--multilingual-e5-small/snapshots/614241f622f53c4eeff9890bdc4f31cfecc418b3"
++CE = CACHE / "models--cross-encoder--mmarco-mMiniLMv2-L12-H384-v1/snapshots/1427fd652930e4ba29e8149678df786c240d8825"
++
++
++def sanitize(value):
++    if isinstance(value, dict):
++        return {
++            key: (
++                "[REDACTED]"
++                if any(word in key.lower() for word in ("authorization", "api_key", "password", "secret"))
++                else sanitize(item)
++            )
++            for key, item in value.items()
++        }
++    if isinstance(value, (tuple, list)):
++        return [sanitize(item) for item in value]
++    return value
++
++
++def checks(result: dict, expected: dict) -> dict:
++    groups = result["evidence"]
++    occurrences = [occurrence for group in groups for occurrence in group.occurrences]
++    valid = all(
++        result["requests"][o.subquery_index].query == o.query
++        and str(result["responses"][o.response_index].request_id) == o.request_id
++        and any(
++            item.retrieval_chunk_id == group.evidence.retrieval_chunk_id
++            and item.content_sha256 == group.evidence.content_sha256
++            for item in result["responses"][o.response_index].evidence
++        )
++        for group in groups
++        for o in group.occurrences
++    )
++    content = " ".join(group.evidence.title + " " + group.evidence.content for group in groups)
++    keys = [
++        group.evidence.model_dump_json(exclude={"rank", "raw_score", "score_kind", "retrieval_method"})
++        for group in groups
++    ]
++    return {
++        "evidence_groups": len(groups),
++        "occurrences": len(occurrences),
++        "duplicates_collapsed": len(occurrences) - len(groups),
++        "provenance_links_valid": valid if occurrences else None,
++        "content_hashes_match": all(
++            hashlib.sha256(group.evidence.content.encode()).hexdigest() == group.evidence.content_sha256
++            for group in groups
++        )
++        if groups
++        else None,
++        "unique_source_payloads": len(keys) == len(set(keys)) if keys else None,
++        "source_ids_present": all(
++            group.evidence.source_document_id and group.evidence.document_structure_id for group in groups
++        )
++        if groups
++        else None,
++        "objective_topic_matches_proxy": sum(matches(pattern, content) for pattern in expected["expected_issues"]),
++        "objective_topic_total": len(expected["expected_issues"]),
++        "relevance_assessment": "LEXICAL_PROXY_ONLY_NO_RELEVANCE_JUDGMENTS",
++    }
++
++
++async def run(args):
++    if args.output.exists():
++        raise ValueError("Preserve previous output; choose a new result path")
++    data = json.loads(args.plans.read_text(encoding="utf-8"))
++    plans = {row["id"]: row for row in data["rows"] if row["status"] == "OK"}
++    cases = {
++        case["id"]: case
++        for case in json.loads((ROOT / "evaluation/query_search/cases.json").read_text(encoding="utf-8"))["cases"]
++    }
++    env = {**{key: value for key, value in dotenv_values(ROOT / ".env").items() if value is not None}, **os.environ}
++    settings = load_settings(environ=env).supabase
++    report = {
++        "plans_artifact": str(args.plans),
++        "prompt_sha256": data["prompt_sha256"],
++        "model": data.get("model"),
++        "live_gemini_replayed_not_recalled": data["mode"] == "gemini",
++        "database": "REAL_SUPABASE_READ_ONLY",
++        "as_of_date": args.as_of_date,
++        "dense_path_exists": DENSE.is_dir(),
++        "reranker_path_exists": CE.is_dir(),
++        "rows": [],
++    }
++    hybrid = HybridConfig(bm25_candidates=10, dense_candidates=10)
++    started = time.perf_counter()
++    service = create_retrieval_service(
++        settings, dense_model_path=DENSE if DENSE.is_dir() else None, hybrid_config=hybrid, timeout_seconds=30
++    )
++    reranked = create_retrieval_service(
++        settings,
++        dense_model_path=DENSE if DENSE.is_dir() else None,
++        hybrid_config=hybrid,
++        timeout_seconds=30,
++        rerank_config=RerankConfig(
++            enabled=True, model_path=CE, candidate_pool=8, inference_timeout_seconds=25, total_timeout_seconds=40
++        ),
++    )
++    report["bootstrap_ms"] = round((time.perf_counter() - started) * 1000, 2)
++    report["model_initialization"] = []
++    if args.warm_models and not args.bm25_only:
++        for name, loader in [
++            ("e5_base", service._query_embedder._get_model),
++            ("e5_rerank", reranked._query_embedder._get_model),
++            ("cross_encoder", reranked._pair_scorer._load),
++        ]:
++            started = time.perf_counter()
++            try:
++                async with asyncio.timeout(90):
++                    await asyncio.to_thread(loader)
++                initialization = {"model": name, "status": "INITIALIZED"}
++            except Exception as error:
++                initialization = {"model": name, "status": "BLOCKED", "error_type": type(error).__name__}
++            initialization["ms"] = round((time.perf_counter() - started) * 1000, 2)
++            report["model_initialization"].append(initialization)
++            print(json.dumps(initialization), flush=True)
++    timings = []
++
++    def timed(original, name):
++        @wraps(original)
++        def wrapper(*a, **kw):
++            started = time.perf_counter()
++            try:
++                return original(*a, **kw)
++            finally:
++                timings.append({"stage": name, "ms": round((time.perf_counter() - started) * 1000, 2)})
++
++        return wrapper
++
++    schedule = [("Q001", mode) for mode in ("bm25", "dense", "hybrid", "rerank")]
++    schedule += [(case_id, "bm25") for case_id in ("Q004", "Q010")]
++    if args.bm25_only:
++        schedule = [(case_id, "bm25") for case_id in args.case_ids.split(",")]
++    with (
++        patch.object(E5QueryEncoder, "_get_model", timed(E5QueryEncoder._get_model, "e5_load_or_cached")),
++        patch.object(LocalCrossEncoder, "_load", timed(LocalCrossEncoder._load, "reranker_cold_load")),
++    ):
++        for case_id, mode in schedule:
++            if case_id not in plans:
++                report["rows"].append({"id": case_id, "mode": mode, "status": "BLOCKED_QUERY_PLAN_UNAVAILABLE"})
++                continue
++            plan = QueryPlan.model_validate(plans[case_id]["plan"]).model_dump()
++            row = {
++                "id": case_id,
++                "mode": mode,
++                "configured": True,
++                "local_dense_available": DENSE.is_dir(),
++                "local_reranker_available": CE.is_dir(),
++            }
++            timings.clear()
++            started = time.perf_counter()
++            try:
++                result = await search(
++                    plan,
++                    reranked if mode == "rerank" else service,
++                    SearchOptions(
++                        mode="hybrid" if mode == "rerank" else mode,
++                        top_k=3,
++                        as_of_date=args.as_of_date,
++                        allowed_usage_policies=("EXPERIMENTAL_ONLY",),
++                    ),
++                )
++                row.update(
++                    status=result["status"], completeness=result["completeness"], checks=checks(result, cases[case_id])
++                )
++                row["requests"] = [request.model_dump(mode="json") for request in result["requests"]]
++                row["responses"] = [response.model_dump(mode="json") for response in result["responses"]]
++                row["aggregated_evidence"] = [group.model_dump(mode="json") for group in result["evidence"]]
++                row["warnings"] = list(result["warnings"])
++                row["errors"] = [error.model_dump(mode="json") for error in result["errors"]]
++                row["reranking_statuses"] = [
++                    response.reranking.status for response in result["responses"] if hasattr(response, "reranking")
++                ]
++                row["reranking_diagnostics"] = [
++                    response.reranking.diagnostics.model_dump(mode="json")
++                    for response in result["responses"]
++                    if hasattr(response, "reranking") and response.reranking.diagnostics
++                ]
++            except Exception as error:
++                row.update(status="BLOCKED", error_type=type(error).__name__)
++            row["timings"] = list(timings)
++            row["latency_ms"] = round((time.perf_counter() - started) * 1000, 2)
++            report["rows"].append(row)
++            args.output.parent.mkdir(parents=True, exist_ok=True)
++            args.output.write_text(json.dumps(sanitize(report), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++            print(
++                json.dumps(
++                    {
++                        key: row.get(key)
++                        for key in (
++                            "id",
++                            "mode",
++                            "status",
++                            "completeness",
++                            "checks",
++                            "latency_ms",
++                            "errors",
++                            "reranking_statuses",
++                        )
++                    }
++                ),
++                flush=True,
++            )
++    return report
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--plans", type=Path, required=True)
++    parser.add_argument("--output", type=Path, required=True)
++    parser.add_argument("--as-of-date", required=True)
++    parser.add_argument("--bm25-only", action="store_true")
++    parser.add_argument("--case-ids", default="Q001,Q004,Q010", help="Case IDs for BM25-only replay")
++    parser.add_argument(
++        "--warm-models", action="store_true", help="Measure local initialization separately from retrieval"
++    )
++    asyncio.run(run(parser.parse_args()))
++
++
++if __name__ == "__main__":
++    main()
+--- a/scripts/summarize_query_search_evaluation.py
++++ b/scripts/summarize_query_search_evaluation.py
+@@ -0,0 +1,47 @@
++"""Recompute comparison metrics from immutable saved runs; no provider/database calls."""
++
++import json
++from pathlib import Path
++
++from scripts.evaluate_query_search import aggregate
++
++ROOT = Path(__file__).resolve().parents[1]
++DATA = ROOT / "evaluation/query_search"
++
++
++def load(name: str) -> dict:
++    return json.loads((DATA / "runs" / name).read_text(encoding="utf-8"))
++
++
++def main() -> None:
++    a, b, candidate, final = [
++        load(name)
++        for name in ("deterministic-before.json", "gemini-before.json", "gemini-after.json", "gemini-final.json")
++    ]
++    baseline_ids = {row["id"] for row in b["rows"]}
++    final_ids = {row["id"] for row in final["rows"]}
++    paired_final_ids = baseline_ids & final_ids
++    a15 = aggregate([row for row in a["rows"] if row["id"] in baseline_ids])
++    candidate15 = aggregate([row for row in candidate["rows"] if row["id"] in baseline_ids])
++    before5 = aggregate([row for row in b["rows"] if row["id"] in paired_final_ids])
++    final5 = aggregate([row for row in final["rows"] if row["id"] in paired_final_ids])
++    summary = {
++        "deterministic_45": a["aggregate"],
++        "deterministic_matched_15": a15,
++        "gemini_baseline_15": b["aggregate"],
++        "rejected_candidate_matched_15": candidate15,
++        "final_6": final["aggregate"],
++        "paired_final_ids": sorted(paired_final_ids),
++        "baseline_paired_final": before5,
++        "final_paired": final5,
++        "total_attempted_gemini_calls": sum(run["aggregate"]["live_model_calls"] for run in (b, candidate, final)),
++        "observed_tokens": sum(run["aggregate"]["tokens"]["total_tokens"] for run in (b, candidate, final)),
++        "deterministic_before_after_identical": [row["plan"] for row in a["rows"]]
++        == [row["plan"] for row in load("deterministic-after.json")["rows"]],
++    }
++    (DATA / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++    print("Updated evaluation/query_search/summary.json from saved runs; no API calls.")
++
++
++if __name__ == "__main__":
++    main()
+--- a/tests/unit/applications/tillegal/test_query_quality.py
++++ b/tests/unit/applications/tillegal/test_query_quality.py
+@@ -0,0 +1,116 @@
++"""Quality harness contracts and targeted Query regressions; no provider/database I/O."""
++
++import asyncio
++import json
++from pathlib import Path
++from unittest.mock import AsyncMock
++
++import pytest
++
++from scripts.evaluate_query_search import aggregate, matches, objective_assignment
++from scripts.evaluate_query_search_retrieval import sanitize
++from src.applications.tillegal.agents.query.schemas import SemanticAnalysis
++from src.applications.tillegal.agents.query.semantic import QueryAnalysisError, SemanticQueryAgent
++
++ROOT = Path(__file__).resolve().parents[4]
++
++
++def model_output(query="điều kiện có hiệu lực hợp đồng", **changes):
++    return {
++        "intent": "legal_question",
++        "domain": "unknown",
++        "facts": [],
++        "issues": [{"issue": "Điều kiện có hiệu lực", "search_query": query}],
++        "missing_information": [],
++        "temporal_mentions": [],
++        "clarification": None,
++        **changes,
++    }
++
++
++def run(question, data):
++    completion = AsyncMock(return_value=json.dumps(data, ensure_ascii=False))
++    plan = asyncio.run(SemanticQueryAgent(completion, "fixture/model").understand(question))
++    return plan, completion
++
++
++def test_semantic_provider_schema_excludes_intent_that_runtime_already_rejects():
++    plan, completion = run("Hợp đồng dân sự có hiệu lực khi nào?", model_output())
++    assert completion.call_args.kwargs["schema"]["properties"]["intent"]["enum"] == ["legal_question"]
++    # Public compatibility schema stays unchanged, including exact lookup.
++    assert SemanticAnalysis.model_json_schema()["properties"]["intent"]["enum"] == ["quote_lookup", "legal_question"]
++    assert plan["intent"] == "legal_question"
++
++
++def test_single_objective_preserves_user_article_clause_and_document_identity():
++    question = "Tôi muốn kiểm tra khoản 1 Điều 117 Bộ luật Dân sự 91/2015/QH13 có đúng như bài viết không?"
++    plan, _ = run(question, model_output("điều kiện có hiệu lực Điều 117"))
++    query = plan["subqueries"][0]["text"]
++    assert all(reference in query for reference in ("khoản 1", "Điều 117", "91/2015/QH13"))
++    assert query.count("Điều 117") == 1
++    assert plan["original"] == question
++
++
++def test_no_citation_invention_for_ordinary_question():
++    plan, _ = run("Hợp đồng dân sự có hiệu lực khi nào?", model_output())
++    assert plan["subqueries"][0]["text"] == "điều kiện có hiệu lực hợp đồng"
++
++
++def test_multiple_objectives_do_not_receive_unrelated_citations():
++    data = model_output(
++        issues=[
++            {"issue": "Hợp đồng", "search_query": "Điều 117 hợp đồng"},
++            {"issue": "Lao động", "search_query": "Điều 35 nghỉ việc"},
++        ]
++    )
++    plan, _ = run("Tôi hỏi Điều 117 Bộ luật Dân sự và Điều 35 Bộ luật Lao động thì sao?", data)
++    assert "Điều 35" not in plan["subqueries"][0]["text"]
++    assert "Điều 117" not in plan["subqueries"][1]["text"]
++
++
++@pytest.mark.parametrize(
++    "facts",
++    [
++        [{"text": "chuyển tiền", "source_quote": "chuyển tiền."}],
++        [{"text": "đã chuyển khoản", "source_quote": "đã chuyển khoản"}],
++    ],
++)
++def test_punctuation_or_paraphrased_facts_still_fail_strict_grounding(facts):
++    completion = AsyncMock(return_value=json.dumps(model_output(facts=facts)))
++    with pytest.raises(QueryAnalysisError, match="QUERY_ANALYSIS_INVALID_RESPONSE"):
++        asyncio.run(
++            SemanticQueryAgent(completion, "fixture/model").understand("Tôi đã chuyển tiền nhưng không nhận hàng.")
++        )
++
++
++def test_dataset_is_fixed_utf8_and_independently_grounded():
++    cases = json.loads((ROOT / "evaluation/query_search/cases.json").read_text(encoding="utf-8"))["cases"]
++    assert len(cases) == 45 and len({case["category"] for case in cases}) == 15
++    assert len({case["id"] for case in cases}) == 45
++    assert sum(case["live_sample"] for case in cases) == 15
++    for case in cases:
++        assert all(fact in case["question"] for fact in case["expected_preserved_facts"])
++        assert all(citation in case["question"] for citation in case["citation_constraints"])
++
++
++def test_objective_matching_does_not_reward_one_query_as_several_distinct_queries():
++    assert objective_assignment(["báo trước", "bồi thường"], ["báo trước và bồi thường"]) == 1
++    assert objective_assignment(["báo trước", "bồi thường"], ["báo trước", "bồi thường"]) == 2
++    assert matches("A|bảo lãnh", "Trách nhiệm của B bảo lãnh")
++    assert not matches("A", "trả")
++
++
++def test_aggregation_retains_errors_in_denominator_and_labels_semantic_proxies():
++    report = aggregate(
++        [{"status": "ERROR", "latency_ms": 2, "api_calls": 1, "error": {"code": "QUERY_ANALYSIS_INVALID_RESPONSE"}}]
++    )
++    assert report["cases"] == report["failures"] == 1 and report["successes"] == 0
++    assert report["issue_coverage_proxy"] is None
++    assert report["semantic_grade"] == "HEURISTIC_REQUIRES_HUMAN_REVIEW"
++    assert report["cost_usd"] is None
++
++
++def test_nested_evidence_export_redacts_sensitive_metadata_keys():
++    assert sanitize({"source": [{"authorization": "secret", "api_key": "secret", "title": "public"}]}) == {
++        "source": [{"authorization": "[REDACTED]", "api_key": "[REDACTED]", "title": "public"}]
++    }
+--- a/evaluation/query_search/cases.json
++++ b/evaluation/query_search/cases.json
+@@ -0,0 +1,1480 @@
++{
++  "schema_version": "1",
++  "cases": [
++    {
++      "id": "Q001",
++      "question": "Điều kiện để hợp đồng dân sự có hiệu lực là gì?",
++      "category": "single_issue",
++      "domain": "civil",
++      "expected_issues": [
++        "hiệu lực|điều kiện"
++      ],
++      "expected_preserved_facts": [],
++      "required_missing_information": [],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "hiệu lực|điều kiện"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": true,
++      "split": "development"
++    },
++    {
++      "id": "Q002",
++      "question": "Tôi mua một chiếc máy giặt mới nhưng bị lỗi, tôi có quyền yêu cầu đổi hàng không?",
++      "category": "single_issue",
++      "domain": "consumer",
++      "expected_issues": [
++        "đổi|đổi trả|bảo hành"
++      ],
++      "expected_preserved_facts": [
++        "máy giặt mới",
++        "bị lỗi"
++      ],
++      "required_missing_information": [
++        "thời điểm|ngày mua"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "đổi|đổi trả|bảo hành"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q003",
++      "question": "Thủ tục đăng ký hộ kinh doanh gồm những bước nào?",
++      "category": "single_issue",
++      "domain": "business",
++      "expected_issues": [
++        "đăng ký|thủ tục"
++      ],
++      "expected_preserved_facts": [],
++      "required_missing_information": [],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "đăng ký|thủ tục"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q004",
++      "question": "Tôi ký hợp đồng lao động 2 năm, mới làm được 6 tháng nhưng muốn nghỉ việc. Tôi có phải báo trước không và có phải bồi thường không?",
++      "category": "multi_issue",
++      "domain": "labour",
++      "expected_issues": [
++        "báo trước",
++        "bồi thường"
++      ],
++      "expected_preserved_facts": [
++        "hợp đồng lao động 2 năm",
++        "6 tháng"
++      ],
++      "required_missing_information": [
++        "lý do",
++        "đào tạo"
++      ],
++      "already_supplied_topics": [
++        "loại hợp đồng|xác định thời hạn|thời hạn hợp đồng"
++      ],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "báo trước",
++        "bồi thường"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": true,
++      "split": "development"
++    },
++    {
++      "id": "Q005",
++      "question": "Tôi muốn ly hôn, việc nuôi con và chia tài sản giải quyết thế nào?",
++      "category": "multi_issue",
++      "domain": "family",
++      "expected_issues": [
++        "ly hôn",
++        "nuôi con|quyền nuôi",
++        "tài sản"
++      ],
++      "expected_preserved_facts": [
++        "muốn ly hôn"
++      ],
++      "required_missing_information": [
++        "tuổi|bao nhiêu tuổi",
++        "tài sản"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "ly hôn",
++        "nuôi con|quyền nuôi",
++        "tài sản"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q006",
++      "question": "Tôi muốn chuyển nhượng đất, cần điều kiện gì và phải nộp những khoản phí nào?",
++      "category": "multi_issue",
++      "domain": "land",
++      "expected_issues": [
++        "chuyển nhượng|điều kiện",
++        "thuế|phí|tài chính"
++      ],
++      "expected_preserved_facts": [
++        "chuyển nhượng đất"
++      ],
++      "required_missing_information": [
++        "loại đất",
++        "giấy chứng nhận|sổ"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "chuyển nhượng|điều kiện",
++        "thuế|phí|tài chính"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q007",
++      "question": "Tôi đặt điện thoại trên mạng, đã chuyển tiền nhưng người bán không giao hàng và không trả lời tin nhắn. Tôi nên tìm hiểu quyền gì?",
++      "category": "implicit_issue",
++      "domain": "consumer",
++      "expected_issues": [
++        "giao hàng|hoàn tiền|đòi tiền",
++        "khiếu nại|tranh chấp|tố giác"
++      ],
++      "expected_preserved_facts": [
++        "đã chuyển tiền",
++        "không giao hàng"
++      ],
++      "required_missing_information": [
++        "thời hạn|thời điểm|ngày"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "giao hàng|hoàn tiền|đòi tiền",
++        "khiếu nại|tranh chấp|tố giác"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": true,
++      "split": "heldout"
++    },
++    {
++      "id": "Q008",
++      "question": "Công ty giữ bản chính bằng đại học của tôi và nói nghỉ việc thì không trả. Tôi cần tra cứu gì?",
++      "category": "implicit_issue",
++      "domain": "labour",
++      "expected_issues": [
++        "giữ|trả|giấy tờ|văn bằng"
++      ],
++      "expected_preserved_facts": [
++        "bản chính bằng đại học",
++        "không trả"
++      ],
++      "required_missing_information": [],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "giữ|trả|giấy tờ|văn bằng"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "heldout"
++    },
++    {
++      "id": "Q009",
++      "question": "Bạn tôi mượn xe rồi đem bán mà tôi không đồng ý. Tôi có thể đòi lại xe như thế nào?",
++      "category": "implicit_issue",
++      "domain": "civil",
++      "expected_issues": [
++        "đòi|hoàn trả|thu hồi",
++        "bồi thường|trách nhiệm"
++      ],
++      "expected_preserved_facts": [
++        "mượn xe",
++        "đem bán",
++        "không đồng ý"
++      ],
++      "required_missing_information": [
++        "người mua|ngay tình"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "đòi|hoàn trả|thu hồi",
++        "bồi thường|trách nhiệm"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "heldout"
++    },
++    {
++      "id": "Q010",
++      "question": "Mảnh đất nhà tôi đang sử dụng có được cấp giấy chứng nhận không?",
++      "category": "missing_information",
++      "domain": "land",
++      "expected_issues": [
++        "cấp|giấy chứng nhận"
++      ],
++      "expected_preserved_facts": [
++        "đang sử dụng"
++      ],
++      "required_missing_information": [
++        "nguồn gốc",
++        "thời điểm|thời gian",
++        "tranh chấp"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "cấp|giấy chứng nhận"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": true,
++      "split": "development"
++    },
++    {
++      "id": "Q011",
++      "question": "Công ty chấm dứt hợp đồng của tôi thì tôi được nhận những khoản nào?",
++      "category": "missing_information",
++      "domain": "labour",
++      "expected_issues": [
++        "chấm dứt",
++        "trợ cấp|quyền lợi|thanh toán"
++      ],
++      "expected_preserved_facts": [
++        "Công ty chấm dứt"
++      ],
++      "required_missing_information": [
++        "lý do",
++        "thời gian|thời điểm",
++        "hợp đồng"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "chấm dứt",
++        "trợ cấp|quyền lợi|thanh toán"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q012",
++      "question": "Tôi có thể khiếu nại quyết định xử phạt này không?",
++      "category": "missing_information",
++      "domain": "administrative",
++      "expected_issues": [
++        "khiếu nại|thời hiệu"
++      ],
++      "expected_preserved_facts": [
++        "quyết định xử phạt"
++      ],
++      "required_missing_information": [
++        "ngày|thời điểm",
++        "nội dung|hành vi|lý do"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "khiếu nại|thời hiệu"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q013",
++      "question": "Có được không?",
++      "category": "ambiguous_intent",
++      "domain": "unknown",
++      "expected_issues": [],
++      "expected_preserved_facts": [],
++      "required_missing_information": [
++        "tình huống|cụ thể|tra cứu|quy định"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": true,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": true,
++      "split": "development"
++    },
++    {
++      "id": "Q014",
++      "question": "Chuyện như hôm trước tôi kể thì làm sao?",
++      "category": "ambiguous_intent",
++      "domain": "unknown",
++      "expected_issues": [],
++      "expected_preserved_facts": [],
++      "required_missing_information": [
++        "tình huống|cụ thể|nội dung"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": true,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q015",
++      "question": "Hợp đồng?",
++      "category": "ambiguous_intent",
++      "domain": "unknown",
++      "expected_issues": [],
++      "expected_preserved_facts": [],
++      "required_missing_information": [
++        "loại|cụ thể|nội dung|vấn đề"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": true,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q016",
++      "question": "Tôi ký hợp đồng lao động 12 tháng vào ngày 15/03/2024, muốn nghỉ ngày 01/09/2024. Cần tra cứu quy định báo trước nào áp dụng?",
++      "category": "explicit_date",
++      "domain": "labour",
++      "expected_issues": [
++        "báo trước"
++      ],
++      "expected_preserved_facts": [
++        "12 tháng",
++        "15/03/2024",
++        "01/09/2024"
++      ],
++      "required_missing_information": [
++        "lý do"
++      ],
++      "already_supplied_topics": [
++        "ngày ký|ngày nghỉ|thời hạn hợp đồng"
++      ],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "báo trước"
++      ],
++      "temporal_expectations": [
++        "15/03/2024",
++        "01/09/2024"
++      ],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": true,
++      "split": "heldout"
++    },
++    {
++      "id": "Q017",
++      "question": "Hợp đồng vay của tôi ký ngày 01/06/2022, đến hạn ngày 01/06/2023 nhưng chưa trả. Tôi muốn tra cứu thời hiệu khởi kiện.",
++      "category": "explicit_date",
++      "domain": "civil",
++      "expected_issues": [
++        "thời hiệu|khởi kiện"
++      ],
++      "expected_preserved_facts": [
++        "01/06/2022",
++        "01/06/2023",
++        "chưa trả"
++      ],
++      "required_missing_information": [],
++      "already_supplied_topics": [
++        "ngày ký|ngày đến hạn"
++      ],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "thời hiệu|khởi kiện"
++      ],
++      "temporal_expectations": [
++        "01/06/2022",
++        "01/06/2023"
++      ],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "heldout"
++    },
++    {
++      "id": "Q018",
++      "question": "Tôi nhận quyết định xử phạt ngày 20/08/2025. Thời hạn khiếu nại được tính ra sao?",
++      "category": "explicit_date",
++      "domain": "administrative",
++      "expected_issues": [
++        "thời hạn|khiếu nại"
++      ],
++      "expected_preserved_facts": [
++        "20/08/2025"
++      ],
++      "required_missing_information": [],
++      "already_supplied_topics": [
++        "ngày nhận"
++      ],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "thời hạn|khiếu nại"
++      ],
++      "temporal_expectations": [
++        "20/08/2025"
++      ],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "heldout"
++    },
++    {
++      "id": "Q019",
++      "question": "Việc mua bán đất của gia đình diễn ra năm 2010, tôi cần tra cứu điều kiện có hiệu lực tại thời điểm đó, không phải hiện nay.",
++      "category": "historical_context",
++      "domain": "land",
++      "expected_issues": [
++        "hiệu lực|mua bán|chuyển nhượng"
++      ],
++      "expected_preserved_facts": [
++        "năm 2010"
++      ],
++      "required_missing_information": [
++        "giấy tờ|hình thức"
++      ],
++      "already_supplied_topics": [
++        "năm giao dịch|thời điểm giao dịch"
++      ],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "hiệu lực|mua bán|chuyển nhượng"
++      ],
++      "temporal_expectations": [
++        "2010"
++      ],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": true,
++      "split": "development"
++    },
++    {
++      "id": "Q020",
++      "question": "Tôi bị chấm dứt hợp đồng lao động vào năm 2018. Quy định báo trước khi đó khác hiện nay thế nào?",
++      "category": "historical_context",
++      "domain": "labour",
++      "expected_issues": [
++        "báo trước",
++        "2018|thời điểm|lịch sử"
++      ],
++      "expected_preserved_facts": [
++        "năm 2018"
++      ],
++      "required_missing_information": [
++        "loại hợp đồng|thời hạn"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "báo trước",
++        "2018|thời điểm|lịch sử"
++      ],
++      "temporal_expectations": [
++        "2018"
++      ],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q021",
++      "question": "Tài sản được vợ chồng tôi mua năm 2005 trước khi đăng ký kết hôn năm 2007. Tôi muốn tìm quy định áp dụng lúc mua.",
++      "category": "historical_context",
++      "domain": "family",
++      "expected_issues": [
++        "tài sản|sở hữu"
++      ],
++      "expected_preserved_facts": [
++        "năm 2005",
++        "năm 2007"
++      ],
++      "required_missing_information": [
++        "đóng góp|đứng tên|thỏa thuận"
++      ],
++      "already_supplied_topics": [
++        "năm mua|năm kết hôn"
++      ],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "tài sản|sở hữu"
++      ],
++      "temporal_expectations": [
++        "2005",
++        "2007"
++      ],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q022",
++      "question": "Tra cứu Điều 35 Bộ luật Lao động 45/2019/QH14.",
++      "category": "exact_citation",
++      "domain": "labour",
++      "expected_issues": [
++        "Điều 35"
++      ],
++      "expected_preserved_facts": [],
++      "required_missing_information": [],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "Điều 35"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [
++        "Điều 35",
++        "45/2019/QH14"
++      ],
++      "expected_intent": "quote_lookup",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": true,
++      "split": "development"
++    },
++    {
++      "id": "Q023",
++      "question": "Trích nguyên văn: khoản 1 Điều 117 Bộ luật Dân sự 91/2015/QH13.",
++      "category": "exact_citation",
++      "domain": "civil",
++      "expected_issues": [
++        "Điều 117"
++      ],
++      "expected_preserved_facts": [],
++      "required_missing_information": [],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "Điều 117"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [
++        "khoản 1",
++        "Điều 117",
++        "91/2015/QH13"
++      ],
++      "expected_intent": "quote_lookup",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q024",
++      "question": "Tìm khoản 2 Điều 45 Luật Đất đai 31/2024/QH15.",
++      "category": "exact_citation",
++      "domain": "land",
++      "expected_issues": [
++        "Điều 45"
++      ],
++      "expected_preserved_facts": [],
++      "required_missing_information": [],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "Điều 45"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [
++        "khoản 2",
++        "Điều 45",
++        "31/2024/QH15"
++      ],
++      "expected_intent": "quote_lookup",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q025",
++      "question": "Một bài viết nói Điều 35 Bộ luật Lao động 45/2019/QH14 cho nghỉ ngay mọi trường hợp. Tôi muốn kiểm tra trích dẫn này có đúng không.",
++      "category": "citation_verification",
++      "domain": "labour",
++      "expected_issues": [
++        "Điều 35",
++        "báo trước|ngoại lệ|nghỉ ngay|trường hợp"
++      ],
++      "expected_preserved_facts": [],
++      "required_missing_information": [],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "Điều 35",
++        "báo trước|ngoại lệ|nghỉ ngay|trường hợp"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [
++        "Điều 35",
++        "45/2019/QH14"
++      ],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": true,
++      "split": "heldout"
++    },
++    {
++      "id": "Q026",
++      "question": "Người bán viện dẫn Điều 117 Bộ luật Dân sự 91/2015/QH13 để nói hợp đồng miệng luôn vô hiệu. Tôi muốn tra cứu nguồn để kiểm tra.",
++      "category": "citation_verification",
++      "domain": "civil",
++      "expected_issues": [
++        "Điều 117",
++        "hình thức|miệng|vô hiệu"
++      ],
++      "expected_preserved_facts": [
++        "hợp đồng miệng"
++      ],
++      "required_missing_information": [],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "Điều 117",
++        "hình thức|miệng|vô hiệu"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [
++        "Điều 117",
++        "91/2015/QH13"
++      ],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "heldout"
++    },
++    {
++      "id": "Q027",
++      "question": "Cửa hàng đưa ra một số điều luật nhưng không ghi số hiệu văn bản để từ chối bảo hành. Tôi cần kiểm tra cơ sở này thế nào?",
++      "category": "citation_verification",
++      "domain": "consumer",
++      "expected_issues": [
++        "bảo hành",
++        "cơ sở|văn bản|trích dẫn"
++      ],
++      "expected_preserved_facts": [
++        "không ghi số hiệu"
++      ],
++      "required_missing_information": [
++        "nội dung|trích dẫn|điều luật"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "bảo hành",
++        "cơ sở|văn bản|trích dẫn"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "heldout"
++    },
++    {
++      "id": "Q028",
++      "question": "Trong trường hợp nào người lao động được nghỉ việc không phải báo trước?",
++      "category": "exceptions_conditions",
++      "domain": "labour",
++      "expected_issues": [
++        "không phải báo trước|miễn báo trước|không cần báo trước"
++      ],
++      "expected_preserved_facts": [],
++      "required_missing_information": [],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "không phải báo trước|miễn báo trước|không cần báo trước"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": true,
++      "split": "development"
++    },
++    {
++      "id": "Q029",
++      "question": "Tôi mua hàng giảm giá nhưng sản phẩm bị lỗi từ nhà sản xuất. Điều kiện nào cho phép từ chối bảo hành?",
++      "category": "exceptions_conditions",
++      "domain": "consumer",
++      "expected_issues": [
++        "bảo hành|từ chối",
++        "lỗi|giảm giá"
++      ],
++      "expected_preserved_facts": [
++        "hàng giảm giá",
++        "lỗi từ nhà sản xuất"
++      ],
++      "required_missing_information": [],
++      "already_supplied_topics": [
++        "có lỗi|giảm giá hay không"
++      ],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "bảo hành|từ chối",
++        "lỗi|giảm giá"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q030",
++      "question": "Hộ kinh doanh có phải tạm ngừng hoạt động khi chủ hộ ốm dài ngày không, có trường hợp được ủy quyền không?",
++      "category": "exceptions_conditions",
++      "domain": "business",
++      "expected_issues": [
++        "tạm ngừng",
++        "ủy quyền"
++      ],
++      "expected_preserved_facts": [
++        "ốm dài ngày"
++      ],
++      "required_missing_information": [],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "tạm ngừng",
++        "ủy quyền"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q031",
++      "question": "Tôi làm ở xưởng may, hợp đồng lao động 2 năm, đã làm 6 tháng. Tôi muốn nghỉ vì chuyển chỗ ở, công ty nói phải đền toàn bộ lương đã nhận. Tôi chưa ký thỏa thuận đào tạo. Tôi muốn tìm quy định về báo trước và trách nhiệm bồi thường, chưa cần bạn kết luận tôi đúng hay sai.",
++      "category": "long_conversation",
++      "domain": "labour",
++      "expected_issues": [
++        "báo trước",
++        "bồi thường"
++      ],
++      "expected_preserved_facts": [
++        "2 năm",
++        "6 tháng",
++        "chuyển chỗ ở",
++        "chưa ký thỏa thuận đào tạo"
++      ],
++      "required_missing_information": [],
++      "already_supplied_topics": [
++        "lý do nghỉ|loại hợp đồng|thời hạn hợp đồng|có thỏa thuận đào tạo"
++      ],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "báo trước",
++        "bồi thường"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": true,
++      "split": "development"
++    },
++    {
++      "id": "Q032",
++      "question": "Tôi thuê nhà để ở, có giấy thỏa thuận, đã đặt cọc 10 triệu đồng. Chủ nhà muốn lấy lại nhà sớm dù tôi vẫn trả tiền đúng hạn. Tôi chỉ muốn biết cần tìm quy định nào về chấm dứt hợp đồng thuê và hoàn trả tiền cọc.",
++      "category": "long_conversation",
++      "domain": "civil",
++      "expected_issues": [
++        "chấm dứt|thuê",
++        "đặt cọc|tiền cọc"
++      ],
++      "expected_preserved_facts": [
++        "10 triệu đồng",
++        "trả tiền đúng hạn"
++      ],
++      "required_missing_information": [
++        "thời hạn|điều khoản"
++      ],
++      "already_supplied_topics": [
++        "có đặt cọc|số tiền cọc"
++      ],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "chấm dứt|thuê",
++        "đặt cọc|tiền cọc"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q033",
++      "question": "Vợ chồng tôi đã sống riêng, con đang ở với mẹ. Chúng tôi chưa nộp đơn ly hôn, chưa thống nhất tiền cấp dưỡng. Tôi muốn tìm quy định về nghĩa vụ nuôi dưỡng khi chưa ly hôn và cách yêu cầu cấp dưỡng.",
++      "category": "long_conversation",
++      "domain": "family",
++      "expected_issues": [
++        "cấp dưỡng",
++        "chưa ly hôn|nuôi dưỡng"
++      ],
++      "expected_preserved_facts": [
++        "chưa nộp đơn ly hôn",
++        "chưa thống nhất tiền cấp dưỡng"
++      ],
++      "required_missing_information": [
++        "tuổi|thu nhập"
++      ],
++      "already_supplied_topics": [
++        "đã ly hôn|đã nộp đơn"
++      ],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "cấp dưỡng",
++        "chưa ly hôn|nuôi dưỡng"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q034",
++      "question": "Tôi thích điện thoại màu xanh, hôm mua trời mưa và quán bên cạnh rất đông. Điện thoại mới mua bị lỗi màn hình. Tôi muốn đổi hàng thì tra cứu quy định nào?",
++      "category": "irrelevant_details",
++      "domain": "consumer",
++      "expected_issues": [
++        "đổi|bảo hành"
++      ],
++      "expected_preserved_facts": [
++        "bị lỗi màn hình"
++      ],
++      "required_missing_information": [
++        "ngày mua|thời điểm|thời hạn"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "đổi|bảo hành"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": true,
++      "split": "heldout"
++    },
++    {
++      "id": "Q035",
++      "question": "Nhà tôi nuôi ba con mèo, hàng xóm hay mở nhạc. Tôi muốn biết thủ tục cấp bản sao giấy chứng nhận đất bị mất.",
++      "category": "irrelevant_details",
++      "domain": "land",
++      "expected_issues": [
++        "mất|cấp lại|giấy chứng nhận"
++      ],
++      "expected_preserved_facts": [
++        "giấy chứng nhận đất bị mất"
++      ],
++      "required_missing_information": [],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "mất|cấp lại|giấy chứng nhận"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "heldout"
++    },
++    {
++      "id": "Q036",
++      "question": "Tôi thích uống cà phê buổi sáng. Tôi muốn đổi địa chỉ trụ sở công ty thì cần hồ sơ gì?",
++      "category": "irrelevant_details",
++      "domain": "business",
++      "expected_issues": [
++        "địa chỉ|trụ sở",
++        "hồ sơ|đăng ký"
++      ],
++      "expected_preserved_facts": [
++        "đổi địa chỉ trụ sở"
++      ],
++      "required_missing_information": [
++        "địa chỉ mới|tỉnh|địa bàn"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "địa chỉ|trụ sở",
++        "hồ sơ|đăng ký"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "heldout"
++    },
++    {
++      "id": "Q037",
++      "question": "Tôi cho bạn vay 50 triệu đồng, thời hạn 6 tháng, có giấy vay. Đến hạn bạn chưa trả thì đòi tiền thế nào?",
++      "category": "numerical_facts",
++      "domain": "civil",
++      "expected_issues": [
++        "đòi|khởi kiện|hoàn trả"
++      ],
++      "expected_preserved_facts": [
++        "50 triệu đồng",
++        "6 tháng",
++        "có giấy vay"
++      ],
++      "required_missing_information": [
++        "ngày|thời điểm"
++      ],
++      "already_supplied_topics": [
++        "số tiền vay|thời hạn vay|có giấy vay"
++      ],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "đòi|khởi kiện|hoàn trả"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": true,
++      "split": "development"
++    },
++    {
++      "id": "Q038",
++      "question": "Tôi làm thêm 20 giờ trong tháng, lương thỏa thuận 8 triệu đồng mỗi tháng. Tôi muốn tìm cách xác định tiền làm thêm, không cần tính ngay.",
++      "category": "numerical_facts",
++      "domain": "labour",
++      "expected_issues": [
++        "làm thêm|tiền lương"
++      ],
++      "expected_preserved_facts": [
++        "20 giờ",
++        "8 triệu đồng"
++      ],
++      "required_missing_information": [
++        "ngày thường|ngày nghỉ|ban đêm"
++      ],
++      "already_supplied_topics": [
++        "số giờ làm thêm|mức lương"
++      ],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "làm thêm|tiền lương"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q039",
++      "question": "Con tôi 7 tuổi, bố mẹ đang tranh chấp quyền nuôi con. Cần tìm các tiêu chí nào?",
++      "category": "numerical_facts",
++      "domain": "family",
++      "expected_issues": [
++        "nuôi con|nguyện vọng|tiêu chí"
++      ],
++      "expected_preserved_facts": [
++        "7 tuổi"
++      ],
++      "required_missing_information": [
++        "điều kiện|thu nhập|nguyện vọng"
++      ],
++      "already_supplied_topics": [
++        "tuổi của con|con bao nhiêu tuổi"
++      ],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "nuôi con|nguyện vọng|tiêu chí"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q040",
++      "question": "Tôi cho A vay tiền, B ký bảo lãnh, A không trả. Tôi có thể yêu cầu A và B thực hiện nghĩa vụ gì?",
++      "category": "multiple_subjects",
++      "domain": "civil",
++      "expected_issues": [
++        "vay|trả nợ|A",
++        "bảo lãnh|B"
++      ],
++      "expected_preserved_facts": [
++        "B ký bảo lãnh",
++        "A không trả"
++      ],
++      "required_missing_information": [
++        "phạm vi|thỏa thuận"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "vay|trả nợ|A",
++        "bảo lãnh|B"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": true,
++      "split": "development"
++    },
++    {
++      "id": "Q041",
++      "question": "Tôi làm cho công ty A nhưng công ty B điều hành công việc và trả lương. Khi nợ lương tôi nên xác định bên có nghĩa vụ thế nào?",
++      "category": "multiple_subjects",
++      "domain": "labour",
++      "expected_issues": [
++        "chủ thể|người sử dụng lao động|trách nhiệm",
++        "nợ lương|trả lương"
++      ],
++      "expected_preserved_facts": [
++        "công ty A",
++        "công ty B",
++        "nợ lương"
++      ],
++      "required_missing_information": [
++        "hợp đồng"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "chủ thể|người sử dụng lao động|trách nhiệm",
++        "nợ lương|trả lương"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q042",
++      "question": "Tôi góp vốn với hai người khác, một người tự ký hợp đồng nhân danh công ty. Tôi muốn tìm quy định về đại diện và trách nhiệm của thành viên.",
++      "category": "multiple_subjects",
++      "domain": "business",
++      "expected_issues": [
++        "đại diện",
++        "trách nhiệm|thành viên"
++      ],
++      "expected_preserved_facts": [
++        "hai người khác",
++        "tự ký hợp đồng"
++      ],
++      "required_missing_information": [
++        "loại hình|điều lệ|ủy quyền"
++      ],
++      "already_supplied_topics": [],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "đại diện",
++        "trách nhiệm|thành viên"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "development"
++    },
++    {
++      "id": "Q043",
++      "question": "Tôi ký hợp đồng lao động xác định thời hạn 24 tháng, muốn nghỉ vì chuyển nhà và không có thỏa thuận đào tạo. Cần tìm quy định báo trước và bồi thường nào?",
++      "category": "already_supplied",
++      "domain": "labour",
++      "expected_issues": [
++        "báo trước",
++        "bồi thường"
++      ],
++      "expected_preserved_facts": [
++        "xác định thời hạn 24 tháng",
++        "chuyển nhà",
++        "không có thỏa thuận đào tạo"
++      ],
++      "required_missing_information": [],
++      "already_supplied_topics": [
++        "loại hợp đồng|thời hạn hợp đồng|lý do nghỉ|có thỏa thuận đào tạo"
++      ],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "báo trước",
++        "bồi thường"
++      ],
++      "temporal_expectations": [],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": true,
++      "split": "heldout"
++    },
++    {
++      "id": "Q044",
++      "question": "Tôi mua máy tính ngày 01/10/2026, còn bảo hành, đã báo lỗi cho cửa hàng. Tôi muốn biết thủ tục yêu cầu bảo hành.",
++      "category": "already_supplied",
++      "domain": "consumer",
++      "expected_issues": [
++        "bảo hành|thủ tục"
++      ],
++      "expected_preserved_facts": [
++        "01/10/2026",
++        "còn bảo hành",
++        "đã báo lỗi"
++      ],
++      "required_missing_information": [],
++      "already_supplied_topics": [
++        "ngày mua|còn bảo hành|đã báo lỗi"
++      ],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "bảo hành|thủ tục"
++      ],
++      "temporal_expectations": [
++        "01/10/2026"
++      ],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "heldout"
++    },
++    {
++      "id": "Q045",
++      "question": "Tôi và chồng đăng ký kết hôn năm 2015, có con 5 tuổi, đều đồng ý ly hôn. Tôi muốn tra cứu hồ sơ thuận tình ly hôn.",
++      "category": "already_supplied",
++      "domain": "family",
++      "expected_issues": [
++        "thuận tình|hồ sơ"
++      ],
++      "expected_preserved_facts": [
++        "năm 2015",
++        "5 tuổi",
++        "đều đồng ý ly hôn"
++      ],
++      "required_missing_information": [],
++      "already_supplied_topics": [
++        "năm kết hôn|tuổi của con|có đồng ý ly hôn"
++      ],
++      "forbidden_invented_facts": [
++        "đã được xác minh",
++        "chắc chắn vi phạm",
++        "chắc chắn thắng kiện"
++      ],
++      "expected_search_objectives": [
++        "thuận tình|hồ sơ"
++      ],
++      "temporal_expectations": [
++        "2015"
++      ],
++      "citation_constraints": [],
++      "expected_intent": "legal_question",
++      "clarification_expected": false,
++      "notes": "Planning objectives only; no legal conclusion or statutory interpretation asserted. Pipe alternatives are heuristic matching vocabulary, not legal equivalence.",
++      "live_sample": false,
++      "split": "heldout"
++    }
++  ]
++}
+--- a/evaluation/query_search/schema.json
++++ b/evaluation/query_search/schema.json
+@@ -0,0 +1,119 @@
++{
++  "$schema": "https://json-schema.org/draft/2020-12/schema",
++  "type": "object",
++  "additionalProperties": false,
++  "required": [
++    "schema_version",
++    "cases"
++  ],
++  "properties": {
++    "schema_version": {
++      "const": "1"
++    },
++    "cases": {
++      "type": "array",
++      "minItems": 40,
++      "maxItems": 60,
++      "items": {
++        "type": "object",
++        "additionalProperties": false,
++        "required": [
++          "id",
++          "question",
++          "category",
++          "domain",
++          "expected_intent",
++          "notes",
++          "split",
++          "expected_issues",
++          "expected_preserved_facts",
++          "required_missing_information",
++          "already_supplied_topics",
++          "forbidden_invented_facts",
++          "expected_search_objectives",
++          "temporal_expectations",
++          "citation_constraints",
++          "clarification_expected",
++          "live_sample"
++        ],
++        "properties": {
++          "id": {
++            "type": "string"
++          },
++          "question": {
++            "type": "string"
++          },
++          "category": {
++            "type": "string"
++          },
++          "domain": {
++            "type": "string"
++          },
++          "expected_intent": {
++            "type": "string"
++          },
++          "notes": {
++            "type": "string"
++          },
++          "split": {
++            "type": "string"
++          },
++          "expected_issues": {
++            "type": "array",
++            "items": {
++              "type": "string"
++            }
++          },
++          "expected_preserved_facts": {
++            "type": "array",
++            "items": {
++              "type": "string"
++            }
++          },
++          "required_missing_information": {
++            "type": "array",
++            "items": {
++              "type": "string"
++            }
++          },
++          "already_supplied_topics": {
++            "type": "array",
++            "items": {
++              "type": "string"
++            }
++          },
++          "forbidden_invented_facts": {
++            "type": "array",
++            "items": {
++              "type": "string"
++            }
++          },
++          "expected_search_objectives": {
++            "type": "array",
++            "items": {
++              "type": "string"
++            }
++          },
++          "temporal_expectations": {
++            "type": "array",
++            "items": {
++              "type": "string"
++            }
++          },
++          "citation_constraints": {
++            "type": "array",
++            "items": {
++              "type": "string"
++            }
++          },
++          "clarification_expected": {
++            "type": "boolean"
++          },
++          "live_sample": {
++            "type": "boolean"
++          }
++        }
++      }
++    }
++  }
++}

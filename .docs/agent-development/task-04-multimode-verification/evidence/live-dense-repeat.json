@@ -1,0 +1,174 @@
+{
+  "probe": "dense",
+  "question": "Trích dẫn: hợp đồng dân sự",
+  "options": {
+    "mode": "dense",
+    "top_k": 5,
+    "as_of_date": "2026-11-17",
+    "allowed_usage_policies": [
+      "EXPERIMENTAL_ONLY"
+    ]
+  },
+  "service_timeout_seconds": 30,
+  "rerank_total_timeout_seconds": null,
+  "elapsed_seconds": 16.21758870000008,
+  "status": "COMPLETED",
+  "plan": {
+    "original": "Trích dẫn: hợp đồng dân sự",
+    "intent": "quote_lookup",
+    "domain": "unknown",
+    "temporal_scope": [],
+    "subqueries": [
+      {
+        "text": "hợp đồng dân sự",
+        "purpose": "lookup"
+      }
+    ],
+    "clarification": null
+  },
+  "requests": [
+    {
+      "query": "hợp đồng dân sự",
+      "mode": "dense",
+      "top_k": 5,
+      "as_of_date": "2026-11-17",
+      "allowed_usage_policies": [
+        "EXPERIMENTAL_ONLY"
+      ]
+    }
+  ],
+  "responses": [
+    {
+      "type": "RetrievalResponse",
+      "mode": "dense",
+      "status": "OK",
+      "evidence_count": 5,
+      "index": {
+        "id": "0fe7b3a9-d051-41c5-ae61-257790c997f9",
+        "index_name": "vbpl-multilingual-e5-small-v1",
+        "index_version": "v1",
+        "status": "READY",
+        "updated_at": "2026-11-14T08:27:44.253063Z",
+        "algorithm": null,
+        "tokenizer": null
+      },
+      "warnings": [
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "8ace515e-582e-405a-aa9e-06e09a186439"
+        },
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "a423deb3-a0c5-4b62-8576-0350ce52e4e7"
+        },
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "39dd64e3-06ae-4265-bd77-2919ce049bb4"
+        },
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "be10ac49-1fc8-4ea5-ad74-811f4b1318fb"
+        },
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "1ea69865-f572-48bb-bbd6-980c95c211a6"
+        }
+      ],
+      "error": null,
+      "consistency": "BEST_EFFORT",
+      "evidence": [
+        {
+          "retrieval_chunk_id": "8ace515e-582e-405a-aa9e-06e09a186439",
+          "source_document_id": "5e363c33-decb-4520-b0b6-17d8987d05be",
+          "document_structure_id": "f75bf876-13a0-4f13-b51c-aa2b4903b429",
+          "chunk_key": "legal-v2-block-000019-1",
+          "content_sha256": "7870182ef1c97beade97e554b5425caa4a669f032f0bc8754e74f4c7cf5d18b9",
+          "hash_check": "MATCHED_STORED",
+          "rank": 1,
+          "raw_score": 0.860909649079464,
+          "score_kind": "COSINE_SIMILARITY",
+          "retrieval_method": "dense",
+          "content_hash_matches": true,
+          "provenance_digest": "b36e0ac39d1a37ae3f52eeab62864ea14daf0f54a54936d29eb5b4a237fee237",
+          "source_metadata_digest": "4be0a4e67abac8425a9f04123affe8c8ca7a27c0860d0052b07c393b74d0046c",
+          "missing_temporal": true
+        },
+        {
+          "retrieval_chunk_id": "a423deb3-a0c5-4b62-8576-0350ce52e4e7",
+          "source_document_id": "05232619-fa5a-450c-9da0-3508242ff4b4",
+          "document_structure_id": "1b231cc1-eb8a-41bc-8527-bfdf74072f44",
+          "chunk_key": "legal-v2-block-000015-1",
+          "content_sha256": "f14d31c6404666a3fb861cf8a13091000bf0d5e826b55b7d67f46a3df5767da2",
+          "hash_check": "MATCHED_STORED",
+          "rank": 2,
+          "raw_score": 0.860338951955407,
+          "score_kind": "COSINE_SIMILARITY",
+          "retrieval_method": "dense",
+          "content_hash_matches": true,
+          "provenance_digest": "0286f584a07410faa6ebf1e4df11ab48f0d061010247884a60043792407ef23d",
+          "source_metadata_digest": "7c4da1c9d4bcf03a85c8cefc3292fc7d66e31f26bb03d8c54abbed9c4ec7902c",
+          "missing_temporal": true
+        },
+        {
+          "retrieval_chunk_id": "39dd64e3-06ae-4265-bd77-2919ce049bb4",
+          "source_document_id": "1632d7cb-fb66-4389-b91b-820809e1432d",
+          "document_structure_id": "703271b3-8b51-4b11-bf7e-02401ab83566",
+          "chunk_key": "legal-v2-block-000119-1",
+          "content_sha256": "3e5a7859c8ca323aeff2adf78030598a3cc4a787ea1326df78dcf8fc39963f40",
+          "hash_check": "MATCHED_STORED",
+          "rank": 3,
+          "raw_score": 0.85641211271286,
+          "score_kind": "COSINE_SIMILARITY",
+          "retrieval_method": "dense",
+          "content_hash_matches": true,
+          "provenance_digest": "4e80ec25ef4a58e9d09c0f31a570cbf4a8a0988c8a65255236cf5005375ad84c",
+          "source_metadata_digest": "bd1e6b8c48c91fd0ea2d5f649eef1371cae0bd30bb71b7fde299fc62e48acb76",
+          "missing_temporal": true
+        },
+        {
+          "retrieval_chunk_id": "be10ac49-1fc8-4ea5-ad74-811f4b1318fb",
+          "source_document_id": "5e363c33-decb-4520-b0b6-17d8987d05be",
+          "document_structure_id": "f75bf876-13a0-4f13-b51c-aa2b4903b429",
+          "chunk_key": "legal-v2-block-000020-1",
+          "content_sha256": "63a97528d8942c0fdf79d0bac4a14f27448a3324cd8e0245f815d90baeaf8cab",
+          "hash_check": "MATCHED_STORED",
+          "rank": 4,
+          "raw_score": 0.856163195142938,
+          "score_kind": "COSINE_SIMILARITY",
+          "retrieval_method": "dense",
+          "content_hash_matches": true,
+          "provenance_digest": "1c2a54806d7aa4b83af0511acca6f079f68ed7af8d4e6cca0f730c658f16c8ef",
+          "source_metadata_digest": "4be0a4e67abac8425a9f04123affe8c8ca7a27c0860d0052b07c393b74d0046c",
+          "missing_temporal": true
+        },
+        {
+          "retrieval_chunk_id": "1ea69865-f572-48bb-bbd6-980c95c211a6",
+          "source_document_id": "05232619-fa5a-450c-9da0-3508242ff4b4",
+          "document_structure_id": "1b231cc1-eb8a-41bc-8527-bfdf74072f44",
+          "chunk_key": "legal-v2-block-000014-1",
+          "content_sha256": "e5795192bf7f7331256174d139ed609e2fc5d68ed7716286a3eaf561a6f1d582",
+          "hash_check": "MATCHED_STORED",
+          "rank": 5,
+          "raw_score": 0.856158145895116,
+          "score_kind": "COSINE_SIMILARITY",
+          "retrieval_method": "dense",
+          "content_hash_matches": true,
+          "provenance_digest": "0920e56fcfeefb66d57bd5838427586b218e787b001e1687b6b779f38dd7dfe4",
+          "source_metadata_digest": "7c4da1c9d4bcf03a85c8cefc3292fc7d66e31f26bb03d8c54abbed9c4ec7902c",
+          "missing_temporal": true
+        }
+      ]
+    }
+  ],
+  "legacy_modules_loaded": [],
+  "e5_local_path": "C:\\Users\\Admin\\.cache\\huggingface\\hub\\models--intfloat--multilingual-e5-small\\snapshots\\614241f622f53c4eeff9890bdc4f31cfecc418b3",
+  "encoder_loaded": true,
+  "encoder_dimension": 384,
+  "encoder_max_seq_length": 512,
+  "repeat_reason": "Initial cold-start timed out; Hybrid and rerank Dense branches subsequently succeeded; unchanged deadlines/config."
+}

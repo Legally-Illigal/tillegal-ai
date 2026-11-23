@@ -1,0 +1,1235 @@
+--- a/src/applications/tillegal/agents/query/agent.py
++++ b/src/applications/tillegal/agents/query/agent.py
+@@ -3,11 +3,12 @@
+ import re
+ import unicodedata
+ from datetime import date
+-from typing import Literal
++from typing import Literal, Self
+ 
+-from pydantic import BaseModel, Field
++from pydantic import BaseModel, Field, model_validator
+ 
+-from src.applications.tillegal.agents.query.schemas import StatedFact
++from src.applications.tillegal.agents.query.context import classify_model_time, parse_context
++from src.applications.tillegal.agents.query.schemas import LegalReference, SearchObjective, StatedFact, TemporalContext
+ 
+ 
+ class QueryInputError(ValueError):
+@@ -31,6 +32,28 @@
+     facts: list[StatedFact] = Field(default_factory=list, max_length=12)
+     issues: list[str] = Field(default_factory=list, max_length=4)
+     missing_information: list[str] = Field(default_factory=list, max_length=8)
++    citations: list[LegalReference] = Field(default_factory=list)
++    temporal_context: list[TemporalContext] = Field(default_factory=list)
++    search_objectives: list[SearchObjective] = Field(default_factory=list, max_length=4)
++    planning_warnings: list[str] = Field(default_factory=list)
++
++    @model_validator(mode="after")
++    def context_and_links(self) -> Self:
++        text = unicodedata.normalize("NFC", self.original).strip()
++        if any(
++            item.start >= item.end or text[item.start : item.end] != item.text
++            for item in [*self.citations, *self.temporal_context]
++        ):
++            raise ValueError("Context span differs from original analysis text")
++        indices = [item.query_index for item in self.search_objectives]
++        if len(indices) != len(set(indices)):
++            raise ValueError("Duplicate objective query mapping")
++        for item in self.search_objectives:
++            if item.query_index >= len(self.subqueries) or any(
++                index < 0 or index >= len(self.issues) for index in item.issue_indices
++            ):
++                raise ValueError("Objective refers to missing issue/query")
++        return self
+ 
+ 
+ def understand(question: str) -> dict:
+@@ -139,7 +162,19 @@
+         ]
+     # Collapse identical objectives in the planner; Search also reuses exact requests.
+     subqueries = list({item.text: item for item in subqueries}.values())
++    references, temporal = parse_context(text)
++    # The legacy list stays available; typed roles separate identity from dates.
++    dates = list(
++        dict.fromkeys(
++            mention for mention in dates if classify_model_time(mention, text, references, temporal) == "time"
++        )
++    )
+     return QueryPlan(
++        citations=references,
++        temporal_context=temporal,
++        search_objectives=[SearchObjective(query_index=index, issue_indices=[index]) for index in range(len(issues))]
++        if len(issues) == len(subqueries)
++        else [],
+         facts=facts,
+         issues=issues,
+         missing_information=missing,
+--- a/src/applications/tillegal/agents/query/prompts.py
++++ b/src/applications/tillegal/agents/query/prompts.py
+@@ -14,5 +14,10 @@
+ Chỉ dùng quote_lookup khi người dùng yêu cầu tra cứu/trích dẫn nguyên văn cụ thể.
+ Chỉ đặt clarification khi không thể xác định mục tiêu tìm kiếm; các dữ kiện thiếu
+ không cản việc tìm quy định chung thì để clarification=null.
++Mỗi mục issues là một nhu cầu tìm kiếm độc lập; không gom tất cả nhu cầu vào
++một mục chỉ vì cùng tình huống. Có thể dùng chung facts, không cần tìm nguồn khác nhau.
++reference_spans là định danh người dùng cung cấp, không phải thời điểm áp dụng.
++user_supplied_slots và temporal_candidates là gợi ý đã trích nguyên văn; không
++coi chúng là kết luận pháp lý hay tự suy ra ngày hiệu lực.
+ Trả JSON duy nhất theo schema được cung cấp, không markdown hay giải thích.
+ """
+--- a/src/applications/tillegal/agents/query/schemas.py
++++ b/src/applications/tillegal/agents/query/schemas.py
+@@ -1,8 +1,9 @@
+ """Strict semantic analysis contract; model claims are never retrieved evidence."""
+ 
++from datetime import date
+ from typing import Literal, Self
+ 
+-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator, model_validator
++from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator, model_validator
+ 
+ 
+ class SemanticModel(BaseModel):
+@@ -21,7 +22,11 @@
+ 
+ 
+ class LegalIssue(SemanticModel):
+-    issue: StrictStr = Field(min_length=1, max_length=1000)
++    issue: StrictStr = Field(
++        min_length=1,
++        max_length=1000,
++        description="One independently searchable information need; related needs may share evidence.",
++    )
+     search_query: StrictStr = Field(min_length=1, max_length=10000)
+ 
+     @field_validator("issue", "search_query")
+@@ -47,3 +52,43 @@
+         if any(not value.strip() or len(value) > 1000 for value in values):
+             raise ValueError("Items must be bounded and nonblank")
+         return values
++
++
++class LegalReference(SemanticModel):
++    kind: Literal["document", "article", "clause", "point", "statute_reference"]
++    text: StrictStr
++    start: StrictInt = Field(ge=0)
++    end: StrictInt = Field(gt=0)
++    source: Literal["user_supplied_unverified"] = "user_supplied_unverified"
++
++
++class TemporalContext(SemanticModel):
++    text: StrictStr
++    start: StrictInt = Field(ge=0)
++    end: StrictInt = Field(gt=0)
++    role: Literal[
++        "event_date",
++        "applicability_date",
++        "publication_date",
++        "effective_date",
++        "historical_reference",
++        "relative_reference",
++        "duration",
++        "current_reference",
++        "unspecified",
++    ]
++    iso_date: StrictStr | None = None
++
++    @field_validator("iso_date")
++    @classmethod
++    def valid_iso_date(cls, value: str | None) -> str | None:
++        if value is not None:
++            date.fromisoformat(value)
++        return value
++
++    negated: bool = False
++
++
++class SearchObjective(SemanticModel):
++    query_index: StrictInt = Field(ge=0, le=3)
++    issue_indices: list[StrictInt] = Field(min_length=1, max_length=4)
+--- a/src/applications/tillegal/agents/query/semantic.py
++++ b/src/applications/tillegal/agents/query/semantic.py
+@@ -10,6 +10,12 @@
+ from pydantic import ValidationError
+ 
+ from src.applications.tillegal.agents.query.agent import QueryPlan, Subquery, understand
++from src.applications.tillegal.agents.query.context import (
++    classify_model_time,
++    parse_context,
++    reconcile_missing,
++    supplied_context,
++)
+ from src.applications.tillegal.agents.query.prompts import SYSTEM_PROMPT
+ from src.applications.tillegal.agents.query.schemas import SemanticAnalysis
+ 
+@@ -44,6 +50,7 @@
+         if base["clarification"] or base["intent"] == "quote_lookup":
+             return base
+         text = unicodedata.normalize("NFC", question).strip()
++        references, temporal = parse_context(text)
+         # Exact lookup has already returned above. Constrain the provider to the
+         # only intent this semantic call can accept, rather than asking it to guess.
+         schema = SemanticAnalysis.model_json_schema()
+@@ -53,7 +60,15 @@
+                 raw = await self.complete(
+                     model=self.model,
+                     system=SYSTEM_PROMPT,
+-                    user=json.dumps({"question": text}, ensure_ascii=False),
++                    user=json.dumps(
++                        {
++                            "question": text,
++                            "user_supplied_slots": supplied_context(text),
++                            "reference_spans": [item.model_dump(mode="json") for item in references],
++                            "temporal_candidates": [item.model_dump(mode="json") for item in temporal],
++                        },
++                        ensure_ascii=False,
++                    ),
+                     schema=schema,
+                 )
+         except TimeoutError:
+@@ -66,9 +81,16 @@
+             analysis = SemanticAnalysis.model_validate_json(raw)
+             if any(fact.source_quote not in text for fact in analysis.facts):
+                 raise ValueError("Unsupported fact")
+-            temporal_text = re.sub(r"\b\d+/(?:19|20)\d{2}/[\wĐđ-]+", "", text)
+-            if any(mention not in temporal_text for mention in analysis.temporal_mentions):
+-                raise ValueError("Unsupported time")
++            model_times = []
++            planning_warnings = []
++            for mention in analysis.temporal_mentions:
++                role = classify_model_time(mention, text, references, temporal)
++                if role == "reference":
++                    planning_warnings.append("MODEL_REFERENCE_RECLASSIFIED")
++                elif role == "negated_time":
++                    planning_warnings.append("NEGATED_TEMPORAL_REFERENCE_IGNORED")
++                else:
++                    model_times.append(mention)
+             if analysis.intent != "legal_question":
+                 raise ValueError("Model cannot promote an ordinary question to exact lookup")
+             generated = " ".join(
+@@ -83,6 +105,33 @@
+             if set(re.findall(r"\d+", generated)) - set(re.findall(r"\d+", text)):
+                 raise ValueError("Unsupported numeric fact or provision")
+             queries = list(dict.fromkeys(item.search_query.strip() for item in analysis.issues))
++            links = [
++                {
++                    "query_index": index,
++                    "issue_indices": [
++                        issue_index
++                        for issue_index, item in enumerate(analysis.issues)
++                        if item.search_query.strip() == query
++                    ],
++                }
++                for index, query in enumerate(queries)
++            ]
++            # Shared context is copied only from verified source spans. Alleged
++            # legal provisions/questions are not promoted to scenario facts.
++            context = []
++            for fact in analysis.facts:
++                if not re.search(r"có phải|đúng không|\?", fact.text, re.I) and not parse_context(fact.text)[0]:
++                    if fact.text not in context and sum(map(len, context)) + len(fact.text) <= 600:
++                        context.append(fact.text)
++            for supplied in supplied_context(text).values():
++                if not any(supplied in item for item in context):
++                    context.append(supplied)
++            for index, query in enumerate(queries):
++                omitted_context = [item for item in context if item.casefold() not in query.casefold()]
++                if omitted_context:
++                    queries[index] += "; tình huống người dùng: " + "; ".join(omitted_context)
++            missing, consistency_warnings = reconcile_missing(text, analysis.missing_information)
++            planning_warnings.extend(consistency_warnings)
+             # One objective can safely retain all citation spans supplied in
+             # this question. Multiple objectives require semantic association,
+             # so never copy every citation into every unrelated search query.
+@@ -103,8 +152,10 @@
+                     "analysis_model": self.model,
+                     "facts": [fact.model_dump() for fact in analysis.facts],
+                     "issues": [item.issue for item in analysis.issues],
+-                    "missing_information": analysis.missing_information,
+-                    "temporal_scope": list(dict.fromkeys(base["temporal_scope"] + analysis.temporal_mentions)),
++                    "missing_information": missing,
++                    "search_objectives": links,
++                    "planning_warnings": list(dict.fromkeys(planning_warnings)),
++                    "temporal_scope": list(dict.fromkeys(base["temporal_scope"] + model_times)),
+                 }
+             ).model_dump()
+         except (ValidationError, ValueError, TypeError):
+--- a/src/applications/tillegal/agents/search/agent.py
++++ b/src/applications/tillegal/agents/search/agent.py
+@@ -1,6 +1,7 @@
+ """Execute a QueryPlan against the application RetrievalService."""
+ 
+ import asyncio
++import unicodedata
+ from collections.abc import Sequence
+ from datetime import date
+ from typing import Literal, TypedDict
+@@ -10,6 +11,7 @@
+ 
+ from src.application.services.retrieval_service import RetrievalService
+ from src.applications.tillegal.agents.query.agent import QueryPlan
++from src.applications.tillegal.agents.query.context import parse_context
+ from src.applications.tillegal.agents.search.schemas import AggregatedEvidence, EvidenceOccurrence
+ from src.applications.tillegal.retrieval.contracts import (
+     RetrievalMode,
+@@ -62,6 +64,8 @@
+     clarification: bool = False,
+ ) -> SearchState:
+     """Group only byte-equivalent source payloads, excluding query-local rank/score."""
++    parsed = QueryPlan.model_validate(plan)
++    objective_links = {item.query_index: tuple(item.issue_indices) for item in parsed.search_objectives}
+     grouped: dict[str, tuple[UnifiedEvidence, list[EvidenceOccurrence]]] = {}
+     warnings = [warning.code for response in responses for warning in response.warnings]
+     identities: dict[str, set[str]] = {}
+@@ -87,8 +91,17 @@
+                     rank=item.rank,
+                     raw_score=item.raw_score,
+                     score_kind=item.score_kind,
++                    issue_indices=objective_links.get(response_index, ()),
+                 )
+             )
++    if parsed.intent == "quote_lookup" and grouped:
++        # A mention inside chunk text does not establish the source's identity.
++        # This is a literal metadata warning, not a legal sufficiency judgment.
++        references = parsed.citations or parse_context(unicodedata.normalize("NFC", parsed.original).strip())[0]
++        required = [item.text for item in references if item.kind == "document"]
++        titles = " ".join(item.title for response in responses for item in response.evidence).casefold()
++        if any(reference.casefold() not in titles for reference in required):
++            warnings.append("EXACT_LOOKUP_SOURCE_IDENTITY_UNCONFIRMED")
+     failed = any(response.status == "FAILED" for response in responses)
+     skipped = tuple(range(len(responses), total))
+     if failed:
+--- a/src/applications/tillegal/agents/search/schemas.py
++++ b/src/applications/tillegal/agents/search/schemas.py
+@@ -16,6 +16,7 @@
+     rank: int = Field(ge=1)
+     raw_score: float
+     score_kind: Literal["BM25", "COSINE_SIMILARITY", "RRF"]
++    issue_indices: tuple[int, ...] = ()
+ 
+ 
+ class AggregatedEvidence(BaseModel):
+--- a/tests/unit/applications/tillegal/test_query_hardening.py
++++ b/tests/unit/applications/tillegal/test_query_hardening.py
+@@ -88,6 +88,10 @@
+         "facts",
+         "issues",
+         "missing_information",
++        "citations",
++        "temporal_context",
++        "search_objectives",
++        "planning_warnings",
+     }
+     assert plan["analysis_method"] == "deterministic" and plan["analysis_model"] is None
+     assert plan["facts"] == plan["issues"] == plan["missing_information"] == []
+--- a/tests/unit/applications/tillegal/test_query_search_semantic.py
++++ b/tests/unit/applications/tillegal/test_query_search_semantic.py
+@@ -79,7 +79,8 @@
+     assert plan["original"] == "  " + QUESTION + "  "
+     assert plan["analysis_method"] == "llm" and plan["analysis_model"] == "fixture/structured-model"
+     assert len(plan["issues"]) == 2 and plan["facts"] == analysis()["facts"]
+-    assert plan["missing_information"] == analysis()["missing_information"]
++    assert plan["missing_information"][0] == analysis()["missing_information"][0]
++    assert any("đào tạo" in item for item in plan["missing_information"])
+     assert QueryPlan.model_validate_json(json.dumps(plan)).model_dump() == plan
+     args = complete.call_args.kwargs
+     assert args["schema"]["additionalProperties"] is False
+@@ -276,8 +277,10 @@
+ 
+ def test_citation_year_is_not_a_temporal_constraint():
+     agent, _ = analyzer(analysis(temporal_mentions=["2019"]))
+-    with pytest.raises(QueryAnalysisError, match="^QUERY_ANALYSIS_INVALID_RESPONSE$"):
+-        asyncio.run(agent.understand(QUESTION + " Theo Luật 45/2019/QH14 thì sao?"))
++    plan = asyncio.run(agent.understand(QUESTION + " Theo Luật 45/2019/QH14 thì sao?"))
++    assert "2019" not in plan["temporal_scope"]
++    assert any(item["text"] == "45/2019/QH14" for item in plan["citations"])
++    assert "MODEL_REFERENCE_RECLASSIFIED" in plan["planning_warnings"]
+ 
+ 
+ def test_new_numeric_user_facts_are_rejected():
+--- a/scripts/evaluate_query_relevance.py
++++ b/scripts/evaluate_query_relevance.py
+@@ -0,0 +1,219 @@
++"""Balanced real-corpus relevance review pool. Labels are never inferred from hits."""
++
++import argparse
++import asyncio
++import hashlib
++import json
++import os
++from pathlib import Path
++
++from dotenv import dotenv_values
++
++from scripts.evaluate_query_search_retrieval import checks, sanitize
++from src.applications.tillegal.agents.query.agent import QueryPlan
++from src.applications.tillegal.agents.search.agent import SearchOptions, search
++from src.core.config import load_settings
++from src.retrieval_bootstrap import create_retrieval_service
++
++ROOT = Path(__file__).resolve().parents[1]
++CASES = ["Q001", "Q004", "Q005", "Q007", "Q019", "Q022", "Q025", "Q040"]
++RUBRIC = {
++    "0": "Unrelated to this information need",
++    "1": "Broadly related, insufficiently targeted",
++    "2": "Relevant to part of this information need",
++    "3": "Directly relevant to this objective",
++}
++
++
++def label_status(rows: list[dict], labels: list[dict]) -> dict:
++    known = {row["review_id"] for row in rows}
++    seen = set()
++    counts = {"human_reviewed": 0, "model_assisted_provisional": 0, "automatic_proxy": 0, "unlabeled": 0}
++    for item in labels:
++        if item["review_id"] not in known or item["review_id"] in seen:
++            raise ValueError("Unknown or duplicate review identifier")
++        seen.add(item["review_id"])
++        label = item.get("label")
++        source = item.get("label_source", "unlabeled")
++        if label is None:
++            counts["unlabeled"] += 1
++        elif type(label) is not int or not 0 <= label <= 3 or source not in counts or source == "unlabeled":
++            raise ValueError("A score requires integer 0..3 and explicit review provenance")
++        elif not item.get("reviewer") or not item.get("reason"):
++            raise ValueError("A score requires reviewer identity and reason")
++        else:
++            counts[source] += 1
++    counts["unlabeled"] += len(known - seen)
++    return {
++        "counts": counts,
++        "expert_precision_at_k": None,
++        "expert_recall_at_k": None,
++        "expert_ndcg": None,
++        "note": "No expert ground truth/corpus relevance coverage established; never turn null labels into zero.",
++    }
++
++
++async def collect(args):
++    if args.output.exists():
++        raise ValueError("Preserve previous relevance run; choose a new folder")
++    args.output.mkdir(parents=True)
++    cases = {
++        item["id"]: item
++        for item in json.loads((ROOT / "evaluation/query_search/cases.json").read_text(encoding="utf-8"))["cases"]
++    }
++    files = {"deterministic": args.deterministic, "gemini": args.gemini}
++    inputs = {
++        variant: {row["id"]: row for row in json.loads(path.read_text(encoding="utf-8"))["rows"]}
++        for variant, path in files.items()
++    }
++    env = {**{key: value for key, value in dotenv_values(ROOT / ".env").items() if value is not None}, **os.environ}
++    service = create_retrieval_service(load_settings(environ=env).supabase, timeout_seconds=30)
++    pool, runs, index_signatures = [], [], set()
++    for case_id in CASES:
++        as_of = "2010-12-31" if case_id == "Q019" else "2026-11-23"
++        # Historical anchor is an explicit evaluation setting, not inferred from year.
++        options = SearchOptions(mode="bm25", top_k=3, as_of_date=as_of, allowed_usage_policies=("EXPERIMENTAL_ONLY",))
++        for variant in ("deterministic", "gemini"):
++            source = inputs[variant].get(case_id)
++            observation = {"id": case_id, "variant": variant, "search_options": options.model_dump(mode="json")}
++            if source is None or source["status"] != "OK":
++                runs.append(
++                    {
++                        **observation,
++                        "status": "BLOCKED_QUERY_PLAN",
++                        "source_error": source.get("error") if source else None,
++                    }
++                )
++                continue
++            plan = QueryPlan.model_validate(source["plan"]).model_dump()
++            result = await search(plan, service, options)
++            validated = checks(result, cases[case_id])
++            # Technical checks are not a relevance metric.
++            validated.pop("objective_topic_matches_proxy", None)
++            validated.pop("objective_topic_total", None)
++            validated.pop("relevance_assessment", None)
++            links = {item["query_index"]: item["issue_indices"] for item in plan.get("search_objectives", [])}
++            observation.update(
++                status=result["status"],
++                completeness=result["completeness"],
++                checks=validated,
++                plan=plan,
++                requests=[item.model_dump(mode="json") for item in result["requests"]],
++                responses=[item.model_dump(mode="json") for item in result["responses"]],
++                evidence=[item.model_dump(mode="json") for item in result["evidence"]],
++                warnings=list(result["warnings"]),
++                errors=[item.model_dump(mode="json") for item in result["errors"]],
++            )
++            for query_index, response in enumerate(result["responses"]):
++                if response.index:
++                    index_signatures.add(response.index.model_dump_json())
++                for item in response.evidence:
++                    identity = f"{case_id}/{variant}/{query_index}/{item.retrieval_chunk_id}/{item.content_sha256}"
++                    pool.append(
++                        {
++                            "review_id": hashlib.sha256(identity.encode()).hexdigest()[:20],
++                            "case_id": case_id,
++                            "question": cases[case_id]["question"],
++                            "issue_labels": [plan["issues"][index] for index in links.get(query_index, [])],
++                            "search_objective": response.query,
++                            "query_index": query_index,
++                            "rank": item.rank,
++                            "document_title": item.title,
++                            "source_url": item.source_url,
++                            "provision_identity": {
++                                "chunk_key": item.chunk_key,
++                                "node_id": item.node_id,
++                                "block_id": item.block_id,
++                            },
++                            "chunk_id": str(item.retrieval_chunk_id),
++                            "source_document_id": str(item.source_document_id),
++                            "source_snapshot_id": item.source_snapshot_id,
++                            "content_sha256": item.content_sha256,
++                            "chunk_text": item.content,
++                            "label": None,
++                            "label_source": "unlabeled",
++                            "reviewer": None,
++                            "reason": None,
++                            "blind_variant_token": hashlib.sha256(variant.encode()).hexdigest()[:8],
++                        }
++                    )
++            runs.append(observation)
++            (args.output / "runs.json").write_text(
++                json.dumps(sanitize(runs), ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
++            )
++            print(
++                json.dumps(
++                    {"id": case_id, "variant": variant, "status": result["status"], "evidence": len(result["evidence"])}
++                ),
++                flush=True,
++            )
++    report = {
++        "rubric": RUBRIC,
++        "mode": "bm25",
++        "top_k": 3,
++        "questions": CASES,
++        "index_signatures": sorted(index_signatures),
++        "same_observed_index_identity": len(index_signatures) == 1,
++        "consistency": "BEST_EFFORT_NO_TRANSACTION_SNAPSHOT",
++        "historical_date_note": "Q019 uses explicit2010-12-31 evaluation anchor; no applicability inferred.",
++        "rows": pool,
++        "label_status": label_status(pool, []),
++    }
++    (args.output / "pool.json").write_text(
++        json.dumps(sanitize(report), ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
++    )
++    labels = [{key: row[key] for key in ("review_id", "label", "label_source", "reviewer", "reason")} for row in pool]
++    (args.output / "labels_template.json").write_text(
++        json.dumps(labels, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
++    )
++    review = [
++        "# Relevance review queue",
++        "",
++        "Rubric 0–3, relevance only; no legal applicability/correctness claim.",
++        "Edit labels_template.json, retaining review_id; identify reviewer/source and explain every score.",
++        "No expert labels currently available; null is unreviewed, not relevance zero.",
++        "",
++    ]
++    for row in pool:
++        review += [
++            f"## {row['review_id']} / {row['case_id']} / rank {row['rank']}",
++            "",
++            row["question"],
++            "",
++            "Issues: " + json.dumps(row["issue_labels"], ensure_ascii=False),
++            "",
++            "Objective: " + row["search_objective"],
++            "",
++            "Source: " + row["document_title"],
++            "",
++            "Identity: " + json.dumps(row["provision_identity"], ensure_ascii=False),
++            "",
++            "```text",
++            row["chunk_text"],
++            "```",
++            "",
++        ]
++    (args.output / "REVIEW_QUEUE.md").write_text("\n".join(review), encoding="utf-8")
++    print(
++        json.dumps(
++            {
++                "review_rows": len(pool),
++                "labels": report["label_status"],
++                "index_stable": report["same_observed_index_identity"],
++            }
++        )
++    )
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--gemini", type=Path, required=True)
++    parser.add_argument(
++        "--deterministic", type=Path, default=ROOT / "evaluation/query_search/runs/deterministic-before.json"
++    )
++    parser.add_argument("--output", type=Path, default=ROOT / "evaluation/query_search/semantic_v2/relevance")
++    asyncio.run(collect(parser.parse_args()))
++
++
++if __name__ == "__main__":
++    main()
+--- a/scripts/validate_query_semantics.py
++++ b/scripts/validate_query_semantics.py
+@@ -0,0 +1,208 @@
++"""Matched semantic evaluation with a persistent task-wide Gemini request budget."""
++
++import argparse
++import asyncio
++import hashlib
++import json
++from pathlib import Path
++from unittest.mock import patch
++
++from scripts.evaluate_query_search import aggregate, evaluate, score
++from src.applications.tillegal.agents.query.agent import understand
++from src.applications.tillegal.agents.query.semantic import SemanticQueryAgent
++from src.framework.llm.providers import gemini_adapter
++
++ROOT = Path(__file__).resolve().parents[1]
++FOLDER = ROOT / "evaluation/query_search/semantic_v2"
++DEFAULT_IDS = ",".join([f"Q{index:03}" for index in range(1, 46, 3)] + ["Q005", "Q044", "Q006", "Q018", "Q042"])
++
++
++def failure_inclusive(rows: list[dict], cases: dict) -> dict:
++    successful = [row for row in rows if row["status"] == "OK"]
++    keys = [
++        ("issue_matches", "issue_total", "expected_issues"),
++        ("distinct_objective_matches", "issue_total", "expected_issues"),
++        ("fact_matches", "fact_total", "expected_preserved_facts"),
++        ("missing_info_matches", "missing_info_total", "required_missing_information"),
++        ("temporal_matches", "temporal_total", "temporal_expectations"),
++        ("citation_matches", "citation_total", "citation_constraints"),
++    ]
++    result = {"cases": len(rows), "accepted": len(successful), "failures": len(rows) - len(successful)}
++    for numerator, _, ground_truth in keys:
++        denominator = sum(len(cases[row["id"]][ground_truth]) for row in rows)
++        count = sum(row["metrics"][numerator] for row in successful)
++        result[numerator] = {
++            "numerator": count,
++            "denominator": denominator,
++            "ratio": round(count / denominator, 4) if denominator else None,
++        }
++    result["note"] = "Same authored rules. Failed plans contribute zero; semantic metrics remain heuristic."
++    return result
++
++
++async def run(args):
++    FOLDER.mkdir(exist_ok=True)
++    budget_path = FOLDER / "api_budget.json"
++    budget = (
++        json.loads(budget_path.read_text(encoding="utf-8")) if budget_path.exists() else {"maximum": 25, "attempted": 0}
++    )
++    if args.mode == "gemini":
++        requested = len(args.ids.split(","))
++        if requested > budget["maximum"] - budget["attempted"]:
++            raise ValueError("SEMANTIC_EVALUATION_BUDGET_INSUFFICIENT")
++    original = gemini_adapter._acompletion
++
++    async def limited(**kwargs):
++        if budget["attempted"] >= budget["maximum"]:
++            raise RuntimeError("SEMANTIC_EVALUATION_BUDGET_EXHAUSTED")
++        budget["attempted"] += 1
++        budget_path.write_text(json.dumps(budget, indent=2) + "\n", encoding="utf-8")
++        return await original(**kwargs)
++
++    with patch.object(gemini_adapter, "_acompletion", limited):
++        result = await evaluate(args)
++    cases = {
++        case["id"]: case
++        for case in json.loads((ROOT / "evaluation/query_search/cases.json").read_text(encoding="utf-8"))["cases"]
++    }
++    result["failure_inclusive"] = failure_inclusive(result["rows"], cases)
++    result["source_hashes"] = {
++        name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
++        for name in [
++            "src/applications/tillegal/agents/query/agent.py",
++            "src/applications/tillegal/agents/query/context.py",
++            "src/applications/tillegal/agents/query/semantic.py",
++            "src/applications/tillegal/agents/query/prompts.py",
++            "src/applications/tillegal/agents/query/schemas.py",
++        ]
++    }
++    args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++    print(json.dumps(result["failure_inclusive"]))
++
++
++async def replay():
++    rows = []
++    for name in ["gemini-before.json", "gemini-after.json", "gemini-final.json"]:
++        old = json.loads((ROOT / "evaluation/query_search/runs" / name).read_text(encoding="utf-8"))
++        for row in old["rows"]:
++            if row.get("raw_response") is None:
++                continue
++
++            async def complete(**kwargs):
++                return row["raw_response"]
++
++            record = {
++                "run": name,
++                "id": row["id"],
++                "historical_status": row["status"],
++                "execution": "SAVED_RAW_REPLAY_NO_API",
++            }
++            try:
++                record.update(
++                    status="OK",
++                    plan=await SemanticQueryAgent(complete, "recorded-response").understand(row["question"]),
++                )
++            except Exception as error:
++                record.update(status="ERROR", error_type=type(error).__name__)
++            rows.append(record)
++    path = FOLDER / "raw_replay.json"
++    path.write_text(json.dumps(rows, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++    print(json.dumps({"replayed": len(rows), "api_calls": 0}))
++
++
++async def summarize():
++    reports = [
++        json.loads((FOLDER / name).read_text(encoding="utf-8")) for name in ["gemini.json", "gemini-resume.json"]
++    ]
++    cases = {
++        case["id"]: case
++        for case in json.loads((ROOT / "evaluation/query_search/cases.json").read_text(encoding="utf-8"))["cases"]
++    }
++    history = {}
++    for report in reports:
++        for row in report["rows"]:
++            history.setdefault(row["id"], []).append(row)
++    rows = []
++    for case_id, attempts in history.items():
++        saved = attempts[-1]
++        row = {
++            **saved,
++            "attempt_history": [
++                {"status": item["status"], "error": item.get("error"), "api_calls": item["api_calls"]}
++                for item in attempts
++            ],
++            "original_api_plan_status": saved["status"],
++            "postprocessing": "SAVED_RAW_FINAL_CODE_REPLAY_NO_API",
++        }
++        if saved.get("raw_response"):
++
++            async def complete(**kwargs):
++                return saved["raw_response"]
++
++            try:
++                plan = await SemanticQueryAgent(complete, reports[-1]["model"]).understand(cases[case_id]["question"])
++                row.update(status="OK", plan=plan, metrics=score(cases[case_id], plan))
++                row.pop("error", None)
++            except Exception as error:
++                row.update(status="ERROR", error={"code": str(error), "type": type(error).__name__})
++        elif saved["api_calls"] == 0:
++            plan = understand(cases[case_id]["question"])
++            row.update(status="OK", plan=plan, metrics=score(cases[case_id], plan))
++        rows.append(row)
++    baseline = json.loads((ROOT / "evaluation/query_search/runs/gemini-before.json").read_text(encoding="utf-8"))
++    ids = {row["id"] for row in baseline["rows"]}
++    matched = [row for row in rows if row["id"] in ids]
++    result = {
++        "schema_version": "1",
++        "mode": "gemini",
++        "model": reports[0]["model"],
++        "prompt_sha256": reports[0]["prompt_sha256"],
++        "prompt_text": reports[0]["prompt_text"],
++        "dataset_sha256": reports[0]["dataset_sha256"],
++        "execution": "REAL_GEMINI_RESPONSES_REPLAYED_THROUGH_FINAL_POSTPROCESSING",
++        "rows": rows,
++        "aggregate": aggregate(rows),
++        "failure_inclusive": failure_inclusive(rows, cases),
++        "matched_baseline_ids": sorted(ids),
++        "matched_final": failure_inclusive(matched, cases),
++        "matched_historical_baseline": failure_inclusive(baseline["rows"], cases),
++        "first_attempt_accepted": sum(attempts[0]["status"] == "OK" for cid, attempts in history.items() if cid in ids),
++        "attempted_api_calls_all_batches": sum(row["api_calls"] for report in reports for row in report["rows"]),
++        "source_hashes": {
++            name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in reports[0]["source_hashes"]
++        },
++    }
++    (FOLDER / "matched.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++    print(
++        json.dumps(
++            {
++                key: result[key]
++                for key in [
++                    "matched_final",
++                    "matched_historical_baseline",
++                    "first_attempt_accepted",
++                    "attempted_api_calls_all_batches",
++                ]
++            }
++        )
++    )
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--mode", choices=("deterministic", "gemini", "replay", "summarize"), required=True)
++    parser.add_argument("--ids", default=DEFAULT_IDS)
++    parser.add_argument("--label", default="semantic-v2")
++    parser.add_argument("--max-requests", type=int, default=20)
++    parser.add_argument("--output", type=Path, default=FOLDER / "gemini.json")
++    args = parser.parse_args()
++    if args.mode == "replay":
++        asyncio.run(replay())
++    elif args.mode == "summarize":
++        asyncio.run(summarize())
++    else:
++        asyncio.run(run(args))
++
++
++if __name__ == "__main__":
++    main()
+--- a/src/applications/tillegal/agents/query/context.py
++++ b/src/applications/tillegal/agents/query/context.py
+@@ -0,0 +1,160 @@
++"""Literal span parsing for user-supplied legal references and temporal roles."""
++
++import re
++from datetime import date
++
++from src.applications.tillegal.agents.query.schemas import LegalReference, TemporalContext
++
++DOCUMENT = re.compile(r"\b\d+/(?:19|20)\d{2}/(?=[A-Za-zĐđ])[\wĐđ-]+\b")
++PROVISION = re.compile(r"\b(?P<kind>điều|khoản|điểm)\s+(?:\d+[a-zđ]?|[a-zđ])\b", re.I)
++STATUTE = re.compile(
++    r"\b(?:bộ luật|luật|nghị định|thông tư)\s+(?!(?:áp dụng|tại|vào|năm)\b)"
++    r"[^\d\n.;?!/]{1,65}?\s+(?:năm\s+)?(?:19|20)\d{2}\b",
++    re.I,
++)
++CALENDAR = re.compile(r"(?<![\w/])(?:\d{1,2}/\d{1,2}/\d{4}|\d{4}-\d{2}-\d{2})(?![\w/])")
++YEAR = re.compile(r"(?<![\w/])(?:19|20)\d{2}(?![\w/])")
++DURATION = re.compile(r"\b\d+\s*(?:ngày|tháng|năm|tuổi|giờ)\b", re.I)
++RELATIVE = re.compile(r"hiện nay|hiện hành|thời điểm đó|khi đó|trước đây|năm tới|năm trước", re.I)
++CUES = {
++    "publication_date": r"ban hành|công bố|thông qua",
++    "effective_date": r"có hiệu lực|hiệu lực từ|hiệu lực ngày",
++    "applicability_date": r"áp dụng|quy định tại|pháp luật tại|tra cứu tại",
++    "event_date": r"ký|mua|nhận|nghỉ|sinh|đến hạn|diễn ra|giao dịch",
++    "historical_reference": r"trước đây|khi đó|thời điểm đó",
++}
++
++
++def overlaps(start: int, end: int, spans) -> bool:
++    return any(start < item.end and end > item.start for item in spans)
++
++
++def parse_context(text: str) -> tuple[list[LegalReference], list[TemporalContext]]:
++    """Offsets refer to the NFC/trimmed analysis text; original is never edited."""
++    references = []
++    for match in DOCUMENT.finditer(text):
++        references.append(LegalReference(kind="document", text=match.group(), start=match.start(), end=match.end()))
++    kinds = {"điều": "article", "khoản": "clause", "điểm": "point"}
++    for match in PROVISION.finditer(text):
++        references.append(
++            LegalReference(
++                kind=kinds[match["kind"].casefold()], text=match.group(), start=match.start(), end=match.end()
++            )
++        )
++    for match in STATUTE.finditer(text):
++        # A publication/effectivity verb is a date cue, not part of a statute title.
++        if not re.search(r"ban hành|hiệu lực|áp dụng|được", match.group(), re.I):
++            references.append(
++                LegalReference(kind="statute_reference", text=match.group(), start=match.start(), end=match.end())
++            )
++    references.sort(key=lambda item: (item.start, item.end))
++    temporal = []
++    calendar_spans = list(CALENDAR.finditer(text))
++    candidates = [(match, "date") for match in calendar_spans]
++    candidates += [
++        (match, "year")
++        for match in YEAR.finditer(text)
++        if not any(match.start() < other.end() and match.end() > other.start() for other in calendar_spans)
++    ]
++    candidates += [(match, "duration") for match in DURATION.finditer(text)]
++    candidates += [(match, "relative") for match in RELATIVE.finditer(text)]
++    used = set()
++    for match, category in sorted(candidates, key=lambda item: (item[0].start(), -len(item[0].group()))):
++        if overlaps(match.start(), match.end(), references) or (match.start(), match.end()) in used:
++            continue
++        value = match.group()
++        iso_date = None
++        if category == "date":
++            try:
++                if "/" in value:
++                    day, month, year = map(int, value.split("/"))
++                    iso_date = date(year, month, day)
++                else:
++                    iso_date = date.fromisoformat(value)
++            except ValueError:
++                continue
++        prefix = text[max(0, match.start() - 65) : match.start()]
++        cues = [(cue.end(), role) for role, pattern in CUES.items() for cue in re.finditer(pattern, prefix, re.I)]
++        role = max(cues)[1] if cues else "unspecified"
++        if category == "duration":
++            role = "duration"
++        elif category == "relative":
++            role = (
++                "current_reference"
++                if value.casefold() in {"hiện nay", "hiện hành"}
++                else "relative_reference"
++                if value.casefold() in {"năm tới", "năm trước"}
++                else "historical_reference"
++            )
++        negated = bool(re.search(r"(?:không phải|không áp dụng|không theo)\s*$", prefix, re.I))
++        temporal.append(
++            TemporalContext(
++                text=value,
++                start=match.start(),
++                end=match.end(),
++                role=role,
++                iso_date=iso_date.isoformat() if iso_date else None,
++                negated=negated,
++            )
++        )
++        used.add((match.start(), match.end()))
++    return references, temporal
++
++
++def classify_model_time(mention: str, text: str, references, temporal) -> str:
++    """Only literal grounded references are reclassified, never unsupported dates."""
++    positions = [match for match in re.finditer(re.escape(mention), text)]
++    has_negated_time = False
++    for match in positions:
++        for item in temporal:
++            start, end = max(match.start(), item.start), min(match.end(), item.end)
++            if start < end and not overlaps(start, end, references):
++                if not item.negated:
++                    return "time"
++                has_negated_time = True
++    if has_negated_time:
++        return "negated_time"
++    if positions and all(overlaps(match.start(), match.end(), references) for match in positions):
++        return "reference"
++    raise ValueError("Unsupported temporal span")
++
++
++def supplied_context(text: str) -> dict[str, str]:
++    """A small set of demonstrated scenario slots, not a legal ontology."""
++    patterns = {
++        "contract_duration": r"hợp đồng(?: lao động)?(?: xác định thời hạn)?\s+\d+\s*(?:năm|tháng)",
++        "exit_reason": r"(?:nghỉ(?: việc)?|muốn nghỉ)\s+vì\s+[^.;?\n]{1,80}",
++        "training_agreement": r"(?:không có|chưa ký|có ký)\s+thỏa thuận đào tạo",
++    }
++    return {name: match.group() for name, pattern in patterns.items() if (match := re.search(pattern, text, re.I))}
++
++
++def reconcile_missing(text: str, missing: list[str]) -> tuple[list[str], list[str]]:
++    slots = supplied_context(text)
++    result, warnings = [], []
++    for item in missing:
++        duration_question = re.search(r"thời hạn hợp đồng|loại hợp đồng|hợp đồng.{0,20}bao lâu", item, re.I)
++        other_question = re.search(r"đặc biệt|điều khoản|thỏa thuận|gia hạn|đào tạo|\s+và\s+", item, re.I)
++        if "contract_duration" in slots and duration_question and not other_question:
++            warnings.append("REDUNDANT_CONTRACT_DURATION_REMOVED")
++        elif (
++            "exit_reason" in slots
++            and re.search(r"lý do.{0,15}nghỉ|nguyên nhân.{0,15}nghỉ", item, re.I)
++            and not other_question
++        ):
++            warnings.append("REDUNDANT_EXIT_REASON_REMOVED")
++        elif (
++            "training_agreement" in slots
++            and re.search(r"có.{0,15}thỏa thuận đào tạo", item, re.I)
++            and not re.search(r"nội dung|chi phí|hoàn trả|và", item, re.I)
++        ):
++            warnings.append("REDUNDANT_TRAINING_QUESTION_REMOVED")
++        else:
++            result.append(item)
++    employee_exit = re.search(r"\btôi\b[^.!?;\n]{0,180}\b(?:muốn|xin) nghỉ", text, re.I)
++    if employee_exit and "hợp đồng lao động" in text.casefold() and not re.search(r"không\s+muốn nghỉ", text, re.I):
++        if "exit_reason" not in slots and not any(re.search(r"lý do|nguyên nhân", item, re.I) for item in result):
++            result.append("Bạn muốn nghỉ việc vì lý do gì?")
++        if "training_agreement" not in slots and not any(re.search(r"đào tạo", item, re.I) for item in result):
++            result.append("Có thỏa thuận đào tạo hoặc hoàn trả chi phí đào tạo không?")
++    return list(dict.fromkeys(result))[:8], warnings
+--- a/tests/unit/applications/tillegal/test_relevance_labels.py
++++ b/tests/unit/applications/tillegal/test_relevance_labels.py
+@@ -0,0 +1,74 @@
++"""Relevance-label provenance must remain independent of retrieval/proxy scores."""
++
++import pytest
++
++from scripts.evaluate_query_relevance import label_status
++
++
++def test_unlabeled_is_not_zero_and_never_becomes_expert_metric():
++    result = label_status([{"review_id": "a"}, {"review_id": "b"}], [])
++    assert result["counts"]["unlabeled"] == 2
++    assert result["expert_precision_at_k"] is result["expert_recall_at_k"] is result["expert_ndcg"] is None
++
++
++def test_provisional_and_human_labels_are_reported_separately():
++    rows = [{"review_id": "a"}, {"review_id": "b"}]
++    labels = [
++        {
++            "review_id": "a",
++            "label": 1,
++            "label_source": "model_assisted_provisional",
++            "reviewer": "fixture-model",
++            "reason": "fixture",
++        },
++        {
++            "review_id": "b",
++            "label": 3,
++            "label_source": "human_reviewed",
++            "reviewer": "fixture-reviewer",
++            "reason": "fixture",
++        },
++    ]
++    result = label_status(rows, labels)
++    assert result["counts"] == {
++        "human_reviewed": 1,
++        "model_assisted_provisional": 1,
++        "automatic_proxy": 0,
++        "unlabeled": 0,
++    }
++    assert result["expert_ndcg"] is None
++
++
++@pytest.mark.parametrize(
++    "bad",
++    [
++        {"review_id": "unknown", "label": None},
++        {"review_id": "a", "label": True, "label_source": "human_reviewed", "reviewer": "fixture", "reason": "fixture"},
++        {"review_id": "a", "label": 4, "label_source": "human_reviewed", "reviewer": "fixture", "reason": "fixture"},
++        {"review_id": "a", "label": 3, "label_source": "unlabeled", "reviewer": "fixture", "reason": "fixture"},
++        {"review_id": "a", "label": 3, "label_source": "human_reviewed", "reviewer": None, "reason": None},
++    ],
++)
++def test_unknown_score_or_missing_provenance_rejected(bad):
++    with pytest.raises(ValueError):
++        label_status([{"review_id": "a"}], [bad])
++
++
++def test_task_budget_refuses_batch_before_any_model_call(tmp_path, monkeypatch):
++    import argparse
++    import asyncio
++    import json
++    from unittest.mock import AsyncMock
++
++    import scripts.validate_query_semantics as evaluator
++
++    monkeypatch.setattr(evaluator, "FOLDER", tmp_path)
++    ledger = {"maximum": 25, "attempted": 24}
++    (tmp_path / "api_budget.json").write_text(json.dumps(ledger), encoding="utf-8")
++    execute = AsyncMock()
++    monkeypatch.setattr(evaluator, "evaluate", execute)
++    args = argparse.Namespace(mode="gemini", ids="Q004,Q025")
++    with pytest.raises(ValueError, match="SEMANTIC_EVALUATION_BUDGET_INSUFFICIENT"):
++        asyncio.run(evaluator.run(args))
++    execute.assert_not_awaited()
++    assert json.loads((tmp_path / "api_budget.json").read_text(encoding="utf-8")) == ledger
+--- a/tests/unit/applications/tillegal/test_semantic_correctness.py
++++ b/tests/unit/applications/tillegal/test_semantic_correctness.py
+@@ -0,0 +1,209 @@
++"""Grounded citation/time semantics and issue provenance. No model or DB I/O."""
++
++import asyncio
++import json
++import unicodedata
++from unittest.mock import AsyncMock
++
++import pytest
++from pydantic import ValidationError
++
++from src.applications.tillegal.agents.query.agent import QueryPlan, understand
++from src.applications.tillegal.agents.query.context import parse_context, reconcile_missing
++from src.applications.tillegal.agents.query.semantic import QueryAnalysisError, SemanticQueryAgent
++from src.applications.tillegal.agents.search.agent import search
++from tests.unit.applications.tillegal.retrieval.test_service import hydrated_service
++from tests.unit.applications.tillegal.test_query_search import options
++
++
++def response(**changes):
++    return {
++        "intent": "legal_question",
++        "domain": "unknown",
++        "facts": [],
++        "issues": [{"issue": "Mục tiêu tìm kiếm", "search_query": "quy định liên quan"}],
++        "missing_information": [],
++        "temporal_mentions": [],
++        "clarification": None,
++        **changes,
++    }
++
++
++def analyze(question, data):
++    complete = AsyncMock(return_value=json.dumps(data, ensure_ascii=False))
++    return asyncio.run(SemanticQueryAgent(complete, "fixture/model").understand(question))
++
++
++@pytest.mark.parametrize(
++    "question,reference,time",
++    [
++        ("Tôi hỏi Luật 45/2019/QH14 có nội dung nào?", "45/2019/QH14", None),
++        ("Tôi hỏi Điều 35 Bộ luật Lao động 2019 áp dụng ra sao?", "Bộ luật Lao động 2019", None),
++        ("Tôi muốn kiểm tra Khoản 2 Điều 10 có đúng không?", "Khoản 2", None),
++        ("Tôi ký ngày 15/03/2024 và muốn kiểm tra Điều 35 Luật 45/2019/QH14.", "45/2019/QH14", "15/03/2024"),
++        ("Giao dịch diễn ra năm 2010 và tôi cần tìm quy định khi đó.", None, "2010"),
++        ("Tôi kiểm tra Điều 35 Luật 45/2019/QH14 và Điều 117 Luật 91/2015/QH13.", "91/2015/QH13", None),
++        ("Một bài viết dẫn Điều 35 Luật 45/2019/QH14, tôi muốn kiểm tra nhận định đó.", "45/2019/QH14", None),
++        ("Tôi muốn tìm hiểu Bộ luật Dân sự 2015.", "Bộ luật Dân sự 2015", None),
++    ],
++)
++def test_reference_identity_never_becomes_applicability_date(question, reference, time):
++    plan = analyze(question, response())
++    assert plan["original"] == question and plan["analysis_method"] == "llm"
++    if reference:
++        assert any(item["text"] == reference for item in plan["citations"])
++    if time:
++        assert any(item["text"] == time for item in plan["temporal_context"])
++    assert all("/QH" not in item["text"] for item in plan["temporal_context"])
++    assert not any(item["role"] == "applicability_date" for item in plan["temporal_context"])
++
++
++def test_grounded_reference_in_model_time_is_reclassified_with_warning():
++    question = "Tôi muốn kiểm tra Điều 35 Luật 45/2019/QH14, hợp đồng ký ngày 15/03/2024."
++    plan = analyze(question, response(temporal_mentions=["45/2019/QH14", "2019", "15/03/2024"]))
++    assert plan["temporal_scope"] == ["15/03/2024"]
++    assert "MODEL_REFERENCE_RECLASSIFIED" in plan["planning_warnings"]
++    assert "45/2019/QH14" in plan["subqueries"][0]["text"]
++    assert all(item["source"] == "user_supplied_unverified" for item in plan["citations"])
++
++
++def test_same_year_in_statute_and_event_is_not_removed():
++    plan = analyze("Tôi theo Bộ luật Lao động 2019, hợp đồng ký năm 2019.", response(temporal_mentions=["2019"]))
++    assert "2019" in plan["temporal_scope"]
++    assert any(item["text"] == "2019" and item["role"] == "event_date" for item in plan["temporal_context"])
++    assert any(item["kind"] == "statute_reference" for item in plan["citations"])
++
++
++@pytest.mark.parametrize(
++    "prefix,role",
++    [
++        ("ký ngày", "event_date"),
++        ("áp dụng tại ngày", "applicability_date"),
++        ("ban hành ngày", "publication_date"),
++        ("có hiệu lực từ", "effective_date"),
++    ],
++)
++def test_explicit_temporal_roles_do_not_infer_dates(prefix, role):
++    question = f"Tôi hỏi văn bản {prefix} 01/02/2024 thì sao?"
++    plan = analyze(question, response())
++    mention = next(item for item in plan["temporal_context"] if item["text"] == "01/02/2024")
++    assert mention["role"] == role and mention["iso_date"] == "2024-02-01"
++    assert "as_of_date" not in plan
++
++
++@pytest.mark.parametrize("mention", ["2027", "01/01/2000", "99/2026/QH15"])
++def test_unsupported_time_or_source_still_rejected(mention):
++    with pytest.raises(QueryAnalysisError, match="QUERY_ANALYSIS_INVALID_RESPONSE"):
++        analyze("Tôi muốn kiểm tra Luật 45/2019/QH14.", response(temporal_mentions=[mention]))
++
++
++def test_calendar_date_must_not_be_parsed_as_document_number():
++    refs, times = parse_context("Tôi ký ngày 15/03/2024 theo Luật 45/2019/QH14.")
++    assert all(item.text != "15/03/2024" for item in refs)
++    assert any(item.text == "15/03/2024" for item in times)
++
++
++def test_original_unicode_offsets_are_documented_analysis_offsets():
++    question = unicodedata.normalize("NFD", "  Tôi hỏi Điều 35 Bộ luật Lao động 2019.  ")
++    plan = understand(question)
++    assert plan["original"] == question
++    normalized = unicodedata.normalize("NFC", question).strip()
++    assert all(normalized[item["start"] : item["end"]] == item["text"] for item in plan["citations"])
++
++
++def test_known_contract_duration_does_not_remove_other_missing_context():
++    text = "Tôi ký hợp đồng lao động 2 năm và muốn nghỉ việc."
++    missing, warnings = reconcile_missing(
++        text, ["Thời hạn hợp đồng là bao lâu?", "Loại hợp đồng có thỏa thuận đặc biệt không?"]
++    )
++    assert "Thời hạn hợp đồng là bao lâu?" not in missing
++    assert "Loại hợp đồng có thỏa thuận đặc biệt không?" in missing
++    assert any("lý do" in item for item in missing) and any("đào tạo" in item for item in missing)
++    assert "REDUNDANT_CONTRACT_DURATION_REMOVED" in warnings
++
++
++def test_provided_reason_training_and_duration_are_not_requested_again():
++    question = (
++        "Tôi ký hợp đồng lao động xác định thời hạn 24 tháng, muốn nghỉ vì chuyển nhà và không có thỏa thuận đào tạo."
++    )
++    missing, _ = reconcile_missing(
++        question, ["Loại hợp đồng là gì?", "Lý do nghỉ là gì?", "Có thỏa thuận đào tạo không?"]
++    )
++    assert missing == []
++
++
++def test_each_objective_gets_grounded_shared_facts_and_evidence_links():
++    question = "Tôi ký hợp đồng lao động 2 năm, mới làm được 6 tháng và muốn nghỉ việc."
++    data = response(
++        domain="labour",
++        facts=[
++            {"text": "hợp đồng lao động 2 năm", "source_quote": "hợp đồng lao động 2 năm"},
++            {"text": "6 tháng", "source_quote": "6 tháng"},
++        ],
++        issues=[
++            {"issue": "Báo trước", "search_query": "nghĩa vụ báo trước"},
++            {"issue": "Bồi thường", "search_query": "nghĩa vụ bồi thường"},
++        ],
++    )
++    plan = analyze(question, data)
++    assert all("2 năm" in item["text"] and "6 tháng" in item["text"] for item in plan["subqueries"])
++    assert plan["search_objectives"] == [
++        {"query_index": 0, "issue_indices": [0]},
++        {"query_index": 1, "issue_indices": [1]},
++    ]
++    service, *_ = hydrated_service()
++    result = asyncio.run(search(plan, service, options()))
++    assert result["status"] == "COMPLETED"
++    assert all([item.issue_indices for item in group.occurrences] == [(0,), (1,)] for group in result["evidence"])
++
++
++def test_related_issues_can_share_a_query_without_extra_calls():
++    plan = analyze(
++        "Tôi hỏi về trách nhiệm vay tiền và bảo lãnh.",
++        response(
++            issues=[
++                {"issue": "Nợ vay", "search_query": "vay tiền bảo lãnh"},
++                {"issue": "Bảo lãnh", "search_query": "vay tiền bảo lãnh"},
++            ]
++        ),
++    )
++    assert len(plan["subqueries"]) == 1 and plan["search_objectives"][0]["issue_indices"] == [0, 1]
++
++
++def test_invalid_issue_link_rejected_and_old_plans_remain_loadable():
++    plan = understand("Tra cứu Điều 35 Bộ luật Lao động")
++    old = {
++        key: value
++        for key, value in plan.items()
++        if key not in {"citations", "temporal_context", "search_objectives", "planning_warnings"}
++    }
++    assert QueryPlan.model_validate(old).search_objectives == []
++    with pytest.raises(ValidationError):
++        QueryPlan.model_validate({**plan, "search_objectives": [{"query_index": 0, "issue_indices": [2]}]})
++
++
++def test_negated_current_reference_does_not_override_historical_need():
++    plan = analyze(
++        "Giao dịch năm 2010, tôi hỏi quy định khi đó, không phải hiện nay.",
++        response(temporal_mentions=["2010", "hiện nay"]),
++    )
++    assert "2010" in plan["temporal_scope"] and "hiện nay" not in plan["temporal_scope"]
++    assert any(item["text"] == "hiện nay" and item["negated"] for item in plan["temporal_context"])
++    assert "NEGATED_TEMPORAL_REFERENCE_IGNORED" in plan["planning_warnings"]
++
++
++def test_cross_reference_does_not_confirm_exact_lookup_source_identity():
++    service, *_ = hydrated_service()
++    plan = understand("Tra cứu Điều 35 Bộ luật Lao động 45/2019/QH14.")
++    result = asyncio.run(search(plan, service, options()))
++    assert result["status"] == "COMPLETED" and result["evidence"]
++    assert "EXACT_LOOKUP_SOURCE_IDENTITY_UNCONFIRMED" in result["warnings"]
++
++
++def test_literal_source_title_confirms_only_identity_not_legal_correctness():
++    from tests.unit.applications.tillegal.retrieval.test_service import source_row
++
++    service, *_ = hydrated_service(source=source_row(title="Bộ luật Lao động 45/2019/QH14"))
++    result = asyncio.run(search(understand("Tra cứu Điều 35 Bộ luật Lao động 45/2019/QH14."), service, options()))
++    assert "EXACT_LOOKUP_SOURCE_IDENTITY_UNCONFIRMED" not in result["warnings"]
++    assert all(item.evidence.hash_check == "MATCHED_STORED" for item in result["evidence"])

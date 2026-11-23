@@ -1,0 +1,341 @@
+[
+  {
+    "id": "Q001",
+    "variant": "deterministic",
+    "auditable": true,
+    "native_items": 3,
+    "aggregated_occurrences": 3,
+    "all_native_occurrences_preserved": true,
+    "explicit_issue_links_preserved": true,
+    "checks": {
+      "evidence_groups": 3,
+      "occurrences": 3,
+      "duplicates_collapsed": 0,
+      "provenance_links_valid": true,
+      "content_hashes_match": true,
+      "unique_source_payloads": true,
+      "source_ids_present": true
+    },
+    "warnings": [
+      "TEMPORAL_METADATA_INCOMPLETE"
+    ],
+    "status": "COMPLETED"
+  },
+  {
+    "id": "Q001",
+    "variant": "gemini",
+    "auditable": true,
+    "native_items": 3,
+    "aggregated_occurrences": 3,
+    "all_native_occurrences_preserved": true,
+    "explicit_issue_links_preserved": true,
+    "checks": {
+      "evidence_groups": 3,
+      "occurrences": 3,
+      "duplicates_collapsed": 0,
+      "provenance_links_valid": true,
+      "content_hashes_match": true,
+      "unique_source_payloads": true,
+      "source_ids_present": true
+    },
+    "warnings": [
+      "TEMPORAL_METADATA_INCOMPLETE"
+    ],
+    "status": "COMPLETED"
+  },
+  {
+    "id": "Q004",
+    "variant": "deterministic",
+    "auditable": true,
+    "native_items": 6,
+    "aggregated_occurrences": 6,
+    "all_native_occurrences_preserved": true,
+    "explicit_issue_links_preserved": true,
+    "checks": {
+      "evidence_groups": 5,
+      "occurrences": 6,
+      "duplicates_collapsed": 1,
+      "provenance_links_valid": true,
+      "content_hashes_match": true,
+      "unique_source_payloads": true,
+      "source_ids_present": true
+    },
+    "warnings": [
+      "TEMPORAL_METADATA_INCOMPLETE"
+    ],
+    "status": "COMPLETED"
+  },
+  {
+    "id": "Q004",
+    "variant": "gemini",
+    "auditable": true,
+    "native_items": 6,
+    "aggregated_occurrences": 6,
+    "all_native_occurrences_preserved": true,
+    "explicit_issue_links_preserved": true,
+    "checks": {
+      "evidence_groups": 6,
+      "occurrences": 6,
+      "duplicates_collapsed": 0,
+      "provenance_links_valid": true,
+      "content_hashes_match": true,
+      "unique_source_payloads": true,
+      "source_ids_present": true
+    },
+    "warnings": [
+      "TEMPORAL_METADATA_INCOMPLETE",
+      "TEMPORAL_SCOPE_REQUIRES_CALLER_DATE_REVIEW"
+    ],
+    "status": "COMPLETED"
+  },
+  {
+    "id": "Q005",
+    "variant": "deterministic",
+    "auditable": true,
+    "native_items": 3,
+    "aggregated_occurrences": 3,
+    "all_native_occurrences_preserved": true,
+    "explicit_issue_links_preserved": true,
+    "checks": {
+      "evidence_groups": 3,
+      "occurrences": 3,
+      "duplicates_collapsed": 0,
+      "provenance_links_valid": true,
+      "content_hashes_match": true,
+      "unique_source_payloads": true,
+      "source_ids_present": true
+    },
+    "warnings": [
+      "TEMPORAL_METADATA_INCOMPLETE"
+    ],
+    "status": "COMPLETED"
+  },
+  {
+    "id": "Q005",
+    "variant": "gemini",
+    "auditable": true,
+    "native_items": 6,
+    "aggregated_occurrences": 6,
+    "all_native_occurrences_preserved": true,
+    "explicit_issue_links_preserved": true,
+    "checks": {
+      "evidence_groups": 6,
+      "occurrences": 6,
+      "duplicates_collapsed": 0,
+      "provenance_links_valid": true,
+      "content_hashes_match": true,
+      "unique_source_payloads": true,
+      "source_ids_present": true
+    },
+    "warnings": [
+      "TEMPORAL_METADATA_INCOMPLETE"
+    ],
+    "status": "COMPLETED"
+  },
+  {
+    "id": "Q007",
+    "variant": "deterministic",
+    "auditable": true,
+    "native_items": 3,
+    "aggregated_occurrences": 3,
+    "all_native_occurrences_preserved": true,
+    "explicit_issue_links_preserved": true,
+    "checks": {
+      "evidence_groups": 3,
+      "occurrences": 3,
+      "duplicates_collapsed": 0,
+      "provenance_links_valid": true,
+      "content_hashes_match": true,
+      "unique_source_payloads": true,
+      "source_ids_present": true
+    },
+    "warnings": [
+      "TEMPORAL_METADATA_INCOMPLETE"
+    ],
+    "status": "COMPLETED"
+  },
+  {
+    "id": "Q007",
+    "variant": "gemini",
+    "status": "BLOCKED_QUERY_PLAN",
+    "auditable": false
+  },
+  {
+    "id": "Q019",
+    "variant": "deterministic",
+    "auditable": true,
+    "native_items": 3,
+    "aggregated_occurrences": 3,
+    "all_native_occurrences_preserved": true,
+    "explicit_issue_links_preserved": true,
+    "checks": {
+      "evidence_groups": 3,
+      "occurrences": 3,
+      "duplicates_collapsed": 0,
+      "provenance_links_valid": true,
+      "content_hashes_match": true,
+      "unique_source_payloads": true,
+      "source_ids_present": true
+    },
+    "warnings": [
+      "TEMPORAL_METADATA_INCOMPLETE",
+      "TEMPORAL_SCOPE_REQUIRES_CALLER_DATE_REVIEW"
+    ],
+    "status": "COMPLETED"
+  },
+  {
+    "id": "Q019",
+    "variant": "gemini",
+    "auditable": true,
+    "native_items": 3,
+    "aggregated_occurrences": 3,
+    "all_native_occurrences_preserved": true,
+    "explicit_issue_links_preserved": true,
+    "checks": {
+      "evidence_groups": 3,
+      "occurrences": 3,
+      "duplicates_collapsed": 0,
+      "provenance_links_valid": true,
+      "content_hashes_match": true,
+      "unique_source_payloads": true,
+      "source_ids_present": true
+    },
+    "warnings": [
+      "TEMPORAL_METADATA_INCOMPLETE",
+      "TEMPORAL_SCOPE_REQUIRES_CALLER_DATE_REVIEW"
+    ],
+    "status": "COMPLETED"
+  },
+  {
+    "id": "Q022",
+    "variant": "deterministic",
+    "auditable": true,
+    "native_items": 3,
+    "aggregated_occurrences": 3,
+    "all_native_occurrences_preserved": true,
+    "explicit_issue_links_preserved": true,
+    "checks": {
+      "evidence_groups": 3,
+      "occurrences": 3,
+      "duplicates_collapsed": 0,
+      "provenance_links_valid": true,
+      "content_hashes_match": true,
+      "unique_source_payloads": true,
+      "source_ids_present": true
+    },
+    "warnings": [
+      "TEMPORAL_METADATA_INCOMPLETE"
+    ],
+    "status": "COMPLETED"
+  },
+  {
+    "id": "Q022",
+    "variant": "gemini",
+    "auditable": true,
+    "native_items": 3,
+    "aggregated_occurrences": 3,
+    "all_native_occurrences_preserved": true,
+    "explicit_issue_links_preserved": true,
+    "checks": {
+      "evidence_groups": 3,
+      "occurrences": 3,
+      "duplicates_collapsed": 0,
+      "provenance_links_valid": true,
+      "content_hashes_match": true,
+      "unique_source_payloads": true,
+      "source_ids_present": true
+    },
+    "warnings": [
+      "TEMPORAL_METADATA_INCOMPLETE"
+    ],
+    "status": "COMPLETED"
+  },
+  {
+    "id": "Q025",
+    "variant": "deterministic",
+    "auditable": true,
+    "native_items": 3,
+    "aggregated_occurrences": 3,
+    "all_native_occurrences_preserved": true,
+    "explicit_issue_links_preserved": true,
+    "checks": {
+      "evidence_groups": 3,
+      "occurrences": 3,
+      "duplicates_collapsed": 0,
+      "provenance_links_valid": true,
+      "content_hashes_match": true,
+      "unique_source_payloads": true,
+      "source_ids_present": true
+    },
+    "warnings": [
+      "TEMPORAL_METADATA_INCOMPLETE"
+    ],
+    "status": "COMPLETED"
+  },
+  {
+    "id": "Q025",
+    "variant": "gemini",
+    "auditable": true,
+    "native_items": 3,
+    "aggregated_occurrences": 3,
+    "all_native_occurrences_preserved": true,
+    "explicit_issue_links_preserved": true,
+    "checks": {
+      "evidence_groups": 3,
+      "occurrences": 3,
+      "duplicates_collapsed": 0,
+      "provenance_links_valid": true,
+      "content_hashes_match": true,
+      "unique_source_payloads": true,
+      "source_ids_present": true
+    },
+    "warnings": [
+      "TEMPORAL_METADATA_INCOMPLETE"
+    ],
+    "status": "COMPLETED"
+  },
+  {
+    "id": "Q040",
+    "variant": "deterministic",
+    "auditable": true,
+    "native_items": 3,
+    "aggregated_occurrences": 3,
+    "all_native_occurrences_preserved": true,
+    "explicit_issue_links_preserved": true,
+    "checks": {
+      "evidence_groups": 3,
+      "occurrences": 3,
+      "duplicates_collapsed": 0,
+      "provenance_links_valid": true,
+      "content_hashes_match": true,
+      "unique_source_payloads": true,
+      "source_ids_present": true
+    },
+    "warnings": [
+      "TEMPORAL_METADATA_INCOMPLETE"
+    ],
+    "status": "COMPLETED"
+  },
+  {
+    "id": "Q040",
+    "variant": "gemini",
+    "auditable": true,
+    "native_items": 6,
+    "aggregated_occurrences": 6,
+    "all_native_occurrences_preserved": true,
+    "explicit_issue_links_preserved": true,
+    "checks": {
+      "evidence_groups": 6,
+      "occurrences": 6,
+      "duplicates_collapsed": 0,
+      "provenance_links_valid": true,
+      "content_hashes_match": true,
+      "unique_source_payloads": true,
+      "source_ids_present": true
+    },
+    "warnings": [
+      "TEMPORAL_METADATA_INCOMPLETE"
+    ],
+    "status": "COMPLETED"
+  }
+]

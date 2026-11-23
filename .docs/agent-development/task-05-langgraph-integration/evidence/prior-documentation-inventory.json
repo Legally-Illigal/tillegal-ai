@@ -1,0 +1,86 @@
+{
+  ".docs/agent-development/task-03-query-search-retrieval/00_IMPLEMENTATION_SUMMARY.md": {
+    "sha256": "57fd7a693162888b806bfd29cc1c26fdbe7e5c763021b73d9c938bb5d41b431b",
+    "lines": 11
+  },
+  ".docs/agent-development/task-03-query-search-retrieval/01_ARCHITECTURE_AND_AUDIT.md": {
+    "sha256": "2b65b4cc40c9bd37eda7405740c0ba6344a45c85d4188e638c752248c81850d1",
+    "lines": 35
+  },
+  ".docs/agent-development/task-03-query-search-retrieval/02_INPUT_OUTPUT_CONTRACTS.md": {
+    "sha256": "dbf2caebdca971c881b322710fc6230f7bc7847207fc25d0c3f9548369e5760a",
+    "lines": 15
+  },
+  ".docs/agent-development/task-03-query-search-retrieval/03_EXECUTION_TRACE.md": {
+    "sha256": "93196739e3537a591c3aaf20cfece2530278cd32734f50e49e000a0af166095b",
+    "lines": 55
+  },
+  ".docs/agent-development/task-03-query-search-retrieval/04_RETRIEVAL_AND_UNIFIED_EVIDENCE.md": {
+    "sha256": "6b6fa8bcccb1694ab2135dc5c95f185297a1b8141fd267a5f59b7781f78d2106",
+    "lines": 22
+  },
+  ".docs/agent-development/task-03-query-search-retrieval/05_TESTS_AND_BACKEND_MATRIX.md": {
+    "sha256": "f6211525e66d7d8f73364b84d09041ffe661001448d5a135ed881f85e6afce62",
+    "lines": 28
+  },
+  ".docs/agent-development/task-03-query-search-retrieval/06_CHANGELOG_AND_NEXT_STEPS.md": {
+    "sha256": "17ea2e800f9061abe05b7cfb984800bf1504969d888470a89c6abf13b529a4f6",
+    "lines": 11
+  },
+  ".docs/agent-development/task-03-query-search-retrieval/07_PRESENTATION_AND_ORAL_EXAM.md": {
+    "sha256": "3073134a6abb065e3f89ab25d897bcef3376584bfe84812812e97b2e874ce69b",
+    "lines": 63
+  },
+  ".docs/agent-development/task-03-query-search-retrieval/README.md": {
+    "sha256": "2f66b05f7626bc350433e40dac4a7755f5129b9ccf67109a8bea7bebd6b53f38",
+    "lines": 12
+  },
+  ".docs/agent-development/task-04-multimode-verification/00_IMPLEMENTATION_SUMMARY.md": {
+    "sha256": "0abbb9a363488132f6e8b9508758ac7891e8c7725ca9e777e80e1d03436d3c9c",
+    "lines": 24
+  },
+  ".docs/agent-development/task-04-multimode-verification/01_QUERY_SEARCH_ARCHITECTURE.md": {
+    "sha256": "206fcd08408c4ffd252d3edbd047359d4baca539b3a76f9da600765011e222c5",
+    "lines": 32
+  },
+  ".docs/agent-development/task-04-multimode-verification/02_INPUT_OUTPUT_CONTRACTS.md": {
+    "sha256": "ec7b1c330d5140c24065427c956b99b7373dd38c7bbdcf810c977db9186ad04e",
+    "lines": 152
+  },
+  ".docs/agent-development/task-04-multimode-verification/03_EXECUTION_TRACE.md": {
+    "sha256": "06b7b07792b490ebdaeed965a4ad4470920eee1a2628b2797645f445a4b4b1d6",
+    "lines": 78
+  },
+  ".docs/agent-development/task-04-multimode-verification/04_DENSE_E5_ANALYSIS.md": {
+    "sha256": "27b091dd036530bc3d49833e0eb48ae953cb55b974d384d490e82d01f499c526",
+    "lines": 34
+  },
+  ".docs/agent-development/task-04-multimode-verification/05_HYBRID_RRF_ANALYSIS.md": {
+    "sha256": "c1bd8cfcbdb44ee8d03686ea2b797126bc77cab304792b020be8cd97eb812bfd",
+    "lines": 13
+  },
+  ".docs/agent-development/task-04-multimode-verification/06_RERANKING_ANALYSIS.md": {
+    "sha256": "db892d50b2df9e6e2bb670bcbe6f6eaf0752d7db8b71b9794c724a63fd7aa598",
+    "lines": 25
+  },
+  ".docs/agent-development/task-04-multimode-verification/07_BACKEND_COMPATIBILITY_MATRIX.md": {
+    "sha256": "8bd7d92234f50764246221f2845ed4d8cb661e7a4ff1701ca37c6487e0d5e20b",
+    "lines": 16
+  },
+  ".docs/agent-development/task-04-multimode-verification/08_TEST_RESULTS.md": {
+    "sha256": "5c6395e605bc8e1658830c490c4a443c2e6451abbbebd2dc1a8b7a0bc526f6c5",
+    "lines": 71
+  },
+  ".docs/agent-development/task-04-multimode-verification/09_PRESENTATION_AND_ORAL_EXAM.md": {
+    "sha256": "c893120ae6148928608a6d658f8c9bf8a91e93e36edfb71962c0165c283fc30d",
+    "lines": 81
+  },
+  ".docs/agent-development/task-04-multimode-verification/10_CHANGELOG_AND_NEXT_STEPS.md": {
+    "sha256": "877e8fa61622938cdedc64835811fc306b88caea1f8e0741eb766cf8dfad1d71",
+    "lines": 13
+  },
+  ".docs/agent-development/task-04-multimode-verification/README.md": {
+    "sha256": "017faeba5a6f01ee9a2356caba645bc46b45f9a81b4a4930a196472761534916",
+    "lines": 17
+  }
+}

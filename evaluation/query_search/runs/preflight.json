@@ -1,0 +1,20 @@
+{
+  "status": "OK",
+  "error": null,
+  "index": {
+    "id": "2acb41da-84af-4e7b-95b6-00faa3f73528",
+    "index_name": "vbpl-bm25-unicode-v1",
+    "index_version": "v1",
+    "status": "READY",
+    "updated_at": "2026-11-14T08:27:10.966337Z",
+    "algorithm": "BM25",
+    "tokenizer": "unicode-nfc-lower-v1"
+  },
+  "count": 3,
+  "titles": [
+    "Thông tư 141/2026/TT-BTC của Bộ Tài chính",
+    "Văn bản hợp nhất 123/2026/VBHN-PL-VPQH của Văn phòng Quốc hội",
+    "Quyết định 20/2026/QĐ-UBND của UBND Tỉnh Ninh Bình"
+  ],
+  "latency_ms": 4087.87
+}

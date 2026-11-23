@@ -1,0 +1,790 @@
+[
+  {
+    "file": ".docs/agent-development/task-03-query-search-retrieval/00_IMPLEMENTATION_SUMMARY.md",
+    "sha256": "57fd7a693162888b806bfd29cc1c26fdbe7e5c763021b73d9c938bb5d41b431b",
+    "headings": [
+      "# K\u1ebft qu\u1ea3 Task 3"
+    ],
+    "characters": 1158
+  },
+  {
+    "file": ".docs/agent-development/task-03-query-search-retrieval/01_ARCHITECTURE_AND_AUDIT.md",
+    "sha256": "2b65b4cc40c9bd37eda7405740c0ba6344a45c85d4188e638c752248c81850d1",
+    "headings": [
+      "# Checkout v\u00e0 ki\u1ebfn tr\u00fac cu\u1ed1i",
+      "## Source fingerprint sau task"
+    ],
+    "characters": 2850
+  },
+  {
+    "file": ".docs/agent-development/task-03-query-search-retrieval/02_INPUT_OUTPUT_CONTRACTS.md",
+    "sha256": "dbf2caebdca971c881b322710fc6230f7bc7847207fc25d0c3f9548369e5760a",
+    "headings": [
+      "# Contracts v\u00e0 quy\u1ec1n s\u1edf h\u1eefu"
+    ],
+    "characters": 2727
+  },
+  {
+    "file": ".docs/agent-development/task-03-query-search-retrieval/03_EXECUTION_TRACE.md",
+    "sha256": "93196739e3537a591c3aaf20cfece2530278cd32734f50e49e000a0af166095b",
+    "headings": [
+      "# Trace theo source th\u1eadt",
+      "## Vai tr\u00f2 t\u1eebng h\u00e0m m\u1edbi/\u0111\u01b0\u1ee3c chuy\u1ec3n"
+    ],
+    "characters": 6374
+  },
+  {
+    "file": ".docs/agent-development/task-03-query-search-retrieval/04_RETRIEVAL_AND_UNIFIED_EVIDENCE.md",
+    "sha256": "6b6fa8bcccb1694ab2135dc5c95f185297a1b8141fd267a5f59b7781f78d2106",
+    "headings": [
+      "# RetrievalService v\u00e0 UnifiedEvidence"
+    ],
+    "characters": 2537
+  },
+  {
+    "file": ".docs/agent-development/task-03-query-search-retrieval/05_TESTS_AND_BACKEND_MATRIX.md",
+    "sha256": "338b33f1f47c17ce05837f6aabb5cc7280c7fcecf3b5f6e0ecd514e8a4482943",
+    "headings": [
+      "# Test evidence",
+      "## Verification cu\u1ed1i sau ch\u1ec9nh import fixture"
+    ],
+    "characters": 3388
+  },
+  {
+    "file": ".docs/agent-development/task-03-query-search-retrieval/06_CHANGELOG_AND_NEXT_STEPS.md",
+    "sha256": "17ea2e800f9061abe05b7cfb984800bf1504969d888470a89c6abf13b529a4f6",
+    "headings": [
+      "# Changelog v\u00e0 gi\u1edbi h\u1ea1n"
+    ],
+    "characters": 1827
+  },
+  {
+    "file": ".docs/agent-development/task-03-query-search-retrieval/07_PRESENTATION_AND_ORAL_EXAM.md",
+    "sha256": "3073134a6abb065e3f89ab25d897bcef3376584bfe84812812e97b2e874ce69b",
+    "headings": [
+      "# Thuy\u1ebft tr\u00ecnh v\u00e0 v\u1ea5n \u0111\u00e1p"
+    ],
+    "characters": 4192
+  },
+  {
+    "file": ".docs/agent-development/task-03-query-search-retrieval/README.md",
+    "sha256": "2f66b05f7626bc350433e40dac4a7755f5129b9ccf67109a8bea7bebd6b53f38",
+    "headings": [
+      "# Task 3 \u2014 \u0110\u00fang RetrievalService Supabase"
+    ],
+    "characters": 667
+  },
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/00_IMPLEMENTATION_SUMMARY.md",
+    "sha256": "0abbb9a363488132f6e8b9508758ac7891e8c7725ca9e777e80e1d03436d3c9c",
+    "headings": [
+      "# Task 4 \u2014 K\u1ebft lu\u1eadn ki\u1ec3m ch\u1ee9ng \u0111a mode",
+      "## K\u1ebft qu\u1ea3"
+    ],
+    "characters": 2204
+  },
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/01_QUERY_SEARCH_ARCHITECTURE.md",
+    "sha256": "206fcd08408c4ffd252d3edbd047359d4baca539b3a76f9da600765011e222c5",
+    "headings": [
+      "# Ki\u1ebfn tr\u00fac v\u00e0 ownership"
+    ],
+    "characters": 2357
+  },
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/02_INPUT_OUTPUT_CONTRACTS.md",
+    "sha256": "ec7b1c330d5140c24065427c956b99b7373dd38c7bbdcf810c977db9186ad04e",
+    "headings": [
+      "# Contracts hi\u1ec7n t\u1ea1i",
+      "## QueryPlan v\u00e0 Search",
+      "### Subquery",
+      "### QueryPlan",
+      "### SearchOptions",
+      "### SearchState",
+      "## Retrieval v\u00e0 evidence",
+      "### RetrievalRequest",
+      "### IndexIdentity",
+      "### RetrievalWarning",
+      "### UnifiedEvidence",
+      "### RetrievalResponse",
+      "## V\u00ed d\u1ee5 \u0111\u00e3 ch\u1ea1y"
+    ],
+    "characters": 8309
+  },
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/03_EXECUTION_TRACE.md",
+    "sha256": "06b7b07792b490ebdaeed965a4ad4470920eee1a2628b2797645f445a4b4b1d6",
+    "headings": [
+      "# Function-level execution trace",
+      "## Entry, input v\u00e0 output chung",
+      "## BM25",
+      "## Dense",
+      "## Hybrid",
+      "## Reranking",
+      "## Probe v\u00e0 \u0111o l\u01b0\u1eddng"
+    ],
+    "characters": 10855
+  },
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/04_DENSE_E5_ANALYSIS.md",
+    "sha256": "27b091dd036530bc3d49833e0eb48ae953cb55b974d384d490e82d01f499c526",
+    "headings": [
+      "# Dense E5 th\u1ef1c t\u1ebf",
+      "## Model v\u00e0 provisioning",
+      "## Query-time processing",
+      "## Index/RPC",
+      "## K\u1ebft qu\u1ea3 v\u00e0 gi\u1edbi h\u1ea1n"
+    ],
+    "characters": 3899
+  },
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/05_HYBRID_RRF_ANALYSIS.md",
+    "sha256": "c1bd8cfcbdb44ee8d03686ea2b797126bc77cab304792b020be8cd97eb812bfd",
+    "headings": [
+      "# Hybrid v\u00e0 RRF"
+    ],
+    "characters": 2201
+  },
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/06_RERANKING_ANALYSIS.md",
+    "sha256": "db892d50b2df9e6e2bb670bcbe6f6eaf0752d7db8b71b9794c724a63fd7aa598",
+    "headings": [
+      "# Reranking stage",
+      "## Model \u0111\u00e3 provision",
+      "## C\u1eb7p query\u2013passage v\u00e0 scores",
+      "## Deadlines v\u00e0 failure",
+      "## K\u1ebft qu\u1ea3"
+    ],
+    "characters": 3137
+  },
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/07_BACKEND_COMPATIBILITY_MATRIX.md",
+    "sha256": "8bd7d92234f50764246221f2845ed4d8cb661e7a4ff1701ca37c6487e0d5e20b",
+    "headings": [
+      "# Ma tr\u1eadn backend v\u00e0 consistency"
+    ],
+    "characters": 2388
+  },
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/08_TEST_RESULTS.md",
+    "sha256": "5c6395e605bc8e1658830c490c4a443c2e6451abbbebd2dc1a8b7a0bc526f6c5",
+    "headings": [
+      "# Commands, counts v\u00e0 evidence",
+      "## M\u00f4i tr\u01b0\u1eddng",
+      "## Level 1 \u2014 controlled fakes",
+      "## Level 2 \u2014 focused regression, real components v\u1edbi fake read ports",
+      "## Level 3 \u2014 live read-only",
+      "## Failure/edge-case coverage",
+      "## Lint v\u00e0 source verification"
+    ],
+    "characters": 6579
+  },
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/09_PRESENTATION_AND_ORAL_EXAM.md",
+    "sha256": "c893120ae6148928608a6d658f8c9bf8a91e93e36edfb71962c0165c283fc30d",
+    "headings": [
+      "# H\u01b0\u1edbng d\u1eabn thuy\u1ebft tr\u00ecnh v\u00e0 v\u1ea5n \u0111\u00e1p"
+    ],
+    "characters": 6270
+  },
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/10_CHANGELOG_AND_NEXT_STEPS.md",
+    "sha256": "877e8fa61622938cdedc64835811fc306b88caea1f8e0741eb766cf8dfad1d71",
+    "headings": [
+      "# Changelog v\u00e0 readiness",
+      "## Readiness Task 5"
+    ],
+    "characters": 1909
+  },
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/README.md",
+    "sha256": "017faeba5a6f01ee9a2356caba645bc46b45f9a81b4a4930a196472761534916",
+    "headings": [
+      "# Task4 \u2014 Query/Search multi-mode verification"
+    ],
+    "characters": 1108
+  },
+  {
+    "file": ".docs/agent-development/task-05-langgraph-integration/00_IMPLEMENTATION_SUMMARY.md",
+    "sha256": "18ce188f8c5768d3e63c4decff8a2a44a40c850bad86a57b2c4810218cfbb31c",
+    "headings": [
+      "# Task 5 \u2014 K\u1ebft qu\u1ea3 tri\u1ec3n khai"
+    ],
+    "characters": 1392
+  },
+  {
+    "file": ".docs/agent-development/task-05-langgraph-integration/01_LANGGRAPH_ARCHITECTURE.md",
+    "sha256": "1afe502f6c82465004e6ecc4df184bccb3e2e4b2df622906e4ddbde4c7149224",
+    "headings": [
+      "# Ki\u1ebfn tr\u00fac v\u00e0 audit"
+    ],
+    "characters": 2125
+  },
+  {
+    "file": ".docs/agent-development/task-05-langgraph-integration/02_GRAPH_STATE_AND_CONTRACTS.md",
+    "sha256": "bf04a6b735bcf3ca242e591d4e00c84c540658559e492cadb9019c259be3e8c1",
+    "headings": [
+      "# State v\u00e0 contracts",
+      "### JudgeHandoff",
+      "### LegalQAState"
+    ],
+    "characters": 3124
+  },
+  {
+    "file": ".docs/agent-development/task-05-langgraph-integration/03_EXECUTION_TRACE.md",
+    "sha256": "adc4d23cf2c32f88a42f807513a7d9c1470588359d6d7c7f64739e4adbbcb4e0",
+    "headings": [
+      "# Source trace"
+    ],
+    "characters": 6770
+  },
+  {
+    "file": ".docs/agent-development/task-05-langgraph-integration/04_QUERY_NODE_ANALYSIS.md",
+    "sha256": "4d9adc8b049bd2056dccc10a8f51b6dde188a7b1a693481ae3c2fe117697870b",
+    "headings": [
+      "# Query node"
+    ],
+    "characters": 1531
+  },
+  {
+    "file": ".docs/agent-development/task-05-langgraph-integration/05_SEARCH_NODE_ANALYSIS.md",
+    "sha256": "8e690971640c7d3efb46f04aa7080dffd19bf64c723f4d25b67448c406d7cd67",
+    "headings": [
+      "# Search node"
+    ],
+    "characters": 1837
+  },
+  {
+    "file": ".docs/agent-development/task-05-langgraph-integration/06_ROUTING_AND_ERROR_HANDLING.md",
+    "sha256": "65ecb5319c4e8b70b6e0e2d4dcca64f12f128a46d17ae57081a56de8671ddb03",
+    "headings": [
+      "# Routing v\u00e0 failure semantics"
+    ],
+    "characters": 2560
+  },
+  {
+    "file": ".docs/agent-development/task-05-langgraph-integration/07_JUDGE_HANDOFF_CONTRACT.md",
+    "sha256": "0aaa47979bd1a4ff06d801af1e2c4a6eca66ac8ef66d85a383063367e13128c8",
+    "headings": [
+      "# JudgeHandoff schema v1",
+      "## Canonical fields v\u00e0 provenance",
+      "## Handoff v\u00e0 serialization",
+      "## Evidence m\u1edbi",
+      "## Gaps cho Judge task"
+    ],
+    "characters": 3197
+  },
+  {
+    "file": ".docs/agent-development/task-05-langgraph-integration/08_TEST_RESULTS.md",
+    "sha256": "60eb99110b8bc3d0dc74dbc7658e4a7dbbf2a0dcc6edbf8c101f637ab601bf2c",
+    "headings": [
+      "# Test evidence v\u00e0 commands",
+      "## Level A/B \u2014 nodes, graph, handoff",
+      "## Level C \u2014 regression",
+      "## Level D \u2014 m\u1ed9t graph BM25 Supabase smoke",
+      "## Quality gates"
+    ],
+    "characters": 4642
+  },
+  {
+    "file": ".docs/agent-development/task-05-langgraph-integration/09_PRESENTATION_AND_ORAL_EXAM.md",
+    "sha256": "f14872ce446247d359d7b5c1fbf9e5cb0158b6739d32646d0803ac8822e6c1c7",
+    "headings": [
+      "# H\u01b0\u1edbng d\u1eabn thuy\u1ebft tr\u00ecnh v\u00e0 v\u1ea5n \u0111\u00e1p"
+    ],
+    "characters": 8823
+  },
+  {
+    "file": ".docs/agent-development/task-05-langgraph-integration/10_FINAL_QUERY_SEARCH_HANDOFF.md",
+    "sha256": "dafa9771905b59004ad5cbd2a21c86d8bbc42a6549b83f6a5dbd30b76f2d6a7f",
+    "headings": [
+      "# B\u00e0n giao cu\u1ed1i ph\u1ea1m vi Query/Search",
+      "## Files v\u00e0 version",
+      "## Application entrypoint",
+      "# Application validate/c\u1ea5p quy\u1ec1n settings v\u00e0 options tr\u01b0\u1edbc khi compose.",
+      "## Readiness v\u00e0 gi\u1edbi h\u1ea1n",
+      "## Quy\u1ebft \u0111\u1ecbnh cho scope ti\u1ebfp theo"
+    ],
+    "characters": 2832
+  },
+  {
+    "file": ".docs/agent-development/task-05-langgraph-integration/README.md",
+    "sha256": "dbad6e4dbadd14081c9c65d2377afb7ef27745b6a58ce9b8dd1d4b8813c0ddaa",
+    "headings": [
+      "# Task 5 \u2014 Query/Search LangGraph integration v\u00e0 handoff"
+    ],
+    "characters": 1107
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/01_ARCHITECTURE_AND_CALL_GRAPH.md",
+    "sha256": "c47f9c3ef03665eff615146bd598723c16e671e5e0e5e8717cc2c375b6c7b53b",
+    "headings": [
+      "# Ki\u1ebfn tr\u00fac Query Agent theo source hi\u1ec7n t\u1ea1i",
+      "## K\u1ebft lu\u1eadn \u0111\u1ecbnh danh",
+      "## Public entrypoints v\u00e0 ownership",
+      "## Standalone th\u1ef1c t\u1ebf",
+      "## Hai c\u00e1ch \u0111i\u1ec1u ph\u1ed1i hi\u1ec7n c\u00f3",
+      "## Sequence \u0111\u1ebfn boundary Search"
+    ],
+    "characters": 5301
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/02_INPUT_VALIDATION_AND_UNICODE.md",
+    "sha256": "5dc70ec8c9859ad528c356b1a513a0b39c25e9176f7cdf91826cc13f9b38d339",
+    "headings": [
+      "# Input boundary, validation v\u00e0 Unicode",
+      "## B\u1ea3ng bi\u1ebfn \u0111\u1ed5i th\u1ef1c t\u1ebf",
+      "## Unicode/control edge cases",
+      "## Kh\u00e1c preprocessing Retrieval"
+    ],
+    "characters": 4722
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/03_INTENT_AND_DOMAIN_RULES.md",
+    "sha256": "2b83b1fa8baa1da74bb59b82a76af095903a773a7dcc45c210043f7417cef46e",
+    "headings": [
+      "# Intent v\u00e0 domain: to\u00e0n b\u1ed9 rules hi\u1ec7n h\u00e0nh",
+      "## Intent ch\u1ec9 c\u00f3 hai nh\u00e3n",
+      "## Decision table v\u00e0 priority",
+      "## Domain ch\u1ec9 l\u00e0 binary keyword flag",
+      "## Expected output v\u00e0 evidence label"
+    ],
+    "characters": 3749
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/04_TEMPORAL_PROCESSING.md",
+    "sha256": "84867c8f8757b04fa9735b03c2b33b9c08190d476b08fb41222a45842f7cb129",
+    "headings": [
+      "# Temporal extraction v\u00e0 calendar validation",
+      "## Format v\u00e0 \u0111i\u1ec1u ki\u1ec7n",
+      "## Processing t\u1eebng b\u01b0\u1edbc",
+      "## B\u1ed1n kh\u00e1i ni\u1ec7m ph\u1ea3i ph\u00e2n bi\u1ec7t",
+      "## Multi-rule/unsupported cases"
+    ],
+    "characters": 4072
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/05_SUBQUERIES_AND_QUERYPLAN.md",
+    "sha256": "2c94d3f5e59b16b2d84a9a9202167ef65bcc68afe80230614674c272609a0605",
+    "headings": [
+      "# Subqueries v\u00e0 QueryPlan contract",
+      "### Subquery",
+      "### QueryPlan",
+      "## Generation rules",
+      "## Ordering/dedup/limit",
+      "## Zero subqueries ch\u00ednh x\u00e1c \u1edf \u0111\u00e2u?",
+      "## Six-field semantics \u0111\u1ea7y \u0111\u1ee7",
+      "## C\u00e1c representation kh\u00e1c nhau"
+    ],
+    "characters": 5885
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/06_CLARIFICATION_AND_ERRORS.md",
+    "sha256": "4d0e9f2aee45fe45ed5d1accc1872cb77ab7b422698389db2303e33d4813a1d5",
+    "headings": [
+      "# Clarification,error v\u00e0 stop conditions",
+      "## Message priority",
+      "## Error matrix",
+      "## Three outcomes c\u1ea7n ph\u00e2n bi\u1ec7t"
+    ],
+    "characters": 5016
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/07_SOURCE_EXECUTION_TRACE.md",
+    "sha256": "9bf070d3f548fbd6d0444bcce8f6cbf36fe3fb813328b0a7beb024076ffed03f",
+    "headings": [
+      "# Source-level execution trace chi ti\u1ebft",
+      "## D\u00f2ng31\u201332",
+      "## D\u00f2ng33\u201334",
+      "## D\u00f2ng35\u201336",
+      "## D\u00f2ng37\u201339",
+      "## D\u00f2ng40\u201344",
+      "## D\u00f2ng45\u201348",
+      "## D\u00f2ng49\u201362",
+      "## D\u00f2ng63\u201371",
+      "## D\u00f2ng72\u201373",
+      "## D\u00f2ng74\u201374",
+      "## D\u00f2ng75\u201387",
+      "## D\u00f2ng88\u201395",
+      "## Call-return dossiers",
+      "### Standalone understand",
+      "### Subquery schema",
+      "### QueryPlan schema v\u00e0 dict serialization",
+      "### QuerySearch orchestration",
+      "### Graph query node",
+      "### Route v\u00e0 receiving boundary"
+    ],
+    "characters": 8828
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/08_OBSERVED_EXECUTION_TRACES.md",
+    "sha256": "716dfe8ee55b0f4a99ae8d5746e174abae7ee5f35e6df034b44e67b931e38f5f",
+    "headings": [
+      "# Runtime traces: standalone Query v\u00e0 graph gi\u1ea3 l\u1eadp",
+      "## Nh\u00e3n ch\u1ee9ng c\u1ee9",
+      "## Case `ordinary`",
+      "## Case `lookup`",
+      "## Case `ambiguous`",
+      "## Case `invalid_date`",
+      "## Case `leap_date`",
+      "## Case `year`",
+      "## Case `nfc`",
+      "## Case `nfd`",
+      "## Case `multiple`",
+      "## Case `multi_rule`",
+      "## Case `too_many`",
+      "## Case `override`",
+      "## Case `prefix_empty`",
+      "## Case `base_duplicates`",
+      "## Case `iso_date`",
+      "## Case `tab_part`",
+      "## Case `punctuation`",
+      "## T\u1ed5ng h\u1ee3p52 cases v\u00e0 outcome"
+    ],
+    "characters": 29866
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/09_LANGGRAPH_QUERY_NODE.md",
+    "sha256": "1cdb512b5c577963283ae7a19a90d884d3c3563560e120348df00338db41ea0e",
+    "headings": [
+      "# Query trong LangGraph"
+    ],
+    "characters": 3248
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/10_QUERY_SEARCH_CONTRACT.md",
+    "sha256": "b587dba656c573571a2fe929f1a42ae6116311268cf11a540fc0f6cdd8783883",
+    "headings": [
+      "# Boundary Query \u2192 Search,kh\u00f4ng m\u1edf r\u1ed9ng ki\u1ebfn th\u1ee9c Search internals",
+      "## Exact object v\u00e0 receiving validation",
+      "## Zero/malformed cases",
+      "## Trusted options kh\u00e1c Query context"
+    ],
+    "characters": 3105
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/11_TEST_MATRIX_AND_RESULTS.md",
+    "sha256": "3eaf73f55c0983492f663b989ce6e7aa478ea9250aca83d4450e60ee6ee96945",
+    "headings": [
+      "# Test matrix v\u00e0 verification hi\u1ec7n t\u1ea1i",
+      "## Command \u0111\u00e3 ch\u1ea1y m\u1edbi trong Task6a",
+      "## Behavior \u2192 test/diagnostic",
+      "## Sanitized diagnostics",
+      "## Source-level test index",
+      "## Gi\u1edbi h\u1ea1n verification"
+    ],
+    "characters": 22558
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/12_RATIONALE_AND_LIMITATIONS.md",
+    "sha256": "78a34f8d631d24dc039932d80760a4d223f7ec50d46f08102ac80017d87e205f",
+    "headings": [
+      "# Engineering rationale,alternatives v\u00e0 limitations",
+      "## Chi ph\u00ed v\u00e0 hallucination",
+      "## Limitations \u0111\u00e3 quan s\u00e1t"
+    ],
+    "characters": 4036
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/13_PEDAGOGICAL_QA_AND_GLOSSARY.md",
+    "sha256": "2f9916ff1edeb723ba00b530afb19947092caf107aa05c80cdc287c3d41bb58e",
+    "headings": [
+      "# H\u1ecfi\u2013\u0111\u00e1p h\u1ecdc thu\u1eadt v\u00e0 glossary",
+      "## 1. Query Agent ch\u1ecbu tr\u00e1ch nhi\u1ec7m g\u00ec?",
+      "## 2. V\u00ec sao t\u00ean Agent kh\u00f4ng ch\u1ee9ng minh c\u00f3 LLM?",
+      "## 3. Deterministic ngh\u0129a l\u00e0 g\u00ec trong implementation n\u00e0y?",
+      "## 4. Entrypoint v\u00e0 ki\u1ec3u tr\u1ea3 th\u1ef1c t\u1ebf l\u00e0 g\u00ec?",
+      "## 5. Raw input d\u00e0i t\u1ed1i \u0111a bao nhi\u00eau?",
+      "## 6. Non-string b\u1ecb x\u1eed l\u00fd th\u1ebf n\u00e0o?",
+      "## 7. Chu\u1ed7i r\u1ed7ng v\u00e0 whitespace-only c\u00f3 gi\u1ed1ng nhau kh\u00f4ng?",
+      "## 8. Control characters n\u00e0o \u0111\u01b0\u1ee3c ph\u00e9p?",
+      "## 9. NFC l\u00e0m g\u00ec v\u1edbi ti\u1ebfng Vi\u1ec7t?",
+      "## 10. Original c\u00f3 b\u1ecb NFC/strip thay \u0111\u1ed5i kh\u00f4ng?",
+      "## 11. H\u00e0m c\u00f3 chu\u1ea9n h\u00f3a t\u1ea5t c\u1ea3 kho\u1ea3ng tr\u1eafng kh\u00f4ng?",
+      "## 12. Query normalization c\u00f3 ph\u1ea3i preprocessing BM25/Dense kh\u00f4ng?",
+      "## 13. C\u00f3 bao nhi\u00eau intent?",
+      "## 14. Khi n\u00e0o quote_lookup \u0111\u01b0\u1ee3c ch\u1ecdn?",
+      "## 15. V\u00ec sao c\u00e2u \u201cTr\u00edch d\u1eabn\u201d c\u00f3 th\u1ec3 kh\u00f4ng y\u00eau c\u1ea7u clarification?",
+      "## 16. N\u1ebfu prefix quote v\u00e0 nhi\u1ec1u clauses c\u00f9ng xu\u1ea5t hi\u1ec7n th\u00ec sao?",
+      "## 17. Domain c\u00f3 nh\u1eefng gi\u00e1 tr\u1ecb n\u00e0o?",
+      "## 18. Domain labour c\u00f3 b\u1ea3o \u0111\u1ea3m c\u00e2u thu\u1ed9c lu\u1eadt lao \u0111\u1ed9ng kh\u00f4ng?",
+      "## 19. Domain c\u00f3 t\u1ef1 tr\u1edf th\u00e0nh retrieval filter kh\u00f4ng?",
+      "## 20. Date extraction nh\u1eadn nh\u1eefng g\u00ec?",
+      "## 21. 29/02/2024 v\u00e031/02/2024 kh\u00e1c nhau \u1edf \u0111\u00e2u?",
+      "## 22. Year-only v\u00e0 date \u0111\u1ea7y \u0111\u1ee7 c\u00f3 c\u00f9ng mi\u1ec1n n\u0103m kh\u00f4ng?",
+      "## 23. ISO date \u0111\u01b0\u1ee3c h\u1ed7 tr\u1ee3 \u0111\u1ea7y \u0111\u1ee7 ch\u01b0a?",
+      "## 24. \u201cHi\u1ec7n nay\u201d \u0111\u01b0\u1ee3c resolve th\u00e0nh ng\u00e0y h\u00f4m nay kh\u00f4ng?",
+      "## 25. Temporal scope c\u00f3 t\u1ef1 thay as_of_date kh\u00f4ng?",
+      "## 26. Subquery c\u00f3 nh\u1eefng fields n\u00e0o?",
+      "## 27. C\u00e2u h\u1ecfi \u0111\u01b0\u1ee3c split th\u1ebf n\u00e0o?",
+      "## 28. M\u1ed9t plan h\u1ee3p l\u1ec7 c\u00f3 th\u1ec3 c\u00f30 subqueries kh\u00f4ng?",
+      "## 29. Topic extraction c\u00f3 ph\u1ea3i semantic expansion kh\u00f4ng?",
+      "## 30. B\u1ea3y topic rules l\u00e0 g\u00ec?",
+      "## 31. Dedup ho\u1ea1t \u0111\u1ed9ng tr\u00ean to\u00e0n danh s\u00e1ch ph\u1ea3i kh\u00f4ng?",
+      "## 32. N\u1ebfu c\u00f3 n\u0103m clauses th\u00ec sao?",
+      "## 33. Clarification rules \u01b0u ti\u00ean th\u1ebf n\u00e0o?",
+      "## 34. Clarification c\u00f3 \u0111\u1ed5i intent kh\u00f4ng?",
+      "## 35. QueryPlan.clarification optional ngh\u0129a l\u00e0 c\u00f3 th\u1ec3 b\u1ecf key?",
+      "## 36. Extra field confidence c\u00f3 \u0111\u01b0\u1ee3c gi\u1eef kh\u00f4ng?",
+      "## 37. Ai g\u1ecdi understand trong LangGraph?",
+      "## 38. Query node c\u1eadp nh\u1eadt nh\u1eefng g\u00ec?",
+      "## 39. Graph d\u1eebng khi n\u00e0o v\u00ec clarification?",
+      "## 40. LegalQAState total=False c\u00f3 ngh\u0129a runtime t\u1ef1 validate m\u1ecdi key?",
+      "## 41. M\u1ed7i request c\u00f3 state ri\u00eang kh\u00f4ng?",
+      "## 42. Search th\u1ef1c s\u1ef1 \u0111\u1ecdc field n\u00e0o c\u1ee7a plan?",
+      "## 43. Malformed plan c\u00f3 \u0111\u01b0\u1ee3c c\u1ee9u b\u1eb1ng clarification kh\u00f4ng?",
+      "## 44. C\u00e2u ch\u1ec9 ch\u1ee9a d\u1ea5u c\u00e2u v\u00e0 tab-only clause c\u00f3 b\u1ecb ch\u1eb7n h\u1ebft ch\u01b0a?",
+      "## 45. Invalid input, clarification v\u00e0 no match kh\u00e1c nhau th\u1ebf n\u00e0o?",
+      "## 46. 120 tests pass ch\u1ee9ng minh semantic accuracy ch\u01b0a?",
+      "## 47. C\u00f3 n\u00ean s\u1eeda c\u00e1c heuristic ngay khi th\u1ea5y h\u1ea1n ch\u1ebf kh\u00f4ng?",
+      "## 48. C\u00f3 th\u1ec3 n\u00f3i Query \u0111\u00e3 k\u1ebft n\u1ed1i tr\u1ef1c ti\u1ebfp Supabase kh\u00f4ng?",
+      "## Glossary"
+    ],
+    "characters": 23326
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/14_ORAL_EXPLANATIONS.md",
+    "sha256": "180d1098cfd36dcd4806f57f49778fbc6fa51a21f205d1ed16e07ce76f07c381",
+    "headings": [
+      "# Gi\u1ea3i th\u00edch mi\u1ec7ng v\u00e0 s\u01a1 \u0111\u1ed3 b\u1ea3ng",
+      "## Script kho\u1ea3ng60 gi\u00e2y",
+      "## Script kho\u1ea3ng3 ph\u00fat",
+      "## S\u01a1 \u0111\u1ed3 b\u1ea3ng: v\u1ebd v\u00e0 gi\u1ea3i th\u00edch theo ownership",
+      "## B\u00e0i t\u1eadp t\u1ef1 gi\u1ea3i th\u00edch b\u1eb1ng v\u00ed d\u1ee5"
+    ],
+    "characters": 6350
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/15_OPEN_QUESTIONS.md",
+    "sha256": "e9b2daed8111bb5264c18800cc364d605695d1422c3dcb271611645775e4ca2e",
+    "headings": [
+      "# Missing evidence,discrepancies v\u00e0 c\u00e2u h\u1ecfi m\u1edf",
+      "## Historical material kh\u00f4ng c\u00f3 trong target",
+      "## Discrepancy \u0111\u00e3 x\u00e1c minh",
+      "## H\u00e0nh vi c\u00f2n c\u1ea7n quy\u1ebft \u0111\u1ecbnh \u1edf task tri\u1ec3n khai ri\u00eang",
+      "## Nh\u1eefng g\u00ec ch\u01b0a \u0111\u01b0\u1ee3c ch\u1ee9ng minh"
+    ],
+    "characters": 3002
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/16_SOURCE_SYMBOL_INDEX.md",
+    "sha256": "35b9e758ca3decdf76026285b2a77deb15e7ea576b90aaca4eaddbec779739f4",
+    "headings": [
+      "# Source symbol index v\u00e0 signatures",
+      "## Signatures OBSERVED"
+    ],
+    "characters": 30619
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/17_TECHNICAL_AUTHOR_HANDOFF.md",
+    "sha256": "d364f0fc2a332d5c73569cb01d0a135e0ef626920a87c3e9029aae8b9f1e2d35",
+    "headings": [
+      "# B\u00e0n giao cho ng\u01b0\u1eddi vi\u1ebft study guide \u0111\u1ed9c l\u1eadp",
+      "## Ngu\u1ed3n v\u00e0 ph\u1ea1m vi",
+      "## B\u1ea3n \u0111\u1ed3 n\u1ed9i dung authoritative",
+      "## Nh\u1eefng s\u1ef1 th\u1eadt kh\u00f4ng \u0111\u01b0\u1ee3c thay \u0111\u1ed5i khi di\u1ec5n gi\u1ea3i",
+      "## C\u1ea5u tr\u00fac study guide g\u1ee3i \u00fd",
+      "## D\u1eabn ch\u1ee9ng runtime n\u00ean d\u00f9ng",
+      "## Evidence v\u00e0 gi\u1edbi h\u1ea1n ph\u00e9p ki\u1ec3m",
+      "## C\u00e1c ph\u00e1t bi\u1ec3u b\u1ecb c\u1ea5m v\u00ec v\u01b0\u1ee3t evidence",
+      "## \u0110i\u1ec3m c\u1ea7n h\u1ecfi l\u1ea1i tr\u01b0\u1edbc task thay \u0111\u1ed5i h\u00e0nh vi"
+    ],
+    "characters": 7878
+  },
+  {
+    "file": ".docs/agent-development/task-06a-query-knowledge-handoff/README.md",
+    "sha256": "66d3f21a21ecf49e1086783043e5a8a5a57e638ef1e85199d2582c146d193132",
+    "headings": [
+      "# Task6a \u2014 Query Agent technical knowledge handoff",
+      "## C\u00e1ch \u0111\u1ecdc",
+      "## C\u1ea5p \u0111\u1ed9 b\u1eb1ng ch\u1ee9ng"
+    ],
+    "characters": 3922
+  },
+  {
+    "file": "docs/retrieval-learning/01_BM25_TECHNICAL_WALKTHROUGH.md",
+    "sha256": "4300bbaf04cc97eecd55fb9d9eb072be527d7a1adec647b4c4adf93f02a5834f",
+    "headings": [
+      "# 01 \u2014 BM25: t\u1eeb c\u00e2u h\u1ecfi \u0111\u1ebfn legal evidence",
+      "## C\u00e1ch \u0111\u1ecdc v\u00e0 ranh gi\u1edbi tr\u00e1ch nhi\u1ec7m",
+      "## A \u2014 Query th\u1ef1c s\u1ef1 bi\u1ebfn th\u00e0nh g\u00ec?",
+      "### A1. Request: bi\u1ebfn c\u00e2u h\u1ecfi th\u00e0nh m\u1ed9t y\u00eau c\u1ea7u t\u00ecm ki\u1ebfm c\u00f3 ng\u1eef c\u1ea3nh",
+      "### A2. Tokenizer: quy t\u1eafc nh\u1ecf nh\u01b0ng quy\u1ebft \u0111\u1ecbnh c\u00e1ch match",
+      "## B \u2014 Sparse index l\u01b0u g\u00ec v\u00e0 li\u00ean k\u1ebft th\u1ebf n\u00e0o?",
+      "## C \u2014 C\u00f4ng th\u1ee9c v\u00e0 ph\u00e9p t\u00ednh: t\u1ea1i sao th\u1ee9 h\u1ea1ng nh\u01b0 v\u1eady?",
+      "### V\u00ed d\u1ee5 t\u00ednh tay \u2014 ILLUSTRATIVE, kh\u00f4ng ph\u1ea3i corpus th\u1eadt",
+      "## D \u2014 Trace query qua c\u00e1c ranh gi\u1edbi",
+      "### D1. T\u1eeb entry point \u0111\u1ebfn ready index",
+      "### D2. T\u1eeb typed sparse request \u0111\u1ebfn hit identifiers",
+      "## E \u2014 SQL \u0111ang t\u00ednh g\u00ec?",
+      "## F \u2014 V\u00ec sao c\u00f2n hydration v\u00e0 validation?",
+      "## G \u2014 15 c\u00e2u h\u1ecfi v\u1ea5n \u0111\u00e1p c\u00f3 l\u1eadp lu\u1eadn",
+      "## Ph\u1ee5 l\u1ee5c \u2014 Source trace c\u00f3 caller/callee v\u00e0 return path",
+      "### `create_retrieval_service`",
+      "### `RetrievalRequest`",
+      "### `RetrievalService.search`",
+      "### `tokenize_sparse_text`",
+      "### `RetrievalService._prepare_sparse_terms`",
+      "### `RetrievalService._read_and_validate_index`",
+      "### `RetrievalService._search_sparse`",
+      "### `SparseRetrievalRepository.search`",
+      "### `RetrievalService._hydrate_sparse_hits`",
+      "### `ChunkRepository.get_by_ids`",
+      "### `SourceDocumentRepository.get`",
+      "### `RetrievalService._check_eligibility`",
+      "### `RetrievalService._make_evidence`",
+      "### `RetrievalService._check_index_unchanged`",
+      "### `RetrievalService._evidence_warnings`",
+      "### `_sparse_chunk`",
+      "## Ph\u1ee5 l\u1ee5c \u2014 C\u00e1c \u0111o\u1ea1n code quy\u1ebft \u0111\u1ecbnh c\u01a1 ch\u1ebf",
+      "### SQL BM25 hi\u1ec7n t\u1ea1i",
+      "### Read RPC get_sparse_index",
+      "### Read RPC get_retrieval_chunks",
+      "### Read RPC get_source_document",
+      "### Corpus statistics khi upstream upsert sparse documents",
+      "### DDL sparse storage v\u00e0 index v\u1eadt l\u00fd",
+      "### Query deduplication sau tokenizer",
+      "### Entry point v\u00e0 read adapters d\u00f9ng chung"
+    ],
+    "characters": 46165
+  },
+  {
+    "file": "docs/retrieval-learning/02_DENSE_E5_TECHNICAL_WALKTHROUGH.md",
+    "sha256": "b08e85f7396a46dbaa0c3a9d27db1f2b5237850910a78988c3180e4e52960baa",
+    "headings": [
+      "# 02 \u2014 Dense E5: t\u1eeb c\u00e2u h\u1ecfi, tensor \u0111\u1ebfn vector search v\u00e0 evidence",
+      "## Ph\u1ea1m vi v\u00e0 m\u1ee9c \u0111\u1ed9 x\u00e1c minh",
+      "## A \u2014 Dense Retrieval t\u00ecm ki\u1ebfm b\u1eb1ng t\u00edn hi\u1ec7u n\u00e0o?",
+      "## B \u2014 Hai ph\u00eda kh\u00e1c nhau: t\u1ea1o corpus tr\u01b0\u1edbc v\u00e0 encode query l\u00fac t\u00ecm",
+      "## C \u2014 E5 Query Encoder: hi\u1ec3u t\u1eebng l\u1ea7n \u0111\u1ed5i h\u00ecnh d\u1ea1ng d\u1eef li\u1ec7u",
+      "### C1. Request v\u00e0 preflight tr\u01b0\u1edbc khi t\u1ed1n chi ph\u00ed inference",
+      "### C2. Prefix v\u00e0 local model loader",
+      "### C3. Tokenizer, vocabulary, input IDs, mask",
+      "### C4. Tensor v\u00e0 Transformer: th\u01b0 vi\u1ec7n th\u1ef1c hi\u1ec7n ph\u1ea7n Python kh\u00f4ng vi\u1ebft tay",
+      "### C5. Pooling: t\u1ea1i sao ph\u1ea3i \u0111\u1ed5i `[1,L,384]` th\u00e0nh `[1,384]`?",
+      "### C6. Normalization v\u00e0 embedding cu\u1ed1i",
+      "## D \u2014 Vector search: t\u1eeb tuple sang SQL ranking",
+      "### D1. Payload v\u00e0 dimension",
+      "### D2. SQL hi\u1ec7n t\u1ea1i, kh\u00f4ng nh\u1ea7m b\u1ea3n legacy 1536",
+      "### D3. Dense hit gi\u00e0u d\u1eef li\u1ec7u h\u01a1n sparse hit",
+      "## E \u2014 Dense hydration: d\u00f9ng chung nguy\u00ean t\u1eafc, kh\u00e1c c\u00e1ch l\u1ea5y source",
+      "## F \u2014 15 c\u00e2u h\u1ecfi v\u1ea5n \u0111\u00e1p",
+      "## Ph\u1ee5 l\u1ee5c \u2014 Source trace c\u00f3 caller/callee v\u00e0 return path",
+      "### `create_retrieval_service`",
+      "### `RetrievalRequest`",
+      "### `RetrievalService.search`",
+      "### `RetrievalService._read_dense_index`",
+      "### `E5QueryEncoder.encode_query`",
+      "### `E5QueryEncoder._get_model`",
+      "### `E5QueryEncoder._encode`",
+      "### `validate_query_vector`",
+      "### `VectorSearchRequest`",
+      "### `SupabaseVectorRepository.search`",
+      "### `SupabaseVectorRepository._execute_search`",
+      "### `_format_vector`",
+      "### `RetrievalService._map_dense_evidence`",
+      "### `RetrievalService._check_dense_index_unchanged`",
+      "### `RetrievalService._check_eligibility`",
+      "### `VbplMarkdownIndexingService.index`",
+      "### `SentenceTransformerPassageEmbedder.embed_passages`",
+      "## Ph\u1ee5 l\u1ee5c \u2014 C\u00e1c \u0111o\u1ea1n code quy\u1ebft \u0111\u1ecbnh c\u01a1 ch\u1ebf",
+      "### pgvector column v\u00e0 HNSW expression indexes",
+      "### SQL vector search hi\u1ec7n t\u1ea1i, g\u1ed3m nh\u00e1nh legacy",
+      "### Read RPC get_dense_index",
+      "### Read RPC get_retrieval_chunks",
+      "### Query encoding boundary",
+      "### Entry point v\u00e0 read adapters d\u00f9ng chung"
+    ],
+    "characters": 49147
+  },
+  {
+    "file": "docs/retrieval-learning/03_HYBRID_RRF_TECHNICAL_WALKTHROUGH.md",
+    "sha256": "b26773ad59206cb8f613a071645aab821ddc829580c59eb8bbaacb0b78944116",
+    "headings": [
+      "# 03 \u2014 Hybrid RRF: h\u1ee3p nh\u1ea5t hai th\u1ee9 h\u1ea1ng \u0111\u00e3 ki\u1ec3m tra",
+      "## Ph\u1ea1m vi v\u00e0 \u0111i\u1ec1u c\u1ea7n n\u00f3i ch\u00ednh x\u00e1c",
+      "## A \u2014 V\u00ec sao c\u1ea7n c\u1ea3 BM25 v\u00e0 Dense?",
+      "## B \u2014 Execution flow v\u00e0 object th\u1eadt",
+      "### B1. Request \u2192 orchestration",
+      "### B2. Nh\u00e1nh BM25 r\u1ed3i m\u1edbi Dense",
+      "### B3. Ki\u1ec3m tra context v\u00e0 index tr\u01b0\u1edbc fusion",
+      "### B4. Trace chuy\u1ec3n file v\u00e0 return path",
+      "## C \u2014 RRF: h\u1ee3p nh\u1ea5t rank thay v\u00ec c\u1ed9ng score kh\u00e1c thang",
+      "### C1. Rank v\u00e0 score l\u00e0 hai th\u00f4ng tin kh\u00e1c nhau",
+      "### C2. T\u00ednh tay t\u1eebng b\u01b0\u1edbc \u2014 ILLUSTRATIVE",
+      "### C3. Deduplication, conflict v\u00e0 deterministic ranking",
+      "## D \u2014 Failure handling \u0111\u00fang source",
+      "## E \u2014 Evidence v\u00e0 final response: d\u00f9ng l\u1ea1i c\u00e1i \u0111\u00e3 ki\u1ec3m tra",
+      "## F \u2014 15 c\u00e2u h\u1ecfi v\u1ea5n \u0111\u00e1p",
+      "## Ph\u1ee5 l\u1ee5c \u2014 Source trace c\u00f3 caller/callee v\u00e0 return path",
+      "### `create_retrieval_service`",
+      "### `RetrievalRequest`",
+      "### `RetrievalService.search`",
+      "### `search_hybrid`",
+      "### `_validate_context`",
+      "### `_check_closing_index`",
+      "### `reciprocal_rank_fusion`",
+      "### `HybridRetrievalResponse.validate_fusion`",
+      "### `RetrievalService._hydrate_sparse_hits`",
+      "### `RetrievalService._map_dense_evidence`",
+      "## Ph\u1ee5 l\u1ee5c \u2014 C\u00e1c \u0111o\u1ea1n code quy\u1ebft \u0111\u1ecbnh c\u01a1 ch\u1ebf",
+      "### Sequential branches v\u00e0 strict failure",
+      "### RRF v\u00e0 integrity guards",
+      "### Entry point v\u00e0 read adapters d\u00f9ng chung"
+    ],
+    "characters": 32745
+  },
+  {
+    "file": "docs/retrieval-learning/04_RERANKING_TECHNICAL_WALKTHROUGH.md",
+    "sha256": "09d4a7edb9b09a87ed27c82429a130a032a193ffd3f344766825defd778da3a9",
+    "headings": [
+      "# 04 \u2014 Cross-Encoder reranking: t\u1eeb Hybrid candidates \u0111\u1ebfn final evidence",
+      "## Ph\u1ea1m vi v\u00e0 c\u00e1ch \u0111\u1ecdc",
+      "## A \u2014 Reranking nh\u1eadn g\u00ec, v\u00e0 t\u1ea1i sao c\u1ea7n th\u00eam b\u01b0\u1edbc n\u00e0y?",
+      "## B \u2014 Execution flow theo source hi\u1ec7n t\u1ea1i",
+      "### B1. Validation, mode v\u00e0 dependency injection",
+      "### B2. Candidate generation gi\u1eef nguy\u00ean guards",
+      "## C \u2014 Cross-Encoder: t\u1eeb pair \u0111\u1ebfn scalar logit",
+      "### C1. Model local v\u00e0 load boundary",
+      "### C2. Query v\u00e0 passage \u0111\u01b0\u1ee3c tokenize th\u1ebf n\u00e0o?",
+      "### C3. Tensors v\u00e0 inference",
+      "### C4. CPU, lock v\u00e0 timing",
+      "## D \u2014 Sorting, response v\u00e0 fallback",
+      "### D1. Map score \u0111\u00fang chunk v\u00e0 gi\u1eef RRF",
+      "### D2. Failures kh\u00f4ng \u0111\u00e1nh \u0111\u1ed3ng v\u1edbi no-match",
+      "## E \u2014 Th\u1ef1c thi th\u1eadt, evaluation v\u00e0 gi\u1edbi h\u1ea1n b\u1eb1ng ch\u1ee9ng",
+      "## F \u2014 15 c\u00e2u h\u1ecfi v\u1ea5n \u0111\u00e1p",
+      "## Ph\u1ee5 l\u1ee5c \u2014 Source trace c\u00f3 caller/callee v\u00e0 return path",
+      "### `main`",
+      "### `create_retrieval_service`",
+      "### `RetrievalService.search`",
+      "### `search_reranked`",
+      "### `validate_candidates`",
+      "### `select_candidates`",
+      "### `LocalCrossEncoder.score_pairs`",
+      "### `LocalCrossEncoder._load`",
+      "### `LocalCrossEncoder._score`",
+      "### `PairScores.numeric_scores`",
+      "### `RerankedHybridRetrievalResponse.validate_reranking`",
+      "### `search_hybrid`",
+      "### `_check_closing_index`",
+      "### `reciprocal_rank_fusion`",
+      "## Ph\u1ee5 l\u1ee5c \u2014 Trace gi\u00e1 tr\u1ecb live t\u1eeb RRF \u0111\u1ebfn final top5",
+      "## Ph\u1ee5 l\u1ee5c \u2014 Execution trace c\u1ee7a evaluation harness",
+      "### `metrics` (module-level)",
+      "### `evaluate` (module-level)"
+    ],
+    "characters": 52997
+  },
+  {
+    "file": "docs/retrieval-learning/README.md",
+    "sha256": "80b6d7b4475bec9ec28df1db418e35062b076e7f142c715359b65eac091decda",
+    "headings": [
+      "# Retrieval \u2014 s\u1ed5 tay \u0111\u1ecdc source v\u00e0 v\u1ea5n \u0111\u00e1p",
+      "## C\u00e1ch d\u00f9ng v\u00e0 gi\u1edbi h\u1ea1n b\u1eb1ng ch\u1ee9ng",
+      "## Ranh gi\u1edbi c\u00f4ng vi\u1ec7c c\u1ea7n n\u00f3i \u0111\u00fang khi b\u1ea3o v\u1ec7",
+      "## Ba \u0111i\u1ec3m r\u1ea5t d\u1ec5 n\u00f3i sai"
+    ],
+    "characters": 3527
+  }
+]

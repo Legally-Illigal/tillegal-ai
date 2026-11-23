@@ -1,0 +1,7 @@
+{
+  "changed": [],
+  "deleted": [],
+  "added": [
+    "tests/unit/applications/tillegal/test_query_search_multimode.py"
+  ]
+}

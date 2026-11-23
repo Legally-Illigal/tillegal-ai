@@ -1,0 +1,82 @@
+{
+  "selected_implementation": "A",
+  "source_root": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main",
+  "base_main_sha": "1158a6a40e85395bb91bed90f0d7b1967bbf8deb",
+  "proposed_worktree": "D:/DOWNLOAD/tillegal-ai/query-search-publish",
+  "proposed_branch": "codex/query-search-prototype",
+  "executed": false,
+  "files": [
+    {
+      "change": "M",
+      "path": "src/applications/tillegal/agents/query/agent.py",
+      "source_sha256": "b196d7c02e3bc9f0b936928f84d33a4e564e8a85f9dbef60458023561de1a6dc",
+      "lf_normalized_sha256": "b196d7c02e3bc9f0b936928f84d33a4e564e8a85f9dbef60458023561de1a6dc"
+    },
+    {
+      "change": "M",
+      "path": "src/applications/tillegal/agents/search/agent.py",
+      "source_sha256": "d00506511093a2eaa197552d24381f42a1db26f6a088c6f354e7975e625fb840",
+      "lf_normalized_sha256": "d00506511093a2eaa197552d24381f42a1db26f6a088c6f354e7975e625fb840"
+    },
+    {
+      "change": "A",
+      "path": "src/query_search_bootstrap.py",
+      "source_sha256": "122c80bbaabed5044e4c760b28d459aa701818c07bbd8a64b8c00b8f09f9a1c2",
+      "lf_normalized_sha256": "122c80bbaabed5044e4c760b28d459aa701818c07bbd8a64b8c00b8f09f9a1c2"
+    },
+    {
+      "change": "M",
+      "path": "src/retrieval_bootstrap.py",
+      "source_sha256": "e5ef67702fc7da35ef0ebf64d88a037e50cc4364aca12764898230e5c523e986",
+      "lf_normalized_sha256": "479b91f398bf152fa28846db6d6df0a7bbd9fac43ec6d3a82057a319ca164e48"
+    },
+    {
+      "change": "M",
+      "path": "src/applications/tillegal/graphs/legal_qa.py",
+      "source_sha256": "9ee6208297ec2b211eabb44df0c76b1c0e4e4678de0519e934277429aa112f93",
+      "lf_normalized_sha256": "cd648f8c6f1c1d5d49ac5f0d522b9e9aee881b183bdf0b0d6c52dde7f639e384"
+    },
+    {
+      "change": "M",
+      "path": "src/applications/tillegal/state/legal_qa_state.py",
+      "source_sha256": "641837c50d6a4f027eafd1d6e1c375fa5fefd5693afb23ff1b31fde75f74fc06",
+      "lf_normalized_sha256": "8d1dc3fed8bbc49e8598d71d22f61a8cda448d87510e3ad2cca9398f3adc1958"
+    },
+    {
+      "change": "A",
+      "path": "tests/unit/applications/tillegal/test_query_hardening.py",
+      "source_sha256": "d1a7b6f2009270869ec35529662296ca03d26ec1c7af2669488bad9bb655ebd3",
+      "lf_normalized_sha256": "d1a7b6f2009270869ec35529662296ca03d26ec1c7af2669488bad9bb655ebd3"
+    },
+    {
+      "change": "A",
+      "path": "tests/unit/applications/tillegal/test_query_search.py",
+      "source_sha256": "c2e5c76cd526c3ed547873ec5242f97325630b88d4e4372e8139ed1548ed4786",
+      "lf_normalized_sha256": "2264beb33c7dbd2aff8f5f67806ea9d2d5350e15fa984a6c78801826a75f110a"
+    },
+    {
+      "change": "A",
+      "path": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+      "source_sha256": "6f388f05434f16959c0e3ff3d8c76957bc98f4db0db82e0d5d567c70f2d6db11",
+      "lf_normalized_sha256": "6f388f05434f16959c0e3ff3d8c76957bc98f4db0db82e0d5d567c70f2d6db11"
+    },
+    {
+      "change": "A",
+      "path": "tests/graph/test_query_search_workflow.py",
+      "source_sha256": "1d570e28a78a1d8f28b3bc0c0aa4f95ae7da66cbc0a739aaed10f88084beee75",
+      "lf_normalized_sha256": "1b05f42130d61219f19b7eeae994b6c20e3114cea87f1ad2d544e6a79ad54b0c"
+    },
+    {
+      "change": "A",
+      "path": ".docs/agent-development/task-03-query-search-retrieval/02_INPUT_OUTPUT_CONTRACTS.md",
+      "source_sha256": "dbf2caebdca971c881b322710fc6230f7bc7847207fc25d0c3f9548369e5760a",
+      "lf_normalized_sha256": "dbf2caebdca971c881b322710fc6230f7bc7847207fc25d0c3f9548369e5760a"
+    },
+    {
+      "change": "A",
+      "path": ".docs/agent-development/task-05-langgraph-integration/10_FINAL_QUERY_SEARCH_HANDOFF.md",
+      "source_sha256": "dafa9771905b59004ad5cbd2a21c86d8bbc42a6549b83f6a5dbd30b76f2d6a7f",
+      "lf_normalized_sha256": "0f256cc28ac06d175a6fbe7109c6e2c6a795c861e017f950536edaada059b657"
+    }
+  ]
+}

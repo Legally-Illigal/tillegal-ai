@@ -1,0 +1,16 @@
+# Production changes and justification
+
+| Component | Failure / root | Selected change | Alternatives rejected | Verification / risk |
+|---|---|---|---|---|
+| query/context.py (new), schemas.py, agent.py | Document identity/date roles conflated; only flat temporal strings | Grounded legal/time spans, explicit roles/negation, additive QueryPlan metadata and link validation | LLM-only dates, substring deletion, full legal ontology | Required examples + novel-source rejection + Unicode round trips; heuristic title/cue coverage remains limited |
+| query/semantic.py | Q025 real grounded document ID rejected as time | Reclassify exact reference-only model spans with warning; reject unsupported values; preserve event dates | Ignore all temporal errors / fabricate metadata | Real Q025 PASS, prior failed raw replay PASS; no effectiveness inferred |
+| query/semantic.py + context.py | Q019 negated current reference active | Preserve negated span but exclude active scope | Delete text / assume a day from historical year | Recorded real output replay and regression |
+| query/prompts.py + schemas.py | Compressed objectives | Small atomic-need guidance and schema description; model receives literal context hints | Restore rejected broad prompt or second LLM verifier | Full15 matched cases plus targeted/unseen and variability; no universal decomposition claim |
+| query/semantic.py | Shared facts lost in search objectives | Append bounded exact selected context, build explicit issue/query mapping | Keyword/sentence decomposition or unbounded query expansion | Two-year/six-month scenario, shared-source/multi-query tests; context may still add noise |
+| context.py | Generic redundant duration/other missing follow-ups | Narrow supplied-slot consistency, preserve compound unknowns, optional employee-exit follow-ups | Generic suppression of all questions about a known topic | Positive/negative/compound regression; not general missing-information completeness |
+| search/schemas.py + agent.py | Missing explicit issue association in aggregated results | Add issue_indices to EvidenceOccurrence from validated mappings | Infer legal coverage from shared hits | Real pool links and tests; native responses/ranks unchanged |
+| search/agent.py | Cross-referencing source can look like exact citation found | EXACT_LOOKUP_SOURCE_IDENTITY_UNCONFIRMED when source titles do not confirm requested document number | Filter/rerank sources or judge legal sufficiency | Real Q022 + mock matching/nonmatching title tests; aliases may remain unconfirmed |
+
+Four additive plan fields have defaults; legacy plans are tested. The old temporal_scope list remains for callers, now excluding proven reference-only/negated items. ISO dates are strings to preserve plain JSON serialization. Two old tests were deliberately updated for new metadata/corrected citation behavior; arbitrary unsupported facts/time/citations still reject.
+
+No API credential/provider configuration or dependencies changed. No BM25/Dense/RRF/Reranking, database/migration/index, Judge/Summary/Answer/Verification or graph modifications. Full changed/new file inventory and protected hashes are in SEMANTIC_V2_REVIEW.md; source diff is SEMANTIC_V2_CHANGES.patch.

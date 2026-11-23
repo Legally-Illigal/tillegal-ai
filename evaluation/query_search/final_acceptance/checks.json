@@ -1,0 +1,22 @@
+[
+  {
+    "command": ".\\.venv\\Scripts\\python.exe -m pytest tests/unit/applications/tillegal tests/graph/test_query_search_workflow.py tests/contract -q -p no:cacheprovider -o faulthandler_timeout=30",
+    "exit_code": 0,
+    "output": "........................................................................ [ 12%]\n........................................................................ [ 24%]\n........................................................................ [ 37%]\n........................................................................ [ 49%]\n........................................................................ [ 62%]\n........................................................................ [ 74%]\n........................................................................ [ 87%]\n........................................................................ [ 99%]\n..                                                                       [100%]\n578 passed in 7.23s\n"
+  },
+  {
+    "command": ".\\.venv\\Scripts\\python.exe -m pytest -q -p no:cacheprovider -o faulthandler_timeout=30",
+    "exit_code": 0,
+    "output": "........................................................................ [ 10%]\n........................................................................ [ 21%]\n........................................................................ [ 32%]\n........................................................................ [ 43%]\n........................................................................ [ 53%]\n........................................................................ [ 64%]\n........................................................................ [ 75%]\n........................................................................ [ 86%]\n........................................................................ [ 97%]\n...................                                                      [100%]\n667 passed in 10.34s\n"
+  },
+  {
+    "command": ".\\.venv\\Scripts\\python.exe -m ruff check --no-cache src/applications/tillegal/agents/query src/applications/tillegal/agents/search src/query_search_bootstrap.py src/retrieval_bootstrap.py src/framework/llm/providers/gemini_adapter.py scripts/verify_query_search_handoff.py scripts/validate_query_semantics.py scripts/investigate_query_relevance.py",
+    "exit_code": 0,
+    "output": "All checks passed!\n"
+  },
+  {
+    "command": ".\\.venv\\Scripts\\python.exe -m ruff format --check src/applications/tillegal/agents/query src/applications/tillegal/agents/search src/query_search_bootstrap.py src/retrieval_bootstrap.py src/framework/llm/providers/gemini_adapter.py scripts/verify_query_search_handoff.py scripts/validate_query_semantics.py scripts/investigate_query_relevance.py",
+    "exit_code": 0,
+    "output": "17 files already formatted\n"
+  }
+]

@@ -1,0 +1,66 @@
+{
+  "selected": "A",
+  "date_local": "2026-11-22",
+  "timezone": "Asia/Saigon",
+  "passed": true,
+  "checks": {
+    "source_and_prior_reports_unchanged": true,
+    "B_head_branch_status_index_unchanged": true,
+    "all_links_resolve": true,
+    "all_symbol_ranges_match": true,
+    "A_320_pass": true,
+    "B_27_pass": true,
+    "A_six_fields_B_twenty_two": true,
+    "B_rejected_before_retrieval": true,
+    "A_clarification_zero_calls": true,
+    "twelve_publication_files_unchanged": true,
+    "no_known_configured_secrets_found": true
+  },
+  "inventory_deltas": {
+    "A": {
+      "baseline_files": 444,
+      "changed": [],
+      "added_outside_audit": [],
+      "missing": []
+    },
+    "B": {
+      "baseline_files": 332,
+      "changed": [],
+      "added_outside_audit": [],
+      "missing": []
+    }
+  },
+  "B_git_after": {
+    "rev-parse HEAD": "89a38931401d51ba8205bf5faf948c66a13adf3f\n",
+    "branch --show-current": "feature/retrieval-bm25-dense-hybrid\n",
+    "status --porcelain=v1 --untracked-files=all": " M src/applications/tillegal/agents/query/__init__.py\n M src/applications/tillegal/agents/query/agent.py\n M src/applications/tillegal/agents/query/schemas.py\n?? .docs/development/query-search-design/00_repository_audit.md\n?? .docs/development/query-search-design/01_system_architecture.md\n?? .docs/development/query-search-design/02_query_agent_design.md\n?? .docs/development/query-search-design/03_search_agent_design.md\n?? .docs/development/query-search-design/04_contracts_and_state.md\n?? .docs/development/query-search-design/05_testing_and_evaluation.md\n?? .docs/development/query-search-design/06_implementation_roadmap.md\n?? .docs/development/query-search-design/07_architecture_decisions.md\n?? .docs/development/query-search-design/08_open_questions_and_blockers.md\n?? .docs/development/query-search-design/README.md\n?? tests/unit/applications/tillegal/agents/query/test_agent.py\n?? tests/unit/applications/tillegal/agents/query/test_contracts.py\n",
+    "diff --cached --name-only": ""
+  },
+  "local_links_checked": 31,
+  "broken_links": [],
+  "symbols_verified": 139,
+  "symbol_errors": [],
+  "tests": {
+    "A": {
+      "tests": 320,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "B": {
+      "tests": 27,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "paired_cases": 13,
+  "B_control_cases": 4,
+  "publication_manifest_errors": [],
+  "configured_secret_hit_files": [],
+  "limits": [
+    "Secret check uses exact configured key/token/secret/password values >=12 chars, not universal detection",
+    "No live DB/model execution; no Git write, transfer or implementation changes",
+    "Inventory excludes cache/bytecode and new audit outputs"
+  ]
+}

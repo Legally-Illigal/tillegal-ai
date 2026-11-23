@@ -1,0 +1,8 @@
+{
+  "origin": "CURRENT_SERIALIZATION_OF_HISTORICAL_NATIVE_SUBTYPE_NO_NETWORK",
+  "default_includes_reranking": false,
+  "serialize_as_any_includes_reranking": true,
+  "serialize_as_any_includes_fusion": true,
+  "python_subtype_preserved": "RerankedHybridRetrievalResponse",
+  "documented_restore_helper_roundtrip": "PASS"
+}

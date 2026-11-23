@@ -1,0 +1,65 @@
+{
+  "missing_route_field": {
+    "exception_type": "KeyError"
+  },
+  "missing_query_field": {
+    "exception_type": "KeyError"
+  },
+  "empty_subqueries": {
+    "exception_type": "ValidationError",
+    "locations": [
+      [
+        "subqueries"
+      ]
+    ],
+    "retrieval_calls": 0
+  },
+  "clarification_empty_subqueries": {
+    "exception_type": "ValidationError",
+    "locations": [
+      [
+        "subqueries"
+      ]
+    ],
+    "retrieval_calls": 0
+  },
+  "blank_subquery": {
+    "exception_type": "ValidationError",
+    "locations": [
+      [
+        "query"
+      ]
+    ],
+    "retrieval_calls": 0
+  },
+  "state_required_keys": [],
+  "state_optional_keys": [
+    "artifacts",
+    "clarification",
+    "errors",
+    "handoff",
+    "messages",
+    "metadata",
+    "options",
+    "plan",
+    "question",
+    "request_id",
+    "run_id",
+    "search_result",
+    "status"
+  ],
+  "query_plan_clarification_required": true,
+  "query_plan_config": {},
+  "signatures": {
+    "understand": "(question: str) -> dict",
+    "QueryPlan": "(*, original: Annotated[str, MinLen(min_length=1), MaxLen(max_length=10000)], intent: Literal['quote_lookup', 'legal_question'], domain: Literal['labour', 'unknown'], temporal_scope: list[str], subqueries: Annotated[list[src.applications.tillegal.agents.query.agent.Subquery], MinLen(min_length=1), MaxLen(max_length=4)], clarification: str | None) -> None",
+    "Subquery": "(*, text: Annotated[str, MinLen(min_length=1), MaxLen(max_length=10000)], purpose: Literal['lookup', 'question_part', 'topic']) -> None",
+    "QuerySearch.search": "(self, question: str) -> src.applications.tillegal.agents.search.agent.SearchState",
+    "create_query_search": "(settings: src.core.config.SupabaseSettings, options: src.applications.tillegal.agents.search.agent.SearchOptions, *, dense_model_path: pathlib.Path | None = None, hybrid_config: src.applications.tillegal.retrieval.hybrid_models.HybridConfig | None = None, rerank_config: src.applications.tillegal.retrieval.reranking_models.RerankConfig | None = None, timeout_seconds: float = 30) -> src.query_search_bootstrap.QuerySearch",
+    "QuerySearchNodes.query": "(self, state: src.applications.tillegal.state.legal_qa_state.LegalQAState) -> src.applications.tillegal.state.legal_qa_state.LegalQAState",
+    "QuerySearchNodes.route_query": "(state: src.applications.tillegal.state.legal_qa_state.LegalQAState) -> Literal['search', 'end']",
+    "QuerySearchNodes.search": "(self, state: src.applications.tillegal.state.legal_qa_state.LegalQAState) -> src.applications.tillegal.state.legal_qa_state.LegalQAState",
+    "compile_query_search_graph": "(pipeline: src.query_search_bootstrap.QuerySearch)",
+    "QuerySearchWorkflow.execute": "(self, question: str, context: src.framework.runtime.execution_context.ExecutionContext, *, timeout_seconds: float, lifecycle: src.framework.runtime.lifecycle.ExecutionLifecycle | None = None) -> src.applications.tillegal.state.legal_qa_state.LegalQAState"
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "cases"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1"
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 40,
+      "maxItems": 60,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "question",
+          "category",
+          "domain",
+          "expected_intent",
+          "notes",
+          "split",
+          "expected_issues",
+          "expected_preserved_facts",
+          "required_missing_information",
+          "already_supplied_topics",
+          "forbidden_invented_facts",
+          "expected_search_objectives",
+          "temporal_expectations",
+          "citation_constraints",
+          "clarification_expected",
+          "live_sample"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "expected_intent": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "split": {
+            "type": "string"
+          },
+          "expected_issues": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "expected_preserved_facts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "required_missing_information": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "already_supplied_topics": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "forbidden_invented_facts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "expected_search_objectives": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "temporal_expectations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "citation_constraints": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "clarification_expected": {
+            "type": "boolean"
+          },
+          "live_sample": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

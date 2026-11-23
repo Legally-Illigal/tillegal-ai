@@ -1,0 +1,11 @@
+{
+  "origin": "CONTROLLED_CURRENT_SCHEMA_PROBES_NO_NETWORK",
+  "span_end_overshoot": {
+    "actual_end": 45,
+    "supplied_end": 145,
+    "accepted": true,
+    "affected_path": "externally constructed plan only; parser-generated spans are correct"
+  },
+  "queryplan_unknown_field_ignored": true,
+  "verdict": "NONBLOCKING_SCHEMA_BOUNDARY_LIMITATION; require trusted planner output"
+}

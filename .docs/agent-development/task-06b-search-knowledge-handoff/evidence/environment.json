@@ -1,0 +1,13 @@
+{
+  "python": "3.12.16",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "packages": {
+    "pytest": "8.4.2",
+    "pydantic": "2.14.1",
+    "langgraph": "1.2.17",
+    "supabase": "2.33.0",
+    "ruff": "0.17.2"
+  },
+  "network_calls": "None requested by Task6B; diagnostics use fake ports",
+  "models": "No model weights loaded/downloaded"
+}

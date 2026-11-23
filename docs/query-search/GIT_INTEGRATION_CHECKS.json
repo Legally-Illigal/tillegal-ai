@@ -1,0 +1,58 @@
+[
+  {
+    "label": "actual-imports",
+    "cwd": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main",
+    "command": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main\\.venv\\Scripts\\python.exe -c import src.query_search_bootstrap, src.applications.tillegal.agents.query.gemini; print(\"Query/Search imports PASS\")",
+    "exit_code": 0,
+    "output": "Query/Search imports PASS\n"
+  },
+  {
+    "label": "actual-focused",
+    "cwd": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main",
+    "command": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main\\.venv\\Scripts\\python.exe -m pytest tests/unit/applications/tillegal tests/graph/test_query_search_workflow.py -q -p no:cacheprovider",
+    "exit_code": 0,
+    "output": "........................................................................ [ 12%]\n........................................................................ [ 24%]\n........................................................................ [ 37%]\n........................................................................ [ 49%]\n........................................................................ [ 62%]\n........................................................................ [ 74%]\n........................................................................ [ 87%]\n........................................................................ [ 99%]\n..                                                                       [100%]\n578 passed in 5.48s\n"
+  },
+  {
+    "label": "actual-full",
+    "cwd": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main",
+    "command": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main\\.venv\\Scripts\\python.exe -m pytest -q -p no:cacheprovider",
+    "exit_code": 0,
+    "output": "........................................................................ [ 10%]\n........................................................................ [ 21%]\n........................................................................ [ 32%]\n........................................................................ [ 43%]\n........................................................................ [ 53%]\n........................................................................ [ 64%]\n........................................................................ [ 75%]\n........................................................................ [ 86%]\n........................................................................ [ 97%]\n...................                                                      [100%]\n667 passed in 6.55s\n"
+  },
+  {
+    "label": "actual-lint",
+    "cwd": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main",
+    "command": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main\\.venv\\Scripts\\python.exe -m ruff check --no-cache scripts/evaluate_query_relevance.py scripts/evaluate_query_search.py scripts/evaluate_query_search_retrieval.py scripts/investigate_query_relevance.py scripts/summarize_query_search_evaluation.py scripts/validate_query_semantics.py scripts/verify_gemini_query.py scripts/verify_query_search_handoff.py src/applications/tillegal/agents/query/agent.py src/applications/tillegal/agents/query/context.py src/applications/tillegal/agents/query/gemini.py src/applications/tillegal/agents/query/prompts.py src/applications/tillegal/agents/query/schemas.py src/applications/tillegal/agents/query/semantic.py src/applications/tillegal/agents/search/agent.py src/applications/tillegal/agents/search/schemas.py src/framework/llm/providers/gemini_adapter.py src/query_search_bootstrap.py tests/unit/applications/tillegal/test_gemini_query.py tests/unit/applications/tillegal/test_query_hardening.py tests/unit/applications/tillegal/test_query_quality.py tests/unit/applications/tillegal/test_query_search_semantic.py tests/unit/applications/tillegal/test_relevance_investigation.py tests/unit/applications/tillegal/test_relevance_labels.py tests/unit/applications/tillegal/test_semantic_correctness.py",
+    "exit_code": 0,
+    "output": "All checks passed!\n"
+  },
+  {
+    "label": "actual-format",
+    "cwd": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main",
+    "command": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main\\.venv\\Scripts\\python.exe -m ruff format --check scripts/evaluate_query_relevance.py scripts/evaluate_query_search.py scripts/evaluate_query_search_retrieval.py scripts/investigate_query_relevance.py scripts/summarize_query_search_evaluation.py scripts/validate_query_semantics.py scripts/verify_gemini_query.py scripts/verify_query_search_handoff.py src/applications/tillegal/agents/query/agent.py src/applications/tillegal/agents/query/context.py src/applications/tillegal/agents/query/gemini.py src/applications/tillegal/agents/query/prompts.py src/applications/tillegal/agents/query/schemas.py src/applications/tillegal/agents/query/semantic.py src/applications/tillegal/agents/search/agent.py src/applications/tillegal/agents/search/schemas.py src/framework/llm/providers/gemini_adapter.py src/query_search_bootstrap.py tests/unit/applications/tillegal/test_gemini_query.py tests/unit/applications/tillegal/test_query_hardening.py tests/unit/applications/tillegal/test_query_quality.py tests/unit/applications/tillegal/test_query_search_semantic.py tests/unit/applications/tillegal/test_relevance_investigation.py tests/unit/applications/tillegal/test_relevance_labels.py tests/unit/applications/tillegal/test_semantic_correctness.py",
+    "exit_code": 0,
+    "output": "25 files already formatted\n"
+  },
+  {
+    "label": "candidate-imports",
+    "cwd": "D:\\DOWNLOAD\\tmp\\tillegal-query-search-final-candidate-20261123",
+    "command": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main\\.venv\\Scripts\\python.exe -c from pathlib import Path; import src.query_search_bootstrap as m; assert Path(m.__file__).resolve().is_relative_to(Path.cwd()); print(\"isolated candidate imports PASS\")",
+    "exit_code": 0,
+    "output": "isolated candidate imports PASS\n"
+  },
+  {
+    "label": "candidate-full",
+    "cwd": "D:\\DOWNLOAD\\tmp\\tillegal-query-search-final-candidate-20261123",
+    "command": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main\\.venv\\Scripts\\python.exe -m pytest -q -p no:cacheprovider",
+    "exit_code": 0,
+    "output": "........................................................................ [ 10%]\n........................................................................ [ 21%]\n........................................................................ [ 32%]\n........................................................................ [ 43%]\n........................................................................ [ 53%]\n........................................................................ [ 64%]\n........................................................................ [ 75%]\n........................................................................ [ 86%]\n........................................................................ [ 97%]\n...................                                                      [100%]\n667 passed in 8.67s\n"
+  },
+  {
+    "label": "candidate-handoff",
+    "cwd": "D:\\DOWNLOAD\\tmp\\tillegal-query-search-final-candidate-20261123",
+    "command": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main\\.venv\\Scripts\\python.exe -m scripts.verify_query_search_handoff --output D:\\DOWNLOAD\\tmp\\tillegal-source-backup-20261123\\candidate-handoff.json",
+    "exit_code": 0,
+    "output": "{\"status\": \"PASS\", \"controlled_states\": 5, \"error_scenarios\": 4, \"new_network_calls\": 0}\n"
+  }
+]

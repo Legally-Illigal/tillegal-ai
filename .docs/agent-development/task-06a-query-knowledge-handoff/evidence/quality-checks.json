@@ -1,0 +1,55 @@
+{
+  "authority": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main",
+  "git_metadata_present": false,
+  "baseline_files": 380,
+  "baseline_changed": [],
+  "baseline_added_in_monitored_scopes": [],
+  "baseline_missing": [],
+  "markdown_files": 18,
+  "local_links_checked": 327,
+  "broken_links": [],
+  "ast_symbols_verified": 160,
+  "symbol_errors": [],
+  "exact_source_blocks_verified": 12,
+  "source_block_errors": [],
+  "understand_signature": "(question: str) -> dict",
+  "query_plan_fields": [
+    "original",
+    "intent",
+    "domain",
+    "temporal_scope",
+    "subqueries",
+    "clarification"
+  ],
+  "query_plan_required_fields": {
+    "original": true,
+    "intent": true,
+    "domain": true,
+    "temporal_scope": true,
+    "subqueries": true,
+    "clarification": true
+  },
+  "subquery_fields": [
+    "text",
+    "purpose"
+  ],
+  "unique_diagnostic_cases": 52,
+  "all_seven_topics_observed": true,
+  "qa_count": 48,
+  "focused_junit": {
+    "tests": 120,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "configured_secret_scan_hit_files": [],
+  "configured_secret_scan_scope": "Exact .env key/token/secret/password values with length >= 12; not universal secret detection",
+  "failures": [],
+  "passed": true,
+  "limits": [
+    "Inventory excludes caches/bytecode and new Task6a artifacts; not a full disk inventory",
+    "Source line visits are not formal branch coverage",
+    "No live database/model/API execution; graph probes use FakeRetrieval",
+    "No Git commands invoked to initialize, commit or push"
+  ]
+}

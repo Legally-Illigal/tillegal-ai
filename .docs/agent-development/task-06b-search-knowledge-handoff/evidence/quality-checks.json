@@ -1,0 +1,90 @@
+{
+  "authority": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main",
+  "completion_date_local": "2026-11-22",
+  "timezone": "Asia/Saigon",
+  "git_metadata_present": false,
+  "baseline_files": 409,
+  "baseline_changed": [],
+  "baseline_added_in_monitored_scopes": [],
+  "baseline_missing": [],
+  "baseline_sha256": "938b2fae4433908bc4105aa4cdb761706597423d245af681b04b81e785dd1f24",
+  "markdown_files": 21,
+  "local_links_checked": 676,
+  "broken_links": [],
+  "ast_symbols_verified": 361,
+  "symbol_errors": [],
+  "exact_source_blocks_verified": 29,
+  "source_block_errors": [],
+  "runtime_signatures_verified": 6,
+  "signature_errors": [],
+  "contracts": {
+    "QueryPlan": [
+      "original",
+      "intent",
+      "domain",
+      "temporal_scope",
+      "subqueries",
+      "clarification"
+    ],
+    "SearchOptions": [
+      "mode",
+      "top_k",
+      "as_of_date",
+      "allowed_usage_policies"
+    ],
+    "SearchState": [
+      "plan",
+      "requests",
+      "responses",
+      "status"
+    ],
+    "JudgeHandoff": [
+      "schema_version",
+      "request_id",
+      "run_id",
+      "question",
+      "plan",
+      "options",
+      "requests",
+      "responses",
+      "search_status",
+      "status"
+    ]
+  },
+  "runtime_observation_checks": {
+    "search_cases_35": true,
+    "graph_invocations_9": true,
+    "tab_prebuild_zero_calls": true,
+    "clarification_zero_calls": true,
+    "duplicate_calls_two": true,
+    "multi_sequential": true,
+    "partial_failure_prefix_two": true,
+    "partial_failure_preserves_evidence": true,
+    "unexpected_exception_no_search_state": true,
+    "direct_context_mismatch_packet_reject": true,
+    "graph_context_mismatch_exception": true,
+    "classified_failure_lifecycle_success": true,
+    "graph_exception_lifecycle_failed": true,
+    "all_profiles_roundtrip": true,
+    "native_identity_all_returned": true,
+    "plan_unchanged_all_cases": true
+  },
+  "qa_count": 50,
+  "glossary_count": 46,
+  "focused_junit": {
+    "tests": 320,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "configured_secret_scan_hit_files": [],
+  "configured_secret_scan_scope": "Exact configured .env key/token/secret/password values length >= 12; not universal secret detection",
+  "failures": [],
+  "passed": true,
+  "limits": [
+    "Inventory excludes caches/bytecode and new Task6B outputs; not a full disk inventory",
+    "Source/diagnostic branches inspected are not formal 100% coverage",
+    "No Task6B live Supabase or real model inference; historical evidence labeled separately",
+    "No Git init/commit/push commands invoked"
+  ]
+}

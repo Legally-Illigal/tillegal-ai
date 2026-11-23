@@ -1,0 +1,95 @@
+{
+  "visibility": "CURRENT_CREDENTIAL_VISIBLE_ROWS_ONLY",
+  "snapshot": false,
+  "filters": "NONE: probes include all visible policies/dates, not just search eligibility",
+  "literal_queries": [
+    {
+      "literal": "đơn phương chấm dứt",
+      "count": 1,
+      "returned_limit": 10,
+      "rows": [
+        {
+          "id": "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "source_document_id": "60c5be9f-20d9-4897-977e-2059f2c59ff2",
+          "node_id": "chapter-i-article-5-clause-2-point-b",
+          "chunk_key": "legal-v2-block-000066-1",
+          "content": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk > Chương I > Điều 5: Hoàn trả kinh phí hỗ trợ thu hút, đào tạo > Khoản 2 > Điểm b > 2. Người được thu hút thông qua hình thức tuyển dụng, tiếp nhận vào làm công chức, viên chức hoặc hình thức hợp đồng lao động xác định thời hạn phải hoàn trả một phần mức hỗ trợ ban đầu nêu tại khoản 1 Điều 7 và điểm a khoản 1 Điều 8 Nghị quyết này theo mức quy định tại khoản 3 Điều này và 100% mức thu nhập theo lợi nhuận hoặc giá trị công trình nêu tại khoản 2 Điều 7 Nghị quyết này; người được hưởng chính sách hỗ trợ đào tạo phải hoàn trả một phần mức hỗ trợ nêu tại Điều 10 Nghị quyết này theo mức quy định tại khoản 3 Điều này nếu thuộc một trong các trường hợp sau (trừ các trường hợp nêu tại khoản 1 Điều này):\n\nb) Đơn phương chấm dứt hợp đồng lao động theo quy định tại khoản 2 Điều 35 Bộ luật Lao động số 45/2019/QH14.",
+          "content_sha256": "f77a5da81f5d0c518f4fb61754300b17dfc0909d412430e3f976e503bd04e396"
+        }
+      ]
+    },
+    {
+      "literal": "bảo lãnh",
+      "count": 0,
+      "returned_limit": 10,
+      "rows": []
+    },
+    {
+      "literal": "ly hôn",
+      "count": 0,
+      "returned_limit": 10,
+      "rows": []
+    },
+    {
+      "literal": "giao dịch dân sự",
+      "count": 0,
+      "returned_limit": 10,
+      "rows": []
+    },
+    {
+      "literal": "điều kiện có hiệu lực",
+      "count": 0,
+      "returned_limit": 10,
+      "rows": []
+    },
+    {
+      "literal": "không giao hàng",
+      "count": 0,
+      "returned_limit": 10,
+      "rows": []
+    },
+    {
+      "literal": "mua bán đất",
+      "count": 0,
+      "returned_limit": 10,
+      "rows": []
+    },
+    {
+      "literal": "45/2019/QH14",
+      "count": 1,
+      "returned_limit": 10,
+      "rows": [
+        {
+          "id": "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "source_document_id": "60c5be9f-20d9-4897-977e-2059f2c59ff2",
+          "node_id": "chapter-i-article-5-clause-2-point-b",
+          "chunk_key": "legal-v2-block-000066-1",
+          "content": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk > Chương I > Điều 5: Hoàn trả kinh phí hỗ trợ thu hút, đào tạo > Khoản 2 > Điểm b > 2. Người được thu hút thông qua hình thức tuyển dụng, tiếp nhận vào làm công chức, viên chức hoặc hình thức hợp đồng lao động xác định thời hạn phải hoàn trả một phần mức hỗ trợ ban đầu nêu tại khoản 1 Điều 7 và điểm a khoản 1 Điều 8 Nghị quyết này theo mức quy định tại khoản 3 Điều này và 100% mức thu nhập theo lợi nhuận hoặc giá trị công trình nêu tại khoản 2 Điều 7 Nghị quyết này; người được hưởng chính sách hỗ trợ đào tạo phải hoàn trả một phần mức hỗ trợ nêu tại Điều 10 Nghị quyết này theo mức quy định tại khoản 3 Điều này nếu thuộc một trong các trường hợp sau (trừ các trường hợp nêu tại khoản 1 Điều này):\n\nb) Đơn phương chấm dứt hợp đồng lao động theo quy định tại khoản 2 Điều 35 Bộ luật Lao động số 45/2019/QH14.",
+          "content_sha256": "f77a5da81f5d0c518f4fb61754300b17dfc0909d412430e3f976e503bd04e396"
+        }
+      ]
+    },
+    {
+      "literal": "nghĩa vụ trả nợ",
+      "count": 1,
+      "returned_limit": 10,
+      "rows": [
+        {
+          "id": "9a511e38-6993-480b-a6d2-38ae07c2d206",
+          "source_document_id": "68740571-19a7-46c9-9321-c096de25a2ac",
+          "node_id": "article-3-2",
+          "chunk_key": "legal-v2-block-000035-1",
+          "content": "Quyết định 84/2026/QĐ-CTUBND của CT UBND Tỉnh Sơn La > Điều 3: Nội dung, mức chi đối với Ban đại diện Hội đồng quản trị Ngân hàng Chính sách xã hội các cấp và các cơ quan, đơn vị có liên quan > - Chi công tác phí cho những người đi học tập, trao đổi kinh nghiệm và những người đi thực hiện công tác, kiểm tra, giám sát; chi tổ chức cuộc họp, hội nghị sơ kết, tổng kết: Nội dung và mức chi thực hiện theo Nghị quyết số 115/2025/NQ-HĐND ngày 17 tháng 7 năm 2025 của HĐND tỉnh quy định mức chi công tác phí, chi hội nghị đối với các cơ quan, đơn vị trên địa bàn tỉnh Sơn La.\n\n- Chi công tác phổ biến, giáo dục pháp luật các quy định pháp luật liên quan trực tiếp đến tín dụng chính sách và nguồn vốn ngân sách địa phương ủy thác: Thực hiện theo quy định tại Nghị quyết số 132/2025/NQ-HĐND ngày 20 tháng 9 năm 2025 của Hội đồng nhân dân tỉnh quy định mức chi bảo đảm cho công tác phổ biến, giáo dục pháp luật, chuẩn tiếp cận pháp luật và hòa giải ở cơ sở trên địa bàn tỉnh Sơn La;\n\n- Chi thông tin, tuyên truyền: Chi xây dựng, sản xuất và đăng tải tin, bài, video, phóng sự, tài liệu truyền thông nhằm phổ biến đối tượng, điều kiện, thủ tục vay vốn; hướng dẫn người vay sử dụng vốn đúng mục đích, thực hiện nghĩa vụ trả nợ, trả lãi; thông tin về công tác triển khai, quản lý và kết quả sử dụng nguồn vốn ngân sách địa phương ủy thác qua Chi nhánh Ngân hàng Chính sách xã hội tỉnh Sơn La: Mức chi theo hợp đồng, hóa đơn, chứng từ hợp pháp, trong phạm vi phần kinh phí được trích. Nội dung tuyên truyền phải gắn trực tiếp với nguồn vốn ngân sách địa phương ủy thác.\n\n- Chi văn phòng phẩm, in ấn tài liệu triển khai các nhiệm vụ liên quan hoạt động của Ban đại diện Hội đồng quản trị Ngân hàng Chính sách xã hội các cấp và công tác ủy thác vốn cho vay: Thanh toán theo chi phí thực tế phát sinh, căn cứ hóa đơn, chứng từ chi tiêu hợp pháp.",
+          "content_sha256": "ecf6c9c4ab94d03e01fa168dc2ef6ad2eb575913a9dd5df6077fea7a2308e82f"
+        }
+      ]
+    }
+  ],
+  "exact_identity": [
+    {
+      "document_number": "45/2019/QH14",
+      "count": 0,
+      "rows": []
+    }
+  ]
+}

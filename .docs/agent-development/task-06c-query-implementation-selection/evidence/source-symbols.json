@@ -1,0 +1,1114 @@
+[
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/agents/query/agent.py",
+    "symbol": "QueryInputError",
+    "kind": "ClassDef",
+    "start": 11,
+    "end": 12
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/agents/query/agent.py",
+    "symbol": "Subquery",
+    "kind": "ClassDef",
+    "start": 15,
+    "end": 17
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/agents/query/agent.py",
+    "symbol": "QueryPlan",
+    "kind": "ClassDef",
+    "start": 20,
+    "end": 26
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/agents/query/agent.py",
+    "symbol": "understand",
+    "kind": "FunctionDef",
+    "start": 29,
+    "end": 95
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/agents/search/agent.py",
+    "symbol": "SearchOptions",
+    "kind": "ClassDef",
+    "start": 13,
+    "end": 28
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/agents/search/agent.py",
+    "symbol": "SearchState",
+    "kind": "ClassDef",
+    "start": 31,
+    "end": 35
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/agents/search/agent.py",
+    "symbol": "search",
+    "kind": "AsyncFunctionDef",
+    "start": 38,
+    "end": 56
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/agents/search/agent.py",
+    "symbol": "nonblank_policies",
+    "kind": "FunctionDef",
+    "start": 25,
+    "end": 28
+  },
+  {
+    "implementation": "A",
+    "file": "src/query_search_bootstrap.py",
+    "symbol": "QuerySearch",
+    "kind": "ClassDef",
+    "start": 16,
+    "end": 21
+  },
+  {
+    "implementation": "A",
+    "file": "src/query_search_bootstrap.py",
+    "symbol": "create_query_search",
+    "kind": "FunctionDef",
+    "start": 24,
+    "end": 42
+  },
+  {
+    "implementation": "A",
+    "file": "src/query_search_bootstrap.py",
+    "symbol": "search",
+    "kind": "AsyncFunctionDef",
+    "start": 20,
+    "end": 21
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "QuerySearchNodes",
+    "kind": "ClassDef",
+    "start": 18,
+    "end": 54
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "compile_query_search_graph",
+    "kind": "FunctionDef",
+    "start": 57,
+    "end": 66
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "QuerySearchWorkflow",
+    "kind": "ClassDef",
+    "start": 69,
+    "end": 95
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "__init__",
+    "kind": "FunctionDef",
+    "start": 21,
+    "end": 22
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "query",
+    "kind": "FunctionDef",
+    "start": 24,
+    "end": 33
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "route_query",
+    "kind": "FunctionDef",
+    "start": 36,
+    "end": 37
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "search",
+    "kind": "AsyncFunctionDef",
+    "start": 39,
+    "end": 54
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "__init__",
+    "kind": "FunctionDef",
+    "start": 72,
+    "end": 74
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "execute",
+    "kind": "AsyncFunctionDef",
+    "start": 76,
+    "end": 95
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/state/legal_qa_state.py",
+    "symbol": "JudgeHandoff",
+    "kind": "ClassDef",
+    "start": 18,
+    "end": 93
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/state/legal_qa_state.py",
+    "symbol": "LegalQAState",
+    "kind": "ClassDef",
+    "start": 96,
+    "end": 103
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/state/legal_qa_state.py",
+    "symbol": "warnings",
+    "kind": "FunctionDef",
+    "start": 35,
+    "end": 37
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/state/legal_qa_state.py",
+    "symbol": "errors",
+    "kind": "FunctionDef",
+    "start": 40,
+    "end": 41
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/state/legal_qa_state.py",
+    "symbol": "validate_context",
+    "kind": "FunctionDef",
+    "start": 44,
+    "end": 64
+  },
+  {
+    "implementation": "A",
+    "file": "src/applications/tillegal/state/legal_qa_state.py",
+    "symbol": "from_search",
+    "kind": "FunctionDef",
+    "start": 67,
+    "end": 93
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_invalid_type",
+    "kind": "FunctionDef",
+    "start": 11,
+    "end": 13
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_length",
+    "kind": "FunctionDef",
+    "start": 17,
+    "end": 19
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_blank",
+    "kind": "FunctionDef",
+    "start": 23,
+    "end": 25
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_characters",
+    "kind": "FunctionDef",
+    "start": 29,
+    "end": 31
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_unicode_and_original",
+    "kind": "FunctionDef",
+    "start": 34,
+    "end": 42
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_valid_date",
+    "kind": "FunctionDef",
+    "start": 46,
+    "end": 49
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_invalid_date",
+    "kind": "FunctionDef",
+    "start": 53,
+    "end": 57
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_temporal_semantics",
+    "kind": "FunctionDef",
+    "start": 73,
+    "end": 74
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_contract_and_regressions",
+    "kind": "FunctionDef",
+    "start": 77,
+    "end": 85
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "options",
+    "kind": "FunctionDef",
+    "start": 24,
+    "end": 27
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "test_real_service_fake_ports",
+    "kind": "FunctionDef",
+    "start": 31,
+    "end": 43
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "test_clarification_no_reads",
+    "kind": "FunctionDef",
+    "start": 47,
+    "end": 52
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "test_invalid_input",
+    "kind": "FunctionDef",
+    "start": 56,
+    "end": 60
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "test_options_and_plan_fail_before_reads",
+    "kind": "FunctionDef",
+    "start": 63,
+    "end": 76
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "test_no_match_failure_and_no_fallback",
+    "kind": "FunctionDef",
+    "start": 79,
+    "end": 85
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "test_response_identity_and_plan_unchanged",
+    "kind": "FunctionDef",
+    "start": 88,
+    "end": 95
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "test_bootstrap_delegates",
+    "kind": "FunctionDef",
+    "start": 98,
+    "end": 103
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "test_no_legacy_imports",
+    "kind": "FunctionDef",
+    "start": 106,
+    "end": 113
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "options",
+    "kind": "FunctionDef",
+    "start": 31,
+    "end": 37
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "RecordingService",
+    "kind": "ClassDef",
+    "start": 40,
+    "end": 52
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_unit_request_mapping_and_no_match_identity",
+    "kind": "FunctionDef",
+    "start": 56,
+    "end": 76
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_clarification_all_modes",
+    "kind": "FunctionDef",
+    "start": 81,
+    "end": 86
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_unit_invalid_options",
+    "kind": "FunctionDef",
+    "start": 100,
+    "end": 102
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_invalid_plan_no_calls",
+    "kind": "FunctionDef",
+    "start": 108,
+    "end": 112
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_unit_bootstrap_preserves_backend_configuration",
+    "kind": "FunctionDef",
+    "start": 116,
+    "end": 135
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_offline_real_dispatch_direct_parity_and_all_metadata",
+    "kind": "FunctionDef",
+    "start": 139,
+    "end": 182
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_offline_no_match_all_modes",
+    "kind": "FunctionDef",
+    "start": 186,
+    "end": 192
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_offline_hybrid_failure_is_not_partial_success",
+    "kind": "FunctionDef",
+    "start": 196,
+    "end": 211
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_offline_missing_e5_no_vector_call",
+    "kind": "FunctionDef",
+    "start": 214,
+    "end": 218
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_offline_missing_dense_index_no_model_call",
+    "kind": "FunctionDef",
+    "start": 221,
+    "end": 226
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_offline_missing_reranker_fallback_explicit",
+    "kind": "FunctionDef",
+    "start": 229,
+    "end": 238
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_offline_total_deadline",
+    "kind": "FunctionDef",
+    "start": 242,
+    "end": 252
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_no_legacy_references_in_application_path",
+    "kind": "FunctionDef",
+    "start": 255,
+    "end": 261
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "__init__",
+    "kind": "FunctionDef",
+    "start": 43,
+    "end": 46
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "search",
+    "kind": "AsyncFunctionDef",
+    "start": 48,
+    "end": 52
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "SlowEncoder",
+    "kind": "ClassDef",
+    "start": 243,
+    "end": 246
+  },
+  {
+    "implementation": "A",
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "encode_query",
+    "kind": "AsyncFunctionDef",
+    "start": 244,
+    "end": 246
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "FakeRetrieval",
+    "kind": "ClassDef",
+    "start": 25,
+    "end": 51
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "context",
+    "kind": "FunctionDef",
+    "start": 54,
+    "end": 55
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "workflow",
+    "kind": "FunctionDef",
+    "start": 58,
+    "end": 59
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_unit_query_node_and_routes",
+    "kind": "FunctionDef",
+    "start": 62,
+    "end": 74
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_unit_search_node_keeps_native_result_and_ids",
+    "kind": "FunctionDef",
+    "start": 77,
+    "end": 88
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_graph_clarification_skips_search_node",
+    "kind": "FunctionDef",
+    "start": 92,
+    "end": 110
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_graph_exact_order_and_no_match_handoff",
+    "kind": "FunctionDef",
+    "start": 113,
+    "end": 126
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_real_service_fake_ports_preserve_subtypes_and_json",
+    "kind": "FunctionDef",
+    "start": 130,
+    "end": 152
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_multiple_queries_failure_keeps_prior_response_and_error",
+    "kind": "FunctionDef",
+    "start": 155,
+    "end": 165
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_invalid_input_preserves_query_error",
+    "kind": "FunctionDef",
+    "start": 169,
+    "end": 175
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_query_execution_failure_propagates_without_handoff",
+    "kind": "FunctionDef",
+    "start": 178,
+    "end": 184
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_unexpected_search_exception_is_execution_failure",
+    "kind": "FunctionDef",
+    "start": 187,
+    "end": 195
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_typed_retrieval_timeout_becomes_failed_handoff",
+    "kind": "FunctionDef",
+    "start": 198,
+    "end": 213
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_outer_timeout_and_cancellation_propagate",
+    "kind": "FunctionDef",
+    "start": 216,
+    "end": 249
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_caller_task_cancellation_propagates",
+    "kind": "FunctionDef",
+    "start": 252,
+    "end": 271
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_repeated_and_concurrent_requests_are_isolated",
+    "kind": "FunctionDef",
+    "start": 274,
+    "end": 296
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_untrusted_state_options_do_not_override_injection",
+    "kind": "FunctionDef",
+    "start": 299,
+    "end": 307
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_handoff_rejects_inconsistent_or_extra_fields",
+    "kind": "FunctionDef",
+    "start": 314,
+    "end": 318
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_graph_context_and_no_judge_dependency",
+    "kind": "FunctionDef",
+    "start": 321,
+    "end": 335
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_handoff_context_mismatch_is_rejected",
+    "kind": "FunctionDef",
+    "start": 339,
+    "end": 349
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_unicode_original_survives_graph_and_handoff",
+    "kind": "FunctionDef",
+    "start": 352,
+    "end": 360
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "__init__",
+    "kind": "FunctionDef",
+    "start": 26,
+    "end": 29
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "search",
+    "kind": "AsyncFunctionDef",
+    "start": 31,
+    "end": 51
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "run",
+    "kind": "AsyncFunctionDef",
+    "start": 96,
+    "end": 107
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "run",
+    "kind": "AsyncFunctionDef",
+    "start": 117,
+    "end": 122
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "Broken",
+    "kind": "ClassDef",
+    "start": 188,
+    "end": 190
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "Deadline",
+    "kind": "ClassDef",
+    "start": 199,
+    "end": 209
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "Waiting",
+    "kind": "ClassDef",
+    "start": 217,
+    "end": 228
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "run",
+    "kind": "AsyncFunctionDef",
+    "start": 230,
+    "end": 247
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "run",
+    "kind": "AsyncFunctionDef",
+    "start": 253,
+    "end": 269
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "run",
+    "kind": "AsyncFunctionDef",
+    "start": 278,
+    "end": 294
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "Bound",
+    "kind": "ClassDef",
+    "start": 326,
+    "end": 329
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "search",
+    "kind": "AsyncFunctionDef",
+    "start": 189,
+    "end": 190
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "search",
+    "kind": "AsyncFunctionDef",
+    "start": 200,
+    "end": 209
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "__init__",
+    "kind": "FunctionDef",
+    "start": 218,
+    "end": 221
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "search",
+    "kind": "AsyncFunctionDef",
+    "start": 223,
+    "end": 228
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "Waiting",
+    "kind": "ClassDef",
+    "start": 256,
+    "end": 259
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "search",
+    "kind": "AsyncFunctionDef",
+    "start": 327,
+    "end": 329
+  },
+  {
+    "implementation": "A",
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "search",
+    "kind": "AsyncFunctionDef",
+    "start": 257,
+    "end": 259
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/agent.py",
+    "symbol": "normalize_query",
+    "kind": "FunctionDef",
+    "start": 12,
+    "end": 14
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/agent.py",
+    "symbol": "extract_literal_references",
+    "kind": "FunctionDef",
+    "start": 17,
+    "end": 22
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/agent.py",
+    "symbol": "validate_plan_against_input",
+    "kind": "FunctionDef",
+    "start": 25,
+    "end": 39
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/agent.py",
+    "symbol": "QueryAgent",
+    "kind": "ClassDef",
+    "start": 42,
+    "end": 130
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/agent.py",
+    "symbol": "__init__",
+    "kind": "FunctionDef",
+    "start": 45,
+    "end": 49
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/agent.py",
+    "symbol": "plan",
+    "kind": "FunctionDef",
+    "start": 51,
+    "end": 130
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "Value",
+    "kind": "ClassDef",
+    "start": 11,
+    "end": 21
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "AgentError",
+    "kind": "ClassDef",
+    "start": 24,
+    "end": 45
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "ContextMessage",
+    "kind": "ClassDef",
+    "start": 48,
+    "end": 51
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "TemporalContext",
+    "kind": "ClassDef",
+    "start": 54,
+    "end": 68
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "SourceScope",
+    "kind": "ClassDef",
+    "start": 71,
+    "end": 82
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "PlanningAllocation",
+    "kind": "ClassDef",
+    "start": 85,
+    "end": 103
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "FollowUp",
+    "kind": "ClassDef",
+    "start": 106,
+    "end": 111
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "QueryAgentInput",
+    "kind": "ClassDef",
+    "start": 114,
+    "end": 130
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "QuotedFact",
+    "kind": "ClassDef",
+    "start": 133,
+    "end": 136
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "LegalReference",
+    "kind": "ClassDef",
+    "start": 140,
+    "end": 143
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "LegalIssue",
+    "kind": "ClassDef",
+    "start": 146,
+    "end": 149
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "PlannedQuery",
+    "kind": "ClassDef",
+    "start": 152,
+    "end": 157
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "ModelCall",
+    "kind": "ClassDef",
+    "start": 160,
+    "end": 172
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "QueryPlan",
+    "kind": "ClassDef",
+    "start": 175,
+    "end": 239
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "reject_blank_strings",
+    "kind": "FunctionDef",
+    "start": 13,
+    "end": 19
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "consistent_date",
+    "kind": "FunctionDef",
+    "start": 61,
+    "end": 68
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "canonical_scope",
+    "kind": "FunctionDef",
+    "start": 77,
+    "end": 82
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "aware_deadline",
+    "kind": "FunctionDef",
+    "start": 98,
+    "end": 103
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "unique_context",
+    "kind": "FunctionDef",
+    "start": 126,
+    "end": 130
+  },
+  {
+    "implementation": "B",
+    "file": "src/applications/tillegal/agents/query/schemas.py",
+    "symbol": "consistent_plan",
+    "kind": "FunctionDef",
+    "start": 200,
+    "end": 239
+  },
+  {
+    "implementation": "B",
+    "file": "tests/unit/applications/tillegal/agents/query/test_agent.py",
+    "symbol": "test_original_normalization_and_literal_origins",
+    "kind": "FunctionDef",
+    "start": 13,
+    "end": 21
+  },
+  {
+    "implementation": "B",
+    "file": "tests/unit/applications/tillegal/agents/query/test_agent.py",
+    "symbol": "test_safe_failures",
+    "kind": "FunctionDef",
+    "start": 35,
+    "end": 39
+  },
+  {
+    "implementation": "B",
+    "file": "tests/unit/applications/tillegal/agents/query/test_agent.py",
+    "symbol": "test_unresolved_and_recognized_ambiguity",
+    "kind": "FunctionDef",
+    "start": 42,
+    "end": 49
+  },
+  {
+    "implementation": "B",
+    "file": "tests/unit/applications/tillegal/agents/query/test_agent.py",
+    "symbol": "test_injection_and_context_cannot_override_controls",
+    "kind": "FunctionDef",
+    "start": 52,
+    "end": 64
+  },
+  {
+    "implementation": "B",
+    "file": "tests/unit/applications/tillegal/agents/query/test_agent.py",
+    "symbol": "test_follow_up_refused",
+    "kind": "FunctionDef",
+    "start": 67,
+    "end": 76
+  },
+  {
+    "implementation": "B",
+    "file": "tests/unit/applications/tillegal/agents/query/test_agent.py",
+    "symbol": "test_reference_overflow_requires_clarification",
+    "kind": "FunctionDef",
+    "start": 79,
+    "end": 82
+  },
+  {
+    "implementation": "B",
+    "file": "tests/unit/applications/tillegal/agents/query/test_agent.py",
+    "symbol": "test_import_does_not_load_infrastructure",
+    "kind": "FunctionDef",
+    "start": 85,
+    "end": 98
+  },
+  {
+    "implementation": "B",
+    "file": "tests/unit/applications/tillegal/agents/query/test_contracts.py",
+    "symbol": "request",
+    "kind": "FunctionDef",
+    "start": 11,
+    "end": 20
+  },
+  {
+    "implementation": "B",
+    "file": "tests/unit/applications/tillegal/agents/query/test_contracts.py",
+    "symbol": "test_invalid_input",
+    "kind": "FunctionDef",
+    "start": 39,
+    "end": 41
+  },
+  {
+    "implementation": "B",
+    "file": "tests/unit/applications/tillegal/agents/query/test_contracts.py",
+    "symbol": "test_length_and_roundtrip",
+    "kind": "FunctionDef",
+    "start": 44,
+    "end": 50
+  },
+  {
+    "implementation": "B",
+    "file": "tests/unit/applications/tillegal/agents/query/test_contracts.py",
+    "symbol": "test_invalid_outputs",
+    "kind": "FunctionDef",
+    "start": 64,
+    "end": 68
+  }
+]

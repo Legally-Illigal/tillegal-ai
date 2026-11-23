@@ -1,0 +1,46 @@
+{
+  "question": "Trích dẫn: hợp đồng dân sự",
+  "options": {
+    "mode": "bm25",
+    "top_k": 5,
+    "as_of_date": "2026-11-17",
+    "allowed_usage_policies": [
+      "EXPERIMENTAL_ONLY"
+    ]
+  },
+  "elapsed_seconds": 3.062240799999927,
+  "retrieval_calls": 1,
+  "graph_status": "SEARCH_COMPLETED",
+  "lifecycle_status": "succeeded",
+  "handoff_status": "READY",
+  "handoff_roundtrip_equal": true,
+  "run_id_preserved": true,
+  "request_id_preserved": true,
+  "response_statuses": [
+    "OK"
+  ],
+  "evidence_counts": [
+    5
+  ],
+  "warning_codes": [
+    "TEMPORAL_METADATA_INCOMPLETE",
+    "TEMPORAL_METADATA_INCOMPLETE",
+    "TEMPORAL_METADATA_INCOMPLETE",
+    "TEMPORAL_METADATA_INCOMPLETE",
+    "TEMPORAL_METADATA_INCOMPLETE"
+  ],
+  "error_codes": [],
+  "content_hashes_match": true,
+  "response_types": [
+    "RetrievalResponse"
+  ],
+  "evidence_ids": [
+    [
+      "d2d598f2-34fa-4886-9b61-ccae6b78ee42",
+      "e6efaa3a-30db-4aaa-8d5f-f5d3455aad79",
+      "a47af466-98ed-423e-9b06-bc110e5587dd",
+      "7a2d9923-a3f3-4bbc-8b83-13c82b95d6ba",
+      "102be0d7-2c6b-40ea-869a-2fedfb5aa0f1"
+    ]
+  ]
+}

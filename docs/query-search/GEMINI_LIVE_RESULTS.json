@@ -1,0 +1,106 @@
+{
+  "record_type": "observed_live_results_not_mocked",
+  "date": "2026-11-23",
+  "timezone": "Asia/Saigon",
+  "model_discovery": {
+    "status": "PASS",
+    "http_status": 200,
+    "model": "models/gemini-3.5-flash-lite",
+    "generateContent_supported": true
+  },
+  "first_smoke": {
+    "tested_at": "2026-11-23T09:14:21.375824+00:00",
+    "model": "gemini-3.5-flash-lite",
+    "status": "FAIL",
+    "latency_ms": 33212.32,
+    "error": {
+      "code": "GEMINI_TIMEOUT",
+      "type": "TimeoutError"
+    },
+    "note": "First cold SDK startup, without local cost map; this does not establish a Gemini outage."
+  },
+  "smoke": {
+    "tested_at": "2026-11-23T09:15:26.857600+00:00",
+    "model": "gemini-3.5-flash-lite",
+    "local_cost_map": true,
+    "status": "PASS",
+    "latency_ms": 6341.89,
+    "output": {
+      "ok": true
+    }
+  },
+  "legal_question": {
+    "tested_at": "2026-11-23T09:16:03.524815+00:00",
+    "mode": "gemini",
+    "live_gemini": true,
+    "search_backend": "fixture",
+    "model": "gemini-3.5-flash-lite",
+    "plan": {
+      "original": "Tôi ký hợp đồng lao động 2 năm, mới làm được 6 tháng nhưng muốn nghỉ việc. Tôi có phải báo trước không và có phải bồi thường không?",
+      "intent": "legal_question",
+      "domain": "labour",
+      "temporal_scope": [
+        "2 năm",
+        "6 tháng"
+      ],
+      "subqueries": [
+        {
+          "text": "quyền đơn phương chấm dứt hợp đồng lao động thời hạn nghĩa vụ báo trước",
+          "purpose": "question_part"
+        },
+        {
+          "text": "nghĩa vụ bồi thường chi phí đào tạo và bồi thường do đơn phương chấm dứt hợp đồng lao động trái pháp luật",
+          "purpose": "question_part"
+        }
+      ],
+      "clarification": null,
+      "analysis_method": "llm",
+      "analysis_model": "gemini-3.5-flash-lite",
+      "facts": [
+        {
+          "text": "Tôi ký hợp đồng lao động 2 năm",
+          "source_quote": "Tôi ký hợp đồng lao động 2 năm"
+        },
+        {
+          "text": "mới làm được 6 tháng nhưng muốn nghỉ việc",
+          "source_quote": "mới làm được 6 tháng nhưng muốn nghỉ việc"
+        }
+      ],
+      "issues": [
+        "Nghĩa vụ báo trước khi người lao động đơn phương chấm dứt hợp đồng lao động",
+        "Nghĩa vụ bồi thường khi người lao động đơn phương chấm dứt hợp đồng lao động trái pháp luật"
+      ],
+      "missing_information": [
+        "Loại hợp đồng lao động cụ thể (xác định thời hạn hay không xác định thời hạn)",
+        "Lý do người lao động muốn nghỉ việc",
+        "Có thỏa thuận về chi phí đào tạo hay không"
+      ]
+    },
+    "search": {
+      "status": "COMPLETED",
+      "completeness": "COMPLETE",
+      "executed_searches": 2,
+      "queries": [
+        "quyền đơn phương chấm dứt hợp đồng lao động thời hạn nghĩa vụ báo trước",
+        "nghĩa vụ bồi thường chi phí đào tạo và bồi thường do đơn phương chấm dứt hợp đồng lao động trái pháp luật"
+      ],
+      "response_statuses": [
+        "NO_MATCH",
+        "NO_MATCH"
+      ],
+      "evidence_count": 0,
+      "warnings": [
+        "NO_MATCH:0",
+        "NO_MATCH:1",
+        "TEMPORAL_SCOPE_REQUIRES_CALLER_DATE_REVIEW"
+      ]
+    },
+    "status": "PASS",
+    "latency_ms": 6867.84
+  },
+  "limitations": [
+    "Live Gemini, real Query/Search/RetrievalService; retrieval ports use an empty fixture.",
+    "No live database, retrieval relevance evaluation or legal accuracy benchmark.",
+    "Model asked a redundant clarification about contract type despite the stated two-year term."
+  ]
+}

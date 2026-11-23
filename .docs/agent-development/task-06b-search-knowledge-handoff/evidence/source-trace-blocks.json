@@ -1,0 +1,176 @@
+[
+  {
+    "file": "src/applications/tillegal/agents/search/agent.py",
+    "start": 13,
+    "end": 28,
+    "snippet": "class SearchOptions(BaseModel):\n    \"\"\"Trusted execution context, explicitly supplied by the application.\"\"\"\n\n    model_config = ConfigDict(extra=\"forbid\", frozen=True)\n\n    mode: RetrievalMode\n    top_k: StrictInt = Field(ge=1, le=50)\n    as_of_date: date\n    allowed_usage_policies: tuple[StrictStr, ...] = Field(min_length=1)\n\n    @field_validator(\"allowed_usage_policies\")\n    @classmethod\n    def nonblank_policies(cls, values: tuple[str, ...]) -> tuple[str, ...]:\n        if any(not value.strip() for value in values):\n            raise ValueError(\"Policies must not be blank\")\n        return tuple(dict.fromkeys(value.strip() for value in values))"
+  },
+  {
+    "file": "src/applications/tillegal/agents/search/agent.py",
+    "start": 38,
+    "end": 41,
+    "snippet": "async def search(plan: dict, retrieval: RetrievalService, options: SearchOptions) -> SearchState:\n    \"\"\"Keep native responses intact; stop on a classified retrieval failure.\"\"\"\n    parsed = QueryPlan.model_validate(plan)\n    options = SearchOptions.model_validate(options)"
+  },
+  {
+    "file": "src/applications/tillegal/agents/search/agent.py",
+    "start": 42,
+    "end": 43,
+    "snippet": "    if parsed.clarification:\n        return {\"plan\": plan, \"requests\": (), \"responses\": (), \"status\": \"CLARIFICATION_REQUIRED\"}"
+  },
+  {
+    "file": "src/applications/tillegal/agents/search/agent.py",
+    "start": 44,
+    "end": 45,
+    "snippet": "    requests = tuple(RetrievalRequest(query=subquery.text, **options.model_dump()) for subquery in parsed.subqueries)\n    responses = []"
+  },
+  {
+    "file": "src/applications/tillegal/agents/search/agent.py",
+    "start": 46,
+    "end": 49,
+    "snippet": "    for request in requests:\n        response = await retrieval.search(request)\n        responses.append(response)\n        if response.status == \"FAILED\":"
+  },
+  {
+    "file": "src/applications/tillegal/agents/search/agent.py",
+    "start": 50,
+    "end": 56,
+    "snippet": "            return {\n                \"plan\": plan,\n                \"requests\": requests[: len(responses)],\n                \"responses\": tuple(responses),\n                \"status\": \"FAILED\",\n            }\n    return {\"plan\": plan, \"requests\": requests, \"responses\": tuple(responses), \"status\": \"COMPLETED\"}"
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/contracts.py",
+    "start": 23,
+    "end": 44,
+    "snippet": "class RetrievalRequest(ContractModel):\n    \"\"\"Explicit search filters; no implicit date or usage-policy defaults.\"\"\"\n\n    query: StrictStr = Field(min_length=1, max_length=10_000)\n    mode: RetrievalMode\n    top_k: StrictInt = Field(default=10, ge=1, le=50)\n    as_of_date: date\n    allowed_usage_policies: tuple[StrictStr, ...] = Field(min_length=1)\n\n    @field_validator(\"query\")\n    @classmethod\n    def nonblank_query(cls, value: str) -> str:\n        if not value.strip():\n            raise ValueError(\"query must not be blank\")\n        return value\n\n    @field_validator(\"allowed_usage_policies\")\n    @classmethod\n    def policies(cls, values: tuple[str, ...]) -> tuple[str, ...]:\n        if any(not value.strip() for value in values):\n            raise ValueError(\"policies must not be blank\")\n        return tuple(dict.fromkeys(value.strip() for value in values))"
+  },
+  {
+    "file": "src/query_search_bootstrap.py",
+    "start": 20,
+    "end": 21,
+    "snippet": "    async def search(self, question: str) -> SearchState:\n        return await search(understand(question), self.retrieval, self.options)"
+  },
+  {
+    "file": "src/query_search_bootstrap.py",
+    "start": 24,
+    "end": 42,
+    "snippet": "def create_query_search(\n    settings: SupabaseSettings,\n    options: SearchOptions,\n    *,\n    dense_model_path: Path | None = None,\n    hybrid_config: HybridConfig | None = None,\n    rerank_config: RerankConfig | None = None,\n    timeout_seconds: float = 30,\n) -> QuerySearch:\n    \"\"\"Require explicit filters and delegate all retrieval composition.\"\"\"\n    options = SearchOptions.model_validate(options)\n    retrieval = create_retrieval_service(\n        settings,\n        dense_model_path=dense_model_path,\n        hybrid_config=hybrid_config,\n        rerank_config=rerank_config,\n        timeout_seconds=timeout_seconds,\n    )\n    return QuerySearch(retrieval, options)"
+  },
+  {
+    "file": "src/retrieval_bootstrap.py",
+    "start": 22,
+    "end": 70,
+    "snippet": "def create_retrieval_service(\n    settings: SupabaseSettings,\n    *,\n    dense_model_path: Path | None = None,\n    hybrid_config: HybridConfig | None = None,\n    rerank_config: RerankConfig | None = None,\n    timeout_seconds: float = 30,\n) -> RetrievalService:\n    \"\"\"Create read adapters only. Credentials are never rendered or logged here.\n\n    Session persistence/refresh is disabled; search calls only existing read RPCs.\n    HTTP timeouts bound worker-thread I/O even after an application deadline expires.\n    \"\"\"\n    if settings.url is None or settings.api_key is None:\n        raise ValueError(\"Supabase retrieval configuration is required\")\n    client = create_client(\n        str(settings.url),\n        settings.api_key.get_secret_value(),\n        options=ClientOptions(persist_session=False, auto_refresh_token=False, postgrest_client_timeout=10),\n    )\n    dense_retriever: LegalRetriever | None = None\n    dense_indexes: IndexReader | None = None\n    query_embedder: QueryEmbedder | None = None\n    if dense_model_path is not None:\n        from src.integrations.embeddings.e5_query_encoder import E5QueryEncoder\n\n        dense_retriever = SupabaseVectorRepository(client)\n        dense_indexes = DenseIndexRepository(client)\n        query_embedder = E5QueryEncoder(dense_model_path)\n    scorer = None\n    if rerank_config is not None and rerank_config.enabled:\n        from src.integrations.embeddings.cross_encoder_reranker import LocalCrossEncoder\n\n        scorer = LocalCrossEncoder(rerank_config)\n    return RetrievalService(\n        SparseRetrievalRepository(client),\n        ChunkRepository(client),\n        SourceDocumentRepository(client),\n        SparseIndexRepository(client),\n        tokenize_sparse_text,\n        sparse_index_name=DEFAULT_SPARSE_INDEX,\n        dense_retriever=dense_retriever,\n        dense_indexes=dense_indexes,\n        query_embedder=query_embedder,\n        hybrid_config=hybrid_config,\n        rerank_config=rerank_config,\n        pair_scorer=scorer,\n        timeout_seconds=timeout_seconds,\n    )"
+  },
+  {
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "start": 21,
+    "end": 22,
+    "snippet": "    def __init__(self, pipeline: QuerySearch) -> None:\n        self.pipeline = pipeline"
+  },
+  {
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "start": 24,
+    "end": 33,
+    "snippet": "    def query(self, state: LegalQAState) -> LegalQAState:\n        plan = understand(state[\"question\"])\n        return {\n            \"plan\": plan,\n            \"options\": self.pipeline.options,\n            \"clarification\": plan[\"clarification\"],\n            \"status\": \"CLARIFICATION_REQUIRED\" if plan[\"clarification\"] else \"QUERY_COMPLETED\",\n            \"search_result\": None,\n            \"handoff\": None,\n        }"
+  },
+  {
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "start": 36,
+    "end": 37,
+    "snippet": "    def route_query(state: LegalQAState) -> Literal[\"search\", \"end\"]:\n        return \"end\" if state[\"clarification\"] else \"search\""
+  },
+  {
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "start": 39,
+    "end": 54,
+    "snippet": "    async def search(self, state: LegalQAState) -> LegalQAState:\n        result = await search(state[\"plan\"], self.pipeline.retrieval, self.pipeline.options)\n        handoff = JudgeHandoff.from_search(\n            question=state[\"question\"],\n            request_id=state.get(\"request_id\"),\n            run_id=state[\"run_id\"],\n            options=self.pipeline.options,\n            result=result,\n        )\n        status = \"SEARCH_COMPLETED\" if handoff.status == \"READY\" else handoff.status\n        return {\n            \"search_result\": result,\n            \"handoff\": handoff,\n            \"status\": status,\n            \"errors\": [error.code for error in handoff.errors],\n        }"
+  },
+  {
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "start": 57,
+    "end": 66,
+    "snippet": "def compile_query_search_graph(pipeline: QuerySearch):\n    \"\"\"Compile the existing framework's StateGraph with no persistent request state.\"\"\"\n    nodes = QuerySearchNodes(pipeline)\n    builder = create_state_graph(LegalQAState)\n    builder.add_node(\"query\", nodes.query)\n    builder.add_node(\"search\", nodes.search)\n    builder.add_edge(START, \"query\")\n    builder.add_conditional_edges(\"query\", nodes.route_query, {\"search\": \"search\", \"end\": END})\n    builder.add_edge(\"search\", END)\n    return compile_graph(builder, name=\"query-search\")"
+  },
+  {
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "start": 72,
+    "end": 74,
+    "snippet": "    def __init__(self, pipeline: QuerySearch) -> None:\n        self.graph = compile_query_search_graph(pipeline)\n        self.executor = GraphExecutor()"
+  },
+  {
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "start": 76,
+    "end": 95,
+    "snippet": "    async def execute(\n        self,\n        question: str,\n        context: ExecutionContext,\n        *,\n        timeout_seconds: float,\n        lifecycle: ExecutionLifecycle | None = None,\n    ) -> LegalQAState:\n        initial: LegalQAState = {\n            \"question\": question,\n            \"run_id\": context.run_id,\n            \"request_id\": context.request_id,\n        }\n        return await self.executor.execute(\n            self.graph,\n            initial,\n            context,\n            timeout_seconds=timeout_seconds,\n            lifecycle=lifecycle,\n        )"
+  },
+  {
+    "file": "src/applications/tillegal/state/legal_qa_state.py",
+    "start": 35,
+    "end": 37,
+    "snippet": "    def warnings(self) -> tuple[RetrievalWarning, ...]:\n        \"\"\"Derive warnings without duplicating or discarding per-query response data.\"\"\"\n        return tuple(warning for response in self.responses for warning in response.warnings)"
+  },
+  {
+    "file": "src/applications/tillegal/state/legal_qa_state.py",
+    "start": 40,
+    "end": 41,
+    "snippet": "    def errors(self) -> tuple[RetrievalErrorDetail, ...]:\n        return tuple(response.error for response in self.responses if response.error is not None)"
+  },
+  {
+    "file": "src/applications/tillegal/state/legal_qa_state.py",
+    "start": 44,
+    "end": 64,
+    "snippet": "    def validate_context(self) -> Self:\n        if self.question != self.plan.original or self.plan.clarification:\n            raise ValueError(\"Handoff requires the original non-clarifying query context\")\n        if len(self.requests) != len(self.responses) or len(self.requests) > len(self.plan.subqueries):\n            raise ValueError(\"Handoff request/response counts differ\")\n        for subquery, request, response in zip(self.plan.subqueries, self.requests, self.responses):\n            if request.query != subquery.text:\n                raise ValueError(\"Handoff query differs from its plan\")\n            if any(getattr(request, key) != value for key, value in self.options.model_dump().items()):\n                raise ValueError(\"Handoff execution options differ\")\n            if any(getattr(response, key) != getattr(request, key) for key in RetrievalRequest.model_fields):\n                raise ValueError(\"Handoff response context differs\")\n        failed = self.responses[-1].status == \"FAILED\"\n        if any(response.status == \"FAILED\" for response in self.responses[:-1]):\n            raise ValueError(\"Search must stop at its first failure\")\n        expected = \"RETRIEVAL_FAILED\" if failed else \"READY\" if any(r.evidence for r in self.responses) else \"NO_MATCH\"\n        if self.status != expected or self.search_status != (\"FAILED\" if failed else \"COMPLETED\"):\n            raise ValueError(\"Handoff status differs from retrieval outcomes\")\n        if not failed and len(self.requests) != len(self.plan.subqueries):\n            raise ValueError(\"Completed handoff requires all subqueries\")\n        return self"
+  },
+  {
+    "file": "src/applications/tillegal/state/legal_qa_state.py",
+    "start": 67,
+    "end": 93,
+    "snippet": "    def from_search(\n        cls,\n        *,\n        question: str,\n        request_id: str | None,\n        run_id: str,\n        options: SearchOptions,\n        result: SearchState,\n    ) -> Self:\n        status = (\n            \"RETRIEVAL_FAILED\"\n            if result[\"status\"] == \"FAILED\"\n            else \"READY\"\n            if any(response.evidence for response in result[\"responses\"])\n            else \"NO_MATCH\"\n        )\n        return cls(\n            question=question,\n            request_id=request_id,\n            run_id=run_id,\n            plan=result[\"plan\"],\n            options=options,\n            requests=result[\"requests\"],\n            responses=result[\"responses\"],\n            search_status=result[\"status\"],\n            status=status,\n        )"
+  },
+  {
+    "file": "src/framework/runtime/executor.py",
+    "start": 28,
+    "end": 84,
+    "snippet": "    async def execute[InputT, OutputT](\n        self,\n        graph: AsyncGraph[InputT, OutputT],\n        graph_input: InputT,\n        context: ExecutionContext,\n        *,\n        config: Mapping[str, object] | None = None,\n        timeout_seconds: float | None = None,\n        lifecycle: ExecutionLifecycle | None = None,\n    ) -> OutputT:\n        \"\"\"Invoke a graph and update lifecycle on success, failure, or cancellation.\"\"\"\n        if timeout_seconds is not None and timeout_seconds <= 0:\n            raise ValueError(\"timeout_seconds must be greater than 0\")\n        context.cancellation_token.raise_if_cancelled()\n        execution_lifecycle = lifecycle or ExecutionLifecycle()\n        execution_lifecycle.start()\n        invocation = asyncio.create_task(self._invoke(graph, graph_input, context, config))\n        cancellation = asyncio.create_task(context.cancellation_token.wait_cancelled())\n        try:\n            done, _ = await asyncio.wait(\n                (invocation, cancellation),\n                timeout=timeout_seconds,\n                return_when=asyncio.FIRST_COMPLETED,\n            )\n            if not done:\n                await self._cancel_invocation(invocation)\n                execution_lifecycle.fail(f\"Graph execution exceeded {timeout_seconds} seconds\")\n                raise TimeoutError(f\"Graph execution exceeded {timeout_seconds} seconds\")\n            if cancellation in done and invocation not in done:\n                await self._cancel_invocation(invocation)\n                execution_lifecycle.cancel()\n                reason = context.cancellation_token.reason\n                message = \"Execution cancelled\"\n                if reason:\n                    message = f\"{message}: {reason}\"\n                raise ExecutionCancelledError(message)\n\n            output = await invocation\n            execution_lifecycle.succeed()\n            return output\n        except asyncio.CancelledError:\n            if execution_lifecycle.snapshot.status is ExecutionStatus.RUNNING:\n                execution_lifecycle.cancel()\n            if not invocation.done():\n                await self._cancel_invocation(invocation)\n            raise\n        except Exception as error:\n            if execution_lifecycle.snapshot.status is ExecutionStatus.RUNNING:\n                execution_lifecycle.fail(f\"{type(error).__name__}: {error}\")\n            raise\n        finally:\n            if not cancellation.done():\n                cancellation.cancel()\n            try:\n                await cancellation\n            except asyncio.CancelledError:\n                pass"
+  },
+  {
+    "file": "src/framework/runtime/executor.py",
+    "start": 87,
+    "end": 94,
+    "snippet": "    async def _invoke[InputT, OutputT](\n        graph: AsyncGraph[InputT, OutputT],\n        graph_input: InputT,\n        context: ExecutionContext,\n        config: Mapping[str, object] | None,\n    ) -> OutputT:\n        with bind_execution_context(context):\n            return await graph.ainvoke(graph_input, config=config)"
+  },
+  {
+    "file": "src/framework/runtime/executor.py",
+    "start": 97,
+    "end": 102,
+    "snippet": "    async def _cancel_invocation[T](invocation: asyncio.Task[T]) -> None:\n        invocation.cancel()\n        try:\n            await invocation\n        except asyncio.CancelledError:\n            pass"
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "start": 157,
+    "end": 190,
+    "snippet": "    def __init__(\n        self,\n        sparse_retriever: SparseRetriever,\n        chunks: ChunkReader,\n        sources: SourceReader,\n        indexes: IndexReader,\n        tokenizer: Callable[[str], tuple[str, ...]],\n        *,\n        sparse_index_name: str = DEFAULT_SPARSE_INDEX,\n        timeout_seconds: float = 30,\n        dense_retriever: LegalRetriever | None = None,\n        query_embedder: QueryEmbedder | None = None,\n        dense_indexes: IndexReader | None = None,\n        dense_index_name: str = DEFAULT_DENSE_INDEX,\n        hybrid_config: HybridConfig | None = None,\n        rerank_config: RerankConfig | None = None,\n        pair_scorer: PairScorer | None = None,\n    ) -> None:\n        if not sparse_index_name.strip() or not 0 < timeout_seconds < float(\"inf\"):\n            raise ValueError(\"index name and finite positive timeout are required\")\n        self._sparse = sparse_retriever\n        self._chunks = chunks\n        self._sources = sources\n        self._indexes = indexes\n        self._tokenizer = tokenizer\n        self._index_name = sparse_index_name.strip()\n        self._timeout = timeout_seconds\n        self._dense = dense_retriever\n        self._query_embedder = query_embedder\n        self._dense_indexes = dense_indexes\n        self._dense_index_name = dense_index_name\n        self._hybrid_config = hybrid_config or HybridConfig()\n        self._rerank_config = rerank_config or RerankConfig()\n        self._pair_scorer = pair_scorer"
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "start": 192,
+    "end": 220,
+    "snippet": "    async def search(self, request: RetrievalRequest) -> RetrievalResponse | HybridRetrievalResponse:\n        \"\"\"Return a classified outcome; malformed requests never invoke dependencies.\"\"\"\n        request = RetrievalRequest.model_validate(request)\n        if request.mode == RetrievalMode.HYBRID:\n\n            async def run_hybrid(branch_request: RetrievalRequest) -> HybridRetrievalResponse:\n                return await search_hybrid(\n                    branch_request,\n                    run_branch=self.search,\n                    sparse_indexes=self._indexes,\n                    dense_indexes=self._dense_indexes,\n                    sparse_index_name=self._index_name,\n                    dense_index_name=self._dense_index_name,\n                    dense_configured=self._dense is not None and self._query_embedder is not None,\n                    config=self._hybrid_config,\n                    timeout_seconds=self._timeout,\n                )\n\n            if self._rerank_config.enabled:\n                return await search_reranked(\n                    request,\n                    run_hybrid=run_hybrid,\n                    scorer=self._pair_scorer,\n                    config=self._rerank_config,\n                    sparse_indexes=self._indexes,\n                    dense_indexes=self._dense_indexes,\n                    hybrid_config=self._hybrid_config,\n                )\n            return await run_hybrid(request)"
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "start": 221,
+    "end": 247,
+    "snippet": "        request_id = new_id()\n        index: _SparseIndex | _DenseIndex | None = None\n        evidence: tuple[UnifiedEvidence, ...] = ()\n        error: RetrievalErrorDetail | None = None\n        stage = \"validation\"\n        try:\n            if request.mode == RetrievalMode.DENSE and (\n                self._dense is None or self._query_embedder is None or self._dense_indexes is None\n            ):\n                raise _failure(\n                    ErrorCategory.CONFIGURATION_ERROR,\n                    \"MODE_NOT_CONFIGURED\",\n                    stage,\n                    \"Dense retrieval requires a local query encoder and read adapters.\",\n                )\n            async with asyncio.timeout(self._timeout):\n                if request.mode == RetrievalMode.BM25:\n                    stage = \"preprocessing\"\n                    terms = self._prepare_sparse_terms(request.query.strip())\n                    stage = \"index_preflight\"\n                    index = await self._read_and_validate_index()\n                    stage = \"search\"\n                    hits = await self._search_sparse(request, terms)\n                    stage = \"hydration\"\n                    evidence = await self._hydrate_sparse_hits(hits, request)\n                    stage = \"index_postflight\"\n                    await self._check_index_unchanged(index)"
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "start": 248,
+    "end": 275,
+    "snippet": "                else:\n                    stage = \"index_preflight\"\n                    index = await self._read_dense_index()\n                    stage = \"encoding\"\n                    vector = await self._query_embedder.encode_query(request.query.strip())\n                    try:\n                        vector = validate_query_vector(vector)\n                    except (TypeError, ValueError) as failure:\n                        raise _failure(\n                            ErrorCategory.MODEL_UNAVAILABLE,\n                            \"INVALID_EMBEDDING\",\n                            stage,\n                            \"Query encoder returned an invalid normalized vector.\",\n                        ) from failure\n                    stage = \"search\"\n                    dense_hits = await self._dense.search(\n                        VectorSearchRequest(\n                            dense_index_name=self._dense_index_name,\n                            query_embedding=vector,\n                            top_k=request.top_k,\n                            as_of_date=request.as_of_date,\n                            allowed_usage_policies=request.allowed_usage_policies,\n                        )\n                    )\n                    stage = \"hydration\"\n                    evidence = await self._map_dense_evidence(dense_hits, request, index)\n                    stage = \"index_postflight\"\n                    await self._check_dense_index_unchanged(index)"
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "start": 276,
+    "end": 305,
+    "snippet": "        except RetrievalServiceError as failure:\n            error = failure.detail\n        except TimeoutError:\n            error = RetrievalErrorDetail(\n                category=ErrorCategory.TIMEOUT,\n                code=\"RETRIEVAL_TIMEOUT\",\n                stage=stage,\n                message=\"Retrieval exceeded its deadline.\",\n                retryable=True,\n            )\n        except (DatabaseRepositoryError, RetrievalError) as failure:\n            invalid_response = isinstance(failure.__cause__, ValidationError)\n            error = RetrievalErrorDetail(\n                category=ErrorCategory.INCONSISTENT_EVIDENCE if invalid_response else ErrorCategory.DATABASE_FAILURE,\n                code=\"INVALID_REPOSITORY_RESPONSE\" if invalid_response else \"DATABASE_READ_FAILED\",\n                stage=stage,\n                message=\"Repository returned invalid data.\" if invalid_response else \"Database read failed.\",\n            )\n        return RetrievalResponse(\n            **request.model_dump(),\n            request_id=request_id,\n            query_used=request.query.strip(),\n            selected_index_name=self._index_name if request.mode == RetrievalMode.BM25 else self._dense_index_name,\n            index=index.identity() if index is not None else None,\n            status=\"FAILED\" if error else \"OK\" if evidence else \"NO_MATCH\",\n            evidence=() if error else evidence,\n            warnings=() if error else self._evidence_warnings(evidence),\n            error=error,\n            retrieved_at=utc_now(),\n        )"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "command": ".\\.venv\\Scripts\\python.exe -m pytest tests/unit/applications/tillegal/test_query_quality.py tests/unit/applications/tillegal/test_gemini_query.py tests/unit/applications/tillegal/test_query_search_semantic.py tests/unit/applications/tillegal/test_query_search.py tests/unit/applications/tillegal/test_query_hardening.py tests/unit/applications/tillegal/test_query_search_multimode.py tests/graph/test_query_search_workflow.py -q -p no:cacheprovider -o faulthandler_timeout=30",
+    "exit_code": 0,
+    "status": "PASS",
+    "output": "........................................................................ [ 32%]\n........................................................................ [ 65%]\n........................................................................ [ 98%]\n...                                                                      [100%]\n219 passed in 2.60s\n"
+  },
+  {
+    "command": ".\\.venv\\Scripts\\python.exe -m pytest -q -p no:cacheprovider -o faulthandler_timeout=30",
+    "exit_code": 0,
+    "status": "PASS",
+    "output": "........................................................................ [ 11%]\n........................................................................ [ 23%]\n........................................................................ [ 34%]\n........................................................................ [ 46%]\n........................................................................ [ 57%]\n........................................................................ [ 69%]\n........................................................................ [ 81%]\n........................................................................ [ 92%]\n..............................................                           [100%]\n622 passed in 6.53s\n"
+  },
+  {
+    "command": ".\\.venv\\Scripts\\python.exe -m ruff check --no-cache scripts/evaluate_query_search.py scripts/evaluate_query_search_retrieval.py src/applications/tillegal/agents/query/semantic.py tests/unit/applications/tillegal/test_query_quality.py",
+    "exit_code": 0,
+    "status": "PASS",
+    "output": "All checks passed!\n"
+  },
+  {
+    "command": ".\\.venv\\Scripts\\python.exe -m ruff format --check scripts/evaluate_query_search.py scripts/evaluate_query_search_retrieval.py src/applications/tillegal/agents/query/semantic.py tests/unit/applications/tillegal/test_query_quality.py",
+    "exit_code": 0,
+    "status": "PASS",
+    "output": "4 files already formatted\n"
+  }
+]

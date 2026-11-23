@@ -1,0 +1,909 @@
+--- a/configs/models.yaml
++++ b/configs/models.yaml
+@@ -1,6 +1,11 @@
+ default_model: gpt-4o-mini
+ 
+ providers:
++  gemini:
++    enabled: true
++    api_key_env: GOOGLE_API_KEY
++    default_model: gemini-3.5-flash-lite
++    timeout_seconds: 30
+   openai:
+     enabled: true
+     api_key_env: OPENAI_API_KEY
+@@ -14,6 +19,10 @@
+     timeout_seconds: 60
+ 
+ profiles:
++  query_semantic:
++    provider: gemini
++    model: gemini-3.5-flash-lite
++    max_output_tokens: 4096
+   legal_fast:
+     provider: openai
+     model: gpt-4o-mini
+--- a/docs/query-search/GEMINI.md
++++ b/docs/query-search/GEMINI.md
+@@ -0,0 +1,143 @@
++# Kết nối Query semantic planner với Gemini
++
++Ngày thực hiện: 23/11/2026. Project đích: `D:/DOWNLOAD/tillegal-ai/tillegal-ai-main`.
++
++## Audit và quyết định
++
++- `src/application/interfaces/llm_gateway.py`, `src/framework/llm/gateway.py` và `providers/litellm_adapter.py` vẫn là placeholder. Tìm trong src/configs/scripts/tests không thấy Gemini integration nào có sẵn.
++- `SemanticQueryAgent` đã có cổng `StructuredCompletion(model, system, user, schema) -> str`, timeout, strict Pydantic validation, grounding facts, guard citation/numeric và lỗi không fallback. Không cần redesign planner.
++- `QuerySearch.search` đã hỗ trợ injected `query_agent`, nhưng factory chỉ có đường cấu hình thủ công. Graph có sẵn gọi `understand` đồng bộ; không thay graph trong task này.
++- `configs/models.yaml` trước thay đổi chỉ có OpenAI/Anthropic. Dependency LiteLLM đã có trong pyproject; môi trường hiện cài LiteLLM 1.106.4. Không thêm dependency.
++- `GOOGLE_API_KEY` đã có giá trị trong process/user environment. Không đọc/in giá trị, không chép vào `.env`, không đổi hay bổ sung `GEMINI_API_KEY`.
++- Bản đích không có `.git`. Dùng baseline SHA-256 và bản gốc để review; không suy diễn branch/HEAD từ worktree bên cạnh.
++
++Giải pháp nhỏ nhất là adapter Gemini trong provider layer, dùng `litellm.acompletion` với route `gemini/`, và cấu hình Query riêng. Không hoàn thiện toàn bộ shared gateway hoặc router/retry/fallback framework. Đây là adapter cho protocol đã có, không phải một hệ thống gateway mới.
++
++## Model
++
++Mặc định: **`gemini-3.5-flash-lite`**; LiteLLM route: `gemini/gemini-3.5-flash-lite`.
++
++API `GET /v1beta/models` trả HTTP 200 và liệt kê model này với `generateContent` cho key hiện tại. Tài liệu Google mô tả model stable, tối ưu độ trễ/chi phí cho extraction và có structured output. Đây là lựa chọn phù hợp cho lập kế hoạch JSON ngắn; không có kết luận benchmark rằng model này tốt nhất cho pháp luật tiếng Việt. Một câu hỏi tiếng Việt thực tế đã được kiểm tra thành công, chi tiết ở phần live bên dưới.
++
++Nguồn đã kiểm tra:
++
++- [Google: Gemini 3.5 Flash-Lite](https://aistudio.google.com/docs/models/gemini-3.5-flash-lite)
++- [Google: structured output](https://aistudio.google.com/docs/structured-output)
++- [LiteLLM: Gemini provider và response_schema](https://docs.litellm.ai/docs/providers/gemini)
++
++Không chọn 2.5 Flash mặc định vì tài liệu Google hiện thông báo deprecation và auto-routing từ 01/12/2026. Không dùng alias `latest` để tránh tự đổi model ngoài ý muốn.
++
++## Các thành phần mới
++
++| File | Trách nhiệm |
++|---|---|
++| `src/framework/llm/providers/gemini_adapter.py` | `GeminiStructuredCompletion`: nhận SecretStr, gọi LiteLLM một lần, yêu cầu JSON/schema, chặn response rỗng/truncated/blocked/non-object, chuẩn hóa lỗi an toàn |
++| `src/applications/tillegal/agents/query/gemini.py` | `GeminiQuerySettings`, `create_gemini_query_agent`: đọc profile và environment, tạo adapter + SemanticQueryAgent |
++| `src/query_search_bootstrap.py` | Thêm `semantic_mode="gemini"` vào factory hiện có; deterministic vẫn là mặc định |
++| `configs/models.yaml` | Thêm provider `gemini` và profile `query_semantic`; giữ nguyên các giá trị OpenAI/Anthropic và global default của thành phần khác |
++| `scripts/verify_gemini_query.py` | CLI kiểm chứng explicit Gemini/deterministic, request smoke và Query → Search bằng RetrievalService/index giả |
++| `tests/unit/applications/tillegal/test_gemini_query.py` | Test provider responses được mock, factory/configuration, bảo vệ secrets, schema, lỗi và interface Query/Search |
++
++## Luồng thực thi
++
++```text
++create_query_search(..., semantic_mode="gemini")
++  -> create_gemini_query_agent()
++  -> đọc profiles.query_semantic + providers.gemini + GOOGLE_API_KEY
++  -> SemanticQueryAgent(complete=GeminiStructuredCompletion(...))
++
++await pipeline.search(question)
++  -> SemanticQueryAgent.understand(question)
++  -> validation deterministic có sẵn
++  -> GeminiStructuredCompletion(model, system, user, schema)
++  -> LiteLLM acompletion(model="gemini/...") -> Google Gemini API
++  -> JSON text -> SemanticAnalysis strict validation + các guard có sẵn
++  -> QueryPlan -> Search -> RetrievalService
++```
++
++Adapter gửi schema từ planner dưới dạng `response_format={"type":"json_object","response_schema":schema}`. Planner tiếp tục validate cục bộ, không tin rằng provider đã kiểm tra đủ schema. Bất kỳ guard nào thất bại đều chặn Search.
++
++Response chỉ được nhận khi finish_reason=`stop`, content là JSON object dài 1–32.000 ký tự. Không bỏ qua output bị cắt hoặc safety blocked. Key giữ dưới SecretStr, bị loại khỏi repr. Lời gọi dùng `no-log=True`, `num_retries=0`, `caching=False`; adapter không tự retry hoặc fallback. Không in upstream exception message, response body hay headers. Các mã provider an toàn như `GEMINI_RATE_LIMITED` giữ HTTP status nếu có.
++
++Provider timeout và timeout planner lấy cùng một giá trị, mặc định 30 giây. Cancellation vẫn truyền lên caller. LiteLLM được import lười trong worker thread để không chặn event loop; lần import đầu có thể tốn thời gian trong deadline. Bảng giá model của LiteLLM không cần tải từ Internet để lập query; khi kiểm chứng đặt `LITELLM_LOCAL_MODEL_COST_MAP=True` để dùng bảng đi kèm package. Không chỉnh package hay bật debug logging.
++
++## Bật/tắt và cấu hình
++
++Đường production dùng RetrievalService hiện hữu:
++
++```python
++pipeline = create_query_search(
++    settings.supabase,
++    search_options,  # mode/date/policy/top-k vẫn do ứng dụng truyền rõ
++    semantic_mode="gemini",
++)
++result = await pipeline.search(question)
++```
++
++Đường offline:
++
++```python
++pipeline = create_query_search(settings.supabase, search_options, semantic_mode="deterministic")
++```
++
++Existing manual `query_agent=` injection vẫn hoạt động. Không truyền đồng thời `query_agent` và `semantic_mode="gemini"`; factory báo `QUERY_AGENT_CONFIGURATION_CONFLICT`. Mode không hợp lệ bị từ chối trước khi tạo retrieval.
++
++| Cấu hình | Nguồn / giá trị |
++|---|---|
++| API key | Chỉ đọc `GOOGLE_API_KEY` từ environment hiện có |
++| Model | `GEMINI_MODEL` nếu có, nếu không dùng `profiles.query_semantic.model` |
++| Deadline | `QUERY_LLM_TIMEOUT_SECONDS` nếu có, nếu không dùng `providers.gemini.timeout_seconds`; hữu hạn, >0 và ≤120 |
++| Output budget | `profiles.query_semantic.max_output_tokens`, mặc định 4096 |
++
++Factory không tự load hoặc ghi `.env`, không thay process environment. Cấu hình thiếu/sai có mã `GEMINI_QUERY_CONFIGURATION_INVALID`, không kèm Pydantic input chứa credentials.
++
++**Phạm vi bật semantic là lời gọi trực tiếp `QuerySearch.search`.** Graph có sẵn vẫn gọi Query đồng bộ deterministic; không được coi việc truyền pipeline vào graph là đã bật Gemini. Không sửa graph, handoff hoặc các agent khác trong task này.
++
++## Lệnh thật đã chạy
++
++Chạy PowerShell trong `D:/DOWNLOAD/tillegal-ai/tillegal-ai-main`; key đã tồn tại trong environment, không paste key vào lệnh:
++
++```powershell
++$env:PYTHONUTF8='1'
++$env:LITELLM_LOCAL_MODEL_COST_MAP='True'
++.\.venv\Scripts\python.exe -m scripts.verify_gemini_query --mode gemini --smoke-test
++.\.venv\Scripts\python.exe -m scripts.verify_gemini_query --mode gemini --search-backend fixture
++```
++
++Lệnh thứ hai dùng câu hỏi mặc định đã ghi trong script: hợp đồng 2 năm, làm 6 tháng, muốn nghỉ việc, hỏi báo trước và bồi thường. Có thể thêm `--question "..."` để đổi câu. `--search-backend none` chỉ chạy Query; `fixture` chạy Search và RetrievalService thật với sparse/index ports giả, không đọc Supabase.
++
++Tắt LLM để test offline:
++
++```powershell
++.\.venv\Scripts\python.exe -m scripts.verify_gemini_query --mode deterministic --search-backend fixture
++```
++
++Các lệnh Gemini trên gọi API thật và có thể tiêu tốn quota/chi phí. CLI chỉ chạy live khi người gọi chọn `--mode gemini`. `--smoke-test` dùng JSON nhỏ với `ok=true`; đây không phải câu hỏi pháp luật.
++
++## Kết quả live thực tế
++
++Xem [GEMINI_LIVE_RESULTS.json](GEMINI_LIVE_RESULTS.json) để đọc bản ghi kết quả, model, timestamp và latency. Các thời điểm hiển thị dưới đây theo Asia/Saigon, ngày 23/11/2026. Latency đo toàn bộ lượt CLI, bao gồm import SDK và validation, không phải thời gian xử lý riêng phía Google.
++
++| Kiểm tra | Kết quả | Model | Latency |
++|---|---|---|---:|
++| Liệt kê model bằng key hiện có | PASS, HTTP 200 | Danh sách có gemini-3.5-flash-lite | Không đo |
++| Smoke đầu tiên | FAIL, GEMINI_TIMEOUT | gemini-3.5-flash-lite | 33.212,32 ms |
++| Smoke, dùng local cost map | PASS, JSON `{ "ok": true }` | gemini-3.5-flash-lite | 6.341,89 ms |
++| Câu hỏi tiếng Việt → Query → Search → RetrievalService/index giả | PASS | gemini-3.5-flash-lite | 6.867,84 ms |
++
++Smoke đầu có warning sampling deprecated và coroutine chưa await khi timeout; không kết luận API Google bị lỗi từ lượt đó. Lượt sau đặt local cost map đã thành công. Adapter sau đó bỏ tham số temperature không cần thiết cho Gemini 3+ và chuyển import SDK sang thread; lượt pháp luật sau thay đổi thành công, không có hai warning trên.
++
++Trong kết quả pháp luật live:
++
++- `analysis_method=llm`, `analysis_model=gemini-3.5-flash-lite`.
++- Facts là các span “Tôi ký hợp đồng lao động 2 năm” và “mới làm được 6 tháng nhưng muốn nghỉ việc”, đều có nguyên văn trong câu hỏi.
++- Hai issues tương ứng nghĩa vụ báo trước và bồi thường khi chấm dứt hợp đồng; hai subqueries tương ứng. Không có số điều luật tự thêm.
++- `SemanticAnalysis` và `QueryPlan` validation đều thành công; Search thực hiện hai truy vấn, trả `COMPLETED/COMPLETE`.
++- Hai native retrieval response là `NO_MATCH`, evidence=0 vì index giả chủ động trả rỗng. Đây là kiểm chứng interface và luồng thực thi, không phải bằng chứng relevance của retrieval trên corpus thật.
++- Model có hỏi lại loại hợp đồng dù câu hỏi đã nêu thời hạn hai năm; đây là thông tin thiếu còn dư thừa về mặt ngữ nghĩa, không bị schema loại bỏ. Không tuyên bố model hiểu hoàn hảo hoặc có độ chính xác pháp lý đo được.
++
++## Giới hạn còn lại
++
++Chưa chạy Supabase/corpus retrieval thật hoặc benchmark tiếng Việt. Không đánh giá/đưa ra câu trả lời pháp luật, không xác minh điều luật hay hiệu lực. Exact lookup và câu cần clarification theo guard cũ vẫn dùng deterministic mà không gọi model, với nhãn đúng. Có API key không bảo đảm quota/permission/model availability cho mọi thời điểm.
++
++Shared gateway chung và adapter OpenAI/LiteLLM placeholder vẫn ngoài scope; các tác vụ Gemini trong task này gọi qua provider adapter mới, không tuyên bố hoàn thiện gateway toàn hệ thống. Không đổi BM25/Dense/Hybrid/Reranking, Search, Judge/Summary/Answer/Verification hoặc graph. Tất cả thay đổi local, không commit/push.
+--- a/docs/query-search/GEMINI_LIVE_RESULTS.json
++++ b/docs/query-search/GEMINI_LIVE_RESULTS.json
+@@ -0,0 +1,106 @@
++{
++  "record_type": "observed_live_results_not_mocked",
++  "date": "2026-11-23",
++  "timezone": "Asia/Saigon",
++  "model_discovery": {
++    "status": "PASS",
++    "http_status": 200,
++    "model": "models/gemini-3.5-flash-lite",
++    "generateContent_supported": true
++  },
++  "first_smoke": {
++    "tested_at": "2026-11-23T09:14:21.375824+00:00",
++    "model": "gemini-3.5-flash-lite",
++    "status": "FAIL",
++    "latency_ms": 33212.32,
++    "error": {
++      "code": "GEMINI_TIMEOUT",
++      "type": "TimeoutError"
++    },
++    "note": "First cold SDK startup, without local cost map; this does not establish a Gemini outage."
++  },
++  "smoke": {
++    "tested_at": "2026-11-23T09:15:26.857600+00:00",
++    "model": "gemini-3.5-flash-lite",
++    "local_cost_map": true,
++    "status": "PASS",
++    "latency_ms": 6341.89,
++    "output": {
++      "ok": true
++    }
++  },
++  "legal_question": {
++    "tested_at": "2026-11-23T09:16:03.524815+00:00",
++    "mode": "gemini",
++    "live_gemini": true,
++    "search_backend": "fixture",
++    "model": "gemini-3.5-flash-lite",
++    "plan": {
++      "original": "Tôi ký hợp đồng lao động 2 năm, mới làm được 6 tháng nhưng muốn nghỉ việc. Tôi có phải báo trước không và có phải bồi thường không?",
++      "intent": "legal_question",
++      "domain": "labour",
++      "temporal_scope": [
++        "2 năm",
++        "6 tháng"
++      ],
++      "subqueries": [
++        {
++          "text": "quyền đơn phương chấm dứt hợp đồng lao động thời hạn nghĩa vụ báo trước",
++          "purpose": "question_part"
++        },
++        {
++          "text": "nghĩa vụ bồi thường chi phí đào tạo và bồi thường do đơn phương chấm dứt hợp đồng lao động trái pháp luật",
++          "purpose": "question_part"
++        }
++      ],
++      "clarification": null,
++      "analysis_method": "llm",
++      "analysis_model": "gemini-3.5-flash-lite",
++      "facts": [
++        {
++          "text": "Tôi ký hợp đồng lao động 2 năm",
++          "source_quote": "Tôi ký hợp đồng lao động 2 năm"
++        },
++        {
++          "text": "mới làm được 6 tháng nhưng muốn nghỉ việc",
++          "source_quote": "mới làm được 6 tháng nhưng muốn nghỉ việc"
++        }
++      ],
++      "issues": [
++        "Nghĩa vụ báo trước khi người lao động đơn phương chấm dứt hợp đồng lao động",
++        "Nghĩa vụ bồi thường khi người lao động đơn phương chấm dứt hợp đồng lao động trái pháp luật"
++      ],
++      "missing_information": [
++        "Loại hợp đồng lao động cụ thể (xác định thời hạn hay không xác định thời hạn)",
++        "Lý do người lao động muốn nghỉ việc",
++        "Có thỏa thuận về chi phí đào tạo hay không"
++      ]
++    },
++    "search": {
++      "status": "COMPLETED",
++      "completeness": "COMPLETE",
++      "executed_searches": 2,
++      "queries": [
++        "quyền đơn phương chấm dứt hợp đồng lao động thời hạn nghĩa vụ báo trước",
++        "nghĩa vụ bồi thường chi phí đào tạo và bồi thường do đơn phương chấm dứt hợp đồng lao động trái pháp luật"
++      ],
++      "response_statuses": [
++        "NO_MATCH",
++        "NO_MATCH"
++      ],
++      "evidence_count": 0,
++      "warnings": [
++        "NO_MATCH:0",
++        "NO_MATCH:1",
++        "TEMPORAL_SCOPE_REQUIRES_CALLER_DATE_REVIEW"
++      ]
++    },
++    "status": "PASS",
++    "latency_ms": 6867.84
++  },
++  "limitations": [
++    "Live Gemini, real Query/Search/RetrievalService; retrieval ports use an empty fixture.",
++    "No live database, retrieval relevance evaluation or legal accuracy benchmark.",
++    "Model asked a redundant clarification about contract type despite the stated two-year term."
++  ]
++}
+--- a/docs/query-search/GEMINI_TEST_RESULTS.md
++++ b/docs/query-search/GEMINI_TEST_RESULTS.md
+@@ -0,0 +1,30 @@
++# Gemini test results — 2026-11-23
++
++Working directory: `D:/DOWNLOAD/tillegal-ai/tillegal-ai-main`. Python 3.12.16, pytest 8.4.2, LiteLLM 1.106.4. All results below are observed executions, not proposed commands.
++
++## Mocked unit and regression checks
++
++| Exact command | Result | Count | Execution |
++|---|---|---:|---|
++| `.\.venv\Scripts\python.exe -m pytest tests/unit/applications/tillegal/test_gemini_query.py -q -p no:cacheprovider` | PASS | 37 | Mocked SDK responses, real adapter/planner/factory/Search interfaces |
++| `.\.venv\Scripts\python.exe -m pytest tests/unit/applications/tillegal/test_gemini_query.py tests/unit/applications/tillegal/test_query_search_semantic.py tests/unit/applications/tillegal/test_query_search.py tests/unit/applications/tillegal/test_query_hardening.py tests/unit/applications/tillegal/test_query_search_multimode.py tests/graph/test_query_search_workflow.py -q -p no:cacheprovider -o faulthandler_timeout=30` | PASS in 2.90s | 209 | Mocked providers/ports; real Query/Search, RetrievalService and graph/runtime |
++| `.\.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider -o faulthandler_timeout=30` | PASS in 7.47s | 612 | Full repository suite; no live Gemini calls |
++| `.\.venv\Scripts\python.exe -m ruff check src/framework/llm/providers/gemini_adapter.py src/applications/tillegal/agents/query/gemini.py src/query_search_bootstrap.py scripts/verify_gemini_query.py tests/unit/applications/tillegal/test_gemini_query.py` | PASS | N/A | Static lint |
++| `.\.venv\Scripts\python.exe -m ruff format --check src/framework/llm/providers/gemini_adapter.py src/applications/tillegal/agents/query/gemini.py src/query_search_bootstrap.py scripts/verify_gemini_query.py tests/unit/applications/tillegal/test_gemini_query.py` | PASS, 5 files formatted | N/A | Static format |
++
++Regression environment: `HF_HUB_OFFLINE=1`, `TRANSFORMERS_OFFLINE=1`, `LITELLM_LOCAL_MODEL_COST_MAP=True`. Existing placeholder test files still do not provide executable integration coverage.
++
++Initial lint found long lines/import ordering and an intentionally SDK-named `Timeout` exception class in a test. Formatting and replacing the test class declaration with `type("Timeout", (Exception,), {})` resolved the findings without suppressions. The final lint result above is clean. No failing unit/regression tests were observed.
++
++## Live API checks
++
++See [GEMINI_LIVE_RESULTS.json](GEMINI_LIVE_RESULTS.json) and [GEMINI.md](GEMINI.md). These are **live Gemini**, not mocked responses. API key/headers were not printed or saved.
++
++1. `GET https://generativelanguage.googleapis.com/v1beta/models?pageSize=1000` with the existing key: PASS, HTTP 200; selected model advertises generateContent.
++2. `.\.venv\Scripts\python.exe -m scripts.verify_gemini_query --mode gemini --smoke-test` without the local cost map flag: FAIL, exit 1, `GEMINI_TIMEOUT`, 33,212.32 ms. Cold SDK startup/warnings were observed; this does not prove an API outage.
++3. Same smoke command with `PYTHONUTF8=1` and `LITELLM_LOCAL_MODEL_COST_MAP=True`: PASS, exit 0, `{"ok": true}`, 6,341.89 ms.
++4. `.\.venv\Scripts\python.exe -m scripts.verify_gemini_query --mode gemini --search-backend fixture` with those environment flags, after moving SDK import off the event loop/removing deprecated sampling: PASS, exit 0, 6,867.84 ms. Actual semantic response passed guards/schema; Search consumed two subqueries; real RetrievalService returned NO_MATCH twice using fake ports.
++
++The live legal-question model output has two relevant legal issues/search objectives and exact extractive facts. Missing-information output includes a redundant contract-type question. These observations are one-case functional evidence, not a measured legal-understanding accuracy score.
++
++NOT RUN: live Supabase/corpus retrieval, Vietnamese evaluation dataset/recall metrics, answer generation, citation verification, and Gemini integration into the untouched synchronous graph.
+--- a/docs/query-search/GUIDE_VI.md
++++ b/docs/query-search/GUIDE_VI.md
+@@ -1,4 +1,6 @@
+ # Hướng dẫn học Query Agent và Search Agent
++
++> Cập nhật Gemini ngày 23/11/2026: adapter và kiểm chứng live đã có. Xem [GEMINI.md](GEMINI.md). Các đoạn dưới đây nói “chưa có provider/adapter” mô tả snapshot redesign trước bước kết nối Gemini; không còn là trạng thái tích hợp mới nhất.
+ 
+ Tài liệu mô tả code đã triển khai trong `D:/DOWNLOAD/tillegal-ai/tillegal-ai-main`, ngày 23/11/2026. Ví dụ không phải tư vấn pháp luật. Không có LLM hoặc database thật được gọi trong kiểm thử.
+ 
+--- a/scripts/verify_gemini_query.py
++++ b/scripts/verify_gemini_query.py
+@@ -0,0 +1,149 @@
++"""Explicit Gemini/deterministic verification. No .env loading or secret output."""
++
++import argparse
++import asyncio
++import json
++import time
++from datetime import UTC, date, datetime
++
++from pydantic import BaseModel, ConfigDict
++
++from src.application.services.retrieval_service import RetrievalService
++from src.applications.tillegal.agents.query.agent import QueryPlan, understand
++from src.applications.tillegal.agents.query.gemini import create_gemini_query_agent
++from src.applications.tillegal.agents.query.semantic import QueryAnalysisError
++from src.applications.tillegal.agents.search.agent import SearchOptions
++from src.framework.llm.providers.gemini_adapter import GeminiProviderError
++from src.query_search_bootstrap import QuerySearch
++
++EXAMPLE = (
++    "Tôi ký hợp đồng lao động 2 năm, mới làm được 6 tháng nhưng muốn nghỉ việc. "
++    "Tôi có phải báo trước không và có phải bồi thường không?"
++)
++
++
++class SmokeResponse(BaseModel):
++    model_config = ConfigDict(extra="forbid", strict=True)
++    ok: bool
++
++
++def fixture_retrieval() -> RetrievalService:
++    """Real RetrievalService with an empty in-memory sparse index; no database I/O."""
++    from src.application.services.retrieval_service import DEFAULT_SPARSE_INDEX
++    from src.application.services.vbpl_markdown_indexing_service import tokenize_sparse_text
++
++    class EmptySparse:
++        async def search(self, request):
++            return ()
++
++    class Index:
++        async def get_index(self, name):
++            return {
++                "id": "00000000-0000-0000-0000-000000000001",
++                "index_name": DEFAULT_SPARSE_INDEX,
++                "index_version": "v1",
++                "status": "READY",
++                "updated_at": "2026-11-23T00:00:00Z",
++                "algorithm": "BM25",
++                "tokenizer": "unicode-nfc-lower-v1",
++                "language_config": "simple",
++                "k1": 1.2,
++                "b": 0.75,
++                "document_count": 1,
++                "total_token_count": 1,
++                "average_document_length": 1,
++                "metadata": {"fixture": True},
++            }
++
++    class NoHydration:
++        def __getattr__(self, name):
++            raise AssertionError("Empty fixture must not hydrate evidence")
++
++    return RetrievalService(EmptySparse(), NoHydration(), NoHydration(), Index(), tokenize_sparse_text)
++
++
++def safe_error(error: Exception) -> dict:
++    """Only serialize allowlisted error codes/status, never arbitrary exception text."""
++    result = {"code": "QUERY_VERIFICATION_FAILED", "type": type(error).__name__}
++    if isinstance(error, QueryAnalysisError):
++        result["code"] = str(error)  # SemanticQueryAgent emits fixed content-free codes.
++    if isinstance(error, ValueError) and str(error) == "GEMINI_QUERY_CONFIGURATION_INVALID":
++        result["code"] = str(error)
++    provider_error = error if isinstance(error, GeminiProviderError) else error.__context__
++    if isinstance(provider_error, GeminiProviderError):
++        result["provider_code"] = provider_error.code
++        result["http_status"] = provider_error.http_status
++    if isinstance(error, TimeoutError):
++        result["code"] = "GEMINI_TIMEOUT"
++    return result
++
++
++async def execute(args: argparse.Namespace) -> dict:
++    started = time.perf_counter()
++    report = {
++        "tested_at": datetime.now(UTC).isoformat(),
++        "mode": args.mode,
++        "live_gemini": args.mode == "gemini",
++        "search_backend": args.search_backend,
++    }
++    try:
++        agent = create_gemini_query_agent() if args.mode == "gemini" else None
++        report["model"] = agent.model if agent else None
++        if args.smoke_test:
++            if agent is None or args.search_backend != "none":
++                raise ValueError("Smoke requires Gemini and no search")
++            raw = await agent.complete(
++                model=agent.model,
++                system="Return only a JSON object matching the schema.",
++                user='Return {"ok": true}.',
++                schema=SmokeResponse.model_json_schema(),
++            )
++            report["smoke"] = SmokeResponse.model_validate_json(raw).model_dump()
++            if not report["smoke"]["ok"]:
++                raise ValueError("Unexpected smoke response")
++        elif args.search_backend == "none":
++            plan = await agent.understand(args.question) if agent else understand(args.question)
++            report["plan"] = QueryPlan.model_validate(plan).model_dump()
++        else:
++            options = SearchOptions(
++                mode="bm25",
++                top_k=5,
++                as_of_date=date.fromisoformat(args.as_of_date),
++                allowed_usage_policies=("EXPERIMENTAL_ONLY",),
++            )
++            result = await QuerySearch(fixture_retrieval(), options, agent).search(args.question)
++            report["plan"] = QueryPlan.model_validate(result["plan"]).model_dump()
++            report["search"] = {
++                "status": result["status"],
++                "completeness": result["completeness"],
++                "executed_searches": result["executed_searches"],
++                "queries": [request.query for request in result["requests"]],
++                "response_statuses": [response.status for response in result["responses"]],
++                "evidence_count": len(result["evidence"]),
++                "warnings": result["warnings"],
++            }
++            if result["status"] == "FAILED":
++                raise ValueError("Fixture retrieval failed")
++        report["status"] = "PASS"
++    except Exception as error:
++        report["status"] = "FAIL"
++        report["error"] = safe_error(error)
++    report["latency_ms"] = round((time.perf_counter() - started) * 1000, 2)
++    return report
++
++
++def main(argv: list[str] | None = None) -> int:
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--mode", choices=("deterministic", "gemini"), default="deterministic")
++    parser.add_argument("--question", default=EXAMPLE)
++    parser.add_argument("--smoke-test", action="store_true", help="One minimal LIVE Gemini JSON request")
++    parser.add_argument("--search-backend", choices=("none", "fixture"), default="none")
++    parser.add_argument("--as-of-date", default="2026-11-23", help="Explicit fixture retrieval date")
++    args = parser.parse_args(argv)
++    result = asyncio.run(execute(args))
++    print(json.dumps(result, ensure_ascii=False, indent=2))
++    return 0 if result["status"] == "PASS" else 1
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- a/src/applications/tillegal/agents/query/gemini.py
++++ b/src/applications/tillegal/agents/query/gemini.py
+@@ -0,0 +1,67 @@
++"""Query-only Gemini configuration; preserve unrelated provider settings."""
++
++import os
++from collections.abc import Mapping
++from pathlib import Path
++
++import yaml
++from pydantic import BaseModel, ConfigDict, Field, SecretStr, ValidationError, field_validator
++
++from src.applications.tillegal.agents.query.semantic import SemanticQueryAgent
++from src.framework.llm.providers.gemini_adapter import GeminiStructuredCompletion
++
++DEFAULT_MODEL_CONFIG = Path(__file__).resolve().parents[5] / "configs/models.yaml"
++
++
++class GeminiQuerySettings(BaseModel):
++    model_config = ConfigDict(extra="forbid", frozen=True, allow_inf_nan=False)
++    api_key: SecretStr = Field(repr=False)
++    model: str = Field(pattern=r"^gemini-[a-z0-9][a-z0-9._-]*$")
++    timeout_seconds: float = Field(gt=0, le=120)
++    max_output_tokens: int = Field(default=4096, ge=128, le=8192, strict=True)
++
++    @field_validator("api_key")
++    @classmethod
++    def configured_key(cls, value: SecretStr) -> SecretStr:
++        if not value.get_secret_value().strip():
++            raise ValueError("GOOGLE_API_KEY_REQUIRED")
++        return value
++
++
++def create_gemini_query_agent(
++    *,
++    environ: Mapping[str, str] | None = None,
++    config_path: Path = DEFAULT_MODEL_CONFIG,
++) -> SemanticQueryAgent:
++    """Read GOOGLE_API_KEY without changing process env or loading/rewriting .env.
++
++    Explicit mapping supports isolated tests. Only the query_semantic profile is
++    consumed: other agents keep their existing provider/default-model choices.
++    """
++    env = os.environ if environ is None else environ
++    try:
++        config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
++        profile = config["profiles"]["query_semantic"]
++        provider = config["providers"]["gemini"]
++        if profile["provider"] != "gemini" or provider["api_key_env"] != "GOOGLE_API_KEY":
++            raise ValueError("Invalid query provider")
++        if provider["enabled"] is not True:
++            raise ValueError("Disabled query provider")
++        settings = GeminiQuerySettings(
++            api_key=env.get("GOOGLE_API_KEY", ""),
++            model=env.get("GEMINI_MODEL", profile["model"]),
++            timeout_seconds=env.get("QUERY_LLM_TIMEOUT_SECONDS", provider["timeout_seconds"]),
++            max_output_tokens=profile.get("max_output_tokens", 4096),
++        )
++    except (OSError, KeyError, TypeError, ValueError, yaml.YAMLError, ValidationError):
++        # Do not include Pydantic input_values or raw YAML/provider data in errors.
++        raise ValueError("GEMINI_QUERY_CONFIGURATION_INVALID") from None
++    return SemanticQueryAgent(
++        complete=GeminiStructuredCompletion(
++            settings.api_key,
++            timeout_seconds=settings.timeout_seconds,
++            max_output_tokens=settings.max_output_tokens,
++        ),
++        model=settings.model,
++        timeout_seconds=settings.timeout_seconds,
++    )
+--- a/src/framework/llm/providers/gemini_adapter.py
++++ b/src/framework/llm/providers/gemini_adapter.py
+@@ -0,0 +1,83 @@
++"""Gemini structured completion through the existing LiteLLM dependency."""
++
++import asyncio
++import json
++from dataclasses import dataclass, field
++
++from pydantic import SecretStr
++
++
++class GeminiProviderError(RuntimeError):
++    """Safe diagnostics only; upstream messages, headers and bodies stay private."""
++
++    def __init__(self, code: str, http_status: int | None = None) -> None:
++        super().__init__(code)
++        self.code = code
++        self.http_status = http_status
++
++
++async def _acompletion(**kwargs):
++    # Keep the provider SDK out of deterministic/offline startup.
++    def load_completion():
++        from litellm import acompletion
++
++        return acompletion
++
++    completion = await asyncio.to_thread(load_completion)
++    return await completion(**kwargs)
++
++
++@dataclass(frozen=True)
++class GeminiStructuredCompletion:
++    api_key: SecretStr = field(repr=False)
++    timeout_seconds: float = 30
++    max_output_tokens: int = 4096
++
++    def __post_init__(self) -> None:
++        if not self.api_key.get_secret_value().strip():
++            raise ValueError("GOOGLE_API_KEY_REQUIRED")
++        if not 0 < self.timeout_seconds < float("inf") or not 128 <= self.max_output_tokens <= 8192:
++            raise ValueError("GEMINI_INVALID_OPTIONS")
++
++    async def __call__(self, *, model: str, system: str, user: str, schema: dict) -> str:
++        """Return JSON text; SemanticQueryAgent remains the strict validation owner."""
++        try:
++            async with asyncio.timeout(self.timeout_seconds):
++                response = await _acompletion(
++                    model=f"gemini/{model}",
++                    api_key=self.api_key.get_secret_value(),
++                    messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
++                    response_format={"type": "json_object", "response_schema": schema},
++                    max_tokens=self.max_output_tokens,
++                    timeout=self.timeout_seconds,
++                    num_retries=0,
++                    caching=False,
++                    **{"no-log": True},
++                )
++        except TimeoutError:
++            raise TimeoutError("GEMINI_TIMEOUT") from None
++        except Exception as error:
++            if type(error).__name__ in {"Timeout", "APITimeoutError"}:
++                raise TimeoutError("GEMINI_TIMEOUT") from None
++            status = getattr(error, "status_code", None)
++            status = status if type(status) is int and 100 <= status <= 599 else None
++            code = {
++                400: "GEMINI_INVALID_REQUEST",
++                401: "GEMINI_AUTHENTICATION_FAILED",
++                403: "GEMINI_PERMISSION_DENIED",
++                404: "GEMINI_MODEL_NOT_FOUND",
++                429: "GEMINI_RATE_LIMITED",
++            }.get(status, "GEMINI_SERVICE_UNAVAILABLE" if status and status >= 500 else "GEMINI_REQUEST_FAILED")
++            raise GeminiProviderError(code, status) from None
++        try:
++            choice = response.choices[0]
++            if choice.finish_reason != "stop":
++                raise ValueError("Incomplete or blocked response")
++            content = choice.message.content
++            if not isinstance(content, str) or not 1 <= len(content) <= 32000:
++                raise ValueError("Invalid content")
++            if not isinstance(json.loads(content), dict):
++                raise ValueError("Expected JSON object")
++        except (AttributeError, IndexError, TypeError, ValueError):
++            raise GeminiProviderError("GEMINI_INVALID_RESPONSE") from None
++        return content
+--- a/src/query_search_bootstrap.py
++++ b/src/query_search_bootstrap.py
+@@ -2,6 +2,7 @@
+ 
+ from dataclasses import dataclass
+ from pathlib import Path
++from typing import Literal
+ 
+ from src.application.services.retrieval_service import RetrievalService
+ from src.applications.tillegal.agents.query.agent import understand
+@@ -29,12 +30,21 @@
+     options: SearchOptions,
+     *,
+     query_agent: SemanticQueryAgent | None = None,
++    semantic_mode: Literal["deterministic", "gemini"] = "deterministic",
+     dense_model_path: Path | None = None,
+     hybrid_config: HybridConfig | None = None,
+     rerank_config: RerankConfig | None = None,
+     timeout_seconds: float = 30,
+ ) -> QuerySearch:
+     """Require explicit filters and delegate all retrieval composition."""
++    if semantic_mode not in {"deterministic", "gemini"}:
++        raise ValueError("QUERY_SEMANTIC_MODE_INVALID")
++    if semantic_mode == "gemini":
++        if query_agent is not None:
++            raise ValueError("QUERY_AGENT_CONFIGURATION_CONFLICT")
++        from src.applications.tillegal.agents.query.gemini import create_gemini_query_agent
++
++        query_agent = create_gemini_query_agent()
+     options = SearchOptions.model_validate(options)
+     retrieval = create_retrieval_service(
+         settings,
+--- a/tests/unit/applications/tillegal/test_gemini_query.py
++++ b/tests/unit/applications/tillegal/test_gemini_query.py
+@@ -0,0 +1,244 @@
++"""Gemini adapter and real Query/Search interfaces with mocked provider responses."""
++
++import asyncio
++import json
++from types import SimpleNamespace
++from unittest.mock import AsyncMock, patch
++
++import pytest
++import yaml
++from pydantic import SecretStr
++
++from scripts.verify_gemini_query import fixture_retrieval, main
++from src.applications.tillegal.agents.query.gemini import DEFAULT_MODEL_CONFIG, create_gemini_query_agent
++from src.applications.tillegal.agents.query.schemas import SemanticAnalysis
++from src.applications.tillegal.agents.query.semantic import QueryAnalysisError
++from src.core.config import SupabaseSettings
++from src.framework.llm.providers.gemini_adapter import GeminiProviderError, GeminiStructuredCompletion
++from src.query_search_bootstrap import QuerySearch, create_query_search
++from tests.unit.applications.tillegal.test_query_search import options
++from tests.unit.applications.tillegal.test_query_search_semantic import QUESTION, analysis
++
++TARGET = "src.framework.llm.providers.gemini_adapter._acompletion"
++FAKE_KEY = "fixture-only-not-a-real-api-key"
++
++
++def reply(content=None, finish="stop"):
++    return SimpleNamespace(
++        choices=[
++            SimpleNamespace(
++                finish_reason=finish,
++                message=SimpleNamespace(content=json.dumps(analysis()) if content is None else content),
++            )
++        ]
++    )
++
++
++def call(adapter):
++    return adapter(
++        model="gemini-3.5-flash-lite", system="system", user="user", schema=SemanticAnalysis.model_json_schema()
++    )
++
++
++def test_adapter_maps_key_and_schema_without_global_environment_changes(monkeypatch):
++    monkeypatch.setenv("GEMINI_API_KEY", "unrelated-existing-value")
++    adapter = GeminiStructuredCompletion(SecretStr(FAKE_KEY))
++    with patch(TARGET, AsyncMock(return_value=reply())) as completion:
++        result = asyncio.run(call(adapter))
++    assert json.loads(result) == analysis()
++    kwargs = completion.call_args.kwargs
++    assert kwargs["model"] == "gemini/gemini-3.5-flash-lite" and kwargs["api_key"] == FAKE_KEY
++    assert kwargs["response_format"]["response_schema"] == SemanticAnalysis.model_json_schema()
++    assert kwargs["messages"] == [{"role": "system", "content": "system"}, {"role": "user", "content": "user"}]
++    assert kwargs["num_retries"] == 0 and kwargs["no-log"] is True and kwargs["caching"] is False
++    assert FAKE_KEY not in repr(adapter)
++    import os
++
++    assert os.environ["GEMINI_API_KEY"] == "unrelated-existing-value"
++
++
++@pytest.mark.parametrize(
++    "status,code",
++    [
++        (400, "GEMINI_INVALID_REQUEST"),
++        (401, "GEMINI_AUTHENTICATION_FAILED"),
++        (403, "GEMINI_PERMISSION_DENIED"),
++        (404, "GEMINI_MODEL_NOT_FOUND"),
++        (429, "GEMINI_RATE_LIMITED"),
++        (503, "GEMINI_SERVICE_UNAVAILABLE"),
++        (None, "GEMINI_REQUEST_FAILED"),
++    ],
++)
++def test_provider_errors_are_classified_without_upstream_text(status, code):
++    error = RuntimeError("private header " + FAKE_KEY)
++    error.status_code = status
++    with patch(TARGET, AsyncMock(side_effect=error)):
++        with pytest.raises(GeminiProviderError) as captured:
++            asyncio.run(call(GeminiStructuredCompletion(SecretStr(FAKE_KEY))))
++    assert captured.value.code == code and captured.value.http_status == status
++    assert FAKE_KEY not in str(captured.value) and "private" not in str(captured.value)
++
++
++@pytest.mark.parametrize(
++    "response",
++    [
++        SimpleNamespace(choices=[]),
++        reply("[]"),
++        reply("not json"),
++        reply("null"),
++        reply(" "),
++        reply("{}", "length"),
++        reply("{}", "content_filter"),
++        reply("x" * 32001),
++        SimpleNamespace(),
++    ],
++)
++def test_invalid_truncated_or_blocked_response_fails(response):
++    with patch(TARGET, AsyncMock(return_value=response)):
++        with pytest.raises(GeminiProviderError, match="^GEMINI_INVALID_RESPONSE$"):
++            asyncio.run(call(GeminiStructuredCompletion(SecretStr(FAKE_KEY))))
++
++
++def test_adapter_timeout_and_cancellation():
++    async def wait(**kwargs):
++        await asyncio.Event().wait()
++
++    with patch(TARGET, wait):
++        with pytest.raises(TimeoutError, match="^GEMINI_TIMEOUT$"):
++            asyncio.run(call(GeminiStructuredCompletion(SecretStr(FAKE_KEY), timeout_seconds=0.01)))
++    with patch(TARGET, AsyncMock(side_effect=asyncio.CancelledError)):
++        with pytest.raises(asyncio.CancelledError):
++            asyncio.run(call(GeminiStructuredCompletion(SecretStr(FAKE_KEY))))
++
++
++def test_gemini_sdk_timeout_translates_to_existing_query_timeout():
++    sdk_timeout_type = type("Timeout", (Exception,), {})
++
++    agent = create_gemini_query_agent(environ={"GOOGLE_API_KEY": FAKE_KEY})
++    with patch(TARGET, AsyncMock(side_effect=sdk_timeout_type("private diagnostic"))):
++        with pytest.raises(QueryAnalysisError, match="^QUERY_ANALYSIS_TIMEOUT$"):
++            asyncio.run(agent.understand(QUESTION))
++
++
++@pytest.mark.parametrize(
++    "env",
++    [
++        {},
++        {"GOOGLE_API_KEY": " "},
++        {"GOOGLE_API_KEY": FAKE_KEY, "GEMINI_MODEL": "openai/model"},
++        {"GOOGLE_API_KEY": FAKE_KEY, "QUERY_LLM_TIMEOUT_SECONDS": "0"},
++        {"GOOGLE_API_KEY": FAKE_KEY, "QUERY_LLM_TIMEOUT_SECONDS": "nan"},
++    ],
++)
++def test_invalid_config_is_safe_and_never_calls_api(env):
++    with patch(TARGET, AsyncMock()) as completion:
++        with pytest.raises(ValueError, match="^GEMINI_QUERY_CONFIGURATION_INVALID$"):
++            create_gemini_query_agent(environ=env)
++    completion.assert_not_awaited()
++
++
++def test_model_and_timeout_are_configurable_without_mutating_mapping():
++    env = {"GOOGLE_API_KEY": FAKE_KEY, "GEMINI_MODEL": "gemini-3.8-flash", "QUERY_LLM_TIMEOUT_SECONDS": "19"}
++    before = dict(env)
++    agent = create_gemini_query_agent(environ=env)
++    assert agent.model == "gemini-3.8-flash" and agent.timeout_seconds == 19
++    assert env == before and FAKE_KEY not in repr(agent)
++
++
++@pytest.mark.parametrize("change", ["disabled", "wrong_provider", "wrong_key_env", "invalid_root"])
++def test_invalid_provider_profile_rejected(tmp_path, change):
++    data = yaml.safe_load(DEFAULT_MODEL_CONFIG.read_text(encoding="utf-8"))
++    if change == "disabled":
++        data["providers"]["gemini"]["enabled"] = False
++    elif change == "wrong_provider":
++        data["profiles"]["query_semantic"]["provider"] = "openai"
++    elif change == "wrong_key_env":
++        data["providers"]["gemini"]["api_key_env"] = "OTHER_KEY"
++    else:
++        data = []
++    path = tmp_path / "models.yaml"
++    path.write_text(yaml.safe_dump(data), encoding="utf-8")
++    with pytest.raises(ValueError, match="^GEMINI_QUERY_CONFIGURATION_INVALID$"):
++        create_gemini_query_agent(environ={"GOOGLE_API_KEY": FAKE_KEY}, config_path=path)
++
++
++def test_semantic_factory_runs_adapter_query_search_and_real_retrieval(monkeypatch):
++    monkeypatch.setenv("GOOGLE_API_KEY", FAKE_KEY)
++    with (
++        patch("src.query_search_bootstrap.create_retrieval_service", return_value=fixture_retrieval()),
++        patch(TARGET, AsyncMock(return_value=reply())) as completion,
++    ):
++        pipeline = create_query_search(SupabaseSettings(), options(), semantic_mode="gemini")
++        result = asyncio.run(pipeline.search(QUESTION))
++    assert result["plan"]["analysis_method"] == "llm" and result["plan"]["analysis_model"] == pipeline.query_agent.model
++    assert result["plan"]["facts"] == analysis()["facts"] and len(result["plan"]["issues"]) == 2
++    assert result["status"] == "COMPLETED" and result["completeness"] == "COMPLETE"
++    assert result["executed_searches"] == 2 and all(response.status == "NO_MATCH" for response in result["responses"])
++    completion.assert_awaited_once()
++
++
++@pytest.mark.parametrize(
++    "raw", ["{}", json.dumps(analysis(issues=[{"issue": "Điều 999", "search_query": "Điều 999"}]))]
++)
++def test_schema_and_hallucination_guards_preserved(raw):
++    agent = create_gemini_query_agent(environ={"GOOGLE_API_KEY": FAKE_KEY})
++    retrieval = AsyncMock()
++    with patch(TARGET, AsyncMock(return_value=reply(raw))):
++        with pytest.raises(QueryAnalysisError, match="^QUERY_ANALYSIS_INVALID_RESPONSE$"):
++            asyncio.run(QuerySearch(retrieval, options(), agent).search(QUESTION))
++    retrieval.search.assert_not_awaited()
++
++
++def test_provider_failure_never_falls_back_or_calls_search():
++    agent = create_gemini_query_agent(environ={"GOOGLE_API_KEY": FAKE_KEY})
++    retrieval = AsyncMock()
++    with patch(TARGET, AsyncMock(side_effect=RuntimeError(FAKE_KEY))):
++        with pytest.raises(QueryAnalysisError, match="^QUERY_ANALYSIS_PROVIDER_ERROR$"):
++            asyncio.run(QuerySearch(retrieval, options(), agent).search(QUESTION))
++    retrieval.search.assert_not_awaited()
++
++
++def test_deterministic_factory_needs_no_google_key(monkeypatch):
++    monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
++    with (
++        patch("src.query_search_bootstrap.create_retrieval_service", return_value=fixture_retrieval()),
++        patch(TARGET, AsyncMock()) as completion,
++    ):
++        pipeline = create_query_search(SupabaseSettings(), options(), semantic_mode="deterministic")
++        result = asyncio.run(pipeline.search(QUESTION))
++    assert result["plan"]["analysis_method"] == "deterministic" and result["status"] == "COMPLETED"
++    completion.assert_not_awaited()
++
++
++def test_factory_rejects_ambiguous_or_unknown_mode_before_retrieval():
++    with patch("src.query_search_bootstrap.create_retrieval_service") as factory:
++        with pytest.raises(ValueError, match="QUERY_AGENT_CONFIGURATION_CONFLICT"):
++            create_query_search(SupabaseSettings(), options(), query_agent=object(), semantic_mode="gemini")
++        with pytest.raises(ValueError, match="QUERY_SEMANTIC_MODE_INVALID"):
++            create_query_search(SupabaseSettings(), options(), semantic_mode="unknown")
++    factory.assert_not_called()
++
++
++def test_cli_mocked_smoke_and_legal_question(monkeypatch, capsys):
++    monkeypatch.setenv("GOOGLE_API_KEY", FAKE_KEY)
++    with patch(TARGET, AsyncMock(return_value=reply('{"ok": true}'))):
++        assert main(["--mode", "gemini", "--smoke-test"]) == 0
++    smoke = json.loads(capsys.readouterr().out)
++    assert smoke["status"] == "PASS" and smoke["smoke"] == {"ok": True}
++    with patch(TARGET, AsyncMock(return_value=reply())):
++        assert main(["--mode", "gemini", "--search-backend", "fixture"]) == 0
++    report = json.loads(capsys.readouterr().out)
++    assert report["status"] == "PASS" and report["search"]["executed_searches"] == 2
++    assert FAKE_KEY not in json.dumps(report)
++
++
++def test_cli_failure_is_safe_and_exits_nonzero(monkeypatch, capsys):
++    monkeypatch.setenv("GOOGLE_API_KEY", FAKE_KEY)
++    error = RuntimeError("Authorization " + FAKE_KEY)
++    error.status_code = 429
++    with patch(TARGET, AsyncMock(side_effect=error)):
++        assert main(["--mode", "gemini", "--search-backend", "fixture"]) == 1
++    output = capsys.readouterr().out
++    report = json.loads(output)
++    assert report["error"]["provider_code"] == "GEMINI_RATE_LIMITED" and report["error"]["http_status"] == 429
++    assert FAKE_KEY not in output and "Authorization" not in output

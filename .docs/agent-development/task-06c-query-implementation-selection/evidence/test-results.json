@@ -1,0 +1,34 @@
+{
+  "A": {
+    "cwd": "D:\\DOWNLOAD\\tillegal-ai\\tillegal-ai-main",
+    "command": ".venv/Scripts/python.exe -B -m pytest -p no:cacheprovider -q tests/graph tests/unit/framework/test_framework_components.py tests/unit/applications/tillegal/test_query_hardening.py tests/unit/applications/tillegal/test_query_search.py tests/unit/applications/tillegal/test_query_search_multimode.py tests/unit/applications/tillegal/retrieval/test_service.py tests/unit/applications/tillegal/retrieval/test_contracts.py tests/unit/applications/tillegal/retrieval/test_dense_service.py tests/unit/applications/tillegal/retrieval/test_query_encoder.py tests/unit/applications/tillegal/retrieval/test_hybrid_service.py tests/unit/applications/tillegal/retrieval/test_rank_fusion.py tests/unit/applications/tillegal/retrieval/test_reranking.py tests/unit/applications/tillegal/retrieval/test_supabase_vector_repository.py --junitxml=.docs/agent-development/task-06c-query-implementation-selection/evidence/A-regression.xml",
+    "console_duration": "4.83s",
+    "counts": {
+      "tests": 320,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "backend": "offline; synthetic/fake ports; no live Supabase/model inference"
+  },
+  "B": {
+    "cwd": "D:\\DOWNLOAD\\tillegal-ai\\retrieval-publish",
+    "command": "D:/DOWNLOAD/tillegal-ai/tillegal-ai-main/.venv/Scripts/python.exe -B -m pytest -p no:cacheprovider -q tests/unit/applications/tillegal/agents/query/test_agent.py tests/unit/applications/tillegal/agents/query/test_contracts.py --junitxml=D:/DOWNLOAD/tillegal-ai/tillegal-ai-main/.docs/agent-development/task-06c-query-implementation-selection/evidence/B-query-unit.xml",
+    "console_duration": "0.66s",
+    "counts": {
+      "tests": 27,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "backend": "offline; synthetic/fake ports; no live Supabase/model inference"
+  },
+  "remote_main": {
+    "exit_code": 0,
+    "output": "1158a6a40e85395bb91bed90f0d7b1967bbf8deb\trefs/heads/main"
+  },
+  "cached_origin_main": {
+    "exit_code": 0,
+    "output": "1158a6a40e85395bb91bed90f0d7b1967bbf8deb"
+  }
+}

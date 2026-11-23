@@ -1,0 +1,270 @@
+{
+  "deterministic_45": {
+    "cases": 45,
+    "successes": 45,
+    "failures": 0,
+    "schema_valid_plans": 45,
+    "raw_schema_valid_responses": 0,
+    "live_model_calls": 0,
+    "analysis_methods": {
+      "deterministic": 45
+    },
+    "issue_coverage_proxy": 0.9365,
+    "distinct_objective_proxy": 0.7143,
+    "fact_span_coverage": 0.0769,
+    "missing_information_proxy": 0.1143,
+    "temporal_span_coverage": 1.0,
+    "citation_identity_coverage": 1.0,
+    "redundant_missing_case_count": 2,
+    "unmatched_issue_labels_proxy": 1,
+    "ungrounded_fact_spans": 0,
+    "clarification_correct_cases": 43,
+    "intent_correct_cases": 45,
+    "errors": {},
+    "latency_ms": {
+      "median": 0.5,
+      "p95_nearest_rank": 0.76
+    },
+    "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0
+    },
+    "cost_usd": null,
+    "cost_note": "No independently verified price/account billing data; no estimated cost claimed.",
+    "semantic_grade": "HEURISTIC_REQUIRES_HUMAN_REVIEW"
+  },
+  "deterministic_matched_15": {
+    "cases": 15,
+    "successes": 15,
+    "failures": 0,
+    "schema_valid_plans": 15,
+    "raw_schema_valid_responses": 0,
+    "live_model_calls": 0,
+    "analysis_methods": {
+      "deterministic": 15
+    },
+    "issue_coverage_proxy": 0.95,
+    "distinct_objective_proxy": 0.85,
+    "fact_span_coverage": 0.2273,
+    "missing_information_proxy": 0.3333,
+    "temporal_span_coverage": 1.0,
+    "citation_identity_coverage": 1.0,
+    "redundant_missing_case_count": 2,
+    "unmatched_issue_labels_proxy": 1,
+    "ungrounded_fact_spans": 0,
+    "clarification_correct_cases": 15,
+    "intent_correct_cases": 15,
+    "errors": {},
+    "latency_ms": {
+      "median": 0.5,
+      "p95_nearest_rank": 1.98
+    },
+    "tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0
+    },
+    "cost_usd": null,
+    "cost_note": "No independently verified price/account billing data; no estimated cost claimed.",
+    "semantic_grade": "HEURISTIC_REQUIRES_HUMAN_REVIEW"
+  },
+  "gemini_baseline_15": {
+    "cases": 15,
+    "successes": 12,
+    "failures": 3,
+    "schema_valid_plans": 12,
+    "raw_schema_valid_responses": 12,
+    "live_model_calls": 13,
+    "analysis_methods": {
+      "llm": 10,
+      "deterministic": 2
+    },
+    "issue_coverage_proxy": 1.0,
+    "distinct_objective_proxy": 1.0,
+    "fact_span_coverage": 1.0,
+    "missing_information_proxy": 0.8,
+    "temporal_span_coverage": 1.0,
+    "citation_identity_coverage": 1.0,
+    "redundant_missing_case_count": 1,
+    "unmatched_issue_labels_proxy": 0,
+    "ungrounded_fact_spans": 0,
+    "clarification_correct_cases": 12,
+    "intent_correct_cases": 12,
+    "errors": {
+      "QUERY_ANALYSIS_INVALID_RESPONSE": 3
+    },
+    "latency_ms": {
+      "median": 1716.99,
+      "p95_nearest_rank": 5621.16
+    },
+    "tokens": {
+      "prompt_tokens": 4326,
+      "completion_tokens": 2880,
+      "total_tokens": 7206
+    },
+    "cost_usd": null,
+    "cost_note": "No independently verified price/account billing data; no estimated cost claimed.",
+    "semantic_grade": "HEURISTIC_REQUIRES_HUMAN_REVIEW"
+  },
+  "rejected_candidate_matched_15": {
+    "cases": 15,
+    "successes": 13,
+    "failures": 2,
+    "schema_valid_plans": 13,
+    "raw_schema_valid_responses": 12,
+    "live_model_calls": 13,
+    "analysis_methods": {
+      "llm": 11,
+      "deterministic": 2
+    },
+    "issue_coverage_proxy": 0.9412,
+    "distinct_objective_proxy": 0.7647,
+    "fact_span_coverage": 1.0,
+    "missing_information_proxy": 0.3636,
+    "temporal_span_coverage": 1.0,
+    "citation_identity_coverage": 0.75,
+    "redundant_missing_case_count": 0,
+    "unmatched_issue_labels_proxy": 0,
+    "ungrounded_fact_spans": 0,
+    "clarification_correct_cases": 13,
+    "intent_correct_cases": 13,
+    "errors": {
+      "QUERY_ANALYSIS_INVALID_RESPONSE": 1,
+      "QUERY_ANALYSIS_PROVIDER_ERROR": 1
+    },
+    "latency_ms": {
+      "median": 1504.32,
+      "p95_nearest_rank": 6077.51
+    },
+    "tokens": {
+      "prompt_tokens": 8199,
+      "completion_tokens": 2083,
+      "total_tokens": 10282
+    },
+    "cost_usd": null,
+    "cost_note": "No independently verified price/account billing data; no estimated cost claimed.",
+    "semantic_grade": "HEURISTIC_REQUIRES_HUMAN_REVIEW"
+  },
+  "final_6": {
+    "cases": 6,
+    "successes": 5,
+    "failures": 1,
+    "schema_valid_plans": 5,
+    "raw_schema_valid_responses": 6,
+    "live_model_calls": 6,
+    "analysis_methods": {
+      "llm": 5
+    },
+    "issue_coverage_proxy": 0.8571,
+    "distinct_objective_proxy": 0.7143,
+    "fact_span_coverage": 1.0,
+    "missing_information_proxy": 0.0,
+    "temporal_span_coverage": 1.0,
+    "citation_identity_coverage": null,
+    "redundant_missing_case_count": 0,
+    "unmatched_issue_labels_proxy": 0,
+    "ungrounded_fact_spans": 0,
+    "clarification_correct_cases": 5,
+    "intent_correct_cases": 5,
+    "errors": {
+      "QUERY_ANALYSIS_INVALID_RESPONSE": 1
+    },
+    "latency_ms": {
+      "median": 1822.16,
+      "p95_nearest_rank": 6159.26
+    },
+    "tokens": {
+      "prompt_tokens": 2016,
+      "completion_tokens": 1324,
+      "total_tokens": 3340
+    },
+    "cost_usd": null,
+    "cost_note": "No independently verified price/account billing data; no estimated cost claimed.",
+    "semantic_grade": "HEURISTIC_REQUIRES_HUMAN_REVIEW"
+  },
+  "paired_final_ids": [
+    "Q004",
+    "Q007",
+    "Q016",
+    "Q025",
+    "Q037"
+  ],
+  "baseline_paired_final": {
+    "cases": 5,
+    "successes": 2,
+    "failures": 3,
+    "schema_valid_plans": 2,
+    "raw_schema_valid_responses": 4,
+    "live_model_calls": 5,
+    "analysis_methods": {
+      "llm": 2
+    },
+    "issue_coverage_proxy": 1.0,
+    "distinct_objective_proxy": 1.0,
+    "fact_span_coverage": 1.0,
+    "missing_information_proxy": 0.6667,
+    "temporal_span_coverage": null,
+    "citation_identity_coverage": null,
+    "redundant_missing_case_count": 1,
+    "unmatched_issue_labels_proxy": 0,
+    "ungrounded_fact_spans": 0,
+    "clarification_correct_cases": 2,
+    "intent_correct_cases": 2,
+    "errors": {
+      "QUERY_ANALYSIS_INVALID_RESPONSE": 3
+    },
+    "latency_ms": {
+      "median": 1740.66,
+      "p95_nearest_rank": 2327.78
+    },
+    "tokens": {
+      "prompt_tokens": 1680,
+      "completion_tokens": 1289,
+      "total_tokens": 2969
+    },
+    "cost_usd": null,
+    "cost_note": "No independently verified price/account billing data; no estimated cost claimed.",
+    "semantic_grade": "HEURISTIC_REQUIRES_HUMAN_REVIEW"
+  },
+  "final_paired": {
+    "cases": 5,
+    "successes": 4,
+    "failures": 1,
+    "schema_valid_plans": 4,
+    "raw_schema_valid_responses": 5,
+    "live_model_calls": 5,
+    "analysis_methods": {
+      "llm": 4
+    },
+    "issue_coverage_proxy": 0.8333,
+    "distinct_objective_proxy": 0.6667,
+    "fact_span_coverage": 1.0,
+    "missing_information_proxy": 0.0,
+    "temporal_span_coverage": 1.0,
+    "citation_identity_coverage": null,
+    "redundant_missing_case_count": 0,
+    "unmatched_issue_labels_proxy": 0,
+    "ungrounded_fact_spans": 0,
+    "clarification_correct_cases": 4,
+    "intent_correct_cases": 4,
+    "errors": {
+      "QUERY_ANALYSIS_INVALID_RESPONSE": 1
+    },
+    "latency_ms": {
+      "median": 1875.12,
+      "p95_nearest_rank": 6159.26
+    },
+    "tokens": {
+      "prompt_tokens": 1680,
+      "completion_tokens": 1151,
+      "total_tokens": 2831
+    },
+    "cost_usd": null,
+    "cost_note": "No independently verified price/account billing data; no estimated cost claimed.",
+    "semantic_grade": "HEURISTIC_REQUIRES_HUMAN_REVIEW"
+  },
+  "total_attempted_gemini_calls": 37,
+  "observed_tokens": 25131,
+  "deterministic_before_after_identical": true
+}

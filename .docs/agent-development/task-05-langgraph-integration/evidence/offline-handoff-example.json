@@ -1,0 +1,68 @@
+{
+  "schema_version": "1",
+  "request_id": "request-1",
+  "run_id": "run-1",
+  "question": "Trích dẫn: thuế",
+  "plan": {
+    "original": "Trích dẫn: thuế",
+    "intent": "quote_lookup",
+    "domain": "unknown",
+    "temporal_scope": [],
+    "subqueries": [
+      {
+        "text": "thuế",
+        "purpose": "lookup"
+      }
+    ],
+    "clarification": null
+  },
+  "options": {
+    "mode": "bm25",
+    "top_k": 2,
+    "as_of_date": "2026-11-10",
+    "allowed_usage_policies": [
+      "EXPERIMENTAL_ONLY"
+    ]
+  },
+  "requests": [
+    {
+      "query": "thuế",
+      "mode": "bm25",
+      "top_k": 2,
+      "as_of_date": "2026-11-10",
+      "allowed_usage_policies": [
+        "EXPERIMENTAL_ONLY"
+      ]
+    }
+  ],
+  "responses": [
+    {
+      "schema_version": "1",
+      "request_id": "00000000-0000-0000-0000-000000000001",
+      "query": "thuế",
+      "query_used": "thuế",
+      "mode": "bm25",
+      "top_k": 2,
+      "as_of_date": "2026-11-10",
+      "allowed_usage_policies": [
+        "EXPERIMENTAL_ONLY"
+      ],
+      "selected_index_name": "fixture",
+      "index": null,
+      "status": "NO_MATCH",
+      "evidence": [],
+      "warnings": [
+        {
+          "code": "FIXTURE_WARNING",
+          "message": "Fixture only",
+          "retrieval_chunk_id": null
+        }
+      ],
+      "error": null,
+      "retrieved_at": "2026-11-21T00:00:00Z",
+      "consistency": "BEST_EFFORT"
+    }
+  ],
+  "search_status": "COMPLETED",
+  "status": "NO_MATCH"
+}

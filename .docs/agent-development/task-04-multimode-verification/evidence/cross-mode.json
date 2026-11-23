@@ -1,0 +1,31 @@
+{
+  "all_successful_plans_equal": true,
+  "all_successful_content_hashes_match": true,
+  "all_live_legacy_modules_empty": true,
+  "pairs": [
+    {
+      "left": "bm25",
+      "right": "dense-repeat",
+      "shared_chunks": 0,
+      "provenance_conflicts": []
+    },
+    {
+      "left": "bm25",
+      "right": "hybrid",
+      "shared_chunks": 2,
+      "provenance_conflicts": []
+    },
+    {
+      "left": "hybrid",
+      "right": "rerank",
+      "shared_chunks": 2,
+      "provenance_conflicts": []
+    },
+    {
+      "left": "dense-repeat",
+      "right": "hybrid",
+      "shared_chunks": 2,
+      "provenance_conflicts": []
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "mode": "bm25",
+    "equal_excluding_response_id_time": true
+  },
+  {
+    "mode": "dense",
+    "equal_excluding_response_id_time": true
+  },
+  {
+    "mode": "hybrid",
+    "equal_excluding_response_id_time": true
+  },
+  {
+    "mode": "rerank",
+    "equal_excluding_response_id_time": true
+  }
+]

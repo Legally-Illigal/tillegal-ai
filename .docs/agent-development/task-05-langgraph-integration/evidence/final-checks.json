@@ -1,0 +1,16 @@
+{
+  "source_delta": {
+    "changed": [
+      "src/applications/tillegal/graphs/legal_qa.py",
+      "src/applications/tillegal/state/legal_qa_state.py"
+    ],
+    "added": [
+      "tests/graph/test_query_search_workflow.py"
+    ],
+    "deleted": []
+  },
+  "broken_links": [],
+  "credential_value_matches": [],
+  "report_count": 12,
+  "available_prior_reports": 21
+}

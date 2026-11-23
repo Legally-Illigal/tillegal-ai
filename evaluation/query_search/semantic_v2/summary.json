@@ -1,0 +1,150 @@
+{
+  "historical_baseline": {
+    "cases": 15,
+    "accepted": 12,
+    "failures": 3,
+    "issue_matches": {
+      "numerator": 15,
+      "denominator": 20,
+      "ratio": 0.75
+    },
+    "distinct_objective_matches": {
+      "numerator": 15,
+      "denominator": 20,
+      "ratio": 0.75
+    },
+    "fact_matches": {
+      "numerator": 17,
+      "denominator": 22,
+      "ratio": 0.7727
+    },
+    "missing_info_matches": {
+      "numerator": 8,
+      "denominator": 12,
+      "ratio": 0.6667
+    },
+    "temporal_matches": {
+      "numerator": 1,
+      "denominator": 3,
+      "ratio": 0.3333
+    },
+    "citation_matches": {
+      "numerator": 2,
+      "denominator": 4,
+      "ratio": 0.5
+    },
+    "note": "Same authored rules. Failed plans contribute zero; semantic metrics remain heuristic."
+  },
+  "deterministic_same_ids": {
+    "cases": 15,
+    "accepted": 15,
+    "failures": 0,
+    "issue_matches": {
+      "numerator": 19,
+      "denominator": 20,
+      "ratio": 0.95
+    },
+    "distinct_objective_matches": {
+      "numerator": 17,
+      "denominator": 20,
+      "ratio": 0.85
+    },
+    "fact_matches": {
+      "numerator": 5,
+      "denominator": 22,
+      "ratio": 0.2273
+    },
+    "missing_info_matches": {
+      "numerator": 4,
+      "denominator": 12,
+      "ratio": 0.3333
+    },
+    "temporal_matches": {
+      "numerator": 3,
+      "denominator": 3,
+      "ratio": 1.0
+    },
+    "citation_matches": {
+      "numerator": 4,
+      "denominator": 4,
+      "ratio": 1.0
+    },
+    "note": "Same authored rules. Failed plans contribute zero; semantic metrics remain heuristic."
+  },
+  "current_matched": {
+    "cases": 15,
+    "accepted": 14,
+    "failures": 1,
+    "issue_matches": {
+      "numerator": 17,
+      "denominator": 20,
+      "ratio": 0.85
+    },
+    "distinct_objective_matches": {
+      "numerator": 17,
+      "denominator": 20,
+      "ratio": 0.85
+    },
+    "fact_matches": {
+      "numerator": 20,
+      "denominator": 22,
+      "ratio": 0.9091
+    },
+    "missing_info_matches": {
+      "numerator": 7,
+      "denominator": 12,
+      "ratio": 0.5833
+    },
+    "temporal_matches": {
+      "numerator": 3,
+      "denominator": 3,
+      "ratio": 1.0
+    },
+    "citation_matches": {
+      "numerator": 4,
+      "denominator": 4,
+      "ratio": 1.0
+    },
+    "note": "Same authored rules. Failed plans contribute zero; semantic metrics remain heuristic."
+  },
+  "first_attempt_accepted": 13,
+  "case_count": 20,
+  "case_accepted": 19,
+  "api_budget": {
+    "maximum": 25,
+    "attempted": 21
+  },
+  "reported_usage_tokens": 14335,
+  "api_calls": 21,
+  "variability": [
+    [
+      "Q007",
+      "OK"
+    ],
+    [
+      "Q025",
+      "OK"
+    ]
+  ],
+  "relevance_rows": 57,
+  "label_status": {
+    "counts": {
+      "human_reviewed": 0,
+      "model_assisted_provisional": 19,
+      "automatic_proxy": 0,
+      "unlabeled": 38
+    },
+    "expert_precision_at_k": null,
+    "expert_recall_at_k": null,
+    "expert_ndcg": null,
+    "note": "No expert ground truth/corpus relevance coverage established; never turn null labels into zero."
+  },
+  "provisional_score_counts": {
+    "0": 10,
+    "1": 9,
+    "2": 0,
+    "3": 0
+  },
+  "expert_relevance_metrics": null,
+  "causal_overall_superiority_claim": false
+}

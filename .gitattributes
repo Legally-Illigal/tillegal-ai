@@ -1,0 +1,2 @@
+# Historical unified patches contain intentional blank context markers.
+docs/query-search/*.patch whitespace=-blank-at-eol

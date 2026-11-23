@@ -1,0 +1,12 @@
+{
+  "label": "OBSERVED",
+  "metadata_serialization": {
+    "setup": "Synthetic copy with object() in source_metadata; no stored data touched",
+    "outcome": "EXCEPTION",
+    "exception_type": "PydanticSerializationError"
+  },
+  "missing_state_plan": {
+    "exception_type": "KeyError",
+    "message": "'plan'"
+  }
+}

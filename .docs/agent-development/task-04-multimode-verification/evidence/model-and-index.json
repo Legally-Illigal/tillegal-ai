@@ -1,0 +1,124 @@
+{
+  "models": {
+    "e5": {
+      "path": "C:\\Users\\Admin\\.cache\\huggingface\\hub\\models--intfloat--multilingual-e5-small\\snapshots\\614241f622f53c4eeff9890bdc4f31cfecc418b3",
+      "revision_directory": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+      "config": {
+        "model_type": "bert",
+        "hidden_size": 384,
+        "num_hidden_layers": 12,
+        "architectures": [
+          "BertModel"
+        ],
+        "_name_or_path": "tmp/"
+      },
+      "files": {
+        "config.json": {
+          "bytes": 655,
+          "sha256": "69137736cab8b8903a07fe8afaafdda25aac55415a12a55d1bffa9f581abf959"
+        },
+        "model.safetensors": {
+          "bytes": 470641600,
+          "sha256": "1a55775f53449dac10a2bcbc312469fac40b96d53198c407081a831f81c98477"
+        },
+        "tokenizer.json": {
+          "bytes": 17082730,
+          "sha256": "0b44a9d7b51c3c62626640cda0e2c2f70fdacdc25bbbd68038369d14ebdf4c39"
+        },
+        "1_Pooling/config.json": {
+          "bytes": 200,
+          "sha256": "987f7a67a38fa564c849bb5d277c52ab9088a84368fc0be31a354125aebb12a0"
+        },
+        "sentence_bert_config.json": {
+          "bytes": 57,
+          "sha256": "948201d8329907aae938fa62f9ceeed53f5694dacc2b87b9f3b78b37ee986529"
+        },
+        "modules.json": {
+          "bytes": 387,
+          "sha256": "c6e29747481e8b5dd2b58401966aeac910de39092f90cda9a704b1545f902b04"
+        }
+      },
+      "1_Pooling/config.json": {
+        "word_embedding_dimension": 384,
+        "pooling_mode_cls_token": false,
+        "pooling_mode_mean_tokens": true,
+        "pooling_mode_max_tokens": false,
+        "pooling_mode_mean_sqrt_len_tokens": false
+      },
+      "sentence_bert_config.json": {
+        "max_seq_length": 512,
+        "do_lower_case": false
+      },
+      "modules.json": [
+        {
+          "idx": 0,
+          "name": "0",
+          "path": "",
+          "type": "sentence_transformers.models.Transformer"
+        },
+        {
+          "idx": 1,
+          "name": "1",
+          "path": "1_Pooling",
+          "type": "sentence_transformers.models.Pooling"
+        },
+        {
+          "idx": 2,
+          "name": "2",
+          "path": "2_Normalize",
+          "type": "sentence_transformers.models.Normalize"
+        }
+      ]
+    },
+    "reranker": {
+      "path": "C:\\Users\\Admin\\.cache\\huggingface\\hub\\models--cross-encoder--mmarco-mMiniLMv2-L12-H384-v1\\snapshots\\1427fd652930e4ba29e8149678df786c240d8825",
+      "revision_directory": "1427fd652930e4ba29e8149678df786c240d8825",
+      "config": {
+        "model_type": "xlm-roberta",
+        "hidden_size": 384,
+        "num_hidden_layers": 12,
+        "architectures": [
+          "XLMRobertaForSequenceClassification"
+        ],
+        "_name_or_path": "nreimers/mMiniLMv2-L12-H384-distilled-from-XLMR-Large"
+      },
+      "files": {
+        "config.json": {
+          "bytes": 891,
+          "sha256": "cc2cfe51aa3fd759d21d21acf5dfd6994aa67a3c9210636d22e143699d336c77"
+        },
+        "model.safetensors": {
+          "bytes": 470592698,
+          "sha256": "5daeca2481a76b5976a2bdc32f0a78532b6716da4f8cd3ff59460ef8d2f359b4"
+        },
+        "tokenizer.json": {
+          "bytes": 17082660,
+          "sha256": "62c24cdc13d4c9952d63718d6c9fa4c287974249e16b7ade6d5a85e7bbb75626"
+        }
+      }
+    }
+  },
+  "dense_index_observed": {
+    "id": "0fe7b3a9-d051-41c5-ae61-257790c997f9",
+    "index_name": "vbpl-multilingual-e5-small-v1",
+    "index_version": "v1",
+    "status": "READY",
+    "updated_at": "2026-11-14T08:27:44.253063+00:00",
+    "provider": "sentence-transformers",
+    "model_name": "intfloat/multilingual-e5-small",
+    "embedding_dimension": 384,
+    "distance_metric": "cosine",
+    "metadata": {
+      "normalized": true,
+      "query_prefix": "query: ",
+      "passage_prefix": "passage: "
+    }
+  },
+  "environment": {
+    "torch": "2.15.0",
+    "transformers": "5.22.2",
+    "sentence-transformers": "5.7.0",
+    "supabase": "2.33.0",
+    "pytest": "8.4.2"
+  }
+}

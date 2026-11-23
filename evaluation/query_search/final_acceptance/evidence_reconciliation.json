@@ -1,0 +1,18 @@
+{
+  "origin": "CURRENT_READ_OF_HISTORICAL_ARTIFACTS_NOT_NEW_LIVE_VERIFICATION",
+  "actual_search_calls": 28,
+  "literal_reuses": 2,
+  "all_completed": true,
+  "reranking_statuses": [
+    "APPLIED",
+    "APPLIED",
+    "APPLIED"
+  ],
+  "visible_source_rows": 58,
+  "visible_chunk_count": 2609,
+  "stored_45_2019_identity_count": 0,
+  "human_review_rows": 57,
+  "human_labels_filled": 0,
+  "primary_Q007_status": "ERROR",
+  "fresh_external_uptime_verified": false
+}

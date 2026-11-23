@@ -1,0 +1,11 @@
+{
+  "source_delta": {
+    "changed": [],
+    "deleted": [],
+    "added": [
+      "tests/unit/applications/tillegal/test_query_search_multimode.py"
+    ]
+  },
+  "credential_value_matches": [],
+  "report_count": 12
+}

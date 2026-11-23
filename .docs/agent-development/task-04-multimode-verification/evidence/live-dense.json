@@ -1,0 +1,70 @@
+{
+  "probe": "dense",
+  "question": "Trích dẫn: hợp đồng dân sự",
+  "options": {
+    "mode": "dense",
+    "top_k": 5,
+    "as_of_date": "2026-11-17",
+    "allowed_usage_policies": [
+      "EXPERIMENTAL_ONLY"
+    ]
+  },
+  "service_timeout_seconds": 30,
+  "rerank_total_timeout_seconds": null,
+  "elapsed_seconds": 30.001632299999983,
+  "status": "FAILED",
+  "plan": {
+    "original": "Trích dẫn: hợp đồng dân sự",
+    "intent": "quote_lookup",
+    "domain": "unknown",
+    "temporal_scope": [],
+    "subqueries": [
+      {
+        "text": "hợp đồng dân sự",
+        "purpose": "lookup"
+      }
+    ],
+    "clarification": null
+  },
+  "requests": [
+    {
+      "query": "hợp đồng dân sự",
+      "mode": "dense",
+      "top_k": 5,
+      "as_of_date": "2026-11-17",
+      "allowed_usage_policies": [
+        "EXPERIMENTAL_ONLY"
+      ]
+    }
+  ],
+  "responses": [
+    {
+      "type": "RetrievalResponse",
+      "mode": "dense",
+      "status": "FAILED",
+      "evidence_count": 0,
+      "index": {
+        "id": "0fe7b3a9-d051-41c5-ae61-257790c997f9",
+        "index_name": "vbpl-multilingual-e5-small-v1",
+        "index_version": "v1",
+        "status": "READY",
+        "updated_at": "2026-11-14T08:27:44.253063Z",
+        "algorithm": null,
+        "tokenizer": null
+      },
+      "warnings": [],
+      "error": {
+        "category": "TIMEOUT",
+        "code": "RETRIEVAL_TIMEOUT",
+        "stage": "encoding",
+        "message": "Retrieval exceeded its deadline.",
+        "retryable": true
+      },
+      "consistency": "BEST_EFFORT",
+      "evidence": []
+    }
+  ],
+  "legacy_modules_loaded": [],
+  "e5_local_path": "C:\\Users\\Admin\\.cache\\huggingface\\hub\\models--intfloat--multilingual-e5-small\\snapshots\\614241f622f53c4eeff9890bdc4f31cfecc418b3",
+  "encoder_loaded": false
+}

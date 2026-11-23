@@ -1,0 +1,208 @@
+{
+  "selection": "All native rank-one rows from the fixed balanced primary pool; not a blind expert trial.",
+  "labels": [
+    {
+      "review_id": "0961ecdddd9b88f7d094",
+      "label": 0,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Honour/award definition for armed forces; not civil contract validity conditions.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "c2e866efba4aa0facc1f",
+      "label": 1,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "A contract-form effective-period clause; broadly contract-related but no general validity conditions.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "b3762eeda81203ff5f6c",
+      "label": 0,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Termination of revolutionary-benefit eligibility, not employee resignation notice.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "bec4d9d1b50ec99f423a",
+      "label": 1,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Local recruitment/training support repayment; related to some exit consequences but narrower than the general user situation.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "707d026fb88b6672ff4a",
+      "label": 1,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Local support repayment on leaving commitments, rather than general advance-notice obligations.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "cc2a19aea244053d7c0a",
+      "label": 0,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Leave/holiday rules for overseas personnel; no termination-compensation information.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "699ad9cec33be6ef2664",
+      "label": 0,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Relatives entitled to revolutionary benefits, not divorce/custody/property division.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "0d9f237e240151fbd9a2",
+      "label": 0,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Definition of a martyr caregiver; not custody after divorce.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "024ae225b1a3fa862008",
+      "label": 0,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Administrative reorganization and public premises; not marital property division.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "d4be40067dd3c0ca88f4",
+      "label": 0,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Training-course recruitment/advertising expenses; not online purchaser nondelivery remedies.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "6ce5af88b3a684f12a79",
+      "label": 0,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Criteria for historical revolutionary activity; not land-sale validity.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "2d398c581f3822b8c42e",
+      "label": 1,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Land-use fee benefits in a special-benefits scheme; broad land-related content but not 2010 transfer validity.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "14a7cf67be814c5efa19",
+      "label": 1,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Cross-reference to requested Article35 in another regulation; not the original article text.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "dd3a9c282d6ad481ec6f",
+      "label": 1,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Same cross-reference; citation presence alone does not supply the requested provision.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "d3ea7d4cd0552ada948f",
+      "label": 1,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Special-policy cross-reference cannot by itself test the broad external claim about every resignation.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "58dfcaea79b72ceba246",
+      "label": 1,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Related employee-exit cross-reference but no original Article35 text or complete notice rule.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "5afffe23335d5afd5727",
+      "label": 0,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Training-service agreement rights; not borrower/guarantor debt obligations.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "b7872075434dee96340f",
+      "label": 1,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Budgeted policy-credit outreach mentions debt duties but does not state ordinary loan repayment rights.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    },
+    {
+      "review_id": "2df3e78aba87c9dbeb21",
+      "label": 0,
+      "label_source": "model_assisted_provisional",
+      "reviewer": "Codex assistant; not a human legal expert",
+      "reason": "Emergency resettlement support end-date; not guarantee obligations.",
+      "uncertainty": "requires_human_review",
+      "basis": "Full retrieved chunk, original question and objective inspected; no keyword-only grading.",
+      "legal_correctness_or_applicability_assessed": false
+    }
+  ],
+  "status": {
+    "counts": {
+      "human_reviewed": 0,
+      "model_assisted_provisional": 19,
+      "automatic_proxy": 0,
+      "unlabeled": 38
+    },
+    "expert_precision_at_k": null,
+    "expert_recall_at_k": null,
+    "expert_ndcg": null,
+    "note": "No expert ground truth/corpus relevance coverage established; never turn null labels into zero."
+  },
+  "warning": "Provisional spot review only. Do not report expert P@K/Recall/NDCG or model superiority from these labels."
+}

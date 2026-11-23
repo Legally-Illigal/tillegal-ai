@@ -1,0 +1,1281 @@
+{
+  "scheduled_rows": 30,
+  "executed_search_calls": 28,
+  "literal_reuses": 2,
+  "completed_calls": 28,
+  "new_gemini_calls": 0,
+  "existing_human_queue_rows": 57,
+  "experimental_review_rows": 280,
+  "human_labels": 0,
+  "same_observed_metadata_before_after": true,
+  "model_initialization": [
+    {
+      "name": "e5",
+      "status": "INITIALIZED",
+      "ms": 15746.19
+    },
+    {
+      "name": "cross_encoder",
+      "status": "INITIALIZED",
+      "ms": 3251.53
+    }
+  ],
+  "latency_by_mode_ms": {
+    "bm25": {
+      "n": 19,
+      "median": 1434.06,
+      "min": 1158.08,
+      "max": 3484.82
+    },
+    "dense": {
+      "n": 3,
+      "median": 903.85,
+      "min": 854.81,
+      "max": 2005.36
+    },
+    "hybrid": {
+      "n": 3,
+      "median": 2525.13,
+      "min": 2230.53,
+      "max": 2948.87
+    },
+    "rerank": {
+      "n": 3,
+      "median": 3688.53,
+      "min": 3415.97,
+      "max": 4061.21
+    }
+  },
+  "rows": [
+    {
+      "row": 0,
+      "id": "Q001",
+      "variant": "A_original",
+      "query_index": 0,
+      "query": "Điều kiện để hợp đồng dân sự có hiệu lực là gì?",
+      "query_chars": 47,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 3484.82,
+      "prefix_ids": {
+        "3": [
+          "ecdd3a4a-cbd7-4af7-ab01-072f917056be",
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "d8369105-7be7-4b39-be3f-52a49f8b6c98"
+        ],
+        "5": [
+          "ecdd3a4a-cbd7-4af7-ab01-072f917056be",
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "d8369105-7be7-4b39-be3f-52a49f8b6c98",
+          "ba3df67d-e741-43f0-b97a-b413f7389f78",
+          "0f74d56e-4f53-47df-983a-ab6bf6a8ee1c"
+        ],
+        "10": [
+          "ecdd3a4a-cbd7-4af7-ab01-072f917056be",
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "d8369105-7be7-4b39-be3f-52a49f8b6c98",
+          "ba3df67d-e741-43f0-b97a-b413f7389f78",
+          "0f74d56e-4f53-47df-983a-ab6bf6a8ee1c",
+          "cc71082e-4d86-429c-97c4-832e1a34764c",
+          "23f78953-1949-4cac-a299-db28ed76b58f",
+          "6bd7ca79-328e-4fb5-a1f3-eec2b2adfa74",
+          "c8057a3a-89a6-42e3-8df6-c82c783ed04e",
+          "9f25715c-4700-45db-8313-05cdb9bfa1b2"
+        ]
+      },
+      "rank_one_source": "Văn bản hợp nhất 123/2026/VBHN-PL-VPQH của Văn phòng Quốc hội",
+      "cross_reference_rank": null,
+      "reranking_status": null
+    },
+    {
+      "row": 1,
+      "id": "Q001",
+      "variant": "D_research_only",
+      "query_index": 0,
+      "query": "điều kiện có hiệu lực của giao dịch dân sự hợp đồng",
+      "query_chars": 51,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1413.77,
+      "prefix_ids": {
+        "3": [
+          "55a0dd68-6bc6-48e7-aaed-cf5c6305e07c",
+          "9f25715c-4700-45db-8313-05cdb9bfa1b2",
+          "e2740feb-e0e8-44fc-b107-faf2c674a835"
+        ],
+        "5": [
+          "55a0dd68-6bc6-48e7-aaed-cf5c6305e07c",
+          "9f25715c-4700-45db-8313-05cdb9bfa1b2",
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "b25e7a50-3b9c-42ed-bbf6-511a6bae6c5e",
+          "830f4616-05dd-45b5-8381-cb068dd4280d"
+        ],
+        "10": [
+          "55a0dd68-6bc6-48e7-aaed-cf5c6305e07c",
+          "9f25715c-4700-45db-8313-05cdb9bfa1b2",
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "b25e7a50-3b9c-42ed-bbf6-511a6bae6c5e",
+          "830f4616-05dd-45b5-8381-cb068dd4280d",
+          "ecdd3a4a-cbd7-4af7-ab01-072f917056be",
+          "88911df7-31df-43c2-a60d-f8f2d126c683",
+          "d6d882fc-89a0-41ce-9f24-54f826b8f7c3",
+          "d78f3d62-ce54-49a9-848c-707161c25a25",
+          "da93240f-75c1-4118-ac73-61cc6b4f2995"
+        ]
+      },
+      "rank_one_source": "Thông tư 141/2026/TT-BTC của Bộ Tài chính",
+      "cross_reference_rank": null,
+      "reranking_status": null
+    },
+    {
+      "row": 2,
+      "id": "Q001",
+      "variant": "B_deterministic",
+      "query_index": 0,
+      "query": "Điều kiện để hợp đồng dân sự có hiệu lực là gì",
+      "query_chars": 46,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1257.86,
+      "prefix_ids": {
+        "3": [
+          "ecdd3a4a-cbd7-4af7-ab01-072f917056be",
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "d8369105-7be7-4b39-be3f-52a49f8b6c98"
+        ],
+        "5": [
+          "ecdd3a4a-cbd7-4af7-ab01-072f917056be",
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "d8369105-7be7-4b39-be3f-52a49f8b6c98",
+          "ba3df67d-e741-43f0-b97a-b413f7389f78",
+          "0f74d56e-4f53-47df-983a-ab6bf6a8ee1c"
+        ],
+        "10": [
+          "ecdd3a4a-cbd7-4af7-ab01-072f917056be",
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "d8369105-7be7-4b39-be3f-52a49f8b6c98",
+          "ba3df67d-e741-43f0-b97a-b413f7389f78",
+          "0f74d56e-4f53-47df-983a-ab6bf6a8ee1c",
+          "cc71082e-4d86-429c-97c4-832e1a34764c",
+          "23f78953-1949-4cac-a299-db28ed76b58f",
+          "6bd7ca79-328e-4fb5-a1f3-eec2b2adfa74",
+          "c8057a3a-89a6-42e3-8df6-c82c783ed04e",
+          "9f25715c-4700-45db-8313-05cdb9bfa1b2"
+        ]
+      },
+      "rank_one_source": "Văn bản hợp nhất 123/2026/VBHN-PL-VPQH của Văn phòng Quốc hội",
+      "cross_reference_rank": null,
+      "reranking_status": null
+    },
+    {
+      "row": 3,
+      "id": "Q001",
+      "variant": "C_gemini",
+      "query_index": 0,
+      "query": "Điều kiện có hiệu lực của hợp đồng dân sự",
+      "query_chars": 41,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1778.91,
+      "prefix_ids": {
+        "3": [
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "ecdd3a4a-cbd7-4af7-ab01-072f917056be",
+          "c8057a3a-89a6-42e3-8df6-c82c783ed04e"
+        ],
+        "5": [
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "ecdd3a4a-cbd7-4af7-ab01-072f917056be",
+          "c8057a3a-89a6-42e3-8df6-c82c783ed04e",
+          "5c31d93c-5299-44df-9f90-4c97e75e5c76",
+          "581470d2-ef61-4a4b-adc6-17cf740bf61a"
+        ],
+        "10": [
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "ecdd3a4a-cbd7-4af7-ab01-072f917056be",
+          "c8057a3a-89a6-42e3-8df6-c82c783ed04e",
+          "5c31d93c-5299-44df-9f90-4c97e75e5c76",
+          "581470d2-ef61-4a4b-adc6-17cf740bf61a",
+          "8f1a3978-5135-4196-99b9-074f5349d43b",
+          "d8369105-7be7-4b39-be3f-52a49f8b6c98",
+          "f74ace23-d852-4c56-b00b-0116094332f8",
+          "bdfbf2c3-d5be-463b-b556-9ef8823d9b52",
+          "6670cc37-0173-43dd-b9a7-bb2ccdc4c6df"
+        ]
+      },
+      "rank_one_source": "Thông tư 141/2026/TT-BTC của Bộ Tài chính",
+      "cross_reference_rank": null,
+      "reranking_status": null
+    },
+    {
+      "row": 4,
+      "id": "Q004",
+      "variant": "A_original",
+      "query_index": 0,
+      "query": "Tôi ký hợp đồng lao động 2 năm, mới làm được 6 tháng nhưng muốn nghỉ việc. Tôi có phải báo trước không và có phải bồi thường không?",
+      "query_chars": 131,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1338.93,
+      "prefix_ids": {
+        "3": [
+          "d7f358eb-2586-42c5-9c7d-d2b9f228ca91",
+          "01fcd190-2fc8-48ee-8cf5-de8fc77fada7",
+          "9acb9eb3-c478-4aca-a994-53f87564849f"
+        ],
+        "5": [
+          "d7f358eb-2586-42c5-9c7d-d2b9f228ca91",
+          "01fcd190-2fc8-48ee-8cf5-de8fc77fada7",
+          "9acb9eb3-c478-4aca-a994-53f87564849f",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "30142e55-42ce-494a-a6fe-a8a10eb46922"
+        ],
+        "10": [
+          "d7f358eb-2586-42c5-9c7d-d2b9f228ca91",
+          "01fcd190-2fc8-48ee-8cf5-de8fc77fada7",
+          "9acb9eb3-c478-4aca-a994-53f87564849f",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "30142e55-42ce-494a-a6fe-a8a10eb46922",
+          "758fd1e3-72be-44e5-b4de-a55bd2b26a15",
+          "60e02dbf-e6c3-45ef-82b4-3a27a5599bb5",
+          "ff3b434a-0a11-4035-8a02-6c31de28fac5",
+          "529c5c88-0c09-4d48-84ea-85b66048f066",
+          "605b557b-948c-4e46-a106-5ca295cfb989"
+        ]
+      },
+      "rank_one_source": "Văn bản hợp nhất 01/2026/VBHN-NĐ-BNG của Văn phòng Chính phủ",
+      "cross_reference_rank": null,
+      "reranking_status": null
+    },
+    {
+      "row": 5,
+      "id": "Q004",
+      "variant": "D_research_only",
+      "query_index": 0,
+      "query": "người lao động đơn phương chấm dứt hợp đồng lao động báo trước",
+      "query_chars": 62,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1158.08,
+      "prefix_ids": {
+        "3": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "e0956b58-06d5-4774-8ee1-ad97649eef70",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef"
+        ],
+        "5": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "e0956b58-06d5-4774-8ee1-ad97649eef70",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "6091277f-6b02-49f1-803b-95d86301cd46",
+          "0ee87e14-19c0-4dd6-a5f4-0b242a507100"
+        ],
+        "10": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "e0956b58-06d5-4774-8ee1-ad97649eef70",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "6091277f-6b02-49f1-803b-95d86301cd46",
+          "0ee87e14-19c0-4dd6-a5f4-0b242a507100",
+          "38745352-93f9-427c-b013-ccd4a5820f21",
+          "b6c170cb-de6d-42df-a79b-479251439db6",
+          "b92d3fca-1fff-4935-8ad3-56d715deb24f",
+          "e50473dc-6faf-436a-b6cc-026ac462fea6",
+          "d6d882fc-89a0-41ce-9f24-54f826b8f7c3"
+        ]
+      },
+      "rank_one_source": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+      "cross_reference_rank": 1,
+      "reranking_status": null
+    },
+    {
+      "row": 6,
+      "id": "Q004",
+      "variant": "D_research_only",
+      "query_index": 1,
+      "query": "người lao động chấm dứt hợp đồng lao động bồi thường",
+      "query_chars": 52,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1424.31,
+      "prefix_ids": {
+        "3": [
+          "6091277f-6b02-49f1-803b-95d86301cd46",
+          "e0956b58-06d5-4774-8ee1-ad97649eef70",
+          "2973a693-2276-4e4f-a233-f7038e4717e0"
+        ],
+        "5": [
+          "6091277f-6b02-49f1-803b-95d86301cd46",
+          "e0956b58-06d5-4774-8ee1-ad97649eef70",
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "249d02f1-19ab-4448-9297-6654dc7ddf7e",
+          "0ee87e14-19c0-4dd6-a5f4-0b242a507100"
+        ],
+        "10": [
+          "6091277f-6b02-49f1-803b-95d86301cd46",
+          "e0956b58-06d5-4774-8ee1-ad97649eef70",
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "249d02f1-19ab-4448-9297-6654dc7ddf7e",
+          "0ee87e14-19c0-4dd6-a5f4-0b242a507100",
+          "e50473dc-6faf-436a-b6cc-026ac462fea6",
+          "08cdd43f-8bbc-4974-8d02-01ea94625fb6",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "b402f00e-e6e6-4cf8-84b5-301f94fde441",
+          "e9bc1040-7bd8-40de-ae29-4a82cce2fcc1"
+        ]
+      },
+      "rank_one_source": "Văn bản hợp nhất 123/2026/VBHN-PL-VPQH của Văn phòng Quốc hội",
+      "cross_reference_rank": 3,
+      "reranking_status": null
+    },
+    {
+      "row": 7,
+      "id": "Q004",
+      "variant": "B_deterministic",
+      "query_index": 0,
+      "query": "người lao động đơn phương chấm dứt hợp đồng lao động nghĩa vụ báo trước trường hợp miễn báo trước; tình huống: hợp đồng lao động 2 năm mới làm được 6 tháng muốn nghỉ việc",
+      "query_chars": 170,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1292.49,
+      "prefix_ids": {
+        "3": [
+          "e0956b58-06d5-4774-8ee1-ad97649eef70",
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef"
+        ],
+        "5": [
+          "e0956b58-06d5-4774-8ee1-ad97649eef70",
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "b6c170cb-de6d-42df-a79b-479251439db6",
+          "d7f358eb-2586-42c5-9c7d-d2b9f228ca91"
+        ],
+        "10": [
+          "e0956b58-06d5-4774-8ee1-ad97649eef70",
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "b6c170cb-de6d-42df-a79b-479251439db6",
+          "d7f358eb-2586-42c5-9c7d-d2b9f228ca91",
+          "88911df7-31df-43c2-a60d-f8f2d126c683",
+          "d6d882fc-89a0-41ce-9f24-54f826b8f7c3",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "537c3815-729f-45c5-9505-1ff7990a6b91",
+          "38745352-93f9-427c-b013-ccd4a5820f21"
+        ]
+      },
+      "rank_one_source": "Văn bản hợp nhất 123/2026/VBHN-PL-VPQH của Văn phòng Quốc hội",
+      "cross_reference_rank": 2,
+      "reranking_status": null
+    },
+    {
+      "row": 8,
+      "id": "Q004",
+      "variant": "B_deterministic",
+      "query_index": 1,
+      "query": "người lao động đơn phương chấm dứt hợp đồng lao động trái pháp luật bồi thường chi phí đào tạo; tình huống: hợp đồng lao động 2 năm mới làm được 6 tháng muốn nghỉ việc",
+      "query_chars": 167,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1250.89,
+      "prefix_ids": {
+        "3": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "758fd1e3-72be-44e5-b4de-a55bd2b26a15"
+        ],
+        "5": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "758fd1e3-72be-44e5-b4de-a55bd2b26a15",
+          "d7f358eb-2586-42c5-9c7d-d2b9f228ca91",
+          "f6a5d1a5-a4ad-49d6-9dca-582c45b768f1"
+        ],
+        "10": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "758fd1e3-72be-44e5-b4de-a55bd2b26a15",
+          "d7f358eb-2586-42c5-9c7d-d2b9f228ca91",
+          "f6a5d1a5-a4ad-49d6-9dca-582c45b768f1",
+          "9f25715c-4700-45db-8313-05cdb9bfa1b2",
+          "01fcd190-2fc8-48ee-8cf5-de8fc77fada7",
+          "249d02f1-19ab-4448-9297-6654dc7ddf7e",
+          "59268950-b640-4da8-a4d4-5e0dfd0185f5",
+          "ed714ca6-a10c-4ae5-acc5-f156e94ec1f3"
+        ]
+      },
+      "rank_one_source": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+      "cross_reference_rank": 1,
+      "reranking_status": null
+    },
+    {
+      "row": 9,
+      "id": "Q004",
+      "variant": "C_gemini",
+      "query_index": 0,
+      "query": "người lao động đơn phương chấm dứt hợp đồng lao động xác định thời hạn nghĩa vụ báo trước; tình huống người dùng: Tôi ký hợp đồng lao động 2 năm; mới làm được 6 tháng nhưng muốn nghỉ việc",
+      "query_chars": 187,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1434.06,
+      "prefix_ids": {
+        "3": [
+          "01fcd190-2fc8-48ee-8cf5-de8fc77fada7",
+          "30142e55-42ce-494a-a6fe-a8a10eb46922",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef"
+        ],
+        "5": [
+          "01fcd190-2fc8-48ee-8cf5-de8fc77fada7",
+          "30142e55-42ce-494a-a6fe-a8a10eb46922",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "382f9ec8-d60d-47d9-af4c-00686812940b",
+          "2973a693-2276-4e4f-a233-f7038e4717e0"
+        ],
+        "10": [
+          "01fcd190-2fc8-48ee-8cf5-de8fc77fada7",
+          "30142e55-42ce-494a-a6fe-a8a10eb46922",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "382f9ec8-d60d-47d9-af4c-00686812940b",
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "1583bfc9-a93a-4b5c-9b24-9a16400ddb69",
+          "79f178af-009c-4e63-a0ce-6945468079d7",
+          "758fd1e3-72be-44e5-b4de-a55bd2b26a15",
+          "e0956b58-06d5-4774-8ee1-ad97649eef70",
+          "579aa859-ddcf-4944-8fab-d95e7e6bc071"
+        ]
+      },
+      "rank_one_source": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+      "cross_reference_rank": 5,
+      "reranking_status": null
+    },
+    {
+      "row": 10,
+      "id": "Q004",
+      "variant": "C_gemini",
+      "query_index": 1,
+      "query": "người lao động đơn phương chấm dứt hợp đồng lao động trái pháp luật nghĩa vụ bồi thường; tình huống người dùng: Tôi ký hợp đồng lao động 2 năm; mới làm được 6 tháng nhưng muốn nghỉ việc",
+      "query_chars": 185,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1441.32,
+      "prefix_ids": {
+        "3": [
+          "d7f358eb-2586-42c5-9c7d-d2b9f228ca91",
+          "e0956b58-06d5-4774-8ee1-ad97649eef70",
+          "2973a693-2276-4e4f-a233-f7038e4717e0"
+        ],
+        "5": [
+          "d7f358eb-2586-42c5-9c7d-d2b9f228ca91",
+          "e0956b58-06d5-4774-8ee1-ad97649eef70",
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "30142e55-42ce-494a-a6fe-a8a10eb46922",
+          "d6d882fc-89a0-41ce-9f24-54f826b8f7c3"
+        ],
+        "10": [
+          "d7f358eb-2586-42c5-9c7d-d2b9f228ca91",
+          "e0956b58-06d5-4774-8ee1-ad97649eef70",
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "30142e55-42ce-494a-a6fe-a8a10eb46922",
+          "d6d882fc-89a0-41ce-9f24-54f826b8f7c3",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "01fcd190-2fc8-48ee-8cf5-de8fc77fada7",
+          "b6c170cb-de6d-42df-a79b-479251439db6",
+          "249d02f1-19ab-4448-9297-6654dc7ddf7e",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef"
+        ]
+      },
+      "rank_one_source": "Văn bản hợp nhất 01/2026/VBHN-NĐ-BNG của Văn phòng Chính phủ",
+      "cross_reference_rank": 3,
+      "reranking_status": null
+    },
+    {
+      "row": 11,
+      "id": "Q022",
+      "variant": "A_original",
+      "query_index": 0,
+      "query": "Tra cứu Điều 35 Bộ luật Lao động 45/2019/QH14.",
+      "query_chars": 46,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1732.72,
+      "prefix_ids": {
+        "3": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "96e8c139-65d4-48aa-98ec-bdd2e169e984",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f"
+        ],
+        "5": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "96e8c139-65d4-48aa-98ec-bdd2e169e984",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "8f3a2840-285d-43d7-8c5b-89c9a0af2100"
+        ],
+        "10": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "96e8c139-65d4-48aa-98ec-bdd2e169e984",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "8f3a2840-285d-43d7-8c5b-89c9a0af2100",
+          "9741a31f-da7b-431f-b200-8bcbe75be08b",
+          "0bbed205-2414-4ff6-af9e-97f53a22db2b",
+          "cdf3a480-a12b-42df-a9eb-8c171a3c4a12",
+          "6770f000-b201-4957-af29-dd42b2b0b234",
+          "040c8e2d-f24a-4ca8-873b-20f6df807ed5"
+        ]
+      },
+      "rank_one_source": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+      "cross_reference_rank": 1,
+      "reranking_status": null
+    },
+    {
+      "row": 12,
+      "id": "Q022",
+      "variant": "D_research_only",
+      "query_index": 0,
+      "query": "Điều 35 Bộ luật Lao động 45/2019/QH14",
+      "query_chars": 37,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1733.69,
+      "prefix_ids": {
+        "3": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "96e8c139-65d4-48aa-98ec-bdd2e169e984",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f"
+        ],
+        "5": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "96e8c139-65d4-48aa-98ec-bdd2e169e984",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "9741a31f-da7b-431f-b200-8bcbe75be08b"
+        ],
+        "10": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "96e8c139-65d4-48aa-98ec-bdd2e169e984",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "9741a31f-da7b-431f-b200-8bcbe75be08b",
+          "0bbed205-2414-4ff6-af9e-97f53a22db2b",
+          "cdf3a480-a12b-42df-a9eb-8c171a3c4a12",
+          "040c8e2d-f24a-4ca8-873b-20f6df807ed5",
+          "01a41a4f-692e-4f93-8fa5-699e3f5aea36",
+          "67c18b69-c5c5-4ab9-abac-0294b5b7ba0f"
+        ]
+      },
+      "rank_one_source": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+      "cross_reference_rank": 1,
+      "reranking_status": null
+    },
+    {
+      "row": 13,
+      "id": "Q022",
+      "variant": "B_deterministic",
+      "query_index": 0,
+      "query": "Tra cứu Điều 35 Bộ luật Lao động 45/2019/QH14.",
+      "query_chars": 46,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": 11,
+      "latency_ms": null,
+      "prefix_ids": {
+        "3": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "96e8c139-65d4-48aa-98ec-bdd2e169e984",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f"
+        ],
+        "5": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "96e8c139-65d4-48aa-98ec-bdd2e169e984",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "8f3a2840-285d-43d7-8c5b-89c9a0af2100"
+        ],
+        "10": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "96e8c139-65d4-48aa-98ec-bdd2e169e984",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "8f3a2840-285d-43d7-8c5b-89c9a0af2100",
+          "9741a31f-da7b-431f-b200-8bcbe75be08b",
+          "0bbed205-2414-4ff6-af9e-97f53a22db2b",
+          "cdf3a480-a12b-42df-a9eb-8c171a3c4a12",
+          "6770f000-b201-4957-af29-dd42b2b0b234",
+          "040c8e2d-f24a-4ca8-873b-20f6df807ed5"
+        ]
+      },
+      "rank_one_source": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+      "cross_reference_rank": 1,
+      "reranking_status": null
+    },
+    {
+      "row": 14,
+      "id": "Q022",
+      "variant": "C_gemini",
+      "query_index": 0,
+      "query": "Tra cứu Điều 35 Bộ luật Lao động 45/2019/QH14.",
+      "query_chars": 46,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": 11,
+      "latency_ms": null,
+      "prefix_ids": {
+        "3": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "96e8c139-65d4-48aa-98ec-bdd2e169e984",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f"
+        ],
+        "5": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "96e8c139-65d4-48aa-98ec-bdd2e169e984",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "8f3a2840-285d-43d7-8c5b-89c9a0af2100"
+        ],
+        "10": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "96e8c139-65d4-48aa-98ec-bdd2e169e984",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "8f3a2840-285d-43d7-8c5b-89c9a0af2100",
+          "9741a31f-da7b-431f-b200-8bcbe75be08b",
+          "0bbed205-2414-4ff6-af9e-97f53a22db2b",
+          "cdf3a480-a12b-42df-a9eb-8c171a3c4a12",
+          "6770f000-b201-4957-af29-dd42b2b0b234",
+          "040c8e2d-f24a-4ca8-873b-20f6df807ed5"
+        ]
+      },
+      "rank_one_source": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+      "cross_reference_rank": 1,
+      "reranking_status": null
+    },
+    {
+      "row": 15,
+      "id": "Q040",
+      "variant": "A_original",
+      "query_index": 0,
+      "query": "Tôi cho A vay tiền, B ký bảo lãnh, A không trả. Tôi có thể yêu cầu A và B thực hiện nghĩa vụ gì?",
+      "query_chars": 96,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1500.94,
+      "prefix_ids": {
+        "3": [
+          "090179c9-e2de-461d-a01c-1fa3b194ffc2",
+          "19020537-db2c-40f3-a438-8fe4aa1c5c7a",
+          "ceecd689-76dc-4f65-b003-b19769c216d4"
+        ],
+        "5": [
+          "090179c9-e2de-461d-a01c-1fa3b194ffc2",
+          "19020537-db2c-40f3-a438-8fe4aa1c5c7a",
+          "ceecd689-76dc-4f65-b003-b19769c216d4",
+          "90ab86ab-0781-4c3e-8fab-9e864a89e21e",
+          "35c9b307-d959-4c87-951e-138df5e6f4cd"
+        ],
+        "10": [
+          "090179c9-e2de-461d-a01c-1fa3b194ffc2",
+          "19020537-db2c-40f3-a438-8fe4aa1c5c7a",
+          "ceecd689-76dc-4f65-b003-b19769c216d4",
+          "90ab86ab-0781-4c3e-8fab-9e864a89e21e",
+          "35c9b307-d959-4c87-951e-138df5e6f4cd",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "9a511e38-6993-480b-a6d2-38ae07c2d206",
+          "ecb1f1ec-ddcc-4448-8759-7939967deef5",
+          "bb3d7c8c-0dc7-4624-a83f-0ded079773b3",
+          "6d6670da-c2a1-4094-b79e-10baf747dfea"
+        ]
+      },
+      "rank_one_source": "Thông tư 141/2026/TT-BTC của Bộ Tài chính",
+      "cross_reference_rank": null,
+      "reranking_status": null
+    },
+    {
+      "row": 16,
+      "id": "Q040",
+      "variant": "D_research_only",
+      "query_index": 0,
+      "query": "nghĩa vụ trả nợ của bên vay",
+      "query_chars": 27,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1528.55,
+      "prefix_ids": {
+        "3": [
+          "ae6e87a6-9f24-4c82-81af-ecbbb7562639",
+          "504fd143-14da-436c-a3ee-08416940d58a",
+          "9a511e38-6993-480b-a6d2-38ae07c2d206"
+        ],
+        "5": [
+          "ae6e87a6-9f24-4c82-81af-ecbbb7562639",
+          "504fd143-14da-436c-a3ee-08416940d58a",
+          "9a511e38-6993-480b-a6d2-38ae07c2d206",
+          "090179c9-e2de-461d-a01c-1fa3b194ffc2",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef"
+        ],
+        "10": [
+          "ae6e87a6-9f24-4c82-81af-ecbbb7562639",
+          "504fd143-14da-436c-a3ee-08416940d58a",
+          "9a511e38-6993-480b-a6d2-38ae07c2d206",
+          "090179c9-e2de-461d-a01c-1fa3b194ffc2",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "770f1d65-af83-430b-a1ff-3d5559ed9492",
+          "1cadf8ee-20f7-4c34-986b-6702bb0c83d1",
+          "f6a5d1a5-a4ad-49d6-9dca-582c45b768f1",
+          "6443d136-e03e-4aa3-a11f-7f58d015da85",
+          "34892381-d511-4cab-9d8a-ec0828f7ad4d"
+        ]
+      },
+      "rank_one_source": "Nghị quyết 29/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+      "cross_reference_rank": null,
+      "reranking_status": null
+    },
+    {
+      "row": 17,
+      "id": "Q040",
+      "variant": "D_research_only",
+      "query_index": 1,
+      "query": "thực hiện nghĩa vụ bảo lãnh",
+      "query_chars": 27,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1236.7,
+      "prefix_ids": {
+        "3": [
+          "84abc259-8022-4c08-9bf0-0699bfd0cf88",
+          "48e5df4f-066a-462e-b9be-3c377b46bb4e",
+          "85a9f5a5-a387-451b-81c9-fcaefe558c75"
+        ],
+        "5": [
+          "84abc259-8022-4c08-9bf0-0699bfd0cf88",
+          "48e5df4f-066a-462e-b9be-3c377b46bb4e",
+          "85a9f5a5-a387-451b-81c9-fcaefe558c75",
+          "80d7197a-f064-45b9-a66e-9e77dddfca39",
+          "893087e0-c9a1-4bf8-96a8-93cc872dada6"
+        ],
+        "10": [
+          "84abc259-8022-4c08-9bf0-0699bfd0cf88",
+          "48e5df4f-066a-462e-b9be-3c377b46bb4e",
+          "85a9f5a5-a387-451b-81c9-fcaefe558c75",
+          "80d7197a-f064-45b9-a66e-9e77dddfca39",
+          "893087e0-c9a1-4bf8-96a8-93cc872dada6",
+          "cc71082e-4d86-429c-97c4-832e1a34764c",
+          "8b792c8f-6464-4412-932f-0c0ec61fb7d8",
+          "3019cd23-76b1-43bb-a98f-98369f9438b4",
+          "2fcda445-c4c2-4dbe-95d2-3156d0bd0fd2",
+          "1f96c0f8-e992-4821-86c6-f40fdd60cd85"
+        ]
+      },
+      "rank_one_source": "Văn bản hợp nhất 60/2026/VBHN-NĐ-BQP của Bộ Quốc phòng",
+      "cross_reference_rank": null,
+      "reranking_status": null
+    },
+    {
+      "row": 18,
+      "id": "Q040",
+      "variant": "B_deterministic",
+      "query_index": 0,
+      "query": "Tôi cho A vay tiền, B ký bảo lãnh, A không trả. Tôi có thể yêu cầu A và B thực hiện nghĩa vụ gì",
+      "query_chars": 95,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1504.82,
+      "prefix_ids": {
+        "3": [
+          "090179c9-e2de-461d-a01c-1fa3b194ffc2",
+          "19020537-db2c-40f3-a438-8fe4aa1c5c7a",
+          "ceecd689-76dc-4f65-b003-b19769c216d4"
+        ],
+        "5": [
+          "090179c9-e2de-461d-a01c-1fa3b194ffc2",
+          "19020537-db2c-40f3-a438-8fe4aa1c5c7a",
+          "ceecd689-76dc-4f65-b003-b19769c216d4",
+          "90ab86ab-0781-4c3e-8fab-9e864a89e21e",
+          "35c9b307-d959-4c87-951e-138df5e6f4cd"
+        ],
+        "10": [
+          "090179c9-e2de-461d-a01c-1fa3b194ffc2",
+          "19020537-db2c-40f3-a438-8fe4aa1c5c7a",
+          "ceecd689-76dc-4f65-b003-b19769c216d4",
+          "90ab86ab-0781-4c3e-8fab-9e864a89e21e",
+          "35c9b307-d959-4c87-951e-138df5e6f4cd",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "9a511e38-6993-480b-a6d2-38ae07c2d206",
+          "ecb1f1ec-ddcc-4448-8759-7939967deef5",
+          "bb3d7c8c-0dc7-4624-a83f-0ded079773b3",
+          "6d6670da-c2a1-4094-b79e-10baf747dfea"
+        ]
+      },
+      "rank_one_source": "Thông tư 141/2026/TT-BTC của Bộ Tài chính",
+      "cross_reference_rank": null,
+      "reranking_status": null
+    },
+    {
+      "row": 19,
+      "id": "Q040",
+      "variant": "C_gemini",
+      "query_index": 0,
+      "query": "nghĩa vụ trả nợ của người vay tiền hợp đồng vay tài sản; tình huống người dùng: Tôi cho A vay tiền; B ký bảo lãnh; A không trả",
+      "query_chars": 126,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1817.56,
+      "prefix_ids": {
+        "3": [
+          "9a511e38-6993-480b-a6d2-38ae07c2d206",
+          "15eab05a-8f91-479c-a2b7-28f9e13ebbe4",
+          "770f1d65-af83-430b-a1ff-3d5559ed9492"
+        ],
+        "5": [
+          "9a511e38-6993-480b-a6d2-38ae07c2d206",
+          "15eab05a-8f91-479c-a2b7-28f9e13ebbe4",
+          "770f1d65-af83-430b-a1ff-3d5559ed9492",
+          "ae6e87a6-9f24-4c82-81af-ecbbb7562639",
+          "19020537-db2c-40f3-a438-8fe4aa1c5c7a"
+        ],
+        "10": [
+          "9a511e38-6993-480b-a6d2-38ae07c2d206",
+          "15eab05a-8f91-479c-a2b7-28f9e13ebbe4",
+          "770f1d65-af83-430b-a1ff-3d5559ed9492",
+          "ae6e87a6-9f24-4c82-81af-ecbbb7562639",
+          "19020537-db2c-40f3-a438-8fe4aa1c5c7a",
+          "45f8c7a0-6065-495b-bf59-6b673a8a4aac",
+          "132faf53-8ab3-4c85-8335-68e08a20c5ec",
+          "2fcda445-c4c2-4dbe-95d2-3156d0bd0fd2",
+          "c5ecba64-8983-4fe5-883c-3107e033b13f",
+          "30142e55-42ce-494a-a6fe-a8a10eb46922"
+        ]
+      },
+      "rank_one_source": "Quyết định 84/2026/QĐ-CTUBND của CT UBND Tỉnh Sơn La",
+      "cross_reference_rank": null,
+      "reranking_status": null
+    },
+    {
+      "row": 20,
+      "id": "Q040",
+      "variant": "C_gemini",
+      "query_index": 1,
+      "query": "trách nhiệm của bên bảo lãnh khi người được bảo lãnh không thực hiện nghĩa vụ; tình huống người dùng: Tôi cho A vay tiền; B ký bảo lãnh; A không trả",
+      "query_chars": 148,
+      "mode": "bm25",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 1362.69,
+      "prefix_ids": {
+        "3": [
+          "132faf53-8ab3-4c85-8335-68e08a20c5ec",
+          "35c9b307-d959-4c87-951e-138df5e6f4cd",
+          "c5ecba64-8983-4fe5-883c-3107e033b13f"
+        ],
+        "5": [
+          "132faf53-8ab3-4c85-8335-68e08a20c5ec",
+          "35c9b307-d959-4c87-951e-138df5e6f4cd",
+          "c5ecba64-8983-4fe5-883c-3107e033b13f",
+          "c3434a2b-1562-4476-b62d-d6625e8e469c",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef"
+        ],
+        "10": [
+          "132faf53-8ab3-4c85-8335-68e08a20c5ec",
+          "35c9b307-d959-4c87-951e-138df5e6f4cd",
+          "c5ecba64-8983-4fe5-883c-3107e033b13f",
+          "c3434a2b-1562-4476-b62d-d6625e8e469c",
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "504fd143-14da-436c-a3ee-08416940d58a",
+          "f4941ea0-d7a3-45d3-82ec-465efd49fbb8",
+          "090179c9-e2de-461d-a01c-1fa3b194ffc2",
+          "ceecd689-76dc-4f65-b003-b19769c216d4",
+          "9f25715c-4700-45db-8313-05cdb9bfa1b2"
+        ]
+      },
+      "rank_one_source": "Nghị quyết 31/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+      "cross_reference_rank": null,
+      "reranking_status": null
+    },
+    {
+      "row": 21,
+      "id": "Q001",
+      "variant": "C_gemini",
+      "query_index": 0,
+      "query": "Điều kiện có hiệu lực của hợp đồng dân sự",
+      "query_chars": 41,
+      "mode": "dense",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 903.85,
+      "prefix_ids": {
+        "3": [
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "91e14d33-71b6-4ee1-b24a-f0cc4b8f3d52",
+          "b625dfa7-ac82-4133-8292-5c6433c94a47"
+        ],
+        "5": [
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "91e14d33-71b6-4ee1-b24a-f0cc4b8f3d52",
+          "b625dfa7-ac82-4133-8292-5c6433c94a47",
+          "51a5efa9-aa28-4c22-85ad-a78a122161e7",
+          "55a0dd68-6bc6-48e7-aaed-cf5c6305e07c"
+        ],
+        "10": [
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "91e14d33-71b6-4ee1-b24a-f0cc4b8f3d52",
+          "b625dfa7-ac82-4133-8292-5c6433c94a47",
+          "51a5efa9-aa28-4c22-85ad-a78a122161e7",
+          "55a0dd68-6bc6-48e7-aaed-cf5c6305e07c",
+          "50d95585-05f1-4387-9607-ba3bb0200967",
+          "ad4e9495-7f83-4398-ba7f-8903dde7570e",
+          "f74ace23-d852-4c56-b00b-0116094332f8",
+          "28ece3fc-4723-40cc-acf5-9b55b298047c",
+          "9df4a8e2-ebe9-4e9e-b908-a691c1616954"
+        ]
+      },
+      "rank_one_source": "Thông tư 141/2026/TT-BTC của Bộ Tài chính",
+      "cross_reference_rank": null,
+      "reranking_status": null
+    },
+    {
+      "row": 22,
+      "id": "Q001",
+      "variant": "C_gemini",
+      "query_index": 0,
+      "query": "Điều kiện có hiệu lực của hợp đồng dân sự",
+      "query_chars": 41,
+      "mode": "hybrid",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 2525.13,
+      "prefix_ids": {
+        "3": [
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "f74ace23-d852-4c56-b00b-0116094332f8",
+          "91e14d33-71b6-4ee1-b24a-f0cc4b8f3d52"
+        ],
+        "5": [
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "f74ace23-d852-4c56-b00b-0116094332f8",
+          "91e14d33-71b6-4ee1-b24a-f0cc4b8f3d52",
+          "ecdd3a4a-cbd7-4af7-ab01-072f917056be",
+          "b625dfa7-ac82-4133-8292-5c6433c94a47"
+        ],
+        "10": [
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "f74ace23-d852-4c56-b00b-0116094332f8",
+          "91e14d33-71b6-4ee1-b24a-f0cc4b8f3d52",
+          "ecdd3a4a-cbd7-4af7-ab01-072f917056be",
+          "b625dfa7-ac82-4133-8292-5c6433c94a47",
+          "c8057a3a-89a6-42e3-8df6-c82c783ed04e",
+          "51a5efa9-aa28-4c22-85ad-a78a122161e7",
+          "5c31d93c-5299-44df-9f90-4c97e75e5c76",
+          "55a0dd68-6bc6-48e7-aaed-cf5c6305e07c",
+          "581470d2-ef61-4a4b-adc6-17cf740bf61a"
+        ]
+      },
+      "rank_one_source": "Thông tư 141/2026/TT-BTC của Bộ Tài chính",
+      "cross_reference_rank": null,
+      "reranking_status": null
+    },
+    {
+      "row": 23,
+      "id": "Q001",
+      "variant": "C_gemini",
+      "query_index": 0,
+      "query": "Điều kiện có hiệu lực của hợp đồng dân sự",
+      "query_chars": 41,
+      "mode": "rerank",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 3415.97,
+      "prefix_ids": {
+        "3": [
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "5c31d93c-5299-44df-9f90-4c97e75e5c76",
+          "91e14d33-71b6-4ee1-b24a-f0cc4b8f3d52"
+        ],
+        "5": [
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "5c31d93c-5299-44df-9f90-4c97e75e5c76",
+          "91e14d33-71b6-4ee1-b24a-f0cc4b8f3d52",
+          "51a5efa9-aa28-4c22-85ad-a78a122161e7",
+          "f74ace23-d852-4c56-b00b-0116094332f8"
+        ],
+        "10": [
+          "e2740feb-e0e8-44fc-b107-faf2c674a835",
+          "5c31d93c-5299-44df-9f90-4c97e75e5c76",
+          "91e14d33-71b6-4ee1-b24a-f0cc4b8f3d52",
+          "51a5efa9-aa28-4c22-85ad-a78a122161e7",
+          "f74ace23-d852-4c56-b00b-0116094332f8",
+          "55a0dd68-6bc6-48e7-aaed-cf5c6305e07c",
+          "ecdd3a4a-cbd7-4af7-ab01-072f917056be",
+          "b625dfa7-ac82-4133-8292-5c6433c94a47",
+          "c8057a3a-89a6-42e3-8df6-c82c783ed04e",
+          "581470d2-ef61-4a4b-adc6-17cf740bf61a"
+        ]
+      },
+      "rank_one_source": "Thông tư 141/2026/TT-BTC của Bộ Tài chính",
+      "cross_reference_rank": null,
+      "reranking_status": "APPLIED"
+    },
+    {
+      "row": 24,
+      "id": "Q004",
+      "variant": "C_gemini",
+      "query_index": 0,
+      "query": "người lao động đơn phương chấm dứt hợp đồng lao động xác định thời hạn nghĩa vụ báo trước; tình huống người dùng: Tôi ký hợp đồng lao động 2 năm; mới làm được 6 tháng nhưng muốn nghỉ việc",
+      "query_chars": 187,
+      "mode": "dense",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 2005.36,
+      "prefix_ids": {
+        "3": [
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "30142e55-42ce-494a-a6fe-a8a10eb46922",
+          "b6c170cb-de6d-42df-a79b-479251439db6"
+        ],
+        "5": [
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "30142e55-42ce-494a-a6fe-a8a10eb46922",
+          "b6c170cb-de6d-42df-a79b-479251439db6",
+          "1583bfc9-a93a-4b5c-9b24-9a16400ddb69",
+          "79f178af-009c-4e63-a0ce-6945468079d7"
+        ],
+        "10": [
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "30142e55-42ce-494a-a6fe-a8a10eb46922",
+          "b6c170cb-de6d-42df-a79b-479251439db6",
+          "1583bfc9-a93a-4b5c-9b24-9a16400ddb69",
+          "79f178af-009c-4e63-a0ce-6945468079d7",
+          "01fcd190-2fc8-48ee-8cf5-de8fc77fada7",
+          "382f9ec8-d60d-47d9-af4c-00686812940b",
+          "579aa859-ddcf-4944-8fab-d95e7e6bc071",
+          "b7ffc437-c1dc-46f9-ae74-27068da7cb4a",
+          "ac385a35-1864-4710-b823-573457a820e7"
+        ]
+      },
+      "rank_one_source": "Thông tư 141/2026/TT-BTC của Bộ Tài chính",
+      "cross_reference_rank": null,
+      "reranking_status": null
+    },
+    {
+      "row": 25,
+      "id": "Q004",
+      "variant": "C_gemini",
+      "query_index": 0,
+      "query": "người lao động đơn phương chấm dứt hợp đồng lao động xác định thời hạn nghĩa vụ báo trước; tình huống người dùng: Tôi ký hợp đồng lao động 2 năm; mới làm được 6 tháng nhưng muốn nghỉ việc",
+      "query_chars": 187,
+      "mode": "hybrid",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 2230.53,
+      "prefix_ids": {
+        "3": [
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "30142e55-42ce-494a-a6fe-a8a10eb46922",
+          "01fcd190-2fc8-48ee-8cf5-de8fc77fada7"
+        ],
+        "5": [
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "30142e55-42ce-494a-a6fe-a8a10eb46922",
+          "01fcd190-2fc8-48ee-8cf5-de8fc77fada7",
+          "1583bfc9-a93a-4b5c-9b24-9a16400ddb69",
+          "382f9ec8-d60d-47d9-af4c-00686812940b"
+        ],
+        "10": [
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "30142e55-42ce-494a-a6fe-a8a10eb46922",
+          "01fcd190-2fc8-48ee-8cf5-de8fc77fada7",
+          "1583bfc9-a93a-4b5c-9b24-9a16400ddb69",
+          "382f9ec8-d60d-47d9-af4c-00686812940b",
+          "79f178af-009c-4e63-a0ce-6945468079d7",
+          "579aa859-ddcf-4944-8fab-d95e7e6bc071",
+          "b6c170cb-de6d-42df-a79b-479251439db6",
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "758fd1e3-72be-44e5-b4de-a55bd2b26a15"
+        ]
+      },
+      "rank_one_source": "Thông tư 141/2026/TT-BTC của Bộ Tài chính",
+      "cross_reference_rank": 9,
+      "reranking_status": null
+    },
+    {
+      "row": 26,
+      "id": "Q004",
+      "variant": "C_gemini",
+      "query_index": 0,
+      "query": "người lao động đơn phương chấm dứt hợp đồng lao động xác định thời hạn nghĩa vụ báo trước; tình huống người dùng: Tôi ký hợp đồng lao động 2 năm; mới làm được 6 tháng nhưng muốn nghỉ việc",
+      "query_chars": 187,
+      "mode": "rerank",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 3688.53,
+      "prefix_ids": {
+        "3": [
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "b6c170cb-de6d-42df-a79b-479251439db6"
+        ],
+        "5": [
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "b6c170cb-de6d-42df-a79b-479251439db6",
+          "79f178af-009c-4e63-a0ce-6945468079d7",
+          "01fcd190-2fc8-48ee-8cf5-de8fc77fada7"
+        ],
+        "10": [
+          "e76653f4-6cc6-4d82-8147-57e9ed6cb3ef",
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "b6c170cb-de6d-42df-a79b-479251439db6",
+          "79f178af-009c-4e63-a0ce-6945468079d7",
+          "01fcd190-2fc8-48ee-8cf5-de8fc77fada7",
+          "30142e55-42ce-494a-a6fe-a8a10eb46922",
+          "579aa859-ddcf-4944-8fab-d95e7e6bc071",
+          "1583bfc9-a93a-4b5c-9b24-9a16400ddb69",
+          "382f9ec8-d60d-47d9-af4c-00686812940b",
+          "758fd1e3-72be-44e5-b4de-a55bd2b26a15"
+        ]
+      },
+      "rank_one_source": "Thông tư 141/2026/TT-BTC của Bộ Tài chính",
+      "cross_reference_rank": 2,
+      "reranking_status": "APPLIED"
+    },
+    {
+      "row": 27,
+      "id": "Q022",
+      "variant": "C_gemini",
+      "query_index": 0,
+      "query": "Tra cứu Điều 35 Bộ luật Lao động 45/2019/QH14.",
+      "query_chars": 46,
+      "mode": "dense",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 854.81,
+      "prefix_ids": {
+        "3": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "67c18b69-c5c5-4ab9-abac-0294b5b7ba0f"
+        ],
+        "5": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "67c18b69-c5c5-4ab9-abac-0294b5b7ba0f",
+          "9f25715c-4700-45db-8313-05cdb9bfa1b2",
+          "34cbcc02-f505-4ce0-b7c7-9bcb9ee4af64"
+        ],
+        "10": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "67c18b69-c5c5-4ab9-abac-0294b5b7ba0f",
+          "9f25715c-4700-45db-8313-05cdb9bfa1b2",
+          "34cbcc02-f505-4ce0-b7c7-9bcb9ee4af64",
+          "db6b5e0d-674a-4924-93e2-77bb1aad8ffd",
+          "9792732b-d133-4e3f-a4c4-5d3cf96720e3",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f",
+          "7a82f804-420d-42d0-9b11-ca9bfa7af3c4",
+          "01fcd190-2fc8-48ee-8cf5-de8fc77fada7"
+        ]
+      },
+      "rank_one_source": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+      "cross_reference_rank": 1,
+      "reranking_status": null
+    },
+    {
+      "row": 28,
+      "id": "Q022",
+      "variant": "C_gemini",
+      "query_index": 0,
+      "query": "Tra cứu Điều 35 Bộ luật Lao động 45/2019/QH14.",
+      "query_chars": 46,
+      "mode": "hybrid",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 2948.87,
+      "prefix_ids": {
+        "3": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f"
+        ],
+        "5": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f",
+          "96e8c139-65d4-48aa-98ec-bdd2e169e984",
+          "67c18b69-c5c5-4ab9-abac-0294b5b7ba0f"
+        ],
+        "10": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f",
+          "96e8c139-65d4-48aa-98ec-bdd2e169e984",
+          "67c18b69-c5c5-4ab9-abac-0294b5b7ba0f",
+          "9f25715c-4700-45db-8313-05cdb9bfa1b2",
+          "34cbcc02-f505-4ce0-b7c7-9bcb9ee4af64",
+          "8f3a2840-285d-43d7-8c5b-89c9a0af2100",
+          "9741a31f-da7b-431f-b200-8bcbe75be08b",
+          "db6b5e0d-674a-4924-93e2-77bb1aad8ffd"
+        ]
+      },
+      "rank_one_source": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+      "cross_reference_rank": 1,
+      "reranking_status": null
+    },
+    {
+      "row": 29,
+      "id": "Q022",
+      "variant": "C_gemini",
+      "query_index": 0,
+      "query": "Tra cứu Điều 35 Bộ luật Lao động 45/2019/QH14.",
+      "query_chars": 46,
+      "mode": "rerank",
+      "status": "COMPLETED",
+      "reused_observation": null,
+      "latency_ms": 4061.21,
+      "prefix_ids": {
+        "3": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "67c18b69-c5c5-4ab9-abac-0294b5b7ba0f",
+          "9f25715c-4700-45db-8313-05cdb9bfa1b2"
+        ],
+        "5": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "67c18b69-c5c5-4ab9-abac-0294b5b7ba0f",
+          "9f25715c-4700-45db-8313-05cdb9bfa1b2",
+          "db6b5e0d-674a-4924-93e2-77bb1aad8ffd",
+          "9741a31f-da7b-431f-b200-8bcbe75be08b"
+        ],
+        "10": [
+          "2973a693-2276-4e4f-a233-f7038e4717e0",
+          "67c18b69-c5c5-4ab9-abac-0294b5b7ba0f",
+          "9f25715c-4700-45db-8313-05cdb9bfa1b2",
+          "db6b5e0d-674a-4924-93e2-77bb1aad8ffd",
+          "9741a31f-da7b-431f-b200-8bcbe75be08b",
+          "34cbcc02-f505-4ce0-b7c7-9bcb9ee4af64",
+          "6552f08a-6132-4ca0-97d7-aab238929d2f",
+          "8f3a2840-285d-43d7-8c5b-89c9a0af2100",
+          "4ebe13ce-f406-4970-ab5c-acceb90dbcdc",
+          "96e8c139-65d4-48aa-98ec-bdd2e169e984"
+        ]
+      },
+      "rank_one_source": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+      "cross_reference_rank": 1,
+      "reranking_status": "APPLIED"
+    }
+  ]
+}

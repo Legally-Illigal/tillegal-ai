@@ -1,0 +1,3570 @@
+[
+  {
+    "file": "src/applications/tillegal/agents/search/agent.py",
+    "symbol": "SearchOptions",
+    "kind": "ClassDef",
+    "start": 13,
+    "end": 28
+  },
+  {
+    "file": "src/applications/tillegal/agents/search/agent.py",
+    "symbol": "SearchOptions.nonblank_policies",
+    "kind": "FunctionDef",
+    "start": 25,
+    "end": 28,
+    "definition": "def nonblank_policies(cls, values: tuple[str, ...]) -> tuple[str, ...]:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/agents/search/agent.py",
+    "symbol": "SearchState",
+    "kind": "ClassDef",
+    "start": 31,
+    "end": 35
+  },
+  {
+    "file": "src/applications/tillegal/agents/search/agent.py",
+    "symbol": "search",
+    "kind": "AsyncFunctionDef",
+    "start": 38,
+    "end": 56,
+    "definition": "async def search(plan: dict, retrieval: RetrievalService, options: SearchOptions) -> SearchState:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/agents/query/agent.py",
+    "symbol": "QueryInputError",
+    "kind": "ClassDef",
+    "start": 11,
+    "end": 12
+  },
+  {
+    "file": "src/applications/tillegal/agents/query/agent.py",
+    "symbol": "Subquery",
+    "kind": "ClassDef",
+    "start": 15,
+    "end": 17
+  },
+  {
+    "file": "src/applications/tillegal/agents/query/agent.py",
+    "symbol": "QueryPlan",
+    "kind": "ClassDef",
+    "start": 20,
+    "end": 26
+  },
+  {
+    "file": "src/applications/tillegal/agents/query/agent.py",
+    "symbol": "understand",
+    "kind": "FunctionDef",
+    "start": 29,
+    "end": 95,
+    "definition": "def understand(question: str) -> dict:",
+    "assertions": []
+  },
+  {
+    "file": "src/query_search_bootstrap.py",
+    "symbol": "QuerySearch",
+    "kind": "ClassDef",
+    "start": 16,
+    "end": 21
+  },
+  {
+    "file": "src/query_search_bootstrap.py",
+    "symbol": "QuerySearch.search",
+    "kind": "AsyncFunctionDef",
+    "start": 20,
+    "end": 21,
+    "definition": "async def search(self, question: str) -> SearchState:",
+    "assertions": []
+  },
+  {
+    "file": "src/query_search_bootstrap.py",
+    "symbol": "create_query_search",
+    "kind": "FunctionDef",
+    "start": 24,
+    "end": 42,
+    "definition": "def create_query_search(",
+    "assertions": []
+  },
+  {
+    "file": "src/retrieval_bootstrap.py",
+    "symbol": "create_retrieval_service",
+    "kind": "FunctionDef",
+    "start": 22,
+    "end": 70,
+    "definition": "def create_retrieval_service(",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "QuerySearchNodes",
+    "kind": "ClassDef",
+    "start": 18,
+    "end": 54
+  },
+  {
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "QuerySearchNodes.__init__",
+    "kind": "FunctionDef",
+    "start": 21,
+    "end": 22,
+    "definition": "def __init__(self, pipeline: QuerySearch) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "QuerySearchNodes.query",
+    "kind": "FunctionDef",
+    "start": 24,
+    "end": 33,
+    "definition": "def query(self, state: LegalQAState) -> LegalQAState:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "QuerySearchNodes.route_query",
+    "kind": "FunctionDef",
+    "start": 36,
+    "end": 37,
+    "definition": "def route_query(state: LegalQAState) -> Literal[\"search\", \"end\"]:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "QuerySearchNodes.search",
+    "kind": "AsyncFunctionDef",
+    "start": 39,
+    "end": 54,
+    "definition": "async def search(self, state: LegalQAState) -> LegalQAState:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "compile_query_search_graph",
+    "kind": "FunctionDef",
+    "start": 57,
+    "end": 66,
+    "definition": "def compile_query_search_graph(pipeline: QuerySearch):",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "QuerySearchWorkflow",
+    "kind": "ClassDef",
+    "start": 69,
+    "end": 95
+  },
+  {
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "QuerySearchWorkflow.__init__",
+    "kind": "FunctionDef",
+    "start": 72,
+    "end": 74,
+    "definition": "def __init__(self, pipeline: QuerySearch) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/graphs/legal_qa.py",
+    "symbol": "QuerySearchWorkflow.execute",
+    "kind": "AsyncFunctionDef",
+    "start": 76,
+    "end": 95,
+    "definition": "async def execute(",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/state/legal_qa_state.py",
+    "symbol": "JudgeHandoff",
+    "kind": "ClassDef",
+    "start": 18,
+    "end": 93
+  },
+  {
+    "file": "src/applications/tillegal/state/legal_qa_state.py",
+    "symbol": "JudgeHandoff.warnings",
+    "kind": "FunctionDef",
+    "start": 35,
+    "end": 37,
+    "definition": "def warnings(self) -> tuple[RetrievalWarning, ...]:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/state/legal_qa_state.py",
+    "symbol": "JudgeHandoff.errors",
+    "kind": "FunctionDef",
+    "start": 40,
+    "end": 41,
+    "definition": "def errors(self) -> tuple[RetrievalErrorDetail, ...]:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/state/legal_qa_state.py",
+    "symbol": "JudgeHandoff.validate_context",
+    "kind": "FunctionDef",
+    "start": 44,
+    "end": 64,
+    "definition": "def validate_context(self) -> Self:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/state/legal_qa_state.py",
+    "symbol": "JudgeHandoff.from_search",
+    "kind": "FunctionDef",
+    "start": 67,
+    "end": 93,
+    "definition": "def from_search(",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/state/legal_qa_state.py",
+    "symbol": "LegalQAState",
+    "kind": "ClassDef",
+    "start": 96,
+    "end": 103
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/contracts.py",
+    "symbol": "RetrievalMode",
+    "kind": "ClassDef",
+    "start": 13,
+    "end": 16
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/contracts.py",
+    "symbol": "ContractModel",
+    "kind": "ClassDef",
+    "start": 19,
+    "end": 20
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/contracts.py",
+    "symbol": "RetrievalRequest",
+    "kind": "ClassDef",
+    "start": 23,
+    "end": 44
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/contracts.py",
+    "symbol": "RetrievalRequest.nonblank_query",
+    "kind": "FunctionDef",
+    "start": 34,
+    "end": 37,
+    "definition": "def nonblank_query(cls, value: str) -> str:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/contracts.py",
+    "symbol": "RetrievalRequest.policies",
+    "kind": "FunctionDef",
+    "start": 41,
+    "end": 44,
+    "definition": "def policies(cls, values: tuple[str, ...]) -> tuple[str, ...]:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/contracts.py",
+    "symbol": "IndexIdentity",
+    "kind": "ClassDef",
+    "start": 47,
+    "end": 56
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/contracts.py",
+    "symbol": "RetrievalWarning",
+    "kind": "ClassDef",
+    "start": 59,
+    "end": 62
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/contracts.py",
+    "symbol": "UnifiedEvidence",
+    "kind": "ClassDef",
+    "start": 65,
+    "end": 110
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/contracts.py",
+    "symbol": "UnifiedEvidence.validate_semantics",
+    "kind": "FunctionDef",
+    "start": 100,
+    "end": 110,
+    "definition": "def validate_semantics(self) -> Self:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/contracts.py",
+    "symbol": "RetrievalResponse",
+    "kind": "ClassDef",
+    "start": 113,
+    "end": 149
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/contracts.py",
+    "symbol": "RetrievalResponse.validate_outcome",
+    "kind": "FunctionDef",
+    "start": 132,
+    "end": 149,
+    "definition": "def validate_outcome(self) -> Self:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/hybrid_models.py",
+    "symbol": "HybridConfig",
+    "kind": "ClassDef",
+    "start": 13,
+    "end": 18
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/hybrid_models.py",
+    "symbol": "RankContribution",
+    "kind": "ClassDef",
+    "start": 21,
+    "end": 34
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/hybrid_models.py",
+    "symbol": "RankContribution.validate_score_kind",
+    "kind": "FunctionDef",
+    "start": 30,
+    "end": 34,
+    "definition": "def validate_score_kind(self) -> Self:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/hybrid_models.py",
+    "symbol": "FusedRank",
+    "kind": "ClassDef",
+    "start": 37,
+    "end": 49
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/hybrid_models.py",
+    "symbol": "FusedRank.unique_backends",
+    "kind": "FunctionDef",
+    "start": 44,
+    "end": 49,
+    "definition": "def unique_backends(self) -> Self:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/hybrid_models.py",
+    "symbol": "BranchObservation",
+    "kind": "ClassDef",
+    "start": 52,
+    "end": 72
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/hybrid_models.py",
+    "symbol": "BranchObservation.validate_outcome",
+    "kind": "FunctionDef",
+    "start": 63,
+    "end": 72,
+    "definition": "def validate_outcome(self) -> Self:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/hybrid_models.py",
+    "symbol": "FusionMetadata",
+    "kind": "ClassDef",
+    "start": 75,
+    "end": 83
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/hybrid_models.py",
+    "symbol": "HybridRetrievalResponse",
+    "kind": "ClassDef",
+    "start": 86,
+    "end": 118
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/hybrid_models.py",
+    "symbol": "HybridRetrievalResponse.validate_fusion",
+    "kind": "FunctionDef",
+    "start": 92,
+    "end": 118,
+    "definition": "def validate_fusion(self) -> Self:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/reranking_models.py",
+    "symbol": "RerankConfig",
+    "kind": "ClassDef",
+    "start": 16,
+    "end": 23
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/reranking_models.py",
+    "symbol": "PairScores",
+    "kind": "ClassDef",
+    "start": 26,
+    "end": 40
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/reranking_models.py",
+    "symbol": "PairScores.numeric_scores",
+    "kind": "FunctionDef",
+    "start": 35,
+    "end": 40,
+    "definition": "def numeric_scores(cls, values: object) -> object:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/reranking_models.py",
+    "symbol": "CandidateScore",
+    "kind": "ClassDef",
+    "start": 43,
+    "end": 48
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/reranking_models.py",
+    "symbol": "RerankingMetadata",
+    "kind": "ClassDef",
+    "start": 51,
+    "end": 60
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/reranking_models.py",
+    "symbol": "RerankedHybridRetrievalResponse",
+    "kind": "ClassDef",
+    "start": 63,
+    "end": 107
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/reranking_models.py",
+    "symbol": "RerankedHybridRetrievalResponse.validate_reranking",
+    "kind": "FunctionDef",
+    "start": 69,
+    "end": 107,
+    "definition": "def validate_reranking(self) -> Self:",
+    "assertions": []
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/errors.py",
+    "symbol": "ErrorCategory",
+    "kind": "ClassDef",
+    "start": 8,
+    "end": 15
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/errors.py",
+    "symbol": "RetrievalErrorDetail",
+    "kind": "ClassDef",
+    "start": 18,
+    "end": 27
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/errors.py",
+    "symbol": "RetrievalServiceError",
+    "kind": "ClassDef",
+    "start": 30,
+    "end": 35
+  },
+  {
+    "file": "src/applications/tillegal/retrieval/errors.py",
+    "symbol": "RetrievalServiceError.__init__",
+    "kind": "FunctionDef",
+    "start": 33,
+    "end": 35,
+    "definition": "def __init__(self, detail: RetrievalErrorDetail) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "_ChunkRow",
+    "kind": "ClassDef",
+    "start": 55,
+    "end": 69
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "_SourceRow",
+    "kind": "ClassDef",
+    "start": 72,
+    "end": 87
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "_SparseIndex",
+    "kind": "ClassDef",
+    "start": 90,
+    "end": 117
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "_SparseIndex.aware_timestamp",
+    "kind": "FunctionDef",
+    "start": 111,
+    "end": 114,
+    "definition": "def aware_timestamp(self) -> Self:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "_SparseIndex.identity",
+    "kind": "FunctionDef",
+    "start": 116,
+    "end": 117,
+    "definition": "def identity(self) -> IndexIdentity:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "_DenseIndex",
+    "kind": "ClassDef",
+    "start": 120,
+    "end": 136
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "_DenseIndex.identity",
+    "kind": "FunctionDef",
+    "start": 134,
+    "end": 136,
+    "definition": "def identity(self) -> IndexIdentity:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "_failure",
+    "kind": "FunctionDef",
+    "start": 139,
+    "end": 147,
+    "definition": "def _failure(category: ErrorCategory, code: str, stage: str, message: str) -> RetrievalServiceError:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "RetrievalService",
+    "kind": "ClassDef",
+    "start": 150,
+    "end": 724
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "RetrievalService.__init__",
+    "kind": "FunctionDef",
+    "start": 157,
+    "end": 190,
+    "definition": "def __init__(",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "RetrievalService.search",
+    "kind": "AsyncFunctionDef",
+    "start": 192,
+    "end": 305,
+    "definition": "async def search(self, request: RetrievalRequest) -> RetrievalResponse | HybridRetrievalResponse:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "RetrievalService.search.run_hybrid",
+    "kind": "AsyncFunctionDef",
+    "start": 197,
+    "end": 208,
+    "definition": "async def run_hybrid(branch_request: RetrievalRequest) -> HybridRetrievalResponse:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "RetrievalService._prepare_sparse_terms",
+    "kind": "FunctionDef",
+    "start": 307,
+    "end": 317,
+    "definition": "def _prepare_sparse_terms(self, query: str) -> tuple[str, ...]:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "RetrievalService._search_sparse",
+    "kind": "AsyncFunctionDef",
+    "start": 319,
+    "end": 343,
+    "definition": "async def _search_sparse(self, request: RetrievalRequest, terms: tuple[str, ...]) -> tuple[SparseSearchHit, ...]:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "RetrievalService._hydrate_sparse_hits",
+    "kind": "AsyncFunctionDef",
+    "start": 345,
+    "end": 409,
+    "definition": "async def _hydrate_sparse_hits(",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "RetrievalService._check_eligibility",
+    "kind": "FunctionDef",
+    "start": 412,
+    "end": 435,
+    "definition": "def _check_eligibility(source: _SourceRow, request: RetrievalRequest) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "RetrievalService._make_evidence",
+    "kind": "FunctionDef",
+    "start": 438,
+    "end": 467,
+    "definition": "def _make_evidence(chunk: _ChunkRow, source: _SourceRow, hit: SparseSearchHit, rank: int) -> UnifiedEvidence:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "RetrievalService._evidence_warnings",
+    "kind": "FunctionDef",
+    "start": 470,
+    "end": 490,
+    "definition": "def _evidence_warnings(evidence: tuple[UnifiedEvidence, ...]) -> tuple[RetrievalWarning, ...]:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "RetrievalService._read_and_validate_index",
+    "kind": "AsyncFunctionDef",
+    "start": 492,
+    "end": 533,
+    "definition": "async def _read_and_validate_index(self) -> _SparseIndex:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "RetrievalService._check_index_unchanged",
+    "kind": "AsyncFunctionDef",
+    "start": 535,
+    "end": 553,
+    "definition": "async def _check_index_unchanged(self, before: _SparseIndex) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "RetrievalService._read_dense_index",
+    "kind": "AsyncFunctionDef",
+    "start": 555,
+    "end": 598,
+    "definition": "async def _read_dense_index(self) -> _DenseIndex:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "RetrievalService._check_dense_index_unchanged",
+    "kind": "AsyncFunctionDef",
+    "start": 600,
+    "end": 617,
+    "definition": "async def _check_dense_index_unchanged(self, before: _DenseIndex) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/retrieval_service.py",
+    "symbol": "RetrievalService._map_dense_evidence",
+    "kind": "AsyncFunctionDef",
+    "start": 619,
+    "end": 724,
+    "definition": "async def _map_dense_evidence(",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/hybrid_retrieval.py",
+    "symbol": "_invalid_context",
+    "kind": "FunctionDef",
+    "start": 28,
+    "end": 37,
+    "definition": "def _invalid_context() -> RetrievalServiceError:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/hybrid_retrieval.py",
+    "symbol": "_validate_context",
+    "kind": "FunctionDef",
+    "start": 40,
+    "end": 50,
+    "definition": "def _validate_context(response: RetrievalResponse, expected: RetrievalRequest, index_name: str) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/hybrid_retrieval.py",
+    "symbol": "_check_closing_index",
+    "kind": "AsyncFunctionDef",
+    "start": 53,
+    "end": 82,
+    "definition": "async def _check_closing_index(reader: IndexReader, observed: IndexIdentity) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/hybrid_retrieval.py",
+    "symbol": "search_hybrid",
+    "kind": "AsyncFunctionDef",
+    "start": 85,
+    "end": 196,
+    "definition": "async def search_hybrid(",
+    "assertions": []
+  },
+  {
+    "file": "src/application/services/reranking.py",
+    "symbol": "search_reranked",
+    "kind": "AsyncFunctionDef",
+    "start": 30,
+    "end": 176,
+    "definition": "async def search_reranked(",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/graphs/compiler.py",
+    "symbol": "compile_graph",
+    "kind": "FunctionDef",
+    "start": 10,
+    "end": 17,
+    "definition": "def compile_graph[StateT](",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/graphs/factory.py",
+    "symbol": "create_state_graph",
+    "kind": "FunctionDef",
+    "start": 8,
+    "end": 12,
+    "definition": "def create_state_graph[StateT](",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/state/base.py",
+    "symbol": "WorkflowState",
+    "kind": "ClassDef",
+    "start": 10,
+    "end": 18
+  },
+  {
+    "file": "src/framework/state/base.py",
+    "symbol": "ArtifactState",
+    "kind": "ClassDef",
+    "start": 21,
+    "end": 24
+  },
+  {
+    "file": "src/framework/state/reducers.py",
+    "symbol": "append_unique",
+    "kind": "FunctionDef",
+    "start": 11,
+    "end": 17,
+    "definition": "def append_unique[T](current: Sequence[T] | None, updates: Sequence[T] | None) -> list[T]:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/state/reducers.py",
+    "symbol": "merge_messages",
+    "kind": "FunctionDef",
+    "start": 20,
+    "end": 34,
+    "definition": "def merge_messages[T](current: Sequence[T] | None, updates: Sequence[T] | None) -> list[T]:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/state/reducers.py",
+    "symbol": "merge_artifacts",
+    "kind": "FunctionDef",
+    "start": 37,
+    "end": 51,
+    "definition": "def merge_artifacts(",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/state/reducers.py",
+    "symbol": "merge_metadata",
+    "kind": "FunctionDef",
+    "start": 54,
+    "end": 59,
+    "definition": "def merge_metadata(",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/state/reducers.py",
+    "symbol": "_message_id",
+    "kind": "FunctionDef",
+    "start": 62,
+    "end": 67,
+    "definition": "def _message_id(message: object) -> str | None:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/executor.py",
+    "symbol": "AsyncGraph",
+    "kind": "ClassDef",
+    "start": 15,
+    "end": 22
+  },
+  {
+    "file": "src/framework/runtime/executor.py",
+    "symbol": "AsyncGraph.ainvoke",
+    "kind": "AsyncFunctionDef",
+    "start": 18,
+    "end": 22,
+    "definition": "async def ainvoke(",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/executor.py",
+    "symbol": "GraphExecutor",
+    "kind": "ClassDef",
+    "start": 25,
+    "end": 102
+  },
+  {
+    "file": "src/framework/runtime/executor.py",
+    "symbol": "GraphExecutor.execute",
+    "kind": "AsyncFunctionDef",
+    "start": 28,
+    "end": 84,
+    "definition": "async def execute[InputT, OutputT](",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/executor.py",
+    "symbol": "GraphExecutor._invoke",
+    "kind": "AsyncFunctionDef",
+    "start": 87,
+    "end": 94,
+    "definition": "async def _invoke[InputT, OutputT](",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/executor.py",
+    "symbol": "GraphExecutor._cancel_invocation",
+    "kind": "AsyncFunctionDef",
+    "start": 97,
+    "end": 102,
+    "definition": "async def _cancel_invocation[T](invocation: asyncio.Task[T]) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/execution_context.py",
+    "symbol": "ExecutionContext",
+    "kind": "ClassDef",
+    "start": 17,
+    "end": 37
+  },
+  {
+    "file": "src/framework/runtime/execution_context.py",
+    "symbol": "ExecutionContext.__post_init__",
+    "kind": "FunctionDef",
+    "start": 26,
+    "end": 37,
+    "definition": "def __post_init__(self) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/execution_context.py",
+    "symbol": "current_execution_context",
+    "kind": "FunctionDef",
+    "start": 40,
+    "end": 42,
+    "definition": "def current_execution_context() -> ExecutionContext | None:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/execution_context.py",
+    "symbol": "_ExecutionContextBinding",
+    "kind": "ClassDef",
+    "start": 45,
+    "end": 66
+  },
+  {
+    "file": "src/framework/runtime/execution_context.py",
+    "symbol": "_ExecutionContextBinding.__init__",
+    "kind": "FunctionDef",
+    "start": 48,
+    "end": 50,
+    "definition": "def __init__(self, context: ExecutionContext) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/execution_context.py",
+    "symbol": "_ExecutionContextBinding.__enter__",
+    "kind": "FunctionDef",
+    "start": 52,
+    "end": 54,
+    "definition": "def __enter__(self) -> ExecutionContext:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/execution_context.py",
+    "symbol": "_ExecutionContextBinding.__exit__",
+    "kind": "FunctionDef",
+    "start": 56,
+    "end": 60,
+    "definition": "def __exit__(self, *_: object) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/execution_context.py",
+    "symbol": "_ExecutionContextBinding.__aenter__",
+    "kind": "AsyncFunctionDef",
+    "start": 62,
+    "end": 63,
+    "definition": "async def __aenter__(self) -> ExecutionContext:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/execution_context.py",
+    "symbol": "_ExecutionContextBinding.__aexit__",
+    "kind": "AsyncFunctionDef",
+    "start": 65,
+    "end": 66,
+    "definition": "async def __aexit__(self, *_: object) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/execution_context.py",
+    "symbol": "bind_execution_context",
+    "kind": "FunctionDef",
+    "start": 69,
+    "end": 71,
+    "definition": "def bind_execution_context(context: ExecutionContext) -> _ExecutionContextBinding:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/lifecycle.py",
+    "symbol": "ExecutionStatus",
+    "kind": "ClassDef",
+    "start": 9,
+    "end": 16
+  },
+  {
+    "file": "src/framework/runtime/lifecycle.py",
+    "symbol": "InvalidLifecycleTransitionError",
+    "kind": "ClassDef",
+    "start": 19,
+    "end": 20
+  },
+  {
+    "file": "src/framework/runtime/lifecycle.py",
+    "symbol": "LifecycleSnapshot",
+    "kind": "ClassDef",
+    "start": 24,
+    "end": 31
+  },
+  {
+    "file": "src/framework/runtime/lifecycle.py",
+    "symbol": "ExecutionLifecycle",
+    "kind": "ClassDef",
+    "start": 34,
+    "end": 106
+  },
+  {
+    "file": "src/framework/runtime/lifecycle.py",
+    "symbol": "ExecutionLifecycle.__init__",
+    "kind": "FunctionDef",
+    "start": 39,
+    "end": 48,
+    "definition": "def __init__(self) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/lifecycle.py",
+    "symbol": "ExecutionLifecycle.snapshot",
+    "kind": "FunctionDef",
+    "start": 51,
+    "end": 54,
+    "definition": "def snapshot(self) -> LifecycleSnapshot:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/lifecycle.py",
+    "symbol": "ExecutionLifecycle.start",
+    "kind": "FunctionDef",
+    "start": 56,
+    "end": 67,
+    "definition": "def start(self) -> LifecycleSnapshot:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/lifecycle.py",
+    "symbol": "ExecutionLifecycle.succeed",
+    "kind": "FunctionDef",
+    "start": 69,
+    "end": 71,
+    "definition": "def succeed(self) -> LifecycleSnapshot:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/lifecycle.py",
+    "symbol": "ExecutionLifecycle.fail",
+    "kind": "FunctionDef",
+    "start": 73,
+    "end": 77,
+    "definition": "def fail(self, error: str) -> LifecycleSnapshot:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/lifecycle.py",
+    "symbol": "ExecutionLifecycle.cancel",
+    "kind": "FunctionDef",
+    "start": 79,
+    "end": 81,
+    "definition": "def cancel(self) -> LifecycleSnapshot:",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/lifecycle.py",
+    "symbol": "ExecutionLifecycle._finish",
+    "kind": "FunctionDef",
+    "start": 83,
+    "end": 98,
+    "definition": "def _finish(",
+    "assertions": []
+  },
+  {
+    "file": "src/framework/runtime/lifecycle.py",
+    "symbol": "ExecutionLifecycle._require_status",
+    "kind": "FunctionDef",
+    "start": 100,
+    "end": 106,
+    "definition": "def _require_status(self, expected: ExecutionStatus) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/integrations/embeddings/e5_query_encoder.py",
+    "symbol": "_encoding_error",
+    "kind": "FunctionDef",
+    "start": 16,
+    "end": 24,
+    "definition": "def _encoding_error(code: str, message: str, *, invalid_input: bool = False) -> RetrievalServiceError:",
+    "assertions": []
+  },
+  {
+    "file": "src/integrations/embeddings/e5_query_encoder.py",
+    "symbol": "E5QueryEncoder",
+    "kind": "ClassDef",
+    "start": 27,
+    "end": 101
+  },
+  {
+    "file": "src/integrations/embeddings/e5_query_encoder.py",
+    "symbol": "E5QueryEncoder.__init__",
+    "kind": "FunctionDef",
+    "start": 35,
+    "end": 38,
+    "definition": "def __init__(self, model_path: Path) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/integrations/embeddings/e5_query_encoder.py",
+    "symbol": "E5QueryEncoder.encode_query",
+    "kind": "AsyncFunctionDef",
+    "start": 40,
+    "end": 44,
+    "definition": "async def encode_query(self, query: str) -> tuple[float, ...]:",
+    "assertions": []
+  },
+  {
+    "file": "src/integrations/embeddings/e5_query_encoder.py",
+    "symbol": "E5QueryEncoder._get_model",
+    "kind": "FunctionDef",
+    "start": 46,
+    "end": 67,
+    "definition": "def _get_model(self) -> Any:",
+    "assertions": []
+  },
+  {
+    "file": "src/integrations/embeddings/e5_query_encoder.py",
+    "symbol": "E5QueryEncoder._encode",
+    "kind": "FunctionDef",
+    "start": 69,
+    "end": 101,
+    "definition": "def _encode(self, query: str) -> tuple[float, ...]:",
+    "assertions": []
+  },
+  {
+    "file": "src/integrations/embeddings/cross_encoder_reranker.py",
+    "symbol": "LocalCrossEncoder",
+    "kind": "ClassDef",
+    "start": 12,
+    "end": 100
+  },
+  {
+    "file": "src/integrations/embeddings/cross_encoder_reranker.py",
+    "symbol": "LocalCrossEncoder.__init__",
+    "kind": "FunctionDef",
+    "start": 13,
+    "end": 17,
+    "definition": "def __init__(self, config: RerankConfig) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/integrations/embeddings/cross_encoder_reranker.py",
+    "symbol": "LocalCrossEncoder.score_pairs",
+    "kind": "AsyncFunctionDef",
+    "start": 19,
+    "end": 20,
+    "definition": "async def score_pairs(self, query: str, passages: tuple[str, ...]) -> PairScores:",
+    "assertions": []
+  },
+  {
+    "file": "src/integrations/embeddings/cross_encoder_reranker.py",
+    "symbol": "LocalCrossEncoder._load",
+    "kind": "FunctionDef",
+    "start": 22,
+    "end": 44,
+    "definition": "def _load(self) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/integrations/embeddings/cross_encoder_reranker.py",
+    "symbol": "LocalCrossEncoder._score",
+    "kind": "FunctionDef",
+    "start": 46,
+    "end": 100,
+    "definition": "def _score(self, query: str, passages: tuple[str, ...]) -> PairScores:",
+    "assertions": []
+  },
+  {
+    "file": "src/integrations/database/repositories/rpc.py",
+    "symbol": "DatabaseRepositoryError",
+    "kind": "ClassDef",
+    "start": 11,
+    "end": 12
+  },
+  {
+    "file": "src/integrations/database/repositories/rpc.py",
+    "symbol": "SupabaseRpcRepository",
+    "kind": "ClassDef",
+    "start": 15,
+    "end": 27
+  },
+  {
+    "file": "src/integrations/database/repositories/rpc.py",
+    "symbol": "SupabaseRpcRepository.__init__",
+    "kind": "FunctionDef",
+    "start": 18,
+    "end": 19,
+    "definition": "def __init__(self, client: Client) -> None:",
+    "assertions": []
+  },
+  {
+    "file": "src/integrations/database/repositories/rpc.py",
+    "symbol": "SupabaseRpcRepository.call_rpc",
+    "kind": "AsyncFunctionDef",
+    "start": 21,
+    "end": 27,
+    "definition": "async def call_rpc(self, function_name: str, parameters: Mapping[str, object]) -> object:",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "options",
+    "kind": "FunctionDef",
+    "start": 24,
+    "end": 27,
+    "definition": "def options(**changes):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "test_real_service_fake_ports",
+    "kind": "FunctionDef",
+    "start": 31,
+    "end": 43,
+    "definition": "def test_real_service_fake_ports(question):",
+    "assertions": [
+      "assert result[\"plan\"] == understand(question)",
+      "assert result[\"status\"] == \"COMPLETED\"",
+      "assert [r.query for r in result[\"requests\"]] == [q[\"text\"] for q in result[\"plan\"][\"subqueries\"]]",
+      "assert all(r.as_of_date == options().as_of_date for r in result[\"requests\"])",
+      "assert all(r.allowed_usage_policies == options().allowed_usage_policies for r in result[\"requests\"])",
+      "assert all(r.status == \"OK\" for r in result[\"responses\"])",
+      "assert row.retrieval_chunk_id.int == 2 and row.source_document_id.int == 30",
+      "assert row.hash_check == \"MATCHED_STORED\" and row.source_url is None",
+      "assert row.raw_score == 7.2 and row.content_representation == \"retrieval_chunk_content\""
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "test_clarification_no_reads",
+    "kind": "FunctionDef",
+    "start": 47,
+    "end": 52,
+    "definition": "def test_clarification_no_reads(question):",
+    "assertions": [
+      "assert result[\"status\"] == \"CLARIFICATION_REQUIRED\"",
+      "assert result[\"requests\"] == result[\"responses\"] == ()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "test_invalid_input",
+    "kind": "FunctionDef",
+    "start": 56,
+    "end": 60,
+    "definition": "def test_invalid_input(question):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "test_options_and_plan_fail_before_reads",
+    "kind": "FunctionDef",
+    "start": 63,
+    "end": 76,
+    "definition": "def test_options_and_plan_fail_before_reads():",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "test_no_match_failure_and_no_fallback",
+    "kind": "FunctionDef",
+    "start": 79,
+    "end": 85,
+    "definition": "def test_no_match_failure_and_no_fallback():",
+    "assertions": [
+      "assert asyncio.run(QuerySearch(service(), options()).search(\"Tr\u00edch d\u1eabn: thu\u1ebf\"))[\"responses\"][0].status == \"NO_MATCH\"",
+      "assert state[\"status\"] == \"FAILED\" and len(state[\"responses\"]) == 1",
+      "assert state[\"responses\"][0].error.category == \"DATABASE_FAILURE\"",
+      "assert state[\"responses\"][0].evidence == ()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "test_response_identity_and_plan_unchanged",
+    "kind": "FunctionDef",
+    "start": 88,
+    "end": 95,
+    "definition": "def test_response_identity_and_plan_unchanged():",
+    "assertions": [
+      "assert state[\"responses\"][0] is response and plan == before"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "test_bootstrap_delegates",
+    "kind": "FunctionDef",
+    "start": 98,
+    "end": 103,
+    "definition": "def test_bootstrap_delegates():",
+    "assertions": [
+      "assert result.retrieval is svc",
+      "assert factory.call_args.kwargs[\"dense_model_path\"] is None"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search.py",
+    "symbol": "test_no_legacy_imports",
+    "kind": "FunctionDef",
+    "start": 106,
+    "end": 113,
+    "definition": "def test_no_legacy_imports():",
+    "assertions": [
+      "assert \"ai_core\" not in inspect.getsource(agent)",
+      "assert \"ai_core\" not in inspect.getsource(bootstrap)"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "options",
+    "kind": "FunctionDef",
+    "start": 31,
+    "end": 37,
+    "definition": "def options(mode):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "RecordingService",
+    "kind": "ClassDef",
+    "start": 40,
+    "end": 52
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "RecordingService.__init__",
+    "kind": "FunctionDef",
+    "start": 43,
+    "end": 46,
+    "definition": "def __init__(self, service):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "RecordingService.search",
+    "kind": "AsyncFunctionDef",
+    "start": 48,
+    "end": 52,
+    "definition": "async def search(self, req):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_unit_request_mapping_and_no_match_identity",
+    "kind": "FunctionDef",
+    "start": 56,
+    "end": 76,
+    "definition": "def test_unit_request_mapping_and_no_match_identity(mode):",
+    "assertions": [
+      "assert result[\"requests\"] == (req,)",
+      "assert result[\"responses\"][0] is response",
+      "assert result[\"plan\"] is plan and result[\"status\"] == \"COMPLETED\""
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_clarification_all_modes",
+    "kind": "FunctionDef",
+    "start": 81,
+    "end": 86,
+    "definition": "def test_clarification_all_modes(mode, question):",
+    "assertions": [
+      "assert result[\"status\"] == \"CLARIFICATION_REQUIRED\"",
+      "assert result[\"requests\"] == result[\"responses\"] == ()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_unit_invalid_options",
+    "kind": "FunctionDef",
+    "start": 100,
+    "end": 102,
+    "definition": "def test_unit_invalid_options(changes):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_invalid_plan_no_calls",
+    "kind": "FunctionDef",
+    "start": 108,
+    "end": 112,
+    "definition": "def test_invalid_plan_no_calls(change):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_unit_bootstrap_preserves_backend_configuration",
+    "kind": "FunctionDef",
+    "start": 116,
+    "end": 135,
+    "definition": "def test_unit_bootstrap_preserves_backend_configuration(mode):",
+    "assertions": [
+      "assert pipeline.options == options(mode)",
+      "assert factory.call_args.kwargs == {\n        \"dense_model_path\": dense,\n        \"hybrid_config\": hybrid,\n        \"rerank_config\": rerank,\n        \"timeout_seconds\": 30,\n    }"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_offline_real_dispatch_direct_parity_and_all_metadata",
+    "kind": "FunctionDef",
+    "start": 139,
+    "end": 182,
+    "definition": "def test_offline_real_dispatch_direct_parity_and_all_metadata(mode):",
+    "assertions": [
+      "assert plan == before and state[\"status\"] == \"COMPLETED\"",
+      "assert response is recorder.responses[0]",
+      "assert state[\"requests\"] == tuple(recorder.requests)",
+      "assert response.status == \"OK\"",
+      "assert response.model_dump(exclude={\"request_id\", \"retrieved_at\"}) == baseline.model_dump(\n        exclude={\"request_id\", \"retrieved_at\"}\n    )",
+      "assert [item.rank for item in response.evidence] == [1, 2]",
+      "assert response.warnings",
+      "assert item.source_document_id.int == 30 and item.document_structure_id.int == 40",
+      "assert item.hash_check == \"MATCHED_STORED\"",
+      "assert item.source_url is None and item.source_snapshot_id is None",
+      "assert item.content_representation == \"retrieval_chunk_content\"",
+      "assert item.chunk_metadata[\"breadcrumb\"] == \"Demo > \u0110i\u1ec1u 1\"",
+      "assert sparse.requests and dense.calls == encoder.calls == []",
+      "assert all(item.score_kind == \"BM25\" for item in response.evidence)",
+      "assert dense.calls and encoder.calls and sparse.requests == []",
+      "assert all(len(req.query_embedding) == 384 for req in dense.calls)",
+      "assert isinstance(response, HybridRetrievalResponse)",
+      "assert [b.backend for b in response.fusion.branches] == [\"bm25\", \"dense\"]",
+      "assert sparse.requests[0].top_k == dense.calls[0].top_k == 20",
+      "assert response.fusion.failure_policy == \"STRICT\"",
+      "assert all(item.score_kind == \"RRF\" for item in response.evidence)",
+      "assert isinstance(response, RerankedHybridRetrievalResponse)",
+      "assert response.reranking.status == \"APPLIED\"",
+      "assert service._pair_scorer.calls"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_offline_no_match_all_modes",
+    "kind": "FunctionDef",
+    "start": 186,
+    "end": 192,
+    "definition": "def test_offline_no_match_all_modes(mode):",
+    "assertions": [
+      "assert result[\"responses\"][0].status == \"NO_MATCH\"",
+      "assert result[\"responses\"][0].evidence == ()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_offline_hybrid_failure_is_not_partial_success",
+    "kind": "FunctionDef",
+    "start": 196,
+    "end": 211,
+    "definition": "def test_offline_hybrid_failure_is_not_partial_success(backend):",
+    "assertions": [
+      "assert result[\"status\"] == \"FAILED\" and len(result[\"responses\"]) == 1",
+      "assert response.error.category == \"DATABASE_FAILURE\"",
+      "assert response.evidence == response.fusion.ranking == ()",
+      "assert \"private\" not in response.model_dump_json()",
+      "assert sparse.requests",
+      "assert dense.calls == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_offline_missing_e5_no_vector_call",
+    "kind": "FunctionDef",
+    "start": 214,
+    "end": 218,
+    "definition": "def test_offline_missing_e5_no_vector_call(tmp_path):",
+    "assertions": [
+      "assert result[\"responses\"][0].error.code == \"MODEL_NOT_PROVISIONED\"",
+      "assert dense.calls == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_offline_missing_dense_index_no_model_call",
+    "kind": "FunctionDef",
+    "start": 221,
+    "end": 226,
+    "definition": "def test_offline_missing_dense_index_no_model_call():",
+    "assertions": [
+      "assert result[\"responses\"][0].error.code == \"INDEX_NOT_FOUND\"",
+      "assert dense.calls == encoder.calls == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_offline_missing_reranker_fallback_explicit",
+    "kind": "FunctionDef",
+    "start": 229,
+    "end": 238,
+    "definition": "def test_offline_missing_reranker_fallback_explicit(tmp_path):",
+    "assertions": [
+      "assert result[\"status\"] == \"COMPLETED\" and response.status == \"OK\"",
+      "assert response.reranking.status == \"FALLBACK\"",
+      "assert response.reranking.failure_code == \"MODEL_NOT_PROVISIONED\"",
+      "assert \"RERANKING_FALLBACK\" in [w.code for w in response.warnings]",
+      "assert all(c.cross_encoder_score is None for c in response.reranking.candidates)"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_offline_total_deadline",
+    "kind": "FunctionDef",
+    "start": 242,
+    "end": 252,
+    "definition": "def test_offline_total_deadline(mode, code):",
+    "assertions": [
+      "assert result[\"status\"] == \"FAILED\"",
+      "assert result[\"responses\"][0].error.code == code",
+      "assert result[\"responses\"][0].evidence == ()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_offline_total_deadline.SlowEncoder",
+    "kind": "ClassDef",
+    "start": 243,
+    "end": 246
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_offline_total_deadline.SlowEncoder.encode_query",
+    "kind": "AsyncFunctionDef",
+    "start": 244,
+    "end": 246,
+    "definition": "async def encode_query(self, query):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_search_multimode.py",
+    "symbol": "test_no_legacy_references_in_application_path",
+    "kind": "FunctionDef",
+    "start": 255,
+    "end": 261,
+    "definition": "def test_no_legacy_references_in_application_path():",
+    "assertions": [
+      "assert \"ai_core\" not in inspect.getsource(module)"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_invalid_type",
+    "kind": "FunctionDef",
+    "start": 11,
+    "end": 13,
+    "definition": "def test_invalid_type(question):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_length",
+    "kind": "FunctionDef",
+    "start": 17,
+    "end": 19,
+    "definition": "def test_length(question):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_blank",
+    "kind": "FunctionDef",
+    "start": 23,
+    "end": 25,
+    "definition": "def test_blank(question):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_characters",
+    "kind": "FunctionDef",
+    "start": 29,
+    "end": 31,
+    "definition": "def test_characters(character):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_unicode_and_original",
+    "kind": "FunctionDef",
+    "start": 34,
+    "end": 42,
+    "definition": "def test_unicode_and_original():",
+    "assertions": [
+      "assert first.pop(\"original\") == original",
+      "assert second.pop(\"original\") == decomposed",
+      "assert first == second",
+      "assert understand(\"x\" * 10000)[\"original\"] == \"x\" * 10000",
+      "assert understand(\"Ngh\u1ec9\\t ph\u00e9p\\nTi\u1ec1n l\u01b0\u01a1ng\\r\")"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_valid_date",
+    "kind": "FunctionDef",
+    "start": 46,
+    "end": 49,
+    "definition": "def test_valid_date(mention):",
+    "assertions": [
+      "assert plan[\"temporal_scope\"] == [mention]",
+      "assert plan[\"clarification\"] is None"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_invalid_date",
+    "kind": "FunctionDef",
+    "start": 53,
+    "end": 57,
+    "definition": "def test_invalid_date(mention):",
+    "assertions": [
+      "assert plan[\"temporal_scope\"] == [\"2020\"]",
+      "assert plan[\"clarification\"]",
+      "assert mention in plan[\"original\"]"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_temporal_semantics",
+    "kind": "FunctionDef",
+    "start": 73,
+    "end": 74,
+    "definition": "def test_temporal_semantics(question, expected):",
+    "assertions": [
+      "assert understand(question)[\"temporal_scope\"] == expected"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/test_query_hardening.py",
+    "symbol": "test_contract_and_regressions",
+    "kind": "FunctionDef",
+    "start": 77,
+    "end": 85,
+    "definition": "def test_contract_and_regressions():",
+    "assertions": [
+      "assert set(plan) == {\"original\", \"intent\", \"domain\", \"temporal_scope\", \"subqueries\", \"clarification\"}",
+      "assert QueryPlan.model_validate(plan).model_dump() == plan",
+      "assert plan[\"intent\"] == \"quote_lookup\"",
+      "assert plan[\"subqueries\"] == [{\"text\": \"\u0111\u1ed1i tho\u1ea1i\", \"purpose\": \"lookup\"}]",
+      "assert understand(\"C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng?\")[\"clarification\"]",
+      "assert understand(\"Ng\u01b0\u1eddi lao \u0111\u1ed9ng ngh\u1ec9 ph\u00e9p?\")[\"domain\"] == \"labour\"",
+      "assert understand(\"a?b?c?d?e\")[\"clarification\"]"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "FakeRetrieval",
+    "kind": "ClassDef",
+    "start": 25,
+    "end": 51
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "FakeRetrieval.__init__",
+    "kind": "FunctionDef",
+    "start": 26,
+    "end": 29,
+    "definition": "def __init__(self, *, fail_at=None):",
+    "assertions": []
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "FakeRetrieval.search",
+    "kind": "AsyncFunctionDef",
+    "start": 31,
+    "end": 51,
+    "definition": "async def search(self, request):",
+    "assertions": []
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "context",
+    "kind": "FunctionDef",
+    "start": 54,
+    "end": 55,
+    "definition": "def context(run=\"run-1\", request=\"request-1\", token=None):",
+    "assertions": []
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "workflow",
+    "kind": "FunctionDef",
+    "start": 58,
+    "end": 59,
+    "definition": "def workflow(service=None, mode=\"bm25\"):",
+    "assertions": []
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_unit_query_node_and_routes",
+    "kind": "FunctionDef",
+    "start": 62,
+    "end": 74,
+    "definition": "def test_unit_query_node_and_routes():",
+    "assertions": [
+      "assert service.requests == []",
+      "assert state[\"plan\"] == understand(question)",
+      "assert state[\"status\"] == status and nodes.route_query(state) == route",
+      "assert state[\"options\"] is nodes.pipeline.options",
+      "assert state[\"search_result\"] is state[\"handoff\"] is None"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_unit_search_node_keeps_native_result_and_ids",
+    "kind": "FunctionDef",
+    "start": 77,
+    "end": 88,
+    "definition": "def test_unit_search_node_keeps_native_result_and_ids():",
+    "assertions": [
+      "assert state == before and update[\"status\"] == \"NO_MATCH\"",
+      "assert handoff.responses[0] is service.responses[0]",
+      "assert handoff.run_id == \"run\" and handoff.request_id == \"request\"",
+      "assert handoff.warnings == service.responses[0].warnings and handoff.errors == ()"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_graph_clarification_skips_search_node",
+    "kind": "FunctionDef",
+    "start": 92,
+    "end": 110,
+    "definition": "def test_graph_clarification_skips_search_node(question):",
+    "assertions": [
+      "assert service.requests == []",
+      "assert [next(iter(update)) for update in updates] == [\"query\"]",
+      "assert result[\"status\"] == \"CLARIFICATION_REQUIRED\"",
+      "assert result[\"handoff\"] is result[\"search_result\"] is None",
+      "assert result[\"clarification\"] == understand(question)[\"clarification\"]"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_graph_clarification_skips_search_node.run",
+    "kind": "AsyncFunctionDef",
+    "start": 96,
+    "end": 107,
+    "definition": "async def run():",
+    "assertions": [
+      "assert [next(iter(update)) for update in updates] == [\"query\"]",
+      "assert result[\"status\"] == \"CLARIFICATION_REQUIRED\"",
+      "assert result[\"handoff\"] is result[\"search_result\"] is None",
+      "assert result[\"clarification\"] == understand(question)[\"clarification\"]"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_graph_exact_order_and_no_match_handoff",
+    "kind": "FunctionDef",
+    "start": 113,
+    "end": 126,
+    "definition": "def test_graph_exact_order_and_no_match_handoff():",
+    "assertions": [
+      "assert len(service.requests) == 1",
+      "assert set(flow.graph.nodes) == {\"__start__\", \"query\", \"search\"}",
+      "assert [next(iter(update)) for update in updates] == [\"query\", \"search\"]",
+      "assert updates[0][\"query\"][\"status\"] == \"QUERY_COMPLETED\"",
+      "assert updates[1][\"search\"][\"status\"] == \"NO_MATCH\""
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_graph_exact_order_and_no_match_handoff.run",
+    "kind": "AsyncFunctionDef",
+    "start": 117,
+    "end": 122,
+    "definition": "async def run():",
+    "assertions": [
+      "assert [next(iter(update)) for update in updates] == [\"query\", \"search\"]",
+      "assert updates[0][\"query\"][\"status\"] == \"QUERY_COMPLETED\"",
+      "assert updates[1][\"search\"][\"status\"] == \"NO_MATCH\""
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_real_service_fake_ports_preserve_subtypes_and_json",
+    "kind": "FunctionDef",
+    "start": 130,
+    "end": 152,
+    "definition": "def test_real_service_fake_ports_preserve_subtypes_and_json(mode):",
+    "assertions": [
+      "assert lifecycle.snapshot.status is ExecutionStatus.SUCCEEDED",
+      "assert state[\"status\"] == \"SEARCH_COMPLETED\" and state[\"clarification\"] is None",
+      "assert packet.status == \"READY\" and packet.search_status == \"COMPLETED\"",
+      "assert packet.responses[0] is state[\"search_result\"][\"responses\"][0]",
+      "assert restored == packet and type(restored.responses[0]) is type(packet.responses[0])",
+      "assert restored.responses[0].evidence == packet.responses[0].evidence",
+      "assert restored.options == options(mode)",
+      "assert restored.warnings == packet.warnings and restored.errors == ()",
+      "assert packet.responses[0].model_dump(exclude={\"request_id\", \"retrieved_at\"}) == direct[\"responses\"][0].model_dump(\n        exclude={\"request_id\", \"retrieved_at\"}\n    )",
+      "assert restored.responses[0].fusion == packet.responses[0].fusion",
+      "assert restored.responses[0].reranking == packet.responses[0].reranking"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_multiple_queries_failure_keeps_prior_response_and_error",
+    "kind": "FunctionDef",
+    "start": 155,
+    "end": 165,
+    "definition": "def test_multiple_queries_failure_keeps_prior_response_and_error():",
+    "assertions": [
+      "assert state[\"status\"] == packet.status == \"RETRIEVAL_FAILED\"",
+      "assert state[\"search_result\"][\"status\"] == \"FAILED\"",
+      "assert len(service.requests) == len(packet.responses) == 2",
+      "assert packet.responses[0].status == \"NO_MATCH\" and packet.responses[1].status == \"FAILED\"",
+      "assert packet.errors[0] is packet.responses[1].error",
+      "assert state[\"errors\"] == [\"FIXTURE_READ_FAILED\"]",
+      "assert JudgeHandoff.model_validate_json(packet.model_dump_json()) == packet"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_invalid_input_preserves_query_error",
+    "kind": "FunctionDef",
+    "start": 169,
+    "end": 175,
+    "definition": "def test_invalid_input_preserves_query_error(question):",
+    "assertions": [
+      "assert lifecycle.snapshot.status is ExecutionStatus.FAILED",
+      "assert service.requests == []"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_query_execution_failure_propagates_without_handoff",
+    "kind": "FunctionDef",
+    "start": 178,
+    "end": 184,
+    "definition": "def test_query_execution_failure_propagates_without_handoff():",
+    "assertions": [
+      "assert lifecycle.snapshot.status is ExecutionStatus.FAILED and service.requests == []"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_unexpected_search_exception_is_execution_failure",
+    "kind": "FunctionDef",
+    "start": 187,
+    "end": 195,
+    "definition": "def test_unexpected_search_exception_is_execution_failure():",
+    "assertions": [
+      "assert lifecycle.snapshot.status is ExecutionStatus.FAILED"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_unexpected_search_exception_is_execution_failure.Broken",
+    "kind": "ClassDef",
+    "start": 188,
+    "end": 190
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_unexpected_search_exception_is_execution_failure.Broken.search",
+    "kind": "AsyncFunctionDef",
+    "start": 189,
+    "end": 190,
+    "definition": "async def search(self, request):",
+    "assertions": []
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_typed_retrieval_timeout_becomes_failed_handoff",
+    "kind": "FunctionDef",
+    "start": 198,
+    "end": 213,
+    "definition": "def test_typed_retrieval_timeout_becomes_failed_handoff():",
+    "assertions": [
+      "assert state[\"status\"] == \"RETRIEVAL_FAILED\"",
+      "assert state[\"handoff\"].errors[0].category == \"TIMEOUT\""
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_typed_retrieval_timeout_becomes_failed_handoff.Deadline",
+    "kind": "ClassDef",
+    "start": 199,
+    "end": 209
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_typed_retrieval_timeout_becomes_failed_handoff.Deadline.search",
+    "kind": "AsyncFunctionDef",
+    "start": 200,
+    "end": 209,
+    "definition": "async def search(self, request):",
+    "assertions": []
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_outer_timeout_and_cancellation_propagate",
+    "kind": "FunctionDef",
+    "start": 216,
+    "end": 249,
+    "definition": "def test_outer_timeout_and_cancellation_propagate():",
+    "assertions": [
+      "assert lifecycle.snapshot.status is ExecutionStatus.FAILED and service.cancelled",
+      "assert lifecycle.snapshot.status is ExecutionStatus.CANCELLED and service.cancelled",
+      "assert current_execution_context() is None"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_outer_timeout_and_cancellation_propagate.Waiting",
+    "kind": "ClassDef",
+    "start": 217,
+    "end": 228
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_outer_timeout_and_cancellation_propagate.Waiting.__init__",
+    "kind": "FunctionDef",
+    "start": 218,
+    "end": 221,
+    "definition": "def __init__(self):",
+    "assertions": []
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_outer_timeout_and_cancellation_propagate.Waiting.search",
+    "kind": "AsyncFunctionDef",
+    "start": 223,
+    "end": 228,
+    "definition": "async def search(self, request):",
+    "assertions": []
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_outer_timeout_and_cancellation_propagate.run",
+    "kind": "AsyncFunctionDef",
+    "start": 230,
+    "end": 247,
+    "definition": "async def run():",
+    "assertions": [
+      "assert lifecycle.snapshot.status is ExecutionStatus.FAILED and service.cancelled",
+      "assert lifecycle.snapshot.status is ExecutionStatus.CANCELLED and service.cancelled",
+      "assert current_execution_context() is None"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_caller_task_cancellation_propagates",
+    "kind": "FunctionDef",
+    "start": 252,
+    "end": 271,
+    "definition": "def test_caller_task_cancellation_propagates():",
+    "assertions": [
+      "assert lifecycle.snapshot.status is ExecutionStatus.CANCELLED"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_caller_task_cancellation_propagates.run",
+    "kind": "AsyncFunctionDef",
+    "start": 253,
+    "end": 269,
+    "definition": "async def run():",
+    "assertions": [
+      "assert lifecycle.snapshot.status is ExecutionStatus.CANCELLED"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_caller_task_cancellation_propagates.run.Waiting",
+    "kind": "ClassDef",
+    "start": 256,
+    "end": 259
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_caller_task_cancellation_propagates.run.Waiting.search",
+    "kind": "AsyncFunctionDef",
+    "start": 257,
+    "end": 259,
+    "definition": "async def search(self, request):",
+    "assertions": []
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_repeated_and_concurrent_requests_are_isolated",
+    "kind": "FunctionDef",
+    "start": 274,
+    "end": 296,
+    "definition": "def test_repeated_and_concurrent_requests_are_isolated():",
+    "assertions": [
+      "assert failed[\"status\"] == \"RETRIEVAL_FAILED\"",
+      "assert first[\"errors\"] == second[\"errors\"] == []",
+      "assert first[\"run_id\"] == first[\"handoff\"].run_id == \"one\"",
+      "assert second[\"request_id\"] == second[\"handoff\"].request_id == \"r2\"",
+      "assert first[\"handoff\"].responses[0].query == \"h\u1ee3p \u0111\u1ed3ng\"",
+      "assert second[\"handoff\"].responses[0].query == \"ngh\u1ec9 ph\u00e9p\"",
+      "assert second[\"plan\"][\"original\"] == \"Tr\u00edch d\u1eabn: ngh\u1ec9 ph\u00e9p\"",
+      "assert clarified[\"handoff\"] is clarified[\"search_result\"] is None",
+      "assert clarified[\"errors\"] == []"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_repeated_and_concurrent_requests_are_isolated.run",
+    "kind": "AsyncFunctionDef",
+    "start": 278,
+    "end": 294,
+    "definition": "async def run():",
+    "assertions": [
+      "assert failed[\"status\"] == \"RETRIEVAL_FAILED\"",
+      "assert first[\"errors\"] == second[\"errors\"] == []",
+      "assert first[\"run_id\"] == first[\"handoff\"].run_id == \"one\"",
+      "assert second[\"request_id\"] == second[\"handoff\"].request_id == \"r2\"",
+      "assert first[\"handoff\"].responses[0].query == \"h\u1ee3p \u0111\u1ed3ng\"",
+      "assert second[\"handoff\"].responses[0].query == \"ngh\u1ec9 ph\u00e9p\"",
+      "assert second[\"plan\"][\"original\"] == \"Tr\u00edch d\u1eabn: ngh\u1ec9 ph\u00e9p\"",
+      "assert clarified[\"handoff\"] is clarified[\"search_result\"] is None",
+      "assert clarified[\"errors\"] == []"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_untrusted_state_options_do_not_override_injection",
+    "kind": "FunctionDef",
+    "start": 299,
+    "end": 307,
+    "definition": "def test_untrusted_state_options_do_not_override_injection():",
+    "assertions": [
+      "assert service.requests[0].mode == \"bm25\"",
+      "assert update[\"handoff\"].options == options(\"bm25\")"
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_handoff_rejects_inconsistent_or_extra_fields",
+    "kind": "FunctionDef",
+    "start": 314,
+    "end": 318,
+    "definition": "def test_handoff_rejects_inconsistent_or_extra_fields(change):",
+    "assertions": []
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_graph_context_and_no_judge_dependency",
+    "kind": "FunctionDef",
+    "start": 321,
+    "end": 335,
+    "definition": "def test_graph_context_and_no_judge_dependency():",
+    "assertions": [
+      "assert \"ai_core\" not in source",
+      "assert \"agents.judge\" not in source",
+      "assert 'add_node(\"judge\"' not in source",
+      "assert current_execution_context().run_id == \"run-1\""
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_graph_context_and_no_judge_dependency.Bound",
+    "kind": "ClassDef",
+    "start": 326,
+    "end": 329
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_graph_context_and_no_judge_dependency.Bound.search",
+    "kind": "AsyncFunctionDef",
+    "start": 327,
+    "end": 329,
+    "definition": "async def search(self, request):",
+    "assertions": [
+      "assert current_execution_context().run_id == \"run-1\""
+    ]
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_handoff_context_mismatch_is_rejected",
+    "kind": "FunctionDef",
+    "start": 339,
+    "end": 349,
+    "definition": "def test_handoff_context_mismatch_is_rejected(boundary):",
+    "assertions": []
+  },
+  {
+    "file": "tests/graph/test_query_search_workflow.py",
+    "symbol": "test_unicode_original_survives_graph_and_handoff",
+    "kind": "FunctionDef",
+    "start": 352,
+    "end": 360,
+    "definition": "def test_unicode_original_survives_graph_and_handoff():",
+    "assertions": [
+      "assert state[\"question\"] == state[\"plan\"][\"original\"] == state[\"handoff\"].question == question",
+      "assert service.requests[0].query == \"ngh\u1ec9 ph\u00e9p\"",
+      "assert JudgeHandoff.model_validate_json(state[\"handoff\"].model_dump_json()).plan.original == question"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_contracts.py",
+    "symbol": "request",
+    "kind": "FunctionDef",
+    "start": 18,
+    "end": 27,
+    "definition": "def request(**changes):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_contracts.py",
+    "symbol": "evidence",
+    "kind": "FunctionDef",
+    "start": 30,
+    "end": 64,
+    "definition": "def evidence(**changes):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_contracts.py",
+    "symbol": "response",
+    "kind": "FunctionDef",
+    "start": 67,
+    "end": 80,
+    "definition": "def response(**changes):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_contracts.py",
+    "symbol": "test_invalid_request",
+    "kind": "FunctionDef",
+    "start": 99,
+    "end": 101,
+    "definition": "def test_invalid_request(changes):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_contracts.py",
+    "symbol": "test_required_date_and_policies",
+    "kind": "FunctionDef",
+    "start": 104,
+    "end": 109,
+    "definition": "def test_required_date_and_policies():",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_contracts.py",
+    "symbol": "test_query_preserved_policies_deduplicated_and_serialization",
+    "kind": "FunctionDef",
+    "start": 112,
+    "end": 118,
+    "definition": "def test_query_preserved_policies_deduplicated_and_serialization():",
+    "assertions": [
+      "assert req.query == \"  Thu\u1ebf  \"",
+      "assert req.allowed_usage_policies == (\"A\", \"B\")",
+      "assert req.top_k == 10",
+      "assert req.as_of_date == date(2026, 11, 10)",
+      "assert RetrievalRequest.model_validate_json(req.model_dump_json()) == req"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_contracts.py",
+    "symbol": "test_old_sparse_imports_are_same_classes",
+    "kind": "FunctionDef",
+    "start": 121,
+    "end": 128,
+    "definition": "def test_old_sparse_imports_are_same_classes():",
+    "assertions": [
+      "assert OldHit is SparseSearchHit",
+      "assert OldRequest is SparseSearchRequest",
+      "assert req.terms == (\"a\",)",
+      "assert req.sparse_index_name == \"x\""
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_contracts.py",
+    "symbol": "test_response_invariants",
+    "kind": "FunctionDef",
+    "start": 146,
+    "end": 148,
+    "definition": "def test_response_invariants(changes):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_contracts.py",
+    "symbol": "test_success_and_failure_roundtrip",
+    "kind": "FunctionDef",
+    "start": 151,
+    "end": 160,
+    "definition": "def test_success_and_failure_roundtrip():",
+    "assertions": [
+      "assert RetrievalResponse.model_validate_json(success.model_dump_json()) == success",
+      "assert not failure.evidence"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_contracts.py",
+    "symbol": "test_score_kinds_cannot_be_mixed",
+    "kind": "FunctionDef",
+    "start": 163,
+    "end": 166,
+    "definition": "def test_score_kinds_cannot_be_mixed():",
+    "assertions": [
+      "assert evidence(retrieval_method=\"dense\", score_kind=\"COSINE_SIMILARITY\").raw_score == 2.0"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "index_row",
+    "kind": "FunctionDef",
+    "start": 16,
+    "end": 33,
+    "definition": "def index_row(**changes):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "FakeIndex",
+    "kind": "ClassDef",
+    "start": 36,
+    "end": 47
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "FakeIndex.__init__",
+    "kind": "FunctionDef",
+    "start": 37,
+    "end": 41,
+    "definition": "def __init__(self, before=None, after=None, *, missing=False, error=None):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "FakeIndex.get_index",
+    "kind": "AsyncFunctionDef",
+    "start": 43,
+    "end": 47,
+    "definition": "async def get_index(self, name):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "Unused",
+    "kind": "ClassDef",
+    "start": 50,
+    "end": 52
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "Unused.__getattr__",
+    "kind": "FunctionDef",
+    "start": 51,
+    "end": 52,
+    "definition": "def __getattr__(self, name):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "FakeSparse",
+    "kind": "ClassDef",
+    "start": 55,
+    "end": 65
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "FakeSparse.__init__",
+    "kind": "FunctionDef",
+    "start": 56,
+    "end": 59,
+    "definition": "def __init__(self, hits=(), error=None):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "FakeSparse.search",
+    "kind": "AsyncFunctionDef",
+    "start": 61,
+    "end": 65,
+    "definition": "async def search(self, req):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "service",
+    "kind": "FunctionDef",
+    "start": 68,
+    "end": 69,
+    "definition": "def service(indexes=None, sparse=None):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_index_failures",
+    "kind": "FunctionDef",
+    "start": 90,
+    "end": 95,
+    "definition": "def test_index_failures(indexes, code):",
+    "assertions": [
+      "assert result.status == \"FAILED\"",
+      "assert result.error.code == code",
+      "assert \"secret\" not in result.model_dump_json()",
+      "assert result.consistency == \"BEST_EFFORT\""
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_dense_not_configured_without_reads",
+    "kind": "FunctionDef",
+    "start": 98,
+    "end": 102,
+    "definition": "def test_dense_not_configured_without_reads():",
+    "assertions": [
+      "assert result.error.code == \"MODE_NOT_CONFIGURED\"",
+      "assert indexes.calls == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_invalid_request_makes_no_calls",
+    "kind": "FunctionDef",
+    "start": 105,
+    "end": 109,
+    "definition": "def test_invalid_request_makes_no_calls():",
+    "assertions": [
+      "assert indexes.calls == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_real_indexing_tokenizer_and_parameter_mapping",
+    "kind": "FunctionDef",
+    "start": 120,
+    "end": 131,
+    "definition": "def test_real_indexing_tokenizer_and_parameter_mapping(query, terms):",
+    "assertions": [
+      "assert result.status == \"NO_MATCH\"",
+      "assert sparse.requests[0].terms == terms",
+      "assert sparse.requests[0].top_k == 3",
+      "assert sparse.requests[0].as_of_date == req.as_of_date",
+      "assert sparse.requests[0].allowed_usage_policies == (\"A\", \"B\")",
+      "assert sparse.requests[0].sparse_index_name == DEFAULT_SPARSE_INDEX",
+      "assert indexes.calls == [DEFAULT_SPARSE_INDEX] * 2"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_empty_terms_without_db_reads",
+    "kind": "FunctionDef",
+    "start": 134,
+    "end": 139,
+    "definition": "def test_empty_terms_without_db_reads():",
+    "assertions": [
+      "assert result.error.code == \"EMPTY_TERMS\"",
+      "assert indexes.calls == sparse.requests == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_sparse_hits_keep_original_order_and_scores",
+    "kind": "FunctionDef",
+    "start": 142,
+    "end": 149,
+    "definition": "def test_sparse_hits_keep_original_order_and_scores():",
+    "assertions": [
+      "assert result == hits"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_sparse_failure_is_not_no_match",
+    "kind": "FunctionDef",
+    "start": 152,
+    "end": 156,
+    "definition": "def test_sparse_failure_is_not_no_match():",
+    "assertions": [
+      "assert result.status == \"FAILED\"",
+      "assert result.error.category == \"DATABASE_FAILURE\"",
+      "assert result.error.stage == \"search\""
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "chunk_row",
+    "kind": "FunctionDef",
+    "start": 159,
+    "end": 171,
+    "definition": "def chunk_row(number=1, **changes):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "source_row",
+    "kind": "FunctionDef",
+    "start": 174,
+    "end": 183,
+    "definition": "def source_row(**changes):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "FakeChunks",
+    "kind": "ClassDef",
+    "start": 186,
+    "end": 193
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "FakeChunks.__init__",
+    "kind": "FunctionDef",
+    "start": 187,
+    "end": 189,
+    "definition": "def __init__(self, rows):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "FakeChunks.get_by_ids",
+    "kind": "AsyncFunctionDef",
+    "start": 191,
+    "end": 193,
+    "definition": "async def get_by_ids(self, ids):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "FakeSources",
+    "kind": "ClassDef",
+    "start": 196,
+    "end": 203
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "FakeSources.__init__",
+    "kind": "FunctionDef",
+    "start": 197,
+    "end": 199,
+    "definition": "def __init__(self, row):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "FakeSources.get",
+    "kind": "AsyncFunctionDef",
+    "start": 201,
+    "end": 203,
+    "definition": "async def get(self, source_id):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "hydrated_service",
+    "kind": "FunctionDef",
+    "start": 206,
+    "end": 215,
+    "definition": "def hydrated_service(rows=None, source=None, hits=None, indexes=None):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_hydration_preserves_ranking_hash_and_reads_source_once",
+    "kind": "FunctionDef",
+    "start": 218,
+    "end": 229,
+    "definition": "def test_hydration_preserves_ranking_hash_and_reads_source_once():",
+    "assertions": [
+      "assert result.status == \"OK\"",
+      "assert [e.retrieval_chunk_id.int for e in result.evidence] == [2, 1]",
+      "assert [e.raw_score for e in result.evidence] == [7.2, 5.4]",
+      "assert [e.rank for e in result.evidence] == [1, 2]",
+      "assert all(e.score_kind == \"BM25\" and e.hash_check == \"MATCHED_STORED\" for e in result.evidence)",
+      "assert all(e.source_url is None and e.effective_to is None for e in result.evidence)",
+      "assert sources.calls == [UUID(int=30)]",
+      "assert chunks.calls == [(UUID(int=2), UUID(int=1))]",
+      "assert {w.code for w in result.warnings} == {\"SOURCE_URL_MISSING\", \"TEMPORAL_METADATA_INCOMPLETE\"}"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_bad_chunks_fail_without_partial_evidence",
+    "kind": "FunctionDef",
+    "start": 244,
+    "end": 249,
+    "definition": "def test_bad_chunks_fail_without_partial_evidence(rows, code):",
+    "assertions": [
+      "assert result.status == \"FAILED\"",
+      "assert result.error.code == code",
+      "assert result.evidence == ()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_bad_sources_fail",
+    "kind": "FunctionDef",
+    "start": 264,
+    "end": 268,
+    "definition": "def test_bad_sources_fail(source, code):",
+    "assertions": [
+      "assert result.error.code == code",
+      "assert result.evidence == ()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_missing_source",
+    "kind": "FunctionDef",
+    "start": 271,
+    "end": 274,
+    "definition": "def test_missing_source():",
+    "assertions": [
+      "assert asyncio.run(svc.search(request())).error.code == \"SOURCE_MISSING\""
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_duplicate_hits_block_hydration",
+    "kind": "FunctionDef",
+    "start": 277,
+    "end": 281,
+    "definition": "def test_duplicate_hits_block_hydration():",
+    "assertions": [
+      "assert asyncio.run(svc.search(request())).error.code == \"DUPLICATE_HITS\"",
+      "assert chunks.calls == sources.calls == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_dates_are_inclusive_and_nullable",
+    "kind": "FunctionDef",
+    "start": 284,
+    "end": 290,
+    "definition": "def test_dates_are_inclusive_and_nullable():",
+    "assertions": [
+      "assert asyncio.run(svc.search(request())).status == \"OK\""
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_postflight_change_discards_hydrated_results",
+    "kind": "FunctionDef",
+    "start": 293,
+    "end": 297,
+    "definition": "def test_postflight_change_discards_hydrated_results():",
+    "assertions": [
+      "assert result.error.code == \"INDEX_CHANGED_DURING_SEARCH\"",
+      "assert result.evidence == ()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_timeout_is_not_no_match",
+    "kind": "FunctionDef",
+    "start": 300,
+    "end": 308,
+    "definition": "def test_timeout_is_not_no_match():",
+    "assertions": [
+      "assert result.error.category == \"TIMEOUT\"",
+      "assert result.status == \"FAILED\""
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_timeout_is_not_no_match.SlowIndex",
+    "kind": "ClassDef",
+    "start": 301,
+    "end": 303
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_timeout_is_not_no_match.SlowIndex.get_index",
+    "kind": "AsyncFunctionDef",
+    "start": 302,
+    "end": 303,
+    "definition": "async def get_index(self, name):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_service.py",
+    "symbol": "test_invalid_repository_schema_cause_is_classified",
+    "kind": "FunctionDef",
+    "start": 311,
+    "end": 319,
+    "definition": "def test_invalid_repository_schema_cause_is_classified():",
+    "assertions": [
+      "assert result.error.code == \"INVALID_REPOSITORY_RESPONSE\"",
+      "assert \"sensitive\" not in result.model_dump_json()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "dense_index",
+    "kind": "FunctionDef",
+    "start": 14,
+    "end": 27,
+    "definition": "def dense_index(**changes):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "dense_hit",
+    "kind": "FunctionDef",
+    "start": 30,
+    "end": 60,
+    "definition": "def dense_hit(number=1, similarity=0.8, **changes):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "FakeEncoder",
+    "kind": "ClassDef",
+    "start": 63,
+    "end": 73
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "FakeEncoder.__init__",
+    "kind": "FunctionDef",
+    "start": 64,
+    "end": 67,
+    "definition": "def __init__(self, vector=None, error=None):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "FakeEncoder.encode_query",
+    "kind": "AsyncFunctionDef",
+    "start": 69,
+    "end": 73,
+    "definition": "async def encode_query(self, query):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "FakeDense",
+    "kind": "ClassDef",
+    "start": 76,
+    "end": 86
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "FakeDense.__init__",
+    "kind": "FunctionDef",
+    "start": 77,
+    "end": 80,
+    "definition": "def __init__(self, hits=(), error=None):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "FakeDense.search",
+    "kind": "AsyncFunctionDef",
+    "start": 82,
+    "end": 86,
+    "definition": "async def search(self, req):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "dense_service",
+    "kind": "FunctionDef",
+    "start": 89,
+    "end": 103,
+    "definition": "def dense_service(hits=(), indexes=None, encoder=None, chunks=None, error=None):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "test_dense_mapping_integrity_ranking_and_filters",
+    "kind": "FunctionDef",
+    "start": 106,
+    "end": 120,
+    "definition": "def test_dense_mapping_integrity_ranking_and_filters():",
+    "assertions": [
+      "assert result.status == \"OK\"",
+      "assert encoder.calls == [\"H\u1ee3p \u0111\u1ed3ng?\"]",
+      "assert dense.calls[0].dense_index_name == DEFAULT_DENSE_INDEX",
+      "assert len(dense.calls[0].query_embedding) == 384",
+      "assert dense.calls[0].top_k == 3",
+      "assert dense.calls[0].as_of_date == request().as_of_date",
+      "assert dense.calls[0].allowed_usage_policies == (\"EXPERIMENTAL_ONLY\",)",
+      "assert [e.retrieval_chunk_id.int for e in result.evidence] == [2, 1]",
+      "assert [e.rank for e in result.evidence] == [1, 2]",
+      "assert [e.raw_score for e in result.evidence] == [0.85, 0.8]",
+      "assert all(e.hash_check == \"MATCHED_STORED\" and e.score_kind == \"COSINE_SIMILARITY\" for e in result.evidence)",
+      "assert chunks.calls == [(UUID(int=2), UUID(int=1))]"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "test_dense_no_match_does_not_fetch_chunks",
+    "kind": "FunctionDef",
+    "start": 123,
+    "end": 126,
+    "definition": "def test_dense_no_match_does_not_fetch_chunks():",
+    "assertions": [
+      "assert asyncio.run(svc.search(request(mode=\"dense\"))).status == \"NO_MATCH\"",
+      "assert chunks.calls == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "test_dense_preflight_failure_before_encoder",
+    "kind": "FunctionDef",
+    "start": 141,
+    "end": 145,
+    "definition": "def test_dense_preflight_failure_before_encoder(row, code):",
+    "assertions": [
+      "assert result.error.code == code",
+      "assert encoder.calls == dense.calls == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "test_dense_missing_index",
+    "kind": "FunctionDef",
+    "start": 148,
+    "end": 151,
+    "definition": "def test_dense_missing_index():",
+    "assertions": [
+      "assert asyncio.run(svc.search(request(mode=\"dense\"))).error.code == \"INDEX_NOT_FOUND\"",
+      "assert encoder.calls == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "test_bad_vector_blocks_rpc",
+    "kind": "FunctionDef",
+    "start": 155,
+    "end": 158,
+    "definition": "def test_bad_vector_blocks_rpc(vector):",
+    "assertions": [
+      "assert asyncio.run(svc.search(request(mode=\"dense\"))).error.code == \"INVALID_EMBEDDING\"",
+      "assert dense.calls == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "test_model_failure_is_classified_without_raw_message",
+    "kind": "FunctionDef",
+    "start": 161,
+    "end": 172,
+    "definition": "def test_model_failure_is_classified_without_raw_message():",
+    "assertions": [
+      "assert asyncio.run(svc.search(request(mode=\"dense\"))).error.category == \"MODEL_UNAVAILABLE\"",
+      "assert dense.calls == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "test_invalid_dense_hits",
+    "kind": "FunctionDef",
+    "start": 185,
+    "end": 189,
+    "definition": "def test_invalid_dense_hits(hits):",
+    "assertions": [
+      "assert result.status == \"FAILED\" and result.error.category == \"INCONSISTENT_EVIDENCE\"",
+      "assert result.evidence == ()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "test_dense_source_filters_and_metadata",
+    "kind": "FunctionDef",
+    "start": 196,
+    "end": 198,
+    "definition": "def test_dense_source_filters_and_metadata(changes):",
+    "assertions": [
+      "assert asyncio.run(svc.search(request(mode=\"dense\"))).status == \"FAILED\""
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "test_dense_stored_integrity",
+    "kind": "FunctionDef",
+    "start": 210,
+    "end": 212,
+    "definition": "def test_dense_stored_integrity(rows, code):",
+    "assertions": [
+      "assert asyncio.run(svc.search(request(mode=\"dense\"))).error.code == code"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_dense_service.py",
+    "symbol": "test_dense_postflight_change_and_network_error",
+    "kind": "FunctionDef",
+    "start": 215,
+    "end": 221,
+    "definition": "def test_dense_postflight_change_and_network_error():",
+    "assertions": [
+      "assert asyncio.run(svc.search(request(mode=\"dense\"))).error.code == \"INDEX_CHANGED_DURING_SEARCH\"",
+      "assert result.error.category == \"DATABASE_FAILURE\"",
+      "assert \"private\" not in result.model_dump_json()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "SelectedChunks",
+    "kind": "ClassDef",
+    "start": 25,
+    "end": 32
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "SelectedChunks.__init__",
+    "kind": "FunctionDef",
+    "start": 26,
+    "end": 28,
+    "definition": "def __init__(self):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "SelectedChunks.get_by_ids",
+    "kind": "AsyncFunctionDef",
+    "start": 30,
+    "end": 32,
+    "definition": "async def get_by_ids(self, ids):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "hybrid_service",
+    "kind": "FunctionDef",
+    "start": 35,
+    "end": 73,
+    "definition": "def hybrid_service(",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_real_service_branches_fuse_with_metadata_and_independent_candidate_limits",
+    "kind": "FunctionDef",
+    "start": 76,
+    "end": 93,
+    "definition": "def test_real_service_branches_fuse_with_metadata_and_independent_candidate_limits():",
+    "assertions": [
+      "assert isinstance(result, HybridRetrievalResponse)",
+      "assert result.status == \"OK\" and result.index is None",
+      "assert [e.retrieval_chunk_id.int for e in result.evidence] == [2, 1]",
+      "assert result.evidence[0].raw_score == pytest.approx(1 / 62 + 1 / 61)",
+      "assert sparse.requests[0].top_k == 3 and dense.calls[0].top_k == 4",
+      "assert sparse.requests[0].as_of_date == dense.calls[0].as_of_date == request().as_of_date",
+      "assert sparse.requests[0].allowed_usage_policies == dense.calls[0].allowed_usage_policies",
+      "assert encoder.calls == [request().query.strip()]",
+      "assert len(sindexes.calls) == len(dindexes.calls) == 3",
+      "assert [b.backend for b in result.fusion.branches] == [\"bm25\", \"dense\"]",
+      "assert result.fusion.failure_policy == \"STRICT\"",
+      "assert all(w.retrieval_chunk_id in {e.retrieval_chunk_id for e in result.evidence} for w in result.warnings)",
+      "assert HybridRetrievalResponse.model_validate_json(result.model_dump_json()) == result"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_empty_is_valid_not_a_backend_failure",
+    "kind": "FunctionDef",
+    "start": 99,
+    "end": 106,
+    "definition": "def test_empty_is_valid_not_a_backend_failure(sparse_empty, dense_empty, status):",
+    "assertions": [
+      "assert result.status == status and result.error is None",
+      "assert [b.status for b in result.fusion.branches] == [\n        \"NO_MATCH\" if sparse_empty else \"OK\",\n        \"NO_MATCH\" if dense_empty else \"OK\",\n    ]"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_backend_failure_never_becomes_degraded_success",
+    "kind": "FunctionDef",
+    "start": 110,
+    "end": 121,
+    "definition": "def test_backend_failure_never_becomes_degraded_success(backend):",
+    "assertions": [
+      "assert result.status == \"FAILED\" and result.error.category == \"DATABASE_FAILURE\"",
+      "assert result.error.stage.startswith(backend + \".\")",
+      "assert result.evidence == result.fusion.ranking == ()",
+      "assert \"private\" not in result.model_dump_json()",
+      "assert dense.calls == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_bad_embedding_stops_hybrid_before_vector_rpc",
+    "kind": "FunctionDef",
+    "start": 124,
+    "end": 128,
+    "definition": "def test_bad_embedding_stops_hybrid_before_vector_rpc():",
+    "assertions": [
+      "assert result.error.code == \"INVALID_EMBEDDING\" and result.error.category == \"MODEL_UNAVAILABLE\"",
+      "assert dense.calls == [] and result.evidence == ()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_missing_local_checkpoint_is_not_no_match",
+    "kind": "FunctionDef",
+    "start": 131,
+    "end": 137,
+    "definition": "def test_missing_local_checkpoint_is_not_no_match(tmp_path):",
+    "assertions": [
+      "assert result.error.code == \"MODEL_NOT_PROVISIONED\" and result.evidence == ()",
+      "assert dense.calls == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_integrity_failure_never_reaches_fusion",
+    "kind": "FunctionDef",
+    "start": 140,
+    "end": 145,
+    "definition": "def test_integrity_failure_never_reaches_fusion():",
+    "assertions": [
+      "assert result.error.code == \"CONTENT_HASH_MISMATCH\"",
+      "assert dense.calls == [] and result.evidence == ()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_same_chunk_conflicting_source_metadata_blocks_fusion",
+    "kind": "FunctionDef",
+    "start": 148,
+    "end": 153,
+    "definition": "def test_same_chunk_conflicting_source_metadata_blocks_fusion():",
+    "assertions": [
+      "assert result.error.code == \"CROSS_BACKEND_EVIDENCE_CONFLICT\"",
+      "assert result.error.category == \"INCONSISTENT_EVIDENCE\"",
+      "assert result.evidence == ()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_closing_index_check_covers_interval_between_branches",
+    "kind": "FunctionDef",
+    "start": 156,
+    "end": 167,
+    "definition": "def test_closing_index_check_covers_interval_between_branches():",
+    "assertions": [
+      "assert result.error.code == \"INDEX_CHANGED_DURING_HYBRID\"",
+      "assert result.evidence == ()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_closing_index_check_covers_interval_between_branches.ChangedIndex",
+    "kind": "ClassDef",
+    "start": 157,
+    "end": 162
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_closing_index_check_covers_interval_between_branches.ChangedIndex.get_index",
+    "kind": "AsyncFunctionDef",
+    "start": 158,
+    "end": 162,
+    "definition": "async def get_index(self, name):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_hybrid_index_unavailable_stops_dense",
+    "kind": "FunctionDef",
+    "start": 170,
+    "end": 173,
+    "definition": "def test_hybrid_index_unavailable_stops_dense():",
+    "assertions": [
+      "assert result.error.category == \"INDEX_UNAVAILABLE\" and dense.calls == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_outer_timeout_does_not_return_first_branch_hits",
+    "kind": "FunctionDef",
+    "start": 176,
+    "end": 184,
+    "definition": "def test_outer_timeout_does_not_return_first_branch_hits():",
+    "assertions": [
+      "assert result.error.category == \"TIMEOUT\" and result.evidence == ()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_outer_timeout_does_not_return_first_branch_hits.slow",
+    "kind": "AsyncFunctionDef",
+    "start": 179,
+    "end": 180,
+    "definition": "async def slow(req):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_single_backend_payloads_keep_original_shape",
+    "kind": "FunctionDef",
+    "start": 187,
+    "end": 192,
+    "definition": "def test_single_backend_payloads_keep_original_shape():",
+    "assertions": [
+      "assert result.status == \"OK\"",
+      "assert \"fusion\" not in result.model_dump()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_closing_read_failure_is_not_no_match",
+    "kind": "FunctionDef",
+    "start": 195,
+    "end": 205,
+    "definition": "def test_closing_read_failure_is_not_no_match():",
+    "assertions": [
+      "assert result.error.category == \"DATABASE_FAILURE\" and result.evidence == ()",
+      "assert \"private\" not in result.model_dump_json()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_closing_read_failure_is_not_no_match.FailedClosing",
+    "kind": "ClassDef",
+    "start": 196,
+    "end": 200
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_closing_read_failure_is_not_no_match.FailedClosing.get_index",
+    "kind": "AsyncFunctionDef",
+    "start": 197,
+    "end": 200,
+    "definition": "async def get_index(self, name):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_branch_context_mismatch_is_an_integrity_failure",
+    "kind": "FunctionDef",
+    "start": 208,
+    "end": 231,
+    "definition": "def test_branch_context_mismatch_is_an_integrity_failure():",
+    "assertions": [
+      "assert result.error.code == \"BRANCH_CONTEXT_MISMATCH\" and result.evidence == ()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_branch_context_mismatch_is_an_integrity_failure.changed",
+    "kind": "AsyncFunctionDef",
+    "start": 212,
+    "end": 214,
+    "definition": "async def changed(req):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_source_filter_failure_is_not_hidden_by_other_backend",
+    "kind": "FunctionDef",
+    "start": 234,
+    "end": 239,
+    "definition": "def test_source_filter_failure_is_not_hidden_by_other_backend():",
+    "assertions": [
+      "assert result.error.code == \"ELIGIBILITY_CHANGED\" and result.evidence == ()",
+      "assert dense.calls == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_hybrid_service.py",
+    "symbol": "test_hybrid_explanation_contract_rejects_tampering",
+    "kind": "FunctionDef",
+    "start": 243,
+    "end": 257,
+    "definition": "def test_hybrid_explanation_contract_rejects_tampering(tamper):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "Scorer",
+    "kind": "ClassDef",
+    "start": 19,
+    "end": 35
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "Scorer.__init__",
+    "kind": "FunctionDef",
+    "start": 20,
+    "end": 23,
+    "definition": "def __init__(self, scores=None, error=None):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "Scorer.score_pairs",
+    "kind": "AsyncFunctionDef",
+    "start": 25,
+    "end": 35,
+    "definition": "async def score_pairs(self, query, passages):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "configured",
+    "kind": "FunctionDef",
+    "start": 38,
+    "end": 42,
+    "definition": "def configured(scorer=None, **kwargs):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_real_service_integration_expands_pool_preserves_metadata_and_rrf_scores",
+    "kind": "FunctionDef",
+    "start": 45,
+    "end": 60,
+    "definition": "def test_real_service_integration_expands_pool_preserves_metadata_and_rrf_scores():",
+    "assertions": [
+      "assert result.reranking.status == \"APPLIED\"",
+      "assert result.top_k == 2 and len(result.reranking.candidates) == 3",
+      "assert scorer.calls[0][1] == tuple(e.content for e in original.evidence)",
+      "assert [e.retrieval_chunk_id for e in result.evidence] == [e.retrieval_chunk_id for e in original.evidence][::-1][\n        :2\n    ]",
+      "assert all(e.model_dump(exclude={\"rank\"}) == originals[e.retrieval_chunk_id] for e in result.evidence)",
+      "assert len(deps[3].calls) == len(deps[4].calls) == 4",
+      "assert RerankedHybridRetrievalResponse.model_validate_json(result.model_dump_json()) == result"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_invalid_scores_fallback_to_original_rrf",
+    "kind": "FunctionDef",
+    "start": 64,
+    "end": 69,
+    "definition": "def test_invalid_scores_fallback_to_original_rrf(scores):",
+    "assertions": [
+      "assert result.reranking.status == \"FALLBACK\"",
+      "assert [e.retrieval_chunk_id.int for e in result.evidence] == [2, 1]",
+      "assert any(w.code == \"RERANKING_FALLBACK\" for w in result.warnings)"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_operational_failure_visible_not_no_match",
+    "kind": "FunctionDef",
+    "start": 75,
+    "end": 79,
+    "definition": "def test_operational_failure_visible_not_no_match(code):",
+    "assertions": [
+      "assert result.status == \"OK\" and result.reranking.status == \"FALLBACK\"",
+      "assert result.reranking.failure_code == code and len(result.evidence) == 3"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_empty_no_model_call_and_single_candidate_is_scored",
+    "kind": "FunctionDef",
+    "start": 82,
+    "end": 91,
+    "definition": "def test_empty_no_model_call_and_single_candidate_is_scored():",
+    "assertions": [
+      "assert result.status == \"NO_MATCH\" and scorer.calls == []",
+      "assert len(result.evidence) == 1 and len(scorer.calls) == 1",
+      "assert len(select_candidates(single, (5,), 5)) == 1"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_equal_scores_retain_original_order",
+    "kind": "FunctionDef",
+    "start": 94,
+    "end": 97,
+    "definition": "def test_equal_scores_retain_original_order():",
+    "assertions": [
+      "assert [e.retrieval_chunk_id.int for e in result.evidence] == [2, 1, 3]"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_disabled_and_nonhybrid_compatibility",
+    "kind": "FunctionDef",
+    "start": 100,
+    "end": 108,
+    "definition": "def test_disabled_and_nonhybrid_compatibility():",
+    "assertions": [
+      "assert \"reranking\" not in result.model_dump() and scorer.calls == []",
+      "assert \"reranking\" not in result.model_dump()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_retrieval_integrity_and_policy_failures_never_fallback",
+    "kind": "FunctionDef",
+    "start": 111,
+    "end": 122,
+    "definition": "def test_retrieval_integrity_and_policy_failures_never_fallback():",
+    "assertions": [
+      "assert result.status == \"FAILED\" and result.evidence == () and scorer.calls == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_pure_selection_rejects_duplicates_missing_content_bool_and_count",
+    "kind": "FunctionDef",
+    "start": 125,
+    "end": 141,
+    "definition": "def test_pure_selection_rejects_duplicates_missing_content_bool_and_count():",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_index_change_during_inference_fails",
+    "kind": "FunctionDef",
+    "start": 144,
+    "end": 154,
+    "definition": "def test_index_change_during_inference_fails():",
+    "assertions": [
+      "assert result.status == \"FAILED\" and result.evidence == ()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_index_change_during_inference_fails.Changing",
+    "kind": "ClassDef",
+    "start": 147,
+    "end": 150
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_index_change_during_inference_fails.Changing.score_pairs",
+    "kind": "AsyncFunctionDef",
+    "start": 148,
+    "end": 150,
+    "definition": "async def score_pairs(self, query, passages):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_model_timeout_fallback_and_total_timeout_failure",
+    "kind": "FunctionDef",
+    "start": 157,
+    "end": 168,
+    "definition": "def test_model_timeout_fallback_and_total_timeout_failure():",
+    "assertions": [
+      "assert result.reranking.failure_code == \"RERANK_TIMEOUT\" and result.status == \"OK\"",
+      "assert result.status == \"FAILED\""
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_model_timeout_fallback_and_total_timeout_failure.Slow",
+    "kind": "ClassDef",
+    "start": 158,
+    "end": 160
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_model_timeout_fallback_and_total_timeout_failure.Slow.score_pairs",
+    "kind": "AsyncFunctionDef",
+    "start": 159,
+    "end": 160,
+    "definition": "async def score_pairs(self, query, passages):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_response_rejects_score_order_and_rrf_tampering",
+    "kind": "FunctionDef",
+    "start": 171,
+    "end": 181,
+    "definition": "def test_response_rejects_score_order_and_rrf_tampering():",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_missing_local_model_no_download",
+    "kind": "FunctionDef",
+    "start": 184,
+    "end": 186,
+    "definition": "def test_missing_local_model_no_download(tmp_path):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_cli_rejects_reranking_nonhybrid_before_dependencies",
+    "kind": "FunctionDef",
+    "start": 189,
+    "end": 192,
+    "definition": "def test_cli_rejects_reranking_nonhybrid_before_dependencies(capsys):",
+    "assertions": [
+      "assert main(args, service_factory=lambda: pytest.fail(\"dependencies called\")) == 2",
+      "assert \"INVALID_ARGUMENTS\" in capsys.readouterr().out"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_cli_serialization_preserves_ce_order_not_rrf_order",
+    "kind": "FunctionDef",
+    "start": 195,
+    "end": 227,
+    "definition": "def test_cli_serialization_preserves_ce_order_not_rrf_order(capsys):",
+    "assertions": [
+      "assert main(args, service_factory=lambda: SimpleNamespace(search=search)) == 0",
+      "assert [e[\"retrieval_chunk_id\"] for e in payload[\"evidence\"]] == [\n        str(e.retrieval_chunk_id) for e in result.evidence\n    ]",
+      "assert [e[\"raw_score\"] for e in payload[\"evidence\"]] != sorted(\n        [e[\"raw_score\"] for e in payload[\"evidence\"]], reverse=True\n    )"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_cli_serialization_preserves_ce_order_not_rrf_order.search",
+    "kind": "AsyncFunctionDef",
+    "start": 202,
+    "end": 203,
+    "definition": "async def search(req):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_adapter_fake_model_pair_mapping_truncation_and_no_sigmoid",
+    "kind": "FunctionDef",
+    "start": 230,
+    "end": 272,
+    "definition": "def test_adapter_fake_model_pair_mapping_truncation_and_no_sigmoid(monkeypatch):",
+    "assertions": [
+      "assert output.scores == (5.0, 200.0) and output.truncated == (False, True)",
+      "assert calls[0][2][\"truncation\"] == \"only_second\""
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_adapter_fake_model_pair_mapping_truncation_and_no_sigmoid.Tokenizer",
+    "kind": "ClassDef",
+    "start": 237,
+    "end": 245
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_adapter_fake_model_pair_mapping_truncation_and_no_sigmoid.Tokenizer.num_special_tokens_to_add",
+    "kind": "FunctionDef",
+    "start": 238,
+    "end": 239,
+    "definition": "def num_special_tokens_to_add(self, pair):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_adapter_fake_model_pair_mapping_truncation_and_no_sigmoid.Tokenizer.__call__",
+    "kind": "FunctionDef",
+    "start": 241,
+    "end": 245,
+    "definition": "def __call__(self, query, passages=None, **kwargs):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_adapter_fake_model_pair_mapping_truncation_and_no_sigmoid.Logits",
+    "kind": "ClassDef",
+    "start": 247,
+    "end": 259
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_adapter_fake_model_pair_mapping_truncation_and_no_sigmoid.Logits.__init__",
+    "kind": "FunctionDef",
+    "start": 248,
+    "end": 250,
+    "definition": "def __init__(self, values):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_adapter_fake_model_pair_mapping_truncation_and_no_sigmoid.Logits.__getitem__",
+    "kind": "FunctionDef",
+    "start": 252,
+    "end": 253,
+    "definition": "def __getitem__(self, key):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_adapter_fake_model_pair_mapping_truncation_and_no_sigmoid.Logits.cpu",
+    "kind": "FunctionDef",
+    "start": 255,
+    "end": 256,
+    "definition": "def cpu(self):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_adapter_fake_model_pair_mapping_truncation_and_no_sigmoid.Logits.tolist",
+    "kind": "FunctionDef",
+    "start": 258,
+    "end": 259,
+    "definition": "def tolist(self):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_adapter_busy_and_cancellation_keep_worker_lock",
+    "kind": "FunctionDef",
+    "start": 275,
+    "end": 302,
+    "definition": "def test_adapter_busy_and_cancellation_keep_worker_lock():",
+    "assertions": [
+      "assert not adapter._lock.locked()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_adapter_busy_and_cancellation_keep_worker_lock.load",
+    "kind": "FunctionDef",
+    "start": 281,
+    "end": 284,
+    "definition": "def load():",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_reranking.py",
+    "symbol": "test_adapter_busy_and_cancellation_keep_worker_lock.scenario",
+    "kind": "AsyncFunctionDef",
+    "start": 288,
+    "end": 299,
+    "definition": "async def scenario():",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "FakeModel",
+    "kind": "ClassDef",
+    "start": 12,
+    "end": 31
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "FakeModel.__init__",
+    "kind": "FunctionDef",
+    "start": 15,
+    "end": 19,
+    "definition": "def __init__(self):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "FakeModel.tokenize",
+    "kind": "FunctionDef",
+    "start": 21,
+    "end": 24,
+    "definition": "def tokenize(self, text, **options):",
+    "assertions": [
+      "assert options == {\"add_special_tokens\": True, \"truncation\": False}"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "FakeModel.get_sentence_embedding_dimension",
+    "kind": "FunctionDef",
+    "start": 26,
+    "end": 27,
+    "definition": "def get_sentence_embedding_dimension(self):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "FakeModel.encode",
+    "kind": "FunctionDef",
+    "start": 29,
+    "end": 31,
+    "definition": "def encode(self, texts, **options):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "encoder",
+    "kind": "FunctionDef",
+    "start": 34,
+    "end": 46,
+    "definition": "def encoder(monkeypatch, tmp_path, model=None):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "encoder.load",
+    "kind": "FunctionDef",
+    "start": 38,
+    "end": 40,
+    "definition": "def load(path, **options):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "test_query_prefix_local_only_lazy_load_and_normalization",
+    "kind": "FunctionDef",
+    "start": 49,
+    "end": 65,
+    "definition": "def test_query_prefix_local_only_lazy_load_and_normalization(monkeypatch, tmp_path):",
+    "assertions": [
+      "assert loads == []",
+      "assert len(loads) == 1",
+      "assert loads[0][1] == {\"device\": \"cpu\", \"local_files_only\": True, \"trust_remote_code\": False}",
+      "assert model.tokenized == \"query: H\u1ee3p \u0111\u1ed3ng?\"",
+      "assert model.inputs[0][0] == [\"query: H\u1ee3p \u0111\u1ed3ng?\"]",
+      "assert model.inputs[0][1] == {\n        \"batch_size\": 1,\n        \"convert_to_numpy\": True,\n        \"normalize_embeddings\": True,\n        \"show_progress_bar\": False,\n        \"prompt\": \"\",\n    }",
+      "assert len(vector) == 384 and math.isclose(sum(v * v for v in vector), 1)"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "test_token_limit_and_empty_input",
+    "kind": "FunctionDef",
+    "start": 68,
+    "end": 76,
+    "definition": "def test_token_limit_and_empty_input(monkeypatch, tmp_path):",
+    "assertions": [
+      "assert exc.value.detail.code == \"QUERY_TOKEN_LIMIT\" and model.inputs == []",
+      "assert exc.value.detail.code == \"EMPTY_QUERY\""
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "test_malformed_embedding",
+    "kind": "FunctionDef",
+    "start": 80,
+    "end": 85,
+    "definition": "def test_malformed_embedding(monkeypatch, tmp_path, rows):",
+    "assertions": [
+      "assert exc.value.detail.category == \"MODEL_UNAVAILABLE\""
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "test_load_failure_redacted",
+    "kind": "FunctionDef",
+    "start": 88,
+    "end": 96,
+    "definition": "def test_load_failure_redacted(monkeypatch, tmp_path):",
+    "assertions": [
+      "assert exc.value.detail.code == \"MODEL_LOAD_FAILED\"",
+      "assert \"private\" not in exc.value.detail.model_dump_json()"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "test_load_failure_redacted.fail",
+    "kind": "FunctionDef",
+    "start": 89,
+    "end": 90,
+    "definition": "def fail(name):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "test_missing_model_does_not_import",
+    "kind": "FunctionDef",
+    "start": 99,
+    "end": 106,
+    "definition": "def test_missing_model_does_not_import(monkeypatch, tmp_path):",
+    "assertions": [
+      "assert exc.value.detail.code == \"MODEL_NOT_PROVISIONED\""
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "test_missing_model_does_not_import.forbidden",
+    "kind": "FunctionDef",
+    "start": 100,
+    "end": 101,
+    "definition": "def forbidden(name):",
+    "assertions": []
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "test_busy_encoder_does_not_start_parallel_work",
+    "kind": "FunctionDef",
+    "start": 109,
+    "end": 117,
+    "definition": "def test_busy_encoder_does_not_start_parallel_work(monkeypatch, tmp_path):",
+    "assertions": [
+      "assert exc.value.detail.code == \"MODEL_BUSY\" and loads == []"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "test_new_dimension_method_and_exact_token_limit",
+    "kind": "FunctionDef",
+    "start": 120,
+    "end": 126,
+    "definition": "def test_new_dimension_method_and_exact_token_limit(monkeypatch, tmp_path):",
+    "assertions": [
+      "assert len(asyncio.run(enc.encode_query(\"query\"))) == 384"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "test_incompatible_model_config",
+    "kind": "FunctionDef",
+    "start": 130,
+    "end": 137,
+    "definition": "def test_incompatible_model_config(monkeypatch, tmp_path, dimension, limit):",
+    "assertions": [
+      "assert exc.value.detail.code == \"MODEL_LOAD_FAILED\""
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "test_cancelled_awaiter_keeps_worker_exclusive",
+    "kind": "FunctionDef",
+    "start": 140,
+    "end": 169,
+    "definition": "def test_cancelled_awaiter_keeps_worker_exclusive(monkeypatch, tmp_path):",
+    "assertions": [
+      "assert release.wait(5)",
+      "assert await asyncio.to_thread(entered.wait, 2)",
+      "assert exc.value.detail.code == \"MODEL_BUSY\"",
+      "assert await asyncio.to_thread(finished.wait, 2)"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "test_cancelled_awaiter_keeps_worker_exclusive.blocking_encode",
+    "kind": "FunctionDef",
+    "start": 145,
+    "end": 151,
+    "definition": "def blocking_encode(*args, **kwargs):",
+    "assertions": [
+      "assert release.wait(5)"
+    ]
+  },
+  {
+    "file": "tests/unit/applications/tillegal/retrieval/test_query_encoder.py",
+    "symbol": "test_cancelled_awaiter_keeps_worker_exclusive.scenario",
+    "kind": "AsyncFunctionDef",
+    "start": 155,
+    "end": 167,
+    "definition": "async def scenario():",
+    "assertions": [
+      "assert await asyncio.to_thread(entered.wait, 2)",
+      "assert exc.value.detail.code == \"MODEL_BUSY\"",
+      "assert await asyncio.to_thread(finished.wait, 2)"
+    ]
+  }
+]

@@ -1,0 +1,1311 @@
+{
+  "scope": "Offline synthetic inputs; B loaded from original path under package alias to avoid import collisions",
+  "canonical_B_tests": "Executed separately with cwd B, not this alias",
+  "A_fields": [
+    "original",
+    "intent",
+    "domain",
+    "temporal_scope",
+    "subqueries",
+    "clarification"
+  ],
+  "B_fields": [
+    "schema_version",
+    "plan_id",
+    "request_id",
+    "original_query",
+    "normalized_query",
+    "main_question",
+    "domains",
+    "facts",
+    "entities",
+    "temporal",
+    "source_scope",
+    "issues",
+    "references",
+    "queries",
+    "status",
+    "clarification_questions",
+    "generation_method",
+    "prompt_version",
+    "model_calls",
+    "warnings",
+    "error",
+    "follow_up"
+  ],
+  "cases": [
+    {
+      "id": "ordinary",
+      "label": "OBSERVED",
+      "input": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng ngh\u1ec9 ph\u00e9p?",
+      "A": {
+        "original": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng ngh\u1ec9 ph\u00e9p?",
+        "intent": "legal_question",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "topic"
+          }
+        ],
+        "clarification": null
+      },
+      "B": {
+        "schema_version": "1",
+        "plan_id": "00000000-0000-0000-0000-000000000001",
+        "request_id": "selection-probe",
+        "original_query": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng ngh\u1ec9 ph\u00e9p?",
+        "normalized_query": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng ngh\u1ec9 ph\u00e9p?",
+        "main_question": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng ngh\u1ec9 ph\u00e9p?",
+        "domains": [],
+        "facts": [],
+        "entities": [],
+        "temporal": {
+          "request_date": "2026-11-22",
+          "as_of_date": "2026-11-22",
+          "origin": "REQUEST_DATE",
+          "expressions": []
+        },
+        "source_scope": {
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "authorization_scope": "USAGE_POLICY_CORPUS",
+          "requested_document_ids": []
+        },
+        "issues": [
+          {
+            "issue_id": "i1",
+            "question": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng ngh\u1ec9 ph\u00e9p?",
+            "missing_information": []
+          }
+        ],
+        "references": [],
+        "queries": [
+          {
+            "query_id": "q1",
+            "text": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng ngh\u1ec9 ph\u00e9p?",
+            "kind": "original",
+            "priority": 1,
+            "issue_ids": [
+              "i1"
+            ]
+          }
+        ],
+        "status": "READY",
+        "clarification_questions": [],
+        "generation_method": "deterministic",
+        "prompt_version": null,
+        "model_calls": [],
+        "warnings": [
+          "LEGAL_APPLICABILITY_NOT_ASSESSED",
+          "LEXICAL_PLANNING_ONLY"
+        ],
+        "error": null,
+        "follow_up": null
+      }
+    },
+    {
+      "id": "lookup",
+      "label": "OBSERVED",
+      "input": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+      "A": {
+        "original": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+        "intent": "quote_lookup",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "\u0111\u1ed1i tho\u1ea1i",
+            "purpose": "lookup"
+          }
+        ],
+        "clarification": null
+      },
+      "B": {
+        "schema_version": "1",
+        "plan_id": "00000000-0000-0000-0000-000000000001",
+        "request_id": "selection-probe",
+        "original_query": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+        "normalized_query": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+        "main_question": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+        "domains": [],
+        "facts": [],
+        "entities": [],
+        "temporal": {
+          "request_date": "2026-11-22",
+          "as_of_date": "2026-11-22",
+          "origin": "REQUEST_DATE",
+          "expressions": []
+        },
+        "source_scope": {
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "authorization_scope": "USAGE_POLICY_CORPUS",
+          "requested_document_ids": []
+        },
+        "issues": [
+          {
+            "issue_id": "i1",
+            "question": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+            "missing_information": []
+          }
+        ],
+        "references": [],
+        "queries": [
+          {
+            "query_id": "q1",
+            "text": "Tr\u00edch d\u1eabn: \u0111\u1ed1i tho\u1ea1i",
+            "kind": "original",
+            "priority": 1,
+            "issue_ids": [
+              "i1"
+            ]
+          }
+        ],
+        "status": "READY",
+        "clarification_questions": [],
+        "generation_method": "deterministic",
+        "prompt_version": null,
+        "model_calls": [],
+        "warnings": [
+          "LEGAL_APPLICABILITY_NOT_ASSESSED",
+          "LEXICAL_PLANNING_ONLY"
+        ],
+        "error": null,
+        "follow_up": null
+      }
+    },
+    {
+      "id": "multipart",
+      "label": "OBSERVED",
+      "input": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng",
+      "A": {
+        "original": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng",
+        "intent": "legal_question",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "thu\u1ebf",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ti\u1ec1n l\u01b0\u01a1ng",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "B": {
+        "schema_version": "1",
+        "plan_id": "00000000-0000-0000-0000-000000000001",
+        "request_id": "selection-probe",
+        "original_query": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng",
+        "normalized_query": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng",
+        "main_question": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng",
+        "domains": [],
+        "facts": [],
+        "entities": [],
+        "temporal": {
+          "request_date": "2026-11-22",
+          "as_of_date": "2026-11-22",
+          "origin": "REQUEST_DATE",
+          "expressions": []
+        },
+        "source_scope": {
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "authorization_scope": "USAGE_POLICY_CORPUS",
+          "requested_document_ids": []
+        },
+        "issues": [
+          {
+            "issue_id": "i1",
+            "question": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng",
+            "missing_information": []
+          }
+        ],
+        "references": [],
+        "queries": [
+          {
+            "query_id": "q1",
+            "text": "thu\u1ebf; ngh\u1ec9 ph\u00e9p; ti\u1ec1n l\u01b0\u01a1ng",
+            "kind": "original",
+            "priority": 1,
+            "issue_ids": [
+              "i1"
+            ]
+          }
+        ],
+        "status": "READY",
+        "clarification_questions": [],
+        "generation_method": "deterministic",
+        "prompt_version": null,
+        "model_calls": [],
+        "warnings": [
+          "LEGAL_APPLICABILITY_NOT_ASSESSED",
+          "LEXICAL_PLANNING_ONLY"
+        ],
+        "error": null,
+        "follow_up": null
+      }
+    },
+    {
+      "id": "A_ambiguity",
+      "label": "OBSERVED",
+      "input": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng?",
+      "A": {
+        "original": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng?",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": "B\u1ea1n c\u1ea7n tra c\u1ee9u quy \u0111\u1ecbnh ho\u1eb7c t\u00ecnh hu\u1ed1ng c\u1ee5 th\u1ec3 n\u00e0o?"
+      },
+      "B": {
+        "schema_version": "1",
+        "plan_id": "00000000-0000-0000-0000-000000000001",
+        "request_id": "selection-probe",
+        "original_query": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng?",
+        "normalized_query": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng?",
+        "main_question": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng?",
+        "domains": [],
+        "facts": [],
+        "entities": [],
+        "temporal": {
+          "request_date": "2026-11-22",
+          "as_of_date": "2026-11-22",
+          "origin": "REQUEST_DATE",
+          "expressions": []
+        },
+        "source_scope": {
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "authorization_scope": "USAGE_POLICY_CORPUS",
+          "requested_document_ids": []
+        },
+        "issues": [
+          {
+            "issue_id": "i1",
+            "question": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng?",
+            "missing_information": []
+          }
+        ],
+        "references": [],
+        "queries": [
+          {
+            "query_id": "q1",
+            "text": "C\u00f3 \u0111\u01b0\u1ee3c kh\u00f4ng?",
+            "kind": "original",
+            "priority": 1,
+            "issue_ids": [
+              "i1"
+            ]
+          }
+        ],
+        "status": "READY",
+        "clarification_questions": [],
+        "generation_method": "deterministic",
+        "prompt_version": null,
+        "model_calls": [],
+        "warnings": [
+          "LEGAL_APPLICABILITY_NOT_ASSESSED",
+          "LEXICAL_PLANNING_ONLY"
+        ],
+        "error": null,
+        "follow_up": null
+      }
+    },
+    {
+      "id": "B_ambiguity",
+      "label": "OBSERVED",
+      "input": "T\u00f4i b\u1ecb cho ngh\u1ec9, c\u00f3 \u0111\u00fang kh\u00f4ng?",
+      "A": {
+        "original": "T\u00f4i b\u1ecb cho ngh\u1ec9, c\u00f3 \u0111\u00fang kh\u00f4ng?",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "T\u00f4i b\u1ecb cho ngh\u1ec9, c\u00f3 \u0111\u00fang kh\u00f4ng",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "B": {
+        "schema_version": "1",
+        "plan_id": "00000000-0000-0000-0000-000000000001",
+        "request_id": "selection-probe",
+        "original_query": "T\u00f4i b\u1ecb cho ngh\u1ec9, c\u00f3 \u0111\u00fang kh\u00f4ng?",
+        "normalized_query": "T\u00f4i b\u1ecb cho ngh\u1ec9, c\u00f3 \u0111\u00fang kh\u00f4ng?",
+        "main_question": "T\u00f4i b\u1ecb cho ngh\u1ec9, c\u00f3 \u0111\u00fang kh\u00f4ng?",
+        "domains": [],
+        "facts": [],
+        "entities": [],
+        "temporal": {
+          "request_date": "2026-11-22",
+          "as_of_date": "2026-11-22",
+          "origin": "REQUEST_DATE",
+          "expressions": []
+        },
+        "source_scope": {
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "authorization_scope": "USAGE_POLICY_CORPUS",
+          "requested_document_ids": []
+        },
+        "issues": [],
+        "references": [],
+        "queries": [],
+        "status": "CLARIFICATION_REQUIRED",
+        "clarification_questions": [
+          "Vui l\u00f2ng l\u00e0m r\u00f5 th\u1eddi \u0111i\u1ec3m v\u00e0 t\u00ecnh hu\u1ed1ng ph\u00e1p l\u00fd c\u1ea7n tra c\u1ee9u."
+        ],
+        "generation_method": "deterministic",
+        "prompt_version": null,
+        "model_calls": [],
+        "warnings": [],
+        "error": null,
+        "follow_up": null
+      }
+    },
+    {
+      "id": "invalid_date",
+      "label": "OBSERVED",
+      "input": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+      "A": {
+        "original": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": "Ng\u00e0y \u0111\u01b0\u1ee3c n\u00eau kh\u00f4ng h\u1ee3p l\u1ec7. B\u1ea1n vui l\u00f2ng ki\u1ec3m tra l\u1ea1i ng\u00e0y, th\u00e1ng v\u00e0 n\u0103m."
+      },
+      "B": {
+        "schema_version": "1",
+        "plan_id": "00000000-0000-0000-0000-000000000001",
+        "request_id": "selection-probe",
+        "original_query": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+        "normalized_query": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+        "main_question": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+        "domains": [],
+        "facts": [],
+        "entities": [],
+        "temporal": {
+          "request_date": "2026-11-22",
+          "as_of_date": "2026-11-22",
+          "origin": "REQUEST_DATE",
+          "expressions": []
+        },
+        "source_scope": {
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "authorization_scope": "USAGE_POLICY_CORPUS",
+          "requested_document_ids": []
+        },
+        "issues": [
+          {
+            "issue_id": "i1",
+            "question": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+            "missing_information": []
+          }
+        ],
+        "references": [],
+        "queries": [
+          {
+            "query_id": "q1",
+            "text": "Quy \u0111\u1ecbnh ng\u00e0y 31/02/2024",
+            "kind": "original",
+            "priority": 1,
+            "issue_ids": [
+              "i1"
+            ]
+          }
+        ],
+        "status": "READY",
+        "clarification_questions": [],
+        "generation_method": "deterministic",
+        "prompt_version": null,
+        "model_calls": [],
+        "warnings": [
+          "LEGAL_APPLICABILITY_NOT_ASSESSED",
+          "LEXICAL_PLANNING_ONLY"
+        ],
+        "error": null,
+        "follow_up": null
+      }
+    },
+    {
+      "id": "leap_date",
+      "label": "OBSERVED",
+      "input": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+      "A": {
+        "original": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [
+          "29/02/2024"
+        ],
+        "subqueries": [
+          {
+            "text": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "B": {
+        "schema_version": "1",
+        "plan_id": "00000000-0000-0000-0000-000000000001",
+        "request_id": "selection-probe",
+        "original_query": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+        "normalized_query": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+        "main_question": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+        "domains": [],
+        "facts": [],
+        "entities": [],
+        "temporal": {
+          "request_date": "2026-11-22",
+          "as_of_date": "2026-11-22",
+          "origin": "REQUEST_DATE",
+          "expressions": []
+        },
+        "source_scope": {
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "authorization_scope": "USAGE_POLICY_CORPUS",
+          "requested_document_ids": []
+        },
+        "issues": [
+          {
+            "issue_id": "i1",
+            "question": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+            "missing_information": []
+          }
+        ],
+        "references": [],
+        "queries": [
+          {
+            "query_id": "q1",
+            "text": "Quy \u0111\u1ecbnh ng\u00e0y 29/02/2024",
+            "kind": "original",
+            "priority": 1,
+            "issue_ids": [
+              "i1"
+            ]
+          }
+        ],
+        "status": "READY",
+        "clarification_questions": [],
+        "generation_method": "deterministic",
+        "prompt_version": null,
+        "model_calls": [],
+        "warnings": [
+          "LEGAL_APPLICABILITY_NOT_ASSESSED",
+          "LEXICAL_PLANNING_ONLY"
+        ],
+        "error": null,
+        "follow_up": null
+      }
+    },
+    {
+      "id": "literal_NFC",
+      "label": "OBSERVED",
+      "input": "Kho\u1ea3n 1 \u0110i\u1ec1u 35 quy \u0111\u1ecbnh g\u00ec?",
+      "A": {
+        "original": "Kho\u1ea3n 1 \u0110i\u1ec1u 35 quy \u0111\u1ecbnh g\u00ec?",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Kho\u1ea3n 1 \u0110i\u1ec1u 35 quy \u0111\u1ecbnh g\u00ec",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "B": {
+        "schema_version": "1",
+        "plan_id": "00000000-0000-0000-0000-000000000001",
+        "request_id": "selection-probe",
+        "original_query": "Kho\u1ea3n 1 \u0110i\u1ec1u 35 quy \u0111\u1ecbnh g\u00ec?",
+        "normalized_query": "Kho\u1ea3n 1 \u0110i\u1ec1u 35 quy \u0111\u1ecbnh g\u00ec?",
+        "main_question": "Kho\u1ea3n 1 \u0110i\u1ec1u 35 quy \u0111\u1ecbnh g\u00ec?",
+        "domains": [],
+        "facts": [],
+        "entities": [],
+        "temporal": {
+          "request_date": "2026-11-22",
+          "as_of_date": "2026-11-22",
+          "origin": "REQUEST_DATE",
+          "expressions": []
+        },
+        "source_scope": {
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "authorization_scope": "USAGE_POLICY_CORPUS",
+          "requested_document_ids": []
+        },
+        "issues": [
+          {
+            "issue_id": "i1",
+            "question": "Kho\u1ea3n 1 \u0110i\u1ec1u 35 quy \u0111\u1ecbnh g\u00ec?",
+            "missing_information": []
+          }
+        ],
+        "references": [
+          {
+            "literal": "Kho\u1ea3n 1 \u0110i\u1ec1u 35",
+            "origin": "query",
+            "issue_ids": [
+              "i1"
+            ]
+          }
+        ],
+        "queries": [
+          {
+            "query_id": "q1",
+            "text": "Kho\u1ea3n 1 \u0110i\u1ec1u 35 quy \u0111\u1ecbnh g\u00ec?",
+            "kind": "original",
+            "priority": 1,
+            "issue_ids": [
+              "i1"
+            ]
+          }
+        ],
+        "status": "READY",
+        "clarification_questions": [],
+        "generation_method": "deterministic",
+        "prompt_version": null,
+        "model_calls": [],
+        "warnings": [
+          "LEGAL_APPLICABILITY_NOT_ASSESSED",
+          "LEXICAL_PLANNING_ONLY"
+        ],
+        "error": null,
+        "follow_up": null
+      }
+    },
+    {
+      "id": "literal_NFD",
+      "label": "OBSERVED",
+      "input": "Khoa\u0309n 1 \u0110ie\u0302\u0300u 35 quy \u0111i\u0323nh gi\u0300?",
+      "A": {
+        "original": "Khoa\u0309n 1 \u0110ie\u0302\u0300u 35 quy \u0111i\u0323nh gi\u0300?",
+        "intent": "legal_question",
+        "domain": "unknown",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Kho\u1ea3n 1 \u0110i\u1ec1u 35 quy \u0111\u1ecbnh g\u00ec",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "B": {
+        "schema_version": "1",
+        "plan_id": "00000000-0000-0000-0000-000000000001",
+        "request_id": "selection-probe",
+        "original_query": "Khoa\u0309n 1 \u0110ie\u0302\u0300u 35 quy \u0111i\u0323nh gi\u0300?",
+        "normalized_query": "Kho\u1ea3n 1 \u0110i\u1ec1u 35 quy \u0111\u1ecbnh g\u00ec?",
+        "main_question": "Kho\u1ea3n 1 \u0110i\u1ec1u 35 quy \u0111\u1ecbnh g\u00ec?",
+        "domains": [],
+        "facts": [],
+        "entities": [],
+        "temporal": {
+          "request_date": "2026-11-22",
+          "as_of_date": "2026-11-22",
+          "origin": "REQUEST_DATE",
+          "expressions": []
+        },
+        "source_scope": {
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "authorization_scope": "USAGE_POLICY_CORPUS",
+          "requested_document_ids": []
+        },
+        "issues": [
+          {
+            "issue_id": "i1",
+            "question": "Kho\u1ea3n 1 \u0110i\u1ec1u 35 quy \u0111\u1ecbnh g\u00ec?",
+            "missing_information": []
+          }
+        ],
+        "references": [],
+        "queries": [
+          {
+            "query_id": "q1",
+            "text": "Kho\u1ea3n 1 \u0110i\u1ec1u 35 quy \u0111\u1ecbnh g\u00ec?",
+            "kind": "original",
+            "priority": 1,
+            "issue_ids": [
+              "i1"
+            ]
+          }
+        ],
+        "status": "READY",
+        "clarification_questions": [],
+        "generation_method": "deterministic",
+        "prompt_version": null,
+        "model_calls": [],
+        "warnings": [
+          "LEGAL_APPLICABILITY_NOT_ASSESSED",
+          "LEXICAL_PLANNING_ONLY"
+        ],
+        "error": null,
+        "follow_up": null
+      }
+    },
+    {
+      "id": "whitespace",
+      "label": "OBSERVED",
+      "input": "  Ng\u01b0\u1eddi  lao \u0111\u1ed9ng\n  ngh\u1ec9 ph\u00e9p  ",
+      "A": {
+        "original": "  Ng\u01b0\u1eddi  lao \u0111\u1ed9ng\n  ngh\u1ec9 ph\u00e9p  ",
+        "intent": "legal_question",
+        "domain": "labour",
+        "temporal_scope": [],
+        "subqueries": [
+          {
+            "text": "Ng\u01b0\u1eddi  lao \u0111\u1ed9ng",
+            "purpose": "question_part"
+          },
+          {
+            "text": "ngh\u1ec9 ph\u00e9p",
+            "purpose": "question_part"
+          }
+        ],
+        "clarification": null
+      },
+      "B": {
+        "schema_version": "1",
+        "plan_id": "00000000-0000-0000-0000-000000000001",
+        "request_id": "selection-probe",
+        "original_query": "  Ng\u01b0\u1eddi  lao \u0111\u1ed9ng\n  ngh\u1ec9 ph\u00e9p  ",
+        "normalized_query": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng ngh\u1ec9 ph\u00e9p",
+        "main_question": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng ngh\u1ec9 ph\u00e9p",
+        "domains": [],
+        "facts": [],
+        "entities": [],
+        "temporal": {
+          "request_date": "2026-11-22",
+          "as_of_date": "2026-11-22",
+          "origin": "REQUEST_DATE",
+          "expressions": []
+        },
+        "source_scope": {
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "authorization_scope": "USAGE_POLICY_CORPUS",
+          "requested_document_ids": []
+        },
+        "issues": [
+          {
+            "issue_id": "i1",
+            "question": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng ngh\u1ec9 ph\u00e9p",
+            "missing_information": []
+          }
+        ],
+        "references": [],
+        "queries": [
+          {
+            "query_id": "q1",
+            "text": "Ng\u01b0\u1eddi lao \u0111\u1ed9ng ngh\u1ec9 ph\u00e9p",
+            "kind": "original",
+            "priority": 1,
+            "issue_ids": [
+              "i1"
+            ]
+          }
+        ],
+        "status": "READY",
+        "clarification_questions": [],
+        "generation_method": "deterministic",
+        "prompt_version": null,
+        "model_calls": [],
+        "warnings": [
+          "LEGAL_APPLICABILITY_NOT_ASSESSED",
+          "LEXICAL_PLANNING_ONLY"
+        ],
+        "error": null,
+        "follow_up": null
+      }
+    },
+    {
+      "id": "control_NUL",
+      "label": "OBSERVED",
+      "input": "abc\u0000def ghi ch\u00fa",
+      "A_error": {
+        "type": "QueryInputError",
+        "message": "QUERY_INPUT_CHARACTER"
+      },
+      "B": {
+        "schema_version": "1",
+        "plan_id": "00000000-0000-0000-0000-000000000001",
+        "request_id": "selection-probe",
+        "original_query": "abc\u0000def ghi ch\u00fa",
+        "normalized_query": "abc\u0000def ghi ch\u00fa",
+        "main_question": "abc\u0000def ghi ch\u00fa",
+        "domains": [],
+        "facts": [],
+        "entities": [],
+        "temporal": {
+          "request_date": "2026-11-22",
+          "as_of_date": "2026-11-22",
+          "origin": "REQUEST_DATE",
+          "expressions": []
+        },
+        "source_scope": {
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "authorization_scope": "USAGE_POLICY_CORPUS",
+          "requested_document_ids": []
+        },
+        "issues": [
+          {
+            "issue_id": "i1",
+            "question": "abc\u0000def ghi ch\u00fa",
+            "missing_information": []
+          }
+        ],
+        "references": [],
+        "queries": [
+          {
+            "query_id": "q1",
+            "text": "abc\u0000def ghi ch\u00fa",
+            "kind": "original",
+            "priority": 1,
+            "issue_ids": [
+              "i1"
+            ]
+          }
+        ],
+        "status": "READY",
+        "clarification_questions": [],
+        "generation_method": "deterministic",
+        "prompt_version": null,
+        "model_calls": [],
+        "warnings": [
+          "LEGAL_APPLICABILITY_NOT_ASSESSED",
+          "LEXICAL_PLANNING_ONLY"
+        ],
+        "error": null,
+        "follow_up": null
+      }
+    },
+    {
+      "id": "control_NEL",
+      "label": "OBSERVED",
+      "input": "ghi\u0085ch\u00fa ph\u00e1p lu\u1eadt",
+      "A_error": {
+        "type": "QueryInputError",
+        "message": "QUERY_INPUT_CHARACTER"
+      },
+      "B": {
+        "schema_version": "1",
+        "plan_id": "00000000-0000-0000-0000-000000000001",
+        "request_id": "selection-probe",
+        "original_query": "ghi\u0085ch\u00fa ph\u00e1p lu\u1eadt",
+        "normalized_query": "ghi ch\u00fa ph\u00e1p lu\u1eadt",
+        "main_question": "ghi ch\u00fa ph\u00e1p lu\u1eadt",
+        "domains": [],
+        "facts": [],
+        "entities": [],
+        "temporal": {
+          "request_date": "2026-11-22",
+          "as_of_date": "2026-11-22",
+          "origin": "REQUEST_DATE",
+          "expressions": []
+        },
+        "source_scope": {
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "authorization_scope": "USAGE_POLICY_CORPUS",
+          "requested_document_ids": []
+        },
+        "issues": [
+          {
+            "issue_id": "i1",
+            "question": "ghi ch\u00fa ph\u00e1p lu\u1eadt",
+            "missing_information": []
+          }
+        ],
+        "references": [],
+        "queries": [
+          {
+            "query_id": "q1",
+            "text": "ghi ch\u00fa ph\u00e1p lu\u1eadt",
+            "kind": "original",
+            "priority": 1,
+            "issue_ids": [
+              "i1"
+            ]
+          }
+        ],
+        "status": "READY",
+        "clarification_questions": [],
+        "generation_method": "deterministic",
+        "prompt_version": null,
+        "model_calls": [],
+        "warnings": [
+          "LEGAL_APPLICABILITY_NOT_ASSESSED",
+          "LEXICAL_PLANNING_ONLY"
+        ],
+        "error": null,
+        "follow_up": null
+      }
+    },
+    {
+      "id": "blank",
+      "label": "OBSERVED",
+      "input": "   ",
+      "A_error": {
+        "type": "QueryInputError",
+        "message": "QUERY_INPUT_EMPTY"
+      },
+      "B_error": {
+        "type": "ValidationError",
+        "details": [
+          {
+            "loc": [],
+            "type": "value_error"
+          }
+        ]
+      }
+    }
+  ],
+  "B_control_cases": [
+    {
+      "id": "unresolved",
+      "label": "OBSERVED",
+      "result": {
+        "schema_version": "1",
+        "plan_id": "00000000-0000-0000-0000-000000000001",
+        "request_id": "selection-probe",
+        "original_query": "Tra c\u1ee9u ph\u00e1p lu\u1eadt",
+        "normalized_query": "Tra c\u1ee9u ph\u00e1p lu\u1eadt",
+        "main_question": "Tra c\u1ee9u ph\u00e1p lu\u1eadt",
+        "domains": [],
+        "facts": [],
+        "entities": [],
+        "temporal": {
+          "request_date": "2026-11-22",
+          "as_of_date": null,
+          "origin": "UNRESOLVED",
+          "expressions": []
+        },
+        "source_scope": {
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "authorization_scope": "USAGE_POLICY_CORPUS",
+          "requested_document_ids": []
+        },
+        "issues": [],
+        "references": [],
+        "queries": [],
+        "status": "CLARIFICATION_REQUIRED",
+        "clarification_questions": [
+          "Vui l\u00f2ng l\u00e0m r\u00f5 th\u1eddi \u0111i\u1ec3m v\u00e0 t\u00ecnh hu\u1ed1ng ph\u00e1p l\u00fd c\u1ea7n tra c\u1ee9u."
+        ],
+        "generation_method": "deterministic",
+        "prompt_version": null,
+        "model_calls": [],
+        "warnings": [],
+        "error": null,
+        "follow_up": null
+      }
+    },
+    {
+      "id": "assisted_unsupported",
+      "label": "OBSERVED",
+      "result": {
+        "schema_version": "1",
+        "plan_id": "00000000-0000-0000-0000-000000000001",
+        "request_id": "selection-probe",
+        "original_query": "Tra c\u1ee9u ph\u00e1p lu\u1eadt",
+        "normalized_query": "Tra c\u1ee9u ph\u00e1p lu\u1eadt",
+        "main_question": "Tra c\u1ee9u ph\u00e1p lu\u1eadt",
+        "domains": [],
+        "facts": [],
+        "entities": [],
+        "temporal": {
+          "request_date": "2026-11-22",
+          "as_of_date": "2026-11-22",
+          "origin": "REQUEST_DATE",
+          "expressions": []
+        },
+        "source_scope": {
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "authorization_scope": "USAGE_POLICY_CORPUS",
+          "requested_document_ids": []
+        },
+        "issues": [],
+        "references": [],
+        "queries": [],
+        "status": "FAILED",
+        "clarification_questions": [],
+        "generation_method": "deterministic",
+        "prompt_version": null,
+        "model_calls": [],
+        "warnings": [],
+        "error": {
+          "category": "CONFIGURATION_ERROR",
+          "code": "ASSISTED_MODE_UNSUPPORTED",
+          "stage": "input",
+          "safe_message": "Requested execution constraints cannot be satisfied.",
+          "retryable": false,
+          "query_id": null,
+          "retrieval_code": null
+        },
+        "follow_up": null
+      }
+    },
+    {
+      "id": "deadline_expired",
+      "label": "OBSERVED",
+      "result": {
+        "schema_version": "1",
+        "plan_id": "00000000-0000-0000-0000-000000000001",
+        "request_id": "selection-probe",
+        "original_query": "Tra c\u1ee9u ph\u00e1p lu\u1eadt",
+        "normalized_query": "Tra c\u1ee9u ph\u00e1p lu\u1eadt",
+        "main_question": "Tra c\u1ee9u ph\u00e1p lu\u1eadt",
+        "domains": [],
+        "facts": [],
+        "entities": [],
+        "temporal": {
+          "request_date": "2026-11-22",
+          "as_of_date": "2026-11-22",
+          "origin": "REQUEST_DATE",
+          "expressions": []
+        },
+        "source_scope": {
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "authorization_scope": "USAGE_POLICY_CORPUS",
+          "requested_document_ids": []
+        },
+        "issues": [],
+        "references": [],
+        "queries": [],
+        "status": "FAILED",
+        "clarification_questions": [],
+        "generation_method": "deterministic",
+        "prompt_version": null,
+        "model_calls": [],
+        "warnings": [],
+        "error": {
+          "category": "TIMEOUT",
+          "code": "DEADLINE_EXCEEDED",
+          "stage": "input",
+          "safe_message": "Requested execution constraints cannot be satisfied.",
+          "retryable": false,
+          "query_id": null,
+          "retrieval_code": null
+        },
+        "follow_up": null
+      }
+    },
+    {
+      "id": "context_reference",
+      "label": "OBSERVED",
+      "result": {
+        "schema_version": "1",
+        "plan_id": "00000000-0000-0000-0000-000000000001",
+        "request_id": "selection-probe",
+        "original_query": "Tra c\u1ee9u ph\u00e1p lu\u1eadt",
+        "normalized_query": "Tra c\u1ee9u ph\u00e1p lu\u1eadt",
+        "main_question": "Tra c\u1ee9u ph\u00e1p lu\u1eadt",
+        "domains": [],
+        "facts": [],
+        "entities": [],
+        "temporal": {
+          "request_date": "2026-11-22",
+          "as_of_date": "2026-11-22",
+          "origin": "REQUEST_DATE",
+          "expressions": []
+        },
+        "source_scope": {
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "authorization_scope": "USAGE_POLICY_CORPUS",
+          "requested_document_ids": []
+        },
+        "issues": [
+          {
+            "issue_id": "i1",
+            "question": "Tra c\u1ee9u ph\u00e1p lu\u1eadt",
+            "missing_information": []
+          }
+        ],
+        "references": [
+          {
+            "literal": "\u0110i\u1ec1u 99",
+            "origin": "m1",
+            "issue_ids": [
+              "i1"
+            ]
+          }
+        ],
+        "queries": [
+          {
+            "query_id": "q1",
+            "text": "Tra c\u1ee9u ph\u00e1p lu\u1eadt",
+            "kind": "original",
+            "priority": 1,
+            "issue_ids": [
+              "i1"
+            ]
+          }
+        ],
+        "status": "READY",
+        "clarification_questions": [],
+        "generation_method": "deterministic",
+        "prompt_version": null,
+        "model_calls": [],
+        "warnings": [
+          "LEGAL_APPLICABILITY_NOT_ASSESSED",
+          "LEXICAL_PLANNING_ONLY"
+        ],
+        "error": null,
+        "follow_up": null
+      }
+    }
+  ],
+  "compatibility": {
+    "B_dump_to_APlan": {
+      "accepted": false,
+      "error": {
+        "type": "ValidationError",
+        "details": [
+          {
+            "loc": [
+              "original"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "intent"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "domain"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "temporal_scope"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "subqueries"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "clarification"
+            ],
+            "type": "missing"
+          }
+        ]
+      }
+    },
+    "A_dict_to_BPlan": {
+      "accepted": false,
+      "error": {
+        "type": "ValidationError",
+        "details": [
+          {
+            "loc": [
+              "plan_id"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "request_id"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "original_query"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "normalized_query"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "main_question"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "temporal"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "source_scope"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "status"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "generation_method"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "original"
+            ],
+            "type": "extra_forbidden"
+          },
+          {
+            "loc": [
+              "intent"
+            ],
+            "type": "extra_forbidden"
+          },
+          {
+            "loc": [
+              "domain"
+            ],
+            "type": "extra_forbidden"
+          },
+          {
+            "loc": [
+              "temporal_scope"
+            ],
+            "type": "extra_forbidden"
+          },
+          {
+            "loc": [
+              "subqueries"
+            ],
+            "type": "extra_forbidden"
+          },
+          {
+            "loc": [
+              "clarification"
+            ],
+            "type": "extra_forbidden"
+          }
+        ]
+      }
+    },
+    "B_dump_to_A_Search": {
+      "accepted": false,
+      "error": {
+        "type": "ValidationError",
+        "details": [
+          {
+            "loc": [
+              "original"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "intent"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "domain"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "temporal_scope"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "subqueries"
+            ],
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "clarification"
+            ],
+            "type": "missing"
+          }
+        ]
+      },
+      "retrieval_calls": 0
+    },
+    "A_clarification_Search": {
+      "status": "CLARIFICATION_REQUIRED",
+      "retrieval_calls": 0
+    },
+    "A_invalid_date_Search": {
+      "status": "CLARIFICATION_REQUIRED",
+      "retrieval_calls": 0
+    }
+  }
+}

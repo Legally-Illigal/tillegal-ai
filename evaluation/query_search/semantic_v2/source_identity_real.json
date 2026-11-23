@@ -1,0 +1,1370 @@
+{
+  "plans_artifact": "evaluation\\query_search\\semantic_v2\\matched.json",
+  "prompt_sha256": "e1aae38788c511af5e4b97324c9530e9bbfe77d9e24e20f041d86b49d027c215",
+  "model": "gemini-3.5-flash-lite",
+  "live_gemini_replayed_not_recalled": true,
+  "database": "REAL_SUPABASE_READ_ONLY",
+  "as_of_date": "2026-11-23",
+  "dense_path_exists": true,
+  "reranker_path_exists": true,
+  "rows": [
+    {
+      "id": "Q022",
+      "mode": "bm25",
+      "configured": true,
+      "local_dense_available": true,
+      "local_reranker_available": true,
+      "status": "COMPLETED",
+      "completeness": "COMPLETE",
+      "checks": {
+        "evidence_groups": 3,
+        "occurrences": 3,
+        "duplicates_collapsed": 0,
+        "provenance_links_valid": true,
+        "content_hashes_match": true,
+        "unique_source_payloads": true,
+        "source_ids_present": true,
+        "objective_topic_matches_proxy": 1,
+        "objective_topic_total": 1,
+        "relevance_assessment": "LEXICAL_PROXY_ONLY_NO_RELEVANCE_JUDGMENTS"
+      },
+      "requests": [
+        {
+          "query": "Tra cứu Điều 35 Bộ luật Lao động 45/2019/QH14.",
+          "mode": "bm25",
+          "top_k": 3,
+          "as_of_date": "2026-11-23",
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "schema_version": "1",
+          "request_id": "00b17ce1-fd87-4a98-bc4e-480695c171b6",
+          "query": "Tra cứu Điều 35 Bộ luật Lao động 45/2019/QH14.",
+          "query_used": "Tra cứu Điều 35 Bộ luật Lao động 45/2019/QH14.",
+          "mode": "bm25",
+          "top_k": 3,
+          "as_of_date": "2026-11-23",
+          "allowed_usage_policies": [
+            "EXPERIMENTAL_ONLY"
+          ],
+          "selected_index_name": "vbpl-bm25-unicode-v1",
+          "index": {
+            "id": "2acb41da-84af-4e7b-95b6-00faa3f73528",
+            "index_name": "vbpl-bm25-unicode-v1",
+            "index_version": "v1",
+            "status": "READY",
+            "updated_at": "2026-11-14T08:27:10.966337Z",
+            "algorithm": "BM25",
+            "tokenizer": "unicode-nfc-lower-v1"
+          },
+          "status": "OK",
+          "evidence": [
+            {
+              "retrieval_chunk_id": "2973a693-2276-4e4f-a233-f7038e4717e0",
+              "source_document_id": "60c5be9f-20d9-4897-977e-2059f2c59ff2",
+              "document_structure_id": "c553ced6-1f21-490c-9bb9-fd4959f44c31",
+              "chunk_key": "legal-v2-block-000066-1",
+              "content": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk > Chương I > Điều 5: Hoàn trả kinh phí hỗ trợ thu hút, đào tạo > Khoản 2 > Điểm b > 2. Người được thu hút thông qua hình thức tuyển dụng, tiếp nhận vào làm công chức, viên chức hoặc hình thức hợp đồng lao động xác định thời hạn phải hoàn trả một phần mức hỗ trợ ban đầu nêu tại khoản 1 Điều 7 và điểm a khoản 1 Điều 8 Nghị quyết này theo mức quy định tại khoản 3 Điều này và 100% mức thu nhập theo lợi nhuận hoặc giá trị công trình nêu tại khoản 2 Điều 7 Nghị quyết này; người được hưởng chính sách hỗ trợ đào tạo phải hoàn trả một phần mức hỗ trợ nêu tại Điều 10 Nghị quyết này theo mức quy định tại khoản 3 Điều này nếu thuộc một trong các trường hợp sau (trừ các trường hợp nêu tại khoản 1 Điều này):\n\nb) Đơn phương chấm dứt hợp đồng lao động theo quy định tại khoản 2 Điều 35 Bộ luật Lao động số 45/2019/QH14.",
+              "content_sha256": "f77a5da81f5d0c518f4fb61754300b17dfc0909d412430e3f976e503bd04e396",
+              "hash_check": "MATCHED_STORED",
+              "content_representation": "retrieval_chunk_content",
+              "rank": 1,
+              "raw_score": 23.2540942793144,
+              "score_kind": "BM25",
+              "retrieval_method": "bm25",
+              "node_id": "chapter-i-article-5-clause-2-point-b",
+              "block_id": "block-000066",
+              "chunk_type": "point",
+              "start_offset": 10984,
+              "end_offset": 11092,
+              "chunk_metadata": {
+                "block_ids": [
+                  "block-000066"
+                ],
+                "breadcrumb": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk > Chương I > Điều 5: Hoàn trả kinh phí hỗ trợ thu hút, đào tạo > Khoản 2 > Điểm b",
+                "block_spans": [
+                  {
+                    "block_id": "block-000066",
+                    "content_end": 108,
+                    "content_start": 0
+                  }
+                ],
+                "context_block_ids": [
+                  "block-000064"
+                ]
+              },
+              "source_id": "vbpl",
+              "source_record_id": "177c1650-dc18-11f1-a2f3-6f4db9961316",
+              "source_snapshot_id": null,
+              "title": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+              "source_url": "https://vbpl.vn/van-ban/chi-tiet/nghi-quyet-so-25-2026-nq-hdnd-quy-dinh-chinh-sach-thu-hut-ho-tro-dao-tao-phat-trien-nguon-nhan-luc-cua-tinh-dak-lak-giai-doan-2026-2031--177c1650-dc18-11f1-a2f3-6f4db9961316",
+              "language": "vi",
+              "issued_on": "2026-10-20",
+              "effective_from": "2026-10-30",
+              "effective_to": null,
+              "effect_status_reported": "Còn hiệu lực",
+              "usage_policy": "EXPERIMENTAL_ONLY",
+              "source_metadata": {
+                "json_ld": [
+                  {
+                    "url": "https://vbpl.vn",
+                    "name": "Cơ sở dữ liệu quốc gia về pháp luật",
+                    "@type": "Organization",
+                    "@context": "https://schema.org",
+                    "description": "Cơ sở dữ liệu quốc gia về pháp luật được xây dựng và vận hành bởi Bộ Tư pháp, cung cấp thông tin đầy đủ, chính xác về văn bản pháp luật Việt Nam."
+                  },
+                  {
+                    "url": "https://vbpl.vn",
+                    "name": "CSDL quốc gia về pháp luật",
+                    "@type": "WebSite",
+                    "@context": "https://schema.org"
+                  },
+                  {
+                    "url": "https://vbpl.vn/van-ban/chi-tiet/nghi-quyet-so-25-2026-nq-hdnd-quy-dinh-chinh-sach-thu-hut-ho-tro-dao-tao-phat-trien-nguon-nhan-luc-cua-tinh-dak-lak-giai-doan-2026-2031--177c1650-dc18-11f1-a2f3-6f4db9961316",
+                    "name": "Nghị quyết số 25/2026/NQ-HĐND Quy định chính sách thu hút, hỗ trợ đào tạo phát triển nguồn nhân lực của tỉnh Đắk Lắk giai đoạn 2026 - 2031",
+                    "@type": "Legislation",
+                    "@context": "https://schema.org",
+                    "keywords": "Nghị quyết, Khoa học, công nghệ và đổi mới sáng tạo, HĐND Tỉnh Đắk Lắk, văn bản pháp luật, pháp luật Việt Nam",
+                    "inLanguage": "vi",
+                    "legislationDate": "2026-10-20T00:00:00",
+                    "legislationType": "Nghị quyết",
+                    "legislationPassedBy": {
+                      "name": "HĐND Tỉnh Đắk Lắk",
+                      "@type": "Organization"
+                    },
+                    "legislationIdentifier": "25/2026/NQ-HĐND",
+                    "legislationLegalForce": "InForce",
+                    "legislationJurisdiction": "VN"
+                  },
+                  {
+                    "@type": "BreadcrumbList",
+                    "@context": "https://schema.org",
+                    "itemListElement": [
+                      {
+                        "item": "https://vbpl.vn",
+                        "name": "Trang chủ",
+                        "@type": "ListItem",
+                        "position": 1
+                      },
+                      {
+                        "item": "https://vbpl.vn/van-ban/dia-phuong",
+                        "name": "Văn bản địa phương",
+                        "@type": "ListItem",
+                        "position": 2
+                      },
+                      {
+                        "item": "https://vbpl.vn/van-ban/chi-tiet/nghi-quyet-so-25-2026-nq-hdnd-quy-dinh-chinh-sach-thu-hut-ho-tro-dao-tao-phat-trien-nguon-nhan-luc-cua-tinh-dak-lak-giai-doan-2026-2031--177c1650-dc18-11f1-a2f3-6f4db9961316",
+                        "name": "Nghị quyết số 25/2026/NQ-HĐND Quy định chính sách thu hút, hỗ trợ đào tạo phát triển nguồn nhân lực của tỉnh Đắk Lắk giai đoạn 2026 - 2031",
+                        "@type": "ListItem",
+                        "position": 3
+                      }
+                    ]
+                  }
+                ],
+                "meta_tags": {
+                  "og:url": "https://vbpl.vn/van-ban/chi-tiet/nghi-quyet-so-25-2026-nq-hdnd-quy-dinh-chinh-sach-thu-hut-ho-tro-dao-tao-phat-trien-nguon-nhan-luc-cua-tinh-dak-lak-giai-doan-2026-2031--177c1650-dc18-11f1-a2f3-6f4db9961316",
+                  "robots": "index, follow",
+                  "og:type": "article",
+                  "og:title": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+                  "viewport": "width=device-width, initial-scale=1",
+                  "og:locale": "vi_VN",
+                  "description": "Tra cứu Nghị quyết 25/2026/NQ-HĐND, Nghị quyết số 25/2026/NQ-HĐND Quy định chính sách thu hút, hỗ trợ đào tạo phát triển nguồn nhân lực của tỉnh Đắk Lắk giai đoạn 2026 - 2031. Xem toàn văn và hiệu lực.",
+                  "og:site_name": "CSDL quốc gia về pháp luật",
+                  "twitter:card": "summary_large_image",
+                  "twitter:title": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+                  "og:description": "Tra cứu Nghị quyết 25/2026/NQ-HĐND, Nghị quyết số 25/2026/NQ-HĐND Quy định chính sách thu hút, hỗ trợ đào tạo phát triển nguồn nhân lực của tỉnh Đắk Lắk giai đoạn 2026 - 2031. Xem toàn văn và hiệu lực.",
+                  "twitter:description": "Tra cứu Nghị quyết 25/2026/NQ-HĐND, Nghị quyết số 25/2026/NQ-HĐND Quy định chính sách thu hút, hỗ trợ đào tạo phát triển nguồn nhân lực của tỉnh Đắk Lắk giai đoạn 2026 - 2031. Xem toàn văn và hiệu lực.",
+                  "article:modified_time": "2026-11-10T02:57:45.000Z",
+                  "article:published_time": "2026-10-19T17:00:00.000Z",
+                  "google-site-verification": "LY6q8GyDpuCAuWEtIfZgVg__EaZ8Cyk-rYDq8p-bUKw"
+                },
+                "sitemap_url": "https://vbpl.vn/sitemap/13.xml",
+                "source_files": [
+                  {
+                    "size": 65217,
+                    "file_name": "25 2026 NQ HĐND.docx",
+                    "full_path": "177c1650-dc18-11f1-a2f3-6f4db9961316/25 2026 NQ HĐND.docx",
+                    "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  },
+                  {
+                    "size": 5622643,
+                    "file_name": "25-2026-NQHĐND_0001.signed.signed.pdf",
+                    "full_path": "177c1650-dc18-11f1-a2f3-6f4db9961316/25-2026-NQHĐND_0001.signed.signed.pdf",
+                    "content_type": "application/pdf"
+                  }
+                ],
+                "stored_files": [
+                  {
+                    "size": 65217,
+                    "sha256": "d6f9bf368f7578a6a25c88beee720a883714d7e635fca73dcf4fd5dcd8469cc7",
+                    "file_name": "25 2026 NQ HĐND.docx",
+                    "storage_ref": "vbpl-raw/vbpl/177c1650-dc18-11f1-a2f3-6f4db9961316/d6f9bf368f7578a6a25c88beee720a883714d7e635fca73dcf4fd5dcd8469cc7/origin.docx",
+                    "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  },
+                  {
+                    "size": 5622643,
+                    "sha256": "d849fed66459eca3fdd8842c00e78cc2b689afa9c3612e22be0d0bcc46a3c629",
+                    "file_name": "25-2026-NQHĐND_0001.signed.signed.pdf",
+                    "storage_ref": "vbpl-raw/vbpl/177c1650-dc18-11f1-a2f3-6f4db9961316/d849fed66459eca3fdd8842c00e78cc2b689afa9c3612e22be0d0bcc46a3c629/origin.pdf",
+                    "content_type": "application/pdf"
+                  },
+                  {
+                    "role": "normalized_markdown",
+                    "size": 33976,
+                    "sha256": "b617f89a4a5c8a5cfa47ba29b637057a68dbab2abb41cb5d77863977f88c3806",
+                    "file_name": "origin.md",
+                    "storage_ref": "vbpl-raw/vbpl/177c1650-dc18-11f1-a2f3-6f4db9961316/b617f89a4a5c8a5cfa47ba29b637057a68dbab2abb41cb5d77863977f88c3806/origin.md",
+                    "content_type": "text/markdown; charset=utf-8",
+                    "source_sha256": "d6f9bf368f7578a6a25c88beee720a883714d7e635fca73dcf4fd5dcd8469cc7",
+                    "source_file_name": "25 2026 NQ HĐND.docx",
+                    "source_storage_ref": "vbpl-raw/vbpl/177c1650-dc18-11f1-a2f3-6f4db9961316/d6f9bf368f7578a6a25c88beee720a883714d7e635fca73dcf4fd5dcd8469cc7/origin.docx"
+                  }
+                ],
+                "sitemap_lastmod": "2026-11-10",
+                "document_attributes": {
+                  "effTo": null,
+                  "docNum": "25/2026/NQ-HĐND",
+                  "docType": {
+                    "id": "044d941c-40de-45b9-ae84-51f5a730bfe0",
+                    "code": "NQ",
+                    "name": "Nghị quyết",
+                    "parentCode": "VBQPPL",
+                    "parentName": null
+                  },
+                  "effFrom": "2026-10-30T00:00:00",
+                  "effStatus": {
+                    "id": "1419f6be-4a15-44a7-97ac-ea042770a514",
+                    "code": "CHL",
+                    "name": "Còn hiệu lực",
+                    "parentCode": null,
+                    "parentName": null
+                  },
+                  "issueDate": "2026-10-20T00:00:00",
+                  "agencyName": "HĐND Tỉnh Đắk Lắk"
+                },
+                "stored_files_refreshed": true
+              }
+            },
+            {
+              "retrieval_chunk_id": "96e8c139-65d4-48aa-98ec-bdd2e169e984",
+              "source_document_id": "4cb20317-2cb1-43fb-886d-443731536540",
+              "document_structure_id": "7fd8d2aa-cb43-4e42-a478-ee70a20b8872",
+              "chunk_key": "legal-v3-block-000004-66",
+              "content": "Văn bản hành chính liên quan 742/QĐ-UBND của UBND Thành phố Bắc Ninh > Phụ lục > Cột: STT; Tên văn bản\nTên văn bản: Quyết định số 29/2019/QĐ-UBND ngày 10/12/2019 của UBND tỉnh Bắc Ninh ban hành Quy định phân công, phân cấp trách nhiệm quản lý nhà nước về công tác an toàn lao động, vệ sinh môi trường trong thi công xây dựng công trình trên địa bàn tỉnh Bắc Ninh",
+              "content_sha256": "265b17a58f43d64d976458802cfc69cec2344db779b038a29137c91a96bb4e31",
+              "hash_check": "MATCHED_STORED",
+              "content_representation": "retrieval_chunk_content",
+              "rank": 2,
+              "raw_score": 13.7336530253431,
+              "score_kind": "BM25",
+              "retrieval_method": "bm25",
+              "node_id": "appendix-1",
+              "block_id": "block-000004",
+              "chunk_type": "table",
+              "start_offset": 250,
+              "end_offset": 14803,
+              "chunk_metadata": {
+                "block_ids": [
+                  "block-000004"
+                ],
+                "table_row": 67,
+                "breadcrumb": "Văn bản hành chính liên quan 742/QĐ-UBND của UBND Thành phố Bắc Ninh > Phụ lục",
+                "block_spans": [
+                  {
+                    "block_id": "block-000004",
+                    "content_end": 13389,
+                    "content_start": 13137
+                  }
+                ],
+                "header_span": [
+                  0,
+                  21
+                ],
+                "table_headers": [
+                  "STT",
+                  "Tên văn bản"
+                ]
+              },
+              "source_id": "vbpl",
+              "source_record_id": "add93d50-dcb6-11f1-b7c7-0fc302839a06",
+              "source_snapshot_id": null,
+              "title": "Văn bản hành chính liên quan 742/QĐ-UBND của UBND Thành phố Bắc Ninh",
+              "source_url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-742-qd-ubnd-ve-viec-bai-bo-cac-quyet-dinh-quy-pham-phap-luat-do-uy-ban-nhan-dan-tinh-bac-giang-va-uy-ban-nhan-dan-tinh-bac-ninh-cu-ban-hanh--add93d50-dcb6-11f1-b7c7-0fc302839a06",
+              "language": "vi",
+              "issued_on": "2026-05-29",
+              "effective_from": "2026-05-29",
+              "effective_to": null,
+              "effect_status_reported": null,
+              "usage_policy": "EXPERIMENTAL_ONLY",
+              "source_metadata": {
+                "json_ld": [
+                  {
+                    "url": "https://vbpl.vn",
+                    "name": "Cơ sở dữ liệu quốc gia về pháp luật",
+                    "@type": "Organization",
+                    "@context": "https://schema.org",
+                    "description": "Cơ sở dữ liệu quốc gia về pháp luật được xây dựng và vận hành bởi Bộ Tư pháp, cung cấp thông tin đầy đủ, chính xác về văn bản pháp luật Việt Nam."
+                  },
+                  {
+                    "url": "https://vbpl.vn",
+                    "name": "CSDL quốc gia về pháp luật",
+                    "@type": "WebSite",
+                    "@context": "https://schema.org"
+                  },
+                  {
+                    "url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-742-qd-ubnd-ve-viec-bai-bo-cac-quyet-dinh-quy-pham-phap-luat-do-uy-ban-nhan-dan-tinh-bac-giang-va-uy-ban-nhan-dan-tinh-bac-ninh-cu-ban-hanh--add93d50-dcb6-11f1-b7c7-0fc302839a06",
+                    "name": "Quyết định số 742/QĐ-UBND Về việc bãi bỏ các Quyết định quy phạm pháp luật do Uỷ ban nhân dân tỉnh Bắc Giang và Uỷ ban nhân dân tỉnh Bắc Ninh (cũ) ban hành",
+                    "@type": "Legislation",
+                    "@context": "https://schema.org",
+                    "keywords": "Văn bản hành chính liên quan, UBND Thành phố Bắc Ninh, văn bản pháp luật, pháp luật Việt Nam",
+                    "inLanguage": "vi",
+                    "legislationDate": "2026-05-29T00:00:00",
+                    "legislationType": "Văn bản hành chính liên quan",
+                    "legislationPassedBy": {
+                      "name": "UBND Thành phố Bắc Ninh",
+                      "@type": "Organization"
+                    },
+                    "legislationIdentifier": "742/QĐ-UBND",
+                    "legislationLegalForce": "InForce",
+                    "legislationJurisdiction": "VN"
+                  },
+                  {
+                    "@type": "BreadcrumbList",
+                    "@context": "https://schema.org",
+                    "itemListElement": [
+                      {
+                        "item": "https://vbpl.vn",
+                        "name": "Trang chủ",
+                        "@type": "ListItem",
+                        "position": 1
+                      },
+                      {
+                        "item": "https://vbpl.vn/van-ban/dia-phuong",
+                        "name": "Văn bản địa phương",
+                        "@type": "ListItem",
+                        "position": 2
+                      },
+                      {
+                        "item": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-742-qd-ubnd-ve-viec-bai-bo-cac-quyet-dinh-quy-pham-phap-luat-do-uy-ban-nhan-dan-tinh-bac-giang-va-uy-ban-nhan-dan-tinh-bac-ninh-cu-ban-hanh--add93d50-dcb6-11f1-b7c7-0fc302839a06",
+                        "name": "Quyết định số 742/QĐ-UBND Về việc bãi bỏ các Quyết định quy phạm pháp luật do Uỷ ban nhân dân tỉnh Bắc Giang và Uỷ ban nhân dân tỉnh Bắc Ninh (cũ) ban hành",
+                        "@type": "ListItem",
+                        "position": 3
+                      }
+                    ]
+                  }
+                ],
+                "meta_tags": {
+                  "og:url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-742-qd-ubnd-ve-viec-bai-bo-cac-quyet-dinh-quy-pham-phap-luat-do-uy-ban-nhan-dan-tinh-bac-giang-va-uy-ban-nhan-dan-tinh-bac-ninh-cu-ban-hanh--add93d50-dcb6-11f1-b7c7-0fc302839a06",
+                  "robots": "index, follow",
+                  "og:type": "article",
+                  "og:title": "Văn bản hành chính liên quan 742/QĐ-UBND của UBND Thành phố Bắc Ninh",
+                  "viewport": "width=device-width, initial-scale=1",
+                  "og:locale": "vi_VN",
+                  "description": "Tra cứu Văn bản hành chính liên quan 742/QĐ-UBND, Quyết định số 742/QĐ-UBND Về việc bãi bỏ các Quyết định quy phạm pháp luật do Uỷ ban nhân dân tỉnh Bắc Giang và Uỷ ban nhân dân tỉnh Bắc Ninh (cũ) ban hành. Xem toàn văn và hiệu lực.",
+                  "og:site_name": "CSDL quốc gia về pháp luật",
+                  "twitter:card": "summary_large_image",
+                  "twitter:title": "Văn bản hành chính liên quan 742/QĐ-UBND của UBND Thành phố Bắc Ninh",
+                  "og:description": "Tra cứu Văn bản hành chính liên quan 742/QĐ-UBND, Quyết định số 742/QĐ-UBND Về việc bãi bỏ các Quyết định quy phạm pháp luật do Uỷ ban nhân dân tỉnh Bắc Giang và Uỷ ban nhân dân tỉnh Bắc Ninh (cũ) ban hành. Xem toàn văn và hiệu lực.",
+                  "twitter:description": "Tra cứu Văn bản hành chính liên quan 742/QĐ-UBND, Quyết định số 742/QĐ-UBND Về việc bãi bỏ các Quyết định quy phạm pháp luật do Uỷ ban nhân dân tỉnh Bắc Giang và Uỷ ban nhân dân tỉnh Bắc Ninh (cũ) ban hành. Xem toàn văn và hiệu lực.",
+                  "article:modified_time": "2026-11-10T03:42:06.000Z",
+                  "article:published_time": "2026-05-28T17:00:00.000Z",
+                  "google-site-verification": "LY6q8GyDpuCAuWEtIfZgVg__EaZ8Cyk-rYDq8p-bUKw"
+                },
+                "sitemap_url": "https://vbpl.vn/sitemap/13.xml",
+                "source_files": [
+                  {
+                    "size": 29781,
+                    "file_name": "2. PL QĐ HHL F.docx",
+                    "full_path": "add93d50-dcb6-11f1-b7c7-0fc302839a06/2. PL QĐ HHL F.docx",
+                    "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  },
+                  {
+                    "size": 147025,
+                    "file_name": "QD 742.docx",
+                    "full_path": "add93d50-dcb6-11f1-b7c7-0fc302839a06/QD 742.docx",
+                    "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  },
+                  {
+                    "size": 677777,
+                    "file_name": "QD 742.pdf",
+                    "full_path": "add93d50-dcb6-11f1-b7c7-0fc302839a06/QD 742.pdf",
+                    "content_type": "application/pdf"
+                  }
+                ],
+                "stored_files": [
+                  {
+                    "size": 29781,
+                    "sha256": "6ecb4e90373df9700f4ca94bb8dd78e2daf444bd6acd00c0ede26c447f745e39",
+                    "file_name": "2. PL QĐ HHL F.docx",
+                    "storage_ref": "vbpl-raw/vbpl/add93d50-dcb6-11f1-b7c7-0fc302839a06/6ecb4e90373df9700f4ca94bb8dd78e2daf444bd6acd00c0ede26c447f745e39/origin.docx",
+                    "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  },
+                  {
+                    "size": 147025,
+                    "sha256": "ef8971b9a31daba31e1055b2a5660042f5d25b17d44c3432f4f6725cc148d8c2",
+                    "file_name": "QD 742.docx",
+                    "storage_ref": "vbpl-raw/vbpl/add93d50-dcb6-11f1-b7c7-0fc302839a06/ef8971b9a31daba31e1055b2a5660042f5d25b17d44c3432f4f6725cc148d8c2/origin.docx",
+                    "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  },
+                  {
+                    "size": 677777,
+                    "sha256": "4fd94d38065d522225a74ad42e5d9e1d84732b4f3a7aaf4edd5260ca92123172",
+                    "file_name": "QD 742.pdf",
+                    "storage_ref": "vbpl-raw/vbpl/add93d50-dcb6-11f1-b7c7-0fc302839a06/4fd94d38065d522225a74ad42e5d9e1d84732b4f3a7aaf4edd5260ca92123172/origin.pdf",
+                    "content_type": "application/pdf"
+                  },
+                  {
+                    "role": "normalized_markdown",
+                    "size": 18982,
+                    "sha256": "ba87faad11ba96c890cfc0bdaeb9849510d14ed8be880fb291a31222226b2c3d",
+                    "file_name": "origin.md",
+                    "storage_ref": "vbpl-raw/vbpl/add93d50-dcb6-11f1-b7c7-0fc302839a06/ba87faad11ba96c890cfc0bdaeb9849510d14ed8be880fb291a31222226b2c3d/origin.md",
+                    "content_type": "text/markdown; charset=utf-8",
+                    "source_sha256": "6ecb4e90373df9700f4ca94bb8dd78e2daf444bd6acd00c0ede26c447f745e39",
+                    "source_file_name": "2. PL QĐ HHL F.docx",
+                    "source_storage_ref": "vbpl-raw/vbpl/add93d50-dcb6-11f1-b7c7-0fc302839a06/6ecb4e90373df9700f4ca94bb8dd78e2daf444bd6acd00c0ede26c447f745e39/origin.docx"
+                  }
+                ],
+                "sitemap_lastmod": "2026-11-10",
+                "document_attributes": {
+                  "effTo": null,
+                  "docNum": "742/QĐ-UBND",
+                  "docType": {
+                    "id": "25fad6ae-78f6-4acd-a70e-da19032729af",
+                    "code": "VBHC",
+                    "name": "Văn bản hành chính liên quan",
+                    "parentCode": "VBHC",
+                    "parentName": "Văn bản hành chính liên quan"
+                  },
+                  "effFrom": "2026-05-29T00:00:00",
+                  "effStatus": null,
+                  "issueDate": "2026-05-29T00:00:00",
+                  "agencyName": "UBND Thành phố Bắc Ninh"
+                },
+                "stored_files_refreshed": true
+              }
+            },
+            {
+              "retrieval_chunk_id": "6552f08a-6132-4ca0-97d7-aab238929d2f",
+              "source_document_id": "450304fc-b390-46bc-8994-4fc8ba485c55",
+              "document_structure_id": "a2ec4d2f-7519-445a-9ede-e3b07490c25b",
+              "chunk_key": "legal-v2-block-000001-1",
+              "content": "Nghị định 369/2026/NĐ-CP của Chính phủ > NGHỊ ĐỊNH\n\nSửa đổi, bổ sung một số điều của Nghị định số 155/2025/NĐ-CP ngày 16 tháng 6 năm 2025 của Chính phủ quy định tiêu chuẩn, định mức sử dụng trụ sở làm việc, cơ sở hoạt động sự nghiệp\n\nCăn cứ Luật Tổ chức Chính phủ số 63/2025/QH15;\n\nCăn cứ Luật Quản lý, sử dụng tài sản công số 15/2017/QH14 được sửa đổi, bổ sung bởi Luật số 64/2020/QH14, Luật số 07/2022/QH15, Luật số 24/2023/QH15, Luật số 31/2024/QH15, Luật số 43/2024/QH15, Luật số 56/2024/QH15 và Luật số 90/2025/QH15;\n\nTheo đề nghị của Bộ trưởng Bộ Tài chính;\n\nChính phủ ban hành Nghị định sửa đổi, bổ sung một số điều của Nghị định số 155/2025/NĐ-CP ngày 16 tháng 6 năm 2025 của Chính phủ quy định tiêu chuẩn, định mức sử dụng trụ sở làm việc, cơ sở hoạt động sự nghiệp.",
+              "content_sha256": "18d9882b9a35272f65e8dd218f3a7173b6f2e589983cdf5988aa348dd63129d8",
+              "hash_check": "MATCHED_STORED",
+              "content_representation": "retrieval_chunk_content",
+              "rank": 3,
+              "raw_score": 12.5129299793615,
+              "score_kind": "BM25",
+              "retrieval_method": "bm25",
+              "node_id": "document",
+              "block_id": "block-000001",
+              "chunk_type": "text",
+              "start_offset": 0,
+              "end_offset": 744,
+              "chunk_metadata": {
+                "block_ids": [
+                  "block-000001",
+                  "block-000002",
+                  "block-000003",
+                  "block-000004",
+                  "block-000005",
+                  "block-000006"
+                ],
+                "breadcrumb": "Nghị định 369/2026/NĐ-CP của Chính phủ",
+                "block_spans": [
+                  {
+                    "block_id": "block-000001",
+                    "content_end": 9,
+                    "content_start": 0
+                  },
+                  {
+                    "block_id": "block-000002",
+                    "content_end": 180,
+                    "content_start": 0
+                  },
+                  {
+                    "block_id": "block-000003",
+                    "content_end": 46,
+                    "content_start": 0
+                  },
+                  {
+                    "block_id": "block-000004",
+                    "content_end": 239,
+                    "content_start": 0
+                  },
+                  {
+                    "block_id": "block-000005",
+                    "content_end": 40,
+                    "content_start": 0
+                  },
+                  {
+                    "block_id": "block-000006",
+                    "content_end": 210,
+                    "content_start": 0
+                  }
+                ],
+                "context_block_ids": []
+              },
+              "source_id": "vbpl",
+              "source_record_id": "25f863d0-bd43-11f1-887c-5fb19e26c115",
+              "source_snapshot_id": null,
+              "title": "Nghị định 369/2026/NĐ-CP của Chính phủ",
+              "source_url": "https://vbpl.vn/van-ban/chi-tiet/nghi-dinh-so-369-2026-nd-cp-sua-doi-bo-sung-mot-so-dieu-cua-nghi-dinh-so-155-2025-nd-cp-ngay-16-thang-6-nam-2025-cua-chinh-phu-quy-dinh-tieu-chuan-dinh-muc-su-dung-tru-so-lam-viec-co-so-hoat-dong-su-nghiep--25f863d0-bd43-11f1-887c-5fb19e26c115",
+              "language": "vi",
+              "issued_on": "2026-09-25",
+              "effective_from": "2026-11-11",
+              "effective_to": null,
+              "effect_status_reported": "Còn hiệu lực",
+              "usage_policy": "EXPERIMENTAL_ONLY",
+              "source_metadata": {
+                "json_ld": [
+                  {
+                    "url": "https://vbpl.vn",
+                    "name": "Cơ sở dữ liệu quốc gia về pháp luật",
+                    "@type": "Organization",
+                    "@context": "https://schema.org",
+                    "description": "Cơ sở dữ liệu quốc gia về pháp luật được xây dựng và vận hành bởi Bộ Tư pháp, cung cấp thông tin đầy đủ, chính xác về văn bản pháp luật Việt Nam."
+                  },
+                  {
+                    "url": "https://vbpl.vn",
+                    "name": "CSDL quốc gia về pháp luật",
+                    "@type": "WebSite",
+                    "@context": "https://schema.org"
+                  },
+                  {
+                    "url": "https://vbpl.vn/van-ban/chi-tiet/nghi-dinh-so-369-2026-nd-cp-sua-doi-bo-sung-mot-so-dieu-cua-nghi-dinh-so-155-2025-nd-cp-ngay-16-thang-6-nam-2025-cua-chinh-phu-quy-dinh-tieu-chuan-dinh-muc-su-dung-tru-so-lam-viec-co-so-hoat-dong-su-nghiep--25f863d0-bd43-11f1-887c-5fb19e26c115",
+                    "name": "Nghị định số 369/2026/NĐ-CP Sửa đổi, bổ sung một số điều của Nghị định số 155/2025/NĐ-CP ngày 16 tháng 6 năm 2025 của Chính phủ quy định tiêu chuẩn, định mức sử dụng trụ sở làm việc, cơ sở hoạt động sự nghiệp",
+                    "@type": "Legislation",
+                    "@context": "https://schema.org",
+                    "keywords": "Nghị định, Quản lý, sử dụng tài sản công, Chính phủ, văn bản pháp luật, pháp luật Việt Nam",
+                    "inLanguage": "vi",
+                    "legislationDate": "2026-09-25T00:00:00",
+                    "legislationType": "Nghị định",
+                    "legislationPassedBy": {
+                      "name": "Chính phủ",
+                      "@type": "Organization"
+                    },
+                    "legislationIdentifier": "369/2026/NĐ-CP",
+                    "legislationLegalForce": "InForce",
+                    "legislationJurisdiction": "VN"
+                  },
+                  {
+                    "@type": "BreadcrumbList",
+                    "@context": "https://schema.org",
+                    "itemListElement": [
+                      {
+                        "item": "https://vbpl.vn",
+                        "name": "Trang chủ",
+                        "@type": "ListItem",
+                        "position": 1
+                      },
+                      {
+                        "item": "https://vbpl.vn/van-ban/trung-uong",
+                        "name": "Văn bản trung ương",
+                        "@type": "ListItem",
+                        "position": 2
+                      },
+                      {
+                        "item": "https://vbpl.vn/van-ban/chi-tiet/nghi-dinh-so-369-2026-nd-cp-sua-doi-bo-sung-mot-so-dieu-cua-nghi-dinh-so-155-2025-nd-cp-ngay-16-thang-6-nam-2025-cua-chinh-phu-quy-dinh-tieu-chuan-dinh-muc-su-dung-tru-so-lam-viec-co-so-hoat-dong-su-nghiep--25f863d0-bd43-11f1-887c-5fb19e26c115",
+                        "name": "Nghị định số 369/2026/NĐ-CP Sửa đổi, bổ sung một số điều của Nghị định số 155/2025/NĐ-CP ngày 16 tháng 6 năm 2025 của Chính phủ quy định tiêu chuẩn, định mức sử dụng trụ sở làm việc, cơ sở hoạt động sự nghiệp",
+                        "@type": "ListItem",
+                        "position": 3
+                      }
+                    ]
+                  }
+                ],
+                "meta_tags": {
+                  "og:url": "https://vbpl.vn/van-ban/chi-tiet/nghi-dinh-so-369-2026-nd-cp-sua-doi-bo-sung-mot-so-dieu-cua-nghi-dinh-so-155-2025-nd-cp-ngay-16-thang-6-nam-2025-cua-chinh-phu-quy-dinh-tieu-chuan-dinh-muc-su-dung-tru-so-lam-viec-co-so-hoat-dong-su-nghiep--25f863d0-bd43-11f1-887c-5fb19e26c115",
+                  "robots": "index, follow",
+                  "og:type": "article",
+                  "og:title": "Nghị định 369/2026/NĐ-CP của Chính phủ",
+                  "viewport": "width=device-width, initial-scale=1",
+                  "og:locale": "vi_VN",
+                  "description": "Tra cứu Nghị định 369/2026/NĐ-CP, Nghị định số 369/2026/NĐ-CP Sửa đổi, bổ sung một số điều của Nghị định số 155/2025/NĐ-CP ngày 16 tháng 6 năm 2025 của Chính phủ quy định tiêu chuẩn, định mức sử dụng trụ sở làm việc, cơ sở hoạt động sự nghiệp. Xem toàn văn và hiệu lực.",
+                  "og:site_name": "CSDL quốc gia về pháp luật",
+                  "twitter:card": "summary_large_image",
+                  "twitter:title": "Nghị định 369/2026/NĐ-CP của Chính phủ",
+                  "og:description": "Tra cứu Nghị định 369/2026/NĐ-CP, Nghị định số 369/2026/NĐ-CP Sửa đổi, bổ sung một số điều của Nghị định số 155/2025/NĐ-CP ngày 16 tháng 6 năm 2025 của Chính phủ quy định tiêu chuẩn, định mức sử dụng trụ sở làm việc, cơ sở hoạt động sự nghiệp. Xem toàn văn và hiệu lực.",
+                  "twitter:description": "Tra cứu Nghị định 369/2026/NĐ-CP, Nghị định số 369/2026/NĐ-CP Sửa đổi, bổ sung một số điều của Nghị định số 155/2025/NĐ-CP ngày 16 tháng 6 năm 2025 của Chính phủ quy định tiêu chuẩn, định mức sử dụng trụ sở làm việc, cơ sở hoạt động sự nghiệp. Xem toàn văn và hiệu lực.",
+                  "article:modified_time": "2026-11-10T17:30:13.000Z",
+                  "article:published_time": "2026-09-24T17:00:00.000Z",
+                  "google-site-verification": "LY6q8GyDpuCAuWEtIfZgVg__EaZ8Cyk-rYDq8p-bUKw"
+                },
+                "sitemap_url": "https://vbpl.vn/sitemap/1.xml",
+                "source_files": [
+                  {
+                    "size": 30236,
+                    "file_name": "Nghị-định-369-2026-NĐ-CP.docx",
+                    "full_path": "25f863d0-bd43-11f1-887c-5fb19e26c115/Nghị-định-369-2026-NĐ-CP.docx",
+                    "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  },
+                  {
+                    "size": 3373371,
+                    "file_name": "Nghị-định-369-2026-NĐ-CP.pdf",
+                    "full_path": "25f863d0-bd43-11f1-887c-5fb19e26c115/Nghị-định-369-2026-NĐ-CP.pdf",
+                    "content_type": "application/pdf"
+                  },
+                  {
+                    "size": 16352,
+                    "file_name": "Nghị-định-369-2026-NĐ-CP_Phụ lục.docx",
+                    "full_path": "25f863d0-bd43-11f1-887c-5fb19e26c115/Nghị-định-369-2026-NĐ-CP_Phụ lục.docx",
+                    "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  }
+                ],
+                "stored_files": [
+                  {
+                    "size": 30236,
+                    "sha256": "e37542fdbb6f6dfcc0bb7531263ca1ba17819f96060785f69b5228405e4ee969",
+                    "file_name": "Nghị-định-369-2026-NĐ-CP.docx",
+                    "storage_ref": "vbpl-raw/vbpl/25f863d0-bd43-11f1-887c-5fb19e26c115/e37542fdbb6f6dfcc0bb7531263ca1ba17819f96060785f69b5228405e4ee969/origin.docx",
+                    "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  },
+                  {
+                    "size": 3373371,
+                    "sha256": "1e2445888ab18edc75940e79c632a3939580f13d36acbbc1bc623871bb2ab02a",
+                    "file_name": "Nghị-định-369-2026-NĐ-CP.pdf",
+                    "storage_ref": "vbpl-raw/vbpl/25f863d0-bd43-11f1-887c-5fb19e26c115/1e2445888ab18edc75940e79c632a3939580f13d36acbbc1bc623871bb2ab02a/origin.pdf",
+                    "content_type": "application/pdf"
+                  },
+                  {
+                    "size": 16352,
+                    "sha256": "8073de49d4d131010a508524893b41e57d6c1c5b822c2a08d28ca29ea7746319",
+                    "file_name": "Nghị-định-369-2026-NĐ-CP_Phụ lục.docx",
+                    "storage_ref": "vbpl-raw/vbpl/25f863d0-bd43-11f1-887c-5fb19e26c115/8073de49d4d131010a508524893b41e57d6c1c5b822c2a08d28ca29ea7746319/origin.docx",
+                    "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  },
+                  {
+                    "role": "normalized_markdown",
+                    "size": 49611,
+                    "sha256": "015ba12f82b50e10ab0bd875378ed81aad1aacad3dab3ecc0848e6843aea6c6e",
+                    "file_name": "origin.md",
+                    "storage_ref": "vbpl-raw/vbpl/25f863d0-bd43-11f1-887c-5fb19e26c115/015ba12f82b50e10ab0bd875378ed81aad1aacad3dab3ecc0848e6843aea6c6e/origin.md",
+                    "content_type": "text/markdown; charset=utf-8",
+                    "source_sha256": "e37542fdbb6f6dfcc0bb7531263ca1ba17819f96060785f69b5228405e4ee969",
+                    "source_file_name": "Nghị-định-369-2026-NĐ-CP.docx",
+                    "source_storage_ref": "vbpl-raw/vbpl/25f863d0-bd43-11f1-887c-5fb19e26c115/e37542fdbb6f6dfcc0bb7531263ca1ba17819f96060785f69b5228405e4ee969/origin.docx"
+                  }
+                ],
+                "sitemap_lastmod": "2026-11-10",
+                "document_attributes": {
+                  "effTo": null,
+                  "docNum": "369/2026/NĐ-CP",
+                  "docType": {
+                    "id": "0d08b84c-7de7-4800-8760-2a68265e7890",
+                    "code": "NĐ",
+                    "name": "Nghị định",
+                    "parentCode": "VBQPPL",
+                    "parentName": null
+                  },
+                  "effFrom": "2026-11-11T00:00:00",
+                  "effStatus": {
+                    "id": "1419f6be-4a15-44a7-97ac-ea042770a514",
+                    "code": "CHL",
+                    "name": "Còn hiệu lực",
+                    "parentCode": null,
+                    "parentName": null
+                  },
+                  "issueDate": "2026-09-25T00:00:00",
+                  "agencyName": "Chính phủ"
+                },
+                "stored_files_refreshed": true
+              }
+            }
+          ],
+          "warnings": [
+            {
+              "code": "TEMPORAL_METADATA_INCOMPLETE",
+              "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+              "retrieval_chunk_id": "2973a693-2276-4e4f-a233-f7038e4717e0"
+            },
+            {
+              "code": "TEMPORAL_METADATA_INCOMPLETE",
+              "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+              "retrieval_chunk_id": "96e8c139-65d4-48aa-98ec-bdd2e169e984"
+            },
+            {
+              "code": "TEMPORAL_METADATA_INCOMPLETE",
+              "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+              "retrieval_chunk_id": "6552f08a-6132-4ca0-97d7-aab238929d2f"
+            }
+          ],
+          "error": null,
+          "retrieved_at": "2026-11-23T10:51:05.266632Z",
+          "consistency": "BEST_EFFORT"
+        }
+      ],
+      "aggregated_evidence": [
+        {
+          "evidence": {
+            "retrieval_chunk_id": "2973a693-2276-4e4f-a233-f7038e4717e0",
+            "source_document_id": "60c5be9f-20d9-4897-977e-2059f2c59ff2",
+            "document_structure_id": "c553ced6-1f21-490c-9bb9-fd4959f44c31",
+            "chunk_key": "legal-v2-block-000066-1",
+            "content": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk > Chương I > Điều 5: Hoàn trả kinh phí hỗ trợ thu hút, đào tạo > Khoản 2 > Điểm b > 2. Người được thu hút thông qua hình thức tuyển dụng, tiếp nhận vào làm công chức, viên chức hoặc hình thức hợp đồng lao động xác định thời hạn phải hoàn trả một phần mức hỗ trợ ban đầu nêu tại khoản 1 Điều 7 và điểm a khoản 1 Điều 8 Nghị quyết này theo mức quy định tại khoản 3 Điều này và 100% mức thu nhập theo lợi nhuận hoặc giá trị công trình nêu tại khoản 2 Điều 7 Nghị quyết này; người được hưởng chính sách hỗ trợ đào tạo phải hoàn trả một phần mức hỗ trợ nêu tại Điều 10 Nghị quyết này theo mức quy định tại khoản 3 Điều này nếu thuộc một trong các trường hợp sau (trừ các trường hợp nêu tại khoản 1 Điều này):\n\nb) Đơn phương chấm dứt hợp đồng lao động theo quy định tại khoản 2 Điều 35 Bộ luật Lao động số 45/2019/QH14.",
+            "content_sha256": "f77a5da81f5d0c518f4fb61754300b17dfc0909d412430e3f976e503bd04e396",
+            "hash_check": "MATCHED_STORED",
+            "content_representation": "retrieval_chunk_content",
+            "rank": 1,
+            "raw_score": 23.2540942793144,
+            "score_kind": "BM25",
+            "retrieval_method": "bm25",
+            "node_id": "chapter-i-article-5-clause-2-point-b",
+            "block_id": "block-000066",
+            "chunk_type": "point",
+            "start_offset": 10984,
+            "end_offset": 11092,
+            "chunk_metadata": {
+              "block_ids": [
+                "block-000066"
+              ],
+              "breadcrumb": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk > Chương I > Điều 5: Hoàn trả kinh phí hỗ trợ thu hút, đào tạo > Khoản 2 > Điểm b",
+              "block_spans": [
+                {
+                  "block_id": "block-000066",
+                  "content_end": 108,
+                  "content_start": 0
+                }
+              ],
+              "context_block_ids": [
+                "block-000064"
+              ]
+            },
+            "source_id": "vbpl",
+            "source_record_id": "177c1650-dc18-11f1-a2f3-6f4db9961316",
+            "source_snapshot_id": null,
+            "title": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+            "source_url": "https://vbpl.vn/van-ban/chi-tiet/nghi-quyet-so-25-2026-nq-hdnd-quy-dinh-chinh-sach-thu-hut-ho-tro-dao-tao-phat-trien-nguon-nhan-luc-cua-tinh-dak-lak-giai-doan-2026-2031--177c1650-dc18-11f1-a2f3-6f4db9961316",
+            "language": "vi",
+            "issued_on": "2026-10-20",
+            "effective_from": "2026-10-30",
+            "effective_to": null,
+            "effect_status_reported": "Còn hiệu lực",
+            "usage_policy": "EXPERIMENTAL_ONLY",
+            "source_metadata": {
+              "json_ld": [
+                {
+                  "url": "https://vbpl.vn",
+                  "name": "Cơ sở dữ liệu quốc gia về pháp luật",
+                  "@type": "Organization",
+                  "@context": "https://schema.org",
+                  "description": "Cơ sở dữ liệu quốc gia về pháp luật được xây dựng và vận hành bởi Bộ Tư pháp, cung cấp thông tin đầy đủ, chính xác về văn bản pháp luật Việt Nam."
+                },
+                {
+                  "url": "https://vbpl.vn",
+                  "name": "CSDL quốc gia về pháp luật",
+                  "@type": "WebSite",
+                  "@context": "https://schema.org"
+                },
+                {
+                  "url": "https://vbpl.vn/van-ban/chi-tiet/nghi-quyet-so-25-2026-nq-hdnd-quy-dinh-chinh-sach-thu-hut-ho-tro-dao-tao-phat-trien-nguon-nhan-luc-cua-tinh-dak-lak-giai-doan-2026-2031--177c1650-dc18-11f1-a2f3-6f4db9961316",
+                  "name": "Nghị quyết số 25/2026/NQ-HĐND Quy định chính sách thu hút, hỗ trợ đào tạo phát triển nguồn nhân lực của tỉnh Đắk Lắk giai đoạn 2026 - 2031",
+                  "@type": "Legislation",
+                  "@context": "https://schema.org",
+                  "keywords": "Nghị quyết, Khoa học, công nghệ và đổi mới sáng tạo, HĐND Tỉnh Đắk Lắk, văn bản pháp luật, pháp luật Việt Nam",
+                  "inLanguage": "vi",
+                  "legislationDate": "2026-10-20T00:00:00",
+                  "legislationType": "Nghị quyết",
+                  "legislationPassedBy": {
+                    "name": "HĐND Tỉnh Đắk Lắk",
+                    "@type": "Organization"
+                  },
+                  "legislationIdentifier": "25/2026/NQ-HĐND",
+                  "legislationLegalForce": "InForce",
+                  "legislationJurisdiction": "VN"
+                },
+                {
+                  "@type": "BreadcrumbList",
+                  "@context": "https://schema.org",
+                  "itemListElement": [
+                    {
+                      "item": "https://vbpl.vn",
+                      "name": "Trang chủ",
+                      "@type": "ListItem",
+                      "position": 1
+                    },
+                    {
+                      "item": "https://vbpl.vn/van-ban/dia-phuong",
+                      "name": "Văn bản địa phương",
+                      "@type": "ListItem",
+                      "position": 2
+                    },
+                    {
+                      "item": "https://vbpl.vn/van-ban/chi-tiet/nghi-quyet-so-25-2026-nq-hdnd-quy-dinh-chinh-sach-thu-hut-ho-tro-dao-tao-phat-trien-nguon-nhan-luc-cua-tinh-dak-lak-giai-doan-2026-2031--177c1650-dc18-11f1-a2f3-6f4db9961316",
+                      "name": "Nghị quyết số 25/2026/NQ-HĐND Quy định chính sách thu hút, hỗ trợ đào tạo phát triển nguồn nhân lực của tỉnh Đắk Lắk giai đoạn 2026 - 2031",
+                      "@type": "ListItem",
+                      "position": 3
+                    }
+                  ]
+                }
+              ],
+              "meta_tags": {
+                "og:url": "https://vbpl.vn/van-ban/chi-tiet/nghi-quyet-so-25-2026-nq-hdnd-quy-dinh-chinh-sach-thu-hut-ho-tro-dao-tao-phat-trien-nguon-nhan-luc-cua-tinh-dak-lak-giai-doan-2026-2031--177c1650-dc18-11f1-a2f3-6f4db9961316",
+                "robots": "index, follow",
+                "og:type": "article",
+                "og:title": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+                "viewport": "width=device-width, initial-scale=1",
+                "og:locale": "vi_VN",
+                "description": "Tra cứu Nghị quyết 25/2026/NQ-HĐND, Nghị quyết số 25/2026/NQ-HĐND Quy định chính sách thu hút, hỗ trợ đào tạo phát triển nguồn nhân lực của tỉnh Đắk Lắk giai đoạn 2026 - 2031. Xem toàn văn và hiệu lực.",
+                "og:site_name": "CSDL quốc gia về pháp luật",
+                "twitter:card": "summary_large_image",
+                "twitter:title": "Nghị quyết 25/2026/NQ-HĐND của HĐND Tỉnh Đắk Lắk",
+                "og:description": "Tra cứu Nghị quyết 25/2026/NQ-HĐND, Nghị quyết số 25/2026/NQ-HĐND Quy định chính sách thu hút, hỗ trợ đào tạo phát triển nguồn nhân lực của tỉnh Đắk Lắk giai đoạn 2026 - 2031. Xem toàn văn và hiệu lực.",
+                "twitter:description": "Tra cứu Nghị quyết 25/2026/NQ-HĐND, Nghị quyết số 25/2026/NQ-HĐND Quy định chính sách thu hút, hỗ trợ đào tạo phát triển nguồn nhân lực của tỉnh Đắk Lắk giai đoạn 2026 - 2031. Xem toàn văn và hiệu lực.",
+                "article:modified_time": "2026-11-10T02:57:45.000Z",
+                "article:published_time": "2026-10-19T17:00:00.000Z",
+                "google-site-verification": "LY6q8GyDpuCAuWEtIfZgVg__EaZ8Cyk-rYDq8p-bUKw"
+              },
+              "sitemap_url": "https://vbpl.vn/sitemap/13.xml",
+              "source_files": [
+                {
+                  "size": 65217,
+                  "file_name": "25 2026 NQ HĐND.docx",
+                  "full_path": "177c1650-dc18-11f1-a2f3-6f4db9961316/25 2026 NQ HĐND.docx",
+                  "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                },
+                {
+                  "size": 5622643,
+                  "file_name": "25-2026-NQHĐND_0001.signed.signed.pdf",
+                  "full_path": "177c1650-dc18-11f1-a2f3-6f4db9961316/25-2026-NQHĐND_0001.signed.signed.pdf",
+                  "content_type": "application/pdf"
+                }
+              ],
+              "stored_files": [
+                {
+                  "size": 65217,
+                  "sha256": "d6f9bf368f7578a6a25c88beee720a883714d7e635fca73dcf4fd5dcd8469cc7",
+                  "file_name": "25 2026 NQ HĐND.docx",
+                  "storage_ref": "vbpl-raw/vbpl/177c1650-dc18-11f1-a2f3-6f4db9961316/d6f9bf368f7578a6a25c88beee720a883714d7e635fca73dcf4fd5dcd8469cc7/origin.docx",
+                  "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                },
+                {
+                  "size": 5622643,
+                  "sha256": "d849fed66459eca3fdd8842c00e78cc2b689afa9c3612e22be0d0bcc46a3c629",
+                  "file_name": "25-2026-NQHĐND_0001.signed.signed.pdf",
+                  "storage_ref": "vbpl-raw/vbpl/177c1650-dc18-11f1-a2f3-6f4db9961316/d849fed66459eca3fdd8842c00e78cc2b689afa9c3612e22be0d0bcc46a3c629/origin.pdf",
+                  "content_type": "application/pdf"
+                },
+                {
+                  "role": "normalized_markdown",
+                  "size": 33976,
+                  "sha256": "b617f89a4a5c8a5cfa47ba29b637057a68dbab2abb41cb5d77863977f88c3806",
+                  "file_name": "origin.md",
+                  "storage_ref": "vbpl-raw/vbpl/177c1650-dc18-11f1-a2f3-6f4db9961316/b617f89a4a5c8a5cfa47ba29b637057a68dbab2abb41cb5d77863977f88c3806/origin.md",
+                  "content_type": "text/markdown; charset=utf-8",
+                  "source_sha256": "d6f9bf368f7578a6a25c88beee720a883714d7e635fca73dcf4fd5dcd8469cc7",
+                  "source_file_name": "25 2026 NQ HĐND.docx",
+                  "source_storage_ref": "vbpl-raw/vbpl/177c1650-dc18-11f1-a2f3-6f4db9961316/d6f9bf368f7578a6a25c88beee720a883714d7e635fca73dcf4fd5dcd8469cc7/origin.docx"
+                }
+              ],
+              "sitemap_lastmod": "2026-11-10",
+              "document_attributes": {
+                "effTo": null,
+                "docNum": "25/2026/NQ-HĐND",
+                "docType": {
+                  "id": "044d941c-40de-45b9-ae84-51f5a730bfe0",
+                  "code": "NQ",
+                  "name": "Nghị quyết",
+                  "parentCode": "VBQPPL",
+                  "parentName": null
+                },
+                "effFrom": "2026-10-30T00:00:00",
+                "effStatus": {
+                  "id": "1419f6be-4a15-44a7-97ac-ea042770a514",
+                  "code": "CHL",
+                  "name": "Còn hiệu lực",
+                  "parentCode": null,
+                  "parentName": null
+                },
+                "issueDate": "2026-10-20T00:00:00",
+                "agencyName": "HĐND Tỉnh Đắk Lắk"
+              },
+              "stored_files_refreshed": true
+            }
+          },
+          "occurrences": [
+            {
+              "subquery_index": 0,
+              "response_index": 0,
+              "query": "Tra cứu Điều 35 Bộ luật Lao động 45/2019/QH14.",
+              "request_id": "00b17ce1-fd87-4a98-bc4e-480695c171b6",
+              "rank": 1,
+              "raw_score": 23.2540942793144,
+              "score_kind": "BM25",
+              "issue_indices": []
+            }
+          ]
+        },
+        {
+          "evidence": {
+            "retrieval_chunk_id": "96e8c139-65d4-48aa-98ec-bdd2e169e984",
+            "source_document_id": "4cb20317-2cb1-43fb-886d-443731536540",
+            "document_structure_id": "7fd8d2aa-cb43-4e42-a478-ee70a20b8872",
+            "chunk_key": "legal-v3-block-000004-66",
+            "content": "Văn bản hành chính liên quan 742/QĐ-UBND của UBND Thành phố Bắc Ninh > Phụ lục > Cột: STT; Tên văn bản\nTên văn bản: Quyết định số 29/2019/QĐ-UBND ngày 10/12/2019 của UBND tỉnh Bắc Ninh ban hành Quy định phân công, phân cấp trách nhiệm quản lý nhà nước về công tác an toàn lao động, vệ sinh môi trường trong thi công xây dựng công trình trên địa bàn tỉnh Bắc Ninh",
+            "content_sha256": "265b17a58f43d64d976458802cfc69cec2344db779b038a29137c91a96bb4e31",
+            "hash_check": "MATCHED_STORED",
+            "content_representation": "retrieval_chunk_content",
+            "rank": 2,
+            "raw_score": 13.7336530253431,
+            "score_kind": "BM25",
+            "retrieval_method": "bm25",
+            "node_id": "appendix-1",
+            "block_id": "block-000004",
+            "chunk_type": "table",
+            "start_offset": 250,
+            "end_offset": 14803,
+            "chunk_metadata": {
+              "block_ids": [
+                "block-000004"
+              ],
+              "table_row": 67,
+              "breadcrumb": "Văn bản hành chính liên quan 742/QĐ-UBND của UBND Thành phố Bắc Ninh > Phụ lục",
+              "block_spans": [
+                {
+                  "block_id": "block-000004",
+                  "content_end": 13389,
+                  "content_start": 13137
+                }
+              ],
+              "header_span": [
+                0,
+                21
+              ],
+              "table_headers": [
+                "STT",
+                "Tên văn bản"
+              ]
+            },
+            "source_id": "vbpl",
+            "source_record_id": "add93d50-dcb6-11f1-b7c7-0fc302839a06",
+            "source_snapshot_id": null,
+            "title": "Văn bản hành chính liên quan 742/QĐ-UBND của UBND Thành phố Bắc Ninh",
+            "source_url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-742-qd-ubnd-ve-viec-bai-bo-cac-quyet-dinh-quy-pham-phap-luat-do-uy-ban-nhan-dan-tinh-bac-giang-va-uy-ban-nhan-dan-tinh-bac-ninh-cu-ban-hanh--add93d50-dcb6-11f1-b7c7-0fc302839a06",
+            "language": "vi",
+            "issued_on": "2026-05-29",
+            "effective_from": "2026-05-29",
+            "effective_to": null,
+            "effect_status_reported": null,
+            "usage_policy": "EXPERIMENTAL_ONLY",
+            "source_metadata": {
+              "json_ld": [
+                {
+                  "url": "https://vbpl.vn",
+                  "name": "Cơ sở dữ liệu quốc gia về pháp luật",
+                  "@type": "Organization",
+                  "@context": "https://schema.org",
+                  "description": "Cơ sở dữ liệu quốc gia về pháp luật được xây dựng và vận hành bởi Bộ Tư pháp, cung cấp thông tin đầy đủ, chính xác về văn bản pháp luật Việt Nam."
+                },
+                {
+                  "url": "https://vbpl.vn",
+                  "name": "CSDL quốc gia về pháp luật",
+                  "@type": "WebSite",
+                  "@context": "https://schema.org"
+                },
+                {
+                  "url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-742-qd-ubnd-ve-viec-bai-bo-cac-quyet-dinh-quy-pham-phap-luat-do-uy-ban-nhan-dan-tinh-bac-giang-va-uy-ban-nhan-dan-tinh-bac-ninh-cu-ban-hanh--add93d50-dcb6-11f1-b7c7-0fc302839a06",
+                  "name": "Quyết định số 742/QĐ-UBND Về việc bãi bỏ các Quyết định quy phạm pháp luật do Uỷ ban nhân dân tỉnh Bắc Giang và Uỷ ban nhân dân tỉnh Bắc Ninh (cũ) ban hành",
+                  "@type": "Legislation",
+                  "@context": "https://schema.org",
+                  "keywords": "Văn bản hành chính liên quan, UBND Thành phố Bắc Ninh, văn bản pháp luật, pháp luật Việt Nam",
+                  "inLanguage": "vi",
+                  "legislationDate": "2026-05-29T00:00:00",
+                  "legislationType": "Văn bản hành chính liên quan",
+                  "legislationPassedBy": {
+                    "name": "UBND Thành phố Bắc Ninh",
+                    "@type": "Organization"
+                  },
+                  "legislationIdentifier": "742/QĐ-UBND",
+                  "legislationLegalForce": "InForce",
+                  "legislationJurisdiction": "VN"
+                },
+                {
+                  "@type": "BreadcrumbList",
+                  "@context": "https://schema.org",
+                  "itemListElement": [
+                    {
+                      "item": "https://vbpl.vn",
+                      "name": "Trang chủ",
+                      "@type": "ListItem",
+                      "position": 1
+                    },
+                    {
+                      "item": "https://vbpl.vn/van-ban/dia-phuong",
+                      "name": "Văn bản địa phương",
+                      "@type": "ListItem",
+                      "position": 2
+                    },
+                    {
+                      "item": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-742-qd-ubnd-ve-viec-bai-bo-cac-quyet-dinh-quy-pham-phap-luat-do-uy-ban-nhan-dan-tinh-bac-giang-va-uy-ban-nhan-dan-tinh-bac-ninh-cu-ban-hanh--add93d50-dcb6-11f1-b7c7-0fc302839a06",
+                      "name": "Quyết định số 742/QĐ-UBND Về việc bãi bỏ các Quyết định quy phạm pháp luật do Uỷ ban nhân dân tỉnh Bắc Giang và Uỷ ban nhân dân tỉnh Bắc Ninh (cũ) ban hành",
+                      "@type": "ListItem",
+                      "position": 3
+                    }
+                  ]
+                }
+              ],
+              "meta_tags": {
+                "og:url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-742-qd-ubnd-ve-viec-bai-bo-cac-quyet-dinh-quy-pham-phap-luat-do-uy-ban-nhan-dan-tinh-bac-giang-va-uy-ban-nhan-dan-tinh-bac-ninh-cu-ban-hanh--add93d50-dcb6-11f1-b7c7-0fc302839a06",
+                "robots": "index, follow",
+                "og:type": "article",
+                "og:title": "Văn bản hành chính liên quan 742/QĐ-UBND của UBND Thành phố Bắc Ninh",
+                "viewport": "width=device-width, initial-scale=1",
+                "og:locale": "vi_VN",
+                "description": "Tra cứu Văn bản hành chính liên quan 742/QĐ-UBND, Quyết định số 742/QĐ-UBND Về việc bãi bỏ các Quyết định quy phạm pháp luật do Uỷ ban nhân dân tỉnh Bắc Giang và Uỷ ban nhân dân tỉnh Bắc Ninh (cũ) ban hành. Xem toàn văn và hiệu lực.",
+                "og:site_name": "CSDL quốc gia về pháp luật",
+                "twitter:card": "summary_large_image",
+                "twitter:title": "Văn bản hành chính liên quan 742/QĐ-UBND của UBND Thành phố Bắc Ninh",
+                "og:description": "Tra cứu Văn bản hành chính liên quan 742/QĐ-UBND, Quyết định số 742/QĐ-UBND Về việc bãi bỏ các Quyết định quy phạm pháp luật do Uỷ ban nhân dân tỉnh Bắc Giang và Uỷ ban nhân dân tỉnh Bắc Ninh (cũ) ban hành. Xem toàn văn và hiệu lực.",
+                "twitter:description": "Tra cứu Văn bản hành chính liên quan 742/QĐ-UBND, Quyết định số 742/QĐ-UBND Về việc bãi bỏ các Quyết định quy phạm pháp luật do Uỷ ban nhân dân tỉnh Bắc Giang và Uỷ ban nhân dân tỉnh Bắc Ninh (cũ) ban hành. Xem toàn văn và hiệu lực.",
+                "article:modified_time": "2026-11-10T03:42:06.000Z",
+                "article:published_time": "2026-05-28T17:00:00.000Z",
+                "google-site-verification": "LY6q8GyDpuCAuWEtIfZgVg__EaZ8Cyk-rYDq8p-bUKw"
+              },
+              "sitemap_url": "https://vbpl.vn/sitemap/13.xml",
+              "source_files": [
+                {
+                  "size": 29781,
+                  "file_name": "2. PL QĐ HHL F.docx",
+                  "full_path": "add93d50-dcb6-11f1-b7c7-0fc302839a06/2. PL QĐ HHL F.docx",
+                  "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                },
+                {
+                  "size": 147025,
+                  "file_name": "QD 742.docx",
+                  "full_path": "add93d50-dcb6-11f1-b7c7-0fc302839a06/QD 742.docx",
+                  "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                },
+                {
+                  "size": 677777,
+                  "file_name": "QD 742.pdf",
+                  "full_path": "add93d50-dcb6-11f1-b7c7-0fc302839a06/QD 742.pdf",
+                  "content_type": "application/pdf"
+                }
+              ],
+              "stored_files": [
+                {
+                  "size": 29781,
+                  "sha256": "6ecb4e90373df9700f4ca94bb8dd78e2daf444bd6acd00c0ede26c447f745e39",
+                  "file_name": "2. PL QĐ HHL F.docx",
+                  "storage_ref": "vbpl-raw/vbpl/add93d50-dcb6-11f1-b7c7-0fc302839a06/6ecb4e90373df9700f4ca94bb8dd78e2daf444bd6acd00c0ede26c447f745e39/origin.docx",
+                  "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                },
+                {
+                  "size": 147025,
+                  "sha256": "ef8971b9a31daba31e1055b2a5660042f5d25b17d44c3432f4f6725cc148d8c2",
+                  "file_name": "QD 742.docx",
+                  "storage_ref": "vbpl-raw/vbpl/add93d50-dcb6-11f1-b7c7-0fc302839a06/ef8971b9a31daba31e1055b2a5660042f5d25b17d44c3432f4f6725cc148d8c2/origin.docx",
+                  "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                },
+                {
+                  "size": 677777,
+                  "sha256": "4fd94d38065d522225a74ad42e5d9e1d84732b4f3a7aaf4edd5260ca92123172",
+                  "file_name": "QD 742.pdf",
+                  "storage_ref": "vbpl-raw/vbpl/add93d50-dcb6-11f1-b7c7-0fc302839a06/4fd94d38065d522225a74ad42e5d9e1d84732b4f3a7aaf4edd5260ca92123172/origin.pdf",
+                  "content_type": "application/pdf"
+                },
+                {
+                  "role": "normalized_markdown",
+                  "size": 18982,
+                  "sha256": "ba87faad11ba96c890cfc0bdaeb9849510d14ed8be880fb291a31222226b2c3d",
+                  "file_name": "origin.md",
+                  "storage_ref": "vbpl-raw/vbpl/add93d50-dcb6-11f1-b7c7-0fc302839a06/ba87faad11ba96c890cfc0bdaeb9849510d14ed8be880fb291a31222226b2c3d/origin.md",
+                  "content_type": "text/markdown; charset=utf-8",
+                  "source_sha256": "6ecb4e90373df9700f4ca94bb8dd78e2daf444bd6acd00c0ede26c447f745e39",
+                  "source_file_name": "2. PL QĐ HHL F.docx",
+                  "source_storage_ref": "vbpl-raw/vbpl/add93d50-dcb6-11f1-b7c7-0fc302839a06/6ecb4e90373df9700f4ca94bb8dd78e2daf444bd6acd00c0ede26c447f745e39/origin.docx"
+                }
+              ],
+              "sitemap_lastmod": "2026-11-10",
+              "document_attributes": {
+                "effTo": null,
+                "docNum": "742/QĐ-UBND",
+                "docType": {
+                  "id": "25fad6ae-78f6-4acd-a70e-da19032729af",
+                  "code": "VBHC",
+                  "name": "Văn bản hành chính liên quan",
+                  "parentCode": "VBHC",
+                  "parentName": "Văn bản hành chính liên quan"
+                },
+                "effFrom": "2026-05-29T00:00:00",
+                "effStatus": null,
+                "issueDate": "2026-05-29T00:00:00",
+                "agencyName": "UBND Thành phố Bắc Ninh"
+              },
+              "stored_files_refreshed": true
+            }
+          },
+          "occurrences": [
+            {
+              "subquery_index": 0,
+              "response_index": 0,
+              "query": "Tra cứu Điều 35 Bộ luật Lao động 45/2019/QH14.",
+              "request_id": "00b17ce1-fd87-4a98-bc4e-480695c171b6",
+              "rank": 2,
+              "raw_score": 13.7336530253431,
+              "score_kind": "BM25",
+              "issue_indices": []
+            }
+          ]
+        },
+        {
+          "evidence": {
+            "retrieval_chunk_id": "6552f08a-6132-4ca0-97d7-aab238929d2f",
+            "source_document_id": "450304fc-b390-46bc-8994-4fc8ba485c55",
+            "document_structure_id": "a2ec4d2f-7519-445a-9ede-e3b07490c25b",
+            "chunk_key": "legal-v2-block-000001-1",
+            "content": "Nghị định 369/2026/NĐ-CP của Chính phủ > NGHỊ ĐỊNH\n\nSửa đổi, bổ sung một số điều của Nghị định số 155/2025/NĐ-CP ngày 16 tháng 6 năm 2025 của Chính phủ quy định tiêu chuẩn, định mức sử dụng trụ sở làm việc, cơ sở hoạt động sự nghiệp\n\nCăn cứ Luật Tổ chức Chính phủ số 63/2025/QH15;\n\nCăn cứ Luật Quản lý, sử dụng tài sản công số 15/2017/QH14 được sửa đổi, bổ sung bởi Luật số 64/2020/QH14, Luật số 07/2022/QH15, Luật số 24/2023/QH15, Luật số 31/2024/QH15, Luật số 43/2024/QH15, Luật số 56/2024/QH15 và Luật số 90/2025/QH15;\n\nTheo đề nghị của Bộ trưởng Bộ Tài chính;\n\nChính phủ ban hành Nghị định sửa đổi, bổ sung một số điều của Nghị định số 155/2025/NĐ-CP ngày 16 tháng 6 năm 2025 của Chính phủ quy định tiêu chuẩn, định mức sử dụng trụ sở làm việc, cơ sở hoạt động sự nghiệp.",
+            "content_sha256": "18d9882b9a35272f65e8dd218f3a7173b6f2e589983cdf5988aa348dd63129d8",
+            "hash_check": "MATCHED_STORED",
+            "content_representation": "retrieval_chunk_content",
+            "rank": 3,
+            "raw_score": 12.5129299793615,
+            "score_kind": "BM25",
+            "retrieval_method": "bm25",
+            "node_id": "document",
+            "block_id": "block-000001",
+            "chunk_type": "text",
+            "start_offset": 0,
+            "end_offset": 744,
+            "chunk_metadata": {
+              "block_ids": [
+                "block-000001",
+                "block-000002",
+                "block-000003",
+                "block-000004",
+                "block-000005",
+                "block-000006"
+              ],
+              "breadcrumb": "Nghị định 369/2026/NĐ-CP của Chính phủ",
+              "block_spans": [
+                {
+                  "block_id": "block-000001",
+                  "content_end": 9,
+                  "content_start": 0
+                },
+                {
+                  "block_id": "block-000002",
+                  "content_end": 180,
+                  "content_start": 0
+                },
+                {
+                  "block_id": "block-000003",
+                  "content_end": 46,
+                  "content_start": 0
+                },
+                {
+                  "block_id": "block-000004",
+                  "content_end": 239,
+                  "content_start": 0
+                },
+                {
+                  "block_id": "block-000005",
+                  "content_end": 40,
+                  "content_start": 0
+                },
+                {
+                  "block_id": "block-000006",
+                  "content_end": 210,
+                  "content_start": 0
+                }
+              ],
+              "context_block_ids": []
+            },
+            "source_id": "vbpl",
+            "source_record_id": "25f863d0-bd43-11f1-887c-5fb19e26c115",
+            "source_snapshot_id": null,
+            "title": "Nghị định 369/2026/NĐ-CP của Chính phủ",
+            "source_url": "https://vbpl.vn/van-ban/chi-tiet/nghi-dinh-so-369-2026-nd-cp-sua-doi-bo-sung-mot-so-dieu-cua-nghi-dinh-so-155-2025-nd-cp-ngay-16-thang-6-nam-2025-cua-chinh-phu-quy-dinh-tieu-chuan-dinh-muc-su-dung-tru-so-lam-viec-co-so-hoat-dong-su-nghiep--25f863d0-bd43-11f1-887c-5fb19e26c115",
+            "language": "vi",
+            "issued_on": "2026-09-25",
+            "effective_from": "2026-11-11",
+            "effective_to": null,
+            "effect_status_reported": "Còn hiệu lực",
+            "usage_policy": "EXPERIMENTAL_ONLY",
+            "source_metadata": {
+              "json_ld": [
+                {
+                  "url": "https://vbpl.vn",
+                  "name": "Cơ sở dữ liệu quốc gia về pháp luật",
+                  "@type": "Organization",
+                  "@context": "https://schema.org",
+                  "description": "Cơ sở dữ liệu quốc gia về pháp luật được xây dựng và vận hành bởi Bộ Tư pháp, cung cấp thông tin đầy đủ, chính xác về văn bản pháp luật Việt Nam."
+                },
+                {
+                  "url": "https://vbpl.vn",
+                  "name": "CSDL quốc gia về pháp luật",
+                  "@type": "WebSite",
+                  "@context": "https://schema.org"
+                },
+                {
+                  "url": "https://vbpl.vn/van-ban/chi-tiet/nghi-dinh-so-369-2026-nd-cp-sua-doi-bo-sung-mot-so-dieu-cua-nghi-dinh-so-155-2025-nd-cp-ngay-16-thang-6-nam-2025-cua-chinh-phu-quy-dinh-tieu-chuan-dinh-muc-su-dung-tru-so-lam-viec-co-so-hoat-dong-su-nghiep--25f863d0-bd43-11f1-887c-5fb19e26c115",
+                  "name": "Nghị định số 369/2026/NĐ-CP Sửa đổi, bổ sung một số điều của Nghị định số 155/2025/NĐ-CP ngày 16 tháng 6 năm 2025 của Chính phủ quy định tiêu chuẩn, định mức sử dụng trụ sở làm việc, cơ sở hoạt động sự nghiệp",
+                  "@type": "Legislation",
+                  "@context": "https://schema.org",
+                  "keywords": "Nghị định, Quản lý, sử dụng tài sản công, Chính phủ, văn bản pháp luật, pháp luật Việt Nam",
+                  "inLanguage": "vi",
+                  "legislationDate": "2026-09-25T00:00:00",
+                  "legislationType": "Nghị định",
+                  "legislationPassedBy": {
+                    "name": "Chính phủ",
+                    "@type": "Organization"
+                  },
+                  "legislationIdentifier": "369/2026/NĐ-CP",
+                  "legislationLegalForce": "InForce",
+                  "legislationJurisdiction": "VN"
+                },
+                {
+                  "@type": "BreadcrumbList",
+                  "@context": "https://schema.org",
+                  "itemListElement": [
+                    {
+                      "item": "https://vbpl.vn",
+                      "name": "Trang chủ",
+                      "@type": "ListItem",
+                      "position": 1
+                    },
+                    {
+                      "item": "https://vbpl.vn/van-ban/trung-uong",
+                      "name": "Văn bản trung ương",
+                      "@type": "ListItem",
+                      "position": 2
+                    },
+                    {
+                      "item": "https://vbpl.vn/van-ban/chi-tiet/nghi-dinh-so-369-2026-nd-cp-sua-doi-bo-sung-mot-so-dieu-cua-nghi-dinh-so-155-2025-nd-cp-ngay-16-thang-6-nam-2025-cua-chinh-phu-quy-dinh-tieu-chuan-dinh-muc-su-dung-tru-so-lam-viec-co-so-hoat-dong-su-nghiep--25f863d0-bd43-11f1-887c-5fb19e26c115",
+                      "name": "Nghị định số 369/2026/NĐ-CP Sửa đổi, bổ sung một số điều của Nghị định số 155/2025/NĐ-CP ngày 16 tháng 6 năm 2025 của Chính phủ quy định tiêu chuẩn, định mức sử dụng trụ sở làm việc, cơ sở hoạt động sự nghiệp",
+                      "@type": "ListItem",
+                      "position": 3
+                    }
+                  ]
+                }
+              ],
+              "meta_tags": {
+                "og:url": "https://vbpl.vn/van-ban/chi-tiet/nghi-dinh-so-369-2026-nd-cp-sua-doi-bo-sung-mot-so-dieu-cua-nghi-dinh-so-155-2025-nd-cp-ngay-16-thang-6-nam-2025-cua-chinh-phu-quy-dinh-tieu-chuan-dinh-muc-su-dung-tru-so-lam-viec-co-so-hoat-dong-su-nghiep--25f863d0-bd43-11f1-887c-5fb19e26c115",
+                "robots": "index, follow",
+                "og:type": "article",
+                "og:title": "Nghị định 369/2026/NĐ-CP của Chính phủ",
+                "viewport": "width=device-width, initial-scale=1",
+                "og:locale": "vi_VN",
+                "description": "Tra cứu Nghị định 369/2026/NĐ-CP, Nghị định số 369/2026/NĐ-CP Sửa đổi, bổ sung một số điều của Nghị định số 155/2025/NĐ-CP ngày 16 tháng 6 năm 2025 của Chính phủ quy định tiêu chuẩn, định mức sử dụng trụ sở làm việc, cơ sở hoạt động sự nghiệp. Xem toàn văn và hiệu lực.",
+                "og:site_name": "CSDL quốc gia về pháp luật",
+                "twitter:card": "summary_large_image",
+                "twitter:title": "Nghị định 369/2026/NĐ-CP của Chính phủ",
+                "og:description": "Tra cứu Nghị định 369/2026/NĐ-CP, Nghị định số 369/2026/NĐ-CP Sửa đổi, bổ sung một số điều của Nghị định số 155/2025/NĐ-CP ngày 16 tháng 6 năm 2025 của Chính phủ quy định tiêu chuẩn, định mức sử dụng trụ sở làm việc, cơ sở hoạt động sự nghiệp. Xem toàn văn và hiệu lực.",
+                "twitter:description": "Tra cứu Nghị định 369/2026/NĐ-CP, Nghị định số 369/2026/NĐ-CP Sửa đổi, bổ sung một số điều của Nghị định số 155/2025/NĐ-CP ngày 16 tháng 6 năm 2025 của Chính phủ quy định tiêu chuẩn, định mức sử dụng trụ sở làm việc, cơ sở hoạt động sự nghiệp. Xem toàn văn và hiệu lực.",
+                "article:modified_time": "2026-11-10T17:30:13.000Z",
+                "article:published_time": "2026-09-24T17:00:00.000Z",
+                "google-site-verification": "LY6q8GyDpuCAuWEtIfZgVg__EaZ8Cyk-rYDq8p-bUKw"
+              },
+              "sitemap_url": "https://vbpl.vn/sitemap/1.xml",
+              "source_files": [
+                {
+                  "size": 30236,
+                  "file_name": "Nghị-định-369-2026-NĐ-CP.docx",
+                  "full_path": "25f863d0-bd43-11f1-887c-5fb19e26c115/Nghị-định-369-2026-NĐ-CP.docx",
+                  "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                },
+                {
+                  "size": 3373371,
+                  "file_name": "Nghị-định-369-2026-NĐ-CP.pdf",
+                  "full_path": "25f863d0-bd43-11f1-887c-5fb19e26c115/Nghị-định-369-2026-NĐ-CP.pdf",
+                  "content_type": "application/pdf"
+                },
+                {
+                  "size": 16352,
+                  "file_name": "Nghị-định-369-2026-NĐ-CP_Phụ lục.docx",
+                  "full_path": "25f863d0-bd43-11f1-887c-5fb19e26c115/Nghị-định-369-2026-NĐ-CP_Phụ lục.docx",
+                  "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                }
+              ],
+              "stored_files": [
+                {
+                  "size": 30236,
+                  "sha256": "e37542fdbb6f6dfcc0bb7531263ca1ba17819f96060785f69b5228405e4ee969",
+                  "file_name": "Nghị-định-369-2026-NĐ-CP.docx",
+                  "storage_ref": "vbpl-raw/vbpl/25f863d0-bd43-11f1-887c-5fb19e26c115/e37542fdbb6f6dfcc0bb7531263ca1ba17819f96060785f69b5228405e4ee969/origin.docx",
+                  "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                },
+                {
+                  "size": 3373371,
+                  "sha256": "1e2445888ab18edc75940e79c632a3939580f13d36acbbc1bc623871bb2ab02a",
+                  "file_name": "Nghị-định-369-2026-NĐ-CP.pdf",
+                  "storage_ref": "vbpl-raw/vbpl/25f863d0-bd43-11f1-887c-5fb19e26c115/1e2445888ab18edc75940e79c632a3939580f13d36acbbc1bc623871bb2ab02a/origin.pdf",
+                  "content_type": "application/pdf"
+                },
+                {
+                  "size": 16352,
+                  "sha256": "8073de49d4d131010a508524893b41e57d6c1c5b822c2a08d28ca29ea7746319",
+                  "file_name": "Nghị-định-369-2026-NĐ-CP_Phụ lục.docx",
+                  "storage_ref": "vbpl-raw/vbpl/25f863d0-bd43-11f1-887c-5fb19e26c115/8073de49d4d131010a508524893b41e57d6c1c5b822c2a08d28ca29ea7746319/origin.docx",
+                  "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                },
+                {
+                  "role": "normalized_markdown",
+                  "size": 49611,
+                  "sha256": "015ba12f82b50e10ab0bd875378ed81aad1aacad3dab3ecc0848e6843aea6c6e",
+                  "file_name": "origin.md",
+                  "storage_ref": "vbpl-raw/vbpl/25f863d0-bd43-11f1-887c-5fb19e26c115/015ba12f82b50e10ab0bd875378ed81aad1aacad3dab3ecc0848e6843aea6c6e/origin.md",
+                  "content_type": "text/markdown; charset=utf-8",
+                  "source_sha256": "e37542fdbb6f6dfcc0bb7531263ca1ba17819f96060785f69b5228405e4ee969",
+                  "source_file_name": "Nghị-định-369-2026-NĐ-CP.docx",
+                  "source_storage_ref": "vbpl-raw/vbpl/25f863d0-bd43-11f1-887c-5fb19e26c115/e37542fdbb6f6dfcc0bb7531263ca1ba17819f96060785f69b5228405e4ee969/origin.docx"
+                }
+              ],
+              "sitemap_lastmod": "2026-11-10",
+              "document_attributes": {
+                "effTo": null,
+                "docNum": "369/2026/NĐ-CP",
+                "docType": {
+                  "id": "0d08b84c-7de7-4800-8760-2a68265e7890",
+                  "code": "NĐ",
+                  "name": "Nghị định",
+                  "parentCode": "VBQPPL",
+                  "parentName": null
+                },
+                "effFrom": "2026-11-11T00:00:00",
+                "effStatus": {
+                  "id": "1419f6be-4a15-44a7-97ac-ea042770a514",
+                  "code": "CHL",
+                  "name": "Còn hiệu lực",
+                  "parentCode": null,
+                  "parentName": null
+                },
+                "issueDate": "2026-09-25T00:00:00",
+                "agencyName": "Chính phủ"
+              },
+              "stored_files_refreshed": true
+            }
+          },
+          "occurrences": [
+            {
+              "subquery_index": 0,
+              "response_index": 0,
+              "query": "Tra cứu Điều 35 Bộ luật Lao động 45/2019/QH14.",
+              "request_id": "00b17ce1-fd87-4a98-bc4e-480695c171b6",
+              "rank": 3,
+              "raw_score": 12.5129299793615,
+              "score_kind": "BM25",
+              "issue_indices": []
+            }
+          ]
+        }
+      ],
+      "warnings": [
+        "TEMPORAL_METADATA_INCOMPLETE",
+        "EXACT_LOOKUP_SOURCE_IDENTITY_UNCONFIRMED"
+      ],
+      "errors": [],
+      "reranking_statuses": [],
+      "reranking_diagnostics": [],
+      "timings": [],
+      "latency_ms": 1771.11
+    }
+  ],
+  "bootstrap_ms": 318.77,
+  "model_initialization": []
+}

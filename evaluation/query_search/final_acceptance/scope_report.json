@@ -1,0 +1,702 @@
+{
+  "verdict_query": "READY_WITH_LIMITATIONS",
+  "verdict_search": "READY_WITH_LIMITATIONS",
+  "scope": "TECHNICAL_HANDOFF_ONLY_NOT_LEGAL_ANSWER_ACCURACY",
+  "original_files_unchanged": 444,
+  "production_changes": 0,
+  "new_gemini_calls": 0,
+  "new_supabase_calls": 0,
+  "tests_focused": 578,
+  "tests_full": 667,
+  "ruff": "PASS",
+  "python": "3.12.16 (main, Oct 26 2026, 14:10:56) [MSC v.1944 64 bit (AMD64)]",
+  "dependencies": {
+    "pydantic": "2.14.1",
+    "litellm": "1.106.4",
+    "supabase": "2.33.0",
+    "python-dotenv": "1.2.4",
+    "PyYAML": "6.0.3",
+    "sentence-transformers": "5.7.0",
+    "transformers": "5.22.2",
+    "torch": "2.15.0",
+    "pytest": "8.4.2",
+    "ruff": "0.17.2"
+  },
+  "source_audit": [
+    {
+      "file": "src/applications/tillegal/agents/query/agent.py",
+      "sha256": "bfdc3e37e6b4b027a45ba51479129e80c919ddb3cb4d21e6134c13086c10a2a6",
+      "symbols": [
+        {
+          "name": "QueryInputError",
+          "line": 14,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "Subquery",
+          "line": 18,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "QueryPlan",
+          "line": 23,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "understand",
+          "line": 59,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "context_and_links",
+          "line": 41,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "file": "src/applications/tillegal/agents/query/context.py",
+      "sha256": "15c8d1f5c8639a26e8dd283d45bf8148ef28383bfcdc1a73c961339a99a5dfb2",
+      "symbols": [
+        {
+          "name": "overlaps",
+          "line": 28,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "parse_context",
+          "line": 32,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "classify_model_time",
+          "line": 104,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "supplied_context",
+          "line": 122,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "reconcile_missing",
+          "line": 132,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "file": "src/applications/tillegal/agents/query/gemini.py",
+      "sha256": "3d385319f75a70f2f84dbf931ccfa0f80da2819b6c1d4e11c87f4a0f32c34194",
+      "symbols": [
+        {
+          "name": "GeminiQuerySettings",
+          "line": 16,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "create_gemini_query_agent",
+          "line": 31,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "configured_key",
+          "line": 25,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "file": "src/applications/tillegal/agents/query/prompts.py",
+      "sha256": "fa6a4d3438bf2e76ebce8627507aeea2a517a720df5b8b110db76acb763ba36e",
+      "symbols": []
+    },
+    {
+      "file": "src/applications/tillegal/agents/query/schemas.py",
+      "sha256": "eb7b4db74a820ab7f296957c51101ec3703c8ad32f77ea9f4f6a6f1dd2c6df59",
+      "symbols": [
+        {
+          "name": "SemanticModel",
+          "line": 9,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "StatedFact",
+          "line": 13,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "LegalIssue",
+          "line": 24,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "SemanticAnalysis",
+          "line": 40,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "LegalReference",
+          "line": 57,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "TemporalContext",
+          "line": 65,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "SearchObjective",
+          "line": 92,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "extractive_only",
+          "line": 18,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "nonblank_objective",
+          "line": 34,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "nonblank_items",
+          "line": 51,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "valid_iso_date",
+          "line": 84,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "file": "src/applications/tillegal/agents/query/semantic.py",
+      "sha256": "6573952f8287a935e4bdd453dce3423c5e61c2f59691a70b42a4dc95604a593e",
+      "symbols": [
+        {
+          "name": "StructuredCompletion",
+          "line": 25,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "QueryAnalysisError",
+          "line": 34,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "SemanticQueryAgent",
+          "line": 39,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "__call__",
+          "line": 26,
+          "kind": "AsyncFunctionDef"
+        },
+        {
+          "name": "__post_init__",
+          "line": 44,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "understand",
+          "line": 48,
+          "kind": "AsyncFunctionDef"
+        }
+      ]
+    },
+    {
+      "file": "src/applications/tillegal/agents/query/__init__.py",
+      "sha256": "28a050356d56eca825f4b1aa77b0874f86a2b502a11f6da4dfbf521b1115781e",
+      "symbols": []
+    },
+    {
+      "file": "src/applications/tillegal/agents/search/agent.py",
+      "sha256": "b662bb3d0b5fcf0739810ad8aa61ebc48e38eaf80c77e45b77a44e1076bca302",
+      "symbols": [
+        {
+          "name": "SearchOptions",
+          "line": 26,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "SearchState",
+          "line": 44,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "_finish",
+          "line": 57,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "search",
+          "line": 131,
+          "kind": "AsyncFunctionDef"
+        },
+        {
+          "name": "nonblank_policies",
+          "line": 38,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "file": "src/applications/tillegal/agents/search/prompts.py",
+      "sha256": "b39814f0b64bd480ab03158d29c7811e513ac56590435ee4638fe71d307437d5",
+      "symbols": []
+    },
+    {
+      "file": "src/applications/tillegal/agents/search/schemas.py",
+      "sha256": "45225e842b7eb11b6b84f76b59c91984a26c9fbb6a54e7c17f75bd69426f340b",
+      "symbols": [
+        {
+          "name": "EvidenceOccurrence",
+          "line": 10,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "AggregatedEvidence",
+          "line": 22,
+          "kind": "ClassDef"
+        }
+      ]
+    },
+    {
+      "file": "src/applications/tillegal/agents/search/__init__.py",
+      "sha256": "b05bb01502a87197ebf1f3a224f44b121fd19d14a289e4ce975dbaab6524ea22",
+      "symbols": []
+    },
+    {
+      "file": "src/query_search_bootstrap.py",
+      "sha256": "0c46ca6ff686be059c12db7ee338a3ae21a24f53f0f5e7be938107cc028fd5f4",
+      "symbols": [
+        {
+          "name": "QuerySearch",
+          "line": 18,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "create_query_search",
+          "line": 28,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "search",
+          "line": 23,
+          "kind": "AsyncFunctionDef"
+        }
+      ]
+    },
+    {
+      "file": "src/retrieval_bootstrap.py",
+      "sha256": "e5ef67702fc7da35ef0ebf64d88a037e50cc4364aca12764898230e5c523e986",
+      "symbols": [
+        {
+          "name": "create_retrieval_service",
+          "line": 22,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "file": "src/framework/llm/providers/gemini_adapter.py",
+      "sha256": "20fe1c0aad6b42e7303258b0c2a8281d9614a21579f5730589eee690fe9d0202",
+      "symbols": [
+        {
+          "name": "GeminiProviderError",
+          "line": 10,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "_acompletion",
+          "line": 19,
+          "kind": "AsyncFunctionDef"
+        },
+        {
+          "name": "GeminiStructuredCompletion",
+          "line": 31,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "__init__",
+          "line": 13,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_completion",
+          "line": 21,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "__post_init__",
+          "line": 36,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "__call__",
+          "line": 42,
+          "kind": "AsyncFunctionDef"
+        }
+      ]
+    },
+    {
+      "file": "src/applications/tillegal/retrieval/contracts.py",
+      "sha256": "6f55d7edddadbb660a204737670cecbada56395720b118108bec28c9f0aea511",
+      "symbols": [
+        {
+          "name": "RetrievalMode",
+          "line": 13,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "ContractModel",
+          "line": 19,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "RetrievalRequest",
+          "line": 23,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "IndexIdentity",
+          "line": 47,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "RetrievalWarning",
+          "line": 59,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "UnifiedEvidence",
+          "line": 65,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "RetrievalResponse",
+          "line": 113,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "nonblank_query",
+          "line": 34,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "policies",
+          "line": 41,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "validate_semantics",
+          "line": 100,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "validate_outcome",
+          "line": 132,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "file": "src/applications/tillegal/retrieval/errors.py",
+      "sha256": "916c01f11e1559eeebc9e1dcf2e84f83859fe66f2a79e742b2fa6e1fca843285",
+      "symbols": [
+        {
+          "name": "ErrorCategory",
+          "line": 8,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "RetrievalErrorDetail",
+          "line": 18,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "RetrievalServiceError",
+          "line": 30,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "__init__",
+          "line": 33,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "file": "src/application/services/retrieval_service.py",
+      "sha256": "195651342360c3905a92155397fe3f2076ba27b288fd848d783c3f32e9a97132",
+      "symbols": [
+        {
+          "name": "_ChunkRow",
+          "line": 55,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "_SourceRow",
+          "line": 72,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "_SparseIndex",
+          "line": 90,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "_DenseIndex",
+          "line": 120,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "_failure",
+          "line": 139,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "RetrievalService",
+          "line": 150,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "aware_timestamp",
+          "line": 111,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "identity",
+          "line": 116,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "identity",
+          "line": 134,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "__init__",
+          "line": 157,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "search",
+          "line": 192,
+          "kind": "AsyncFunctionDef"
+        },
+        {
+          "name": "_prepare_sparse_terms",
+          "line": 307,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_search_sparse",
+          "line": 319,
+          "kind": "AsyncFunctionDef"
+        },
+        {
+          "name": "_hydrate_sparse_hits",
+          "line": 345,
+          "kind": "AsyncFunctionDef"
+        },
+        {
+          "name": "_check_eligibility",
+          "line": 412,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_make_evidence",
+          "line": 438,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_evidence_warnings",
+          "line": 470,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_read_and_validate_index",
+          "line": 492,
+          "kind": "AsyncFunctionDef"
+        },
+        {
+          "name": "_check_index_unchanged",
+          "line": 535,
+          "kind": "AsyncFunctionDef"
+        },
+        {
+          "name": "_read_dense_index",
+          "line": 555,
+          "kind": "AsyncFunctionDef"
+        },
+        {
+          "name": "_check_dense_index_unchanged",
+          "line": 600,
+          "kind": "AsyncFunctionDef"
+        },
+        {
+          "name": "_map_dense_evidence",
+          "line": 619,
+          "kind": "AsyncFunctionDef"
+        },
+        {
+          "name": "run_hybrid",
+          "line": 197,
+          "kind": "AsyncFunctionDef"
+        }
+      ]
+    },
+    {
+      "file": "src/application/services/hybrid_retrieval.py",
+      "sha256": "81483b0683dda2ed2d75287f3ccfb5cb94413bdedfc783652c16c6cda16934bb",
+      "symbols": [
+        {
+          "name": "_invalid_context",
+          "line": 28,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_validate_context",
+          "line": 40,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_check_closing_index",
+          "line": 53,
+          "kind": "AsyncFunctionDef"
+        },
+        {
+          "name": "search_hybrid",
+          "line": 85,
+          "kind": "AsyncFunctionDef"
+        }
+      ]
+    },
+    {
+      "file": "src/application/services/reranking.py",
+      "sha256": "2e85e82aa1996f27f0ac03f9d319ccbf7fcd63c068e88155cf167b33a3636d33",
+      "symbols": [
+        {
+          "name": "search_reranked",
+          "line": 30,
+          "kind": "AsyncFunctionDef"
+        }
+      ]
+    },
+    {
+      "file": "src/core/config.py",
+      "sha256": "ed24837eeb9f0be4d6fbce1437c78775bec87a3b1b5b092b183b0db8f2e512a2",
+      "symbols": [
+        {
+          "name": "StrictConfig",
+          "line": 21,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "ApplicationSettings",
+          "line": 25,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "APISettings",
+          "line": 34,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "SecuritySettings",
+          "line": 39,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "SupabaseSettings",
+          "line": 44,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "LangGraphSettings",
+          "line": 83,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "VbplCrawlSettings",
+          "line": 87,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "AppSettings",
+          "line": 111,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "load_settings",
+          "line": 126,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "empty_url_is_unset",
+          "line": 53,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "empty_key_is_unset",
+          "line": 60,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "validate_connection_settings",
+          "line": 66,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "api_key",
+          "line": 74,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "is_configured",
+          "line": 79,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "validate_worker_lease",
+          "line": 105,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "validate_checkpointer_settings",
+          "line": 120,
+          "kind": "FunctionDef"
+        }
+      ]
+    }
+  ],
+  "git": "NO_REPOSITORY_METADATA_BRANCH_HEAD_UNAVAILABLE",
+  "credential_scan": "PASS",
+  "new_files": [
+    "docs/query-search/final-handoff/00_README.md",
+    "docs/query-search/final-handoff/01_FINAL_ARCHITECTURE.md",
+    "docs/query-search/final-handoff/02_QUERY_AGENT_INTERNALS.md",
+    "docs/query-search/final-handoff/03_SEARCH_AGENT_INTERNALS.md",
+    "docs/query-search/final-handoff/04_INPUT_OUTPUT_CONTRACTS.md",
+    "docs/query-search/final-handoff/05_INTEGRATION_GUIDE.md",
+    "docs/query-search/final-handoff/06_TEST_ACCEPTANCE.md",
+    "docs/query-search/final-handoff/07_LIMITATIONS_AND_OWNERSHIP.md",
+    "docs/query-search/final-handoff/08_TECHNICAL_DEFENSE_VI.md",
+    "docs/query-search/final-handoff/09_HANDOFF_SUMMARY.md",
+    "docs/query-search/final-handoff/SCOPE_REVIEW.md",
+    "evaluation/query_search/final_acceptance/baseline_manifest.json",
+    "evaluation/query_search/final_acceptance/checks.json",
+    "evaluation/query_search/final_acceptance/contract_probes.json",
+    "evaluation/query_search/final_acceptance/documentation_examples.json",
+    "evaluation/query_search/final_acceptance/evidence_reconciliation.json",
+    "evaluation/query_search/final_acceptance/execution.json",
+    "evaluation/query_search/final_acceptance/scope_report.json",
+    "evaluation/query_search/final_acceptance/serialization_probe.json",
+    "scripts/verify_query_search_handoff.py"
+  ]
+}

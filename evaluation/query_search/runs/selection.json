@@ -1,0 +1,29 @@
+{
+  "paired_ids": [
+    "Q001",
+    "Q004",
+    "Q007",
+    "Q010",
+    "Q013",
+    "Q016",
+    "Q019",
+    "Q022",
+    "Q025",
+    "Q028",
+    "Q031",
+    "Q034",
+    "Q037",
+    "Q040",
+    "Q043"
+  ],
+  "additional_unseen_ids": [
+    "Q002",
+    "Q005",
+    "Q008",
+    "Q017",
+    "Q026",
+    "Q044"
+  ],
+  "max_after_requests": 21,
+  "scope_note": "Original split labels were unblinded during failure analysis and are not a blind holdout. Six additional cases have no Gemini baseline output and are reserved for a one-pass post-change generalization check."
+}

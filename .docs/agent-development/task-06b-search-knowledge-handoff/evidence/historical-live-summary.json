@@ -1,0 +1,122 @@
+[
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/evidence/live-bm25.json",
+    "sha256": "4324f89a21b0be3773fb912ed9dfbc201f740343f4a5cb0858a3b1c7ec10aa28",
+    "label": "HISTORICAL_OBSERVED_NOT_RERUN",
+    "probe": "bm25",
+    "elapsed_seconds": 3.833383700000013,
+    "status": "COMPLETED",
+    "handoff_status": null,
+    "responses": [
+      {
+        "type": "RetrievalResponse",
+        "status": "OK",
+        "evidence_count": 5,
+        "error": null,
+        "reranking_status": null
+      }
+    ],
+    "evidence_counts": null,
+    "direct_parity_excluding_ids_time": true
+  },
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/evidence/live-dense-repeat.json",
+    "sha256": "8fe7c2351c51c9adf1b447872fc38025f7cf8498384323a60b2ae52337197cc2",
+    "label": "HISTORICAL_OBSERVED_NOT_RERUN",
+    "probe": "dense",
+    "elapsed_seconds": 16.21758870000008,
+    "status": "COMPLETED",
+    "handoff_status": null,
+    "responses": [
+      {
+        "type": "RetrievalResponse",
+        "status": "OK",
+        "evidence_count": 5,
+        "error": null,
+        "reranking_status": null
+      }
+    ],
+    "evidence_counts": null,
+    "direct_parity_excluding_ids_time": null
+  },
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/evidence/live-dense.json",
+    "sha256": "35472e75f12dc6234bc09407b42718ac1ff03ab1ba1af91425210f3af83d730a",
+    "label": "HISTORICAL_OBSERVED_NOT_RERUN",
+    "probe": "dense",
+    "elapsed_seconds": 30.001632299999983,
+    "status": "FAILED",
+    "handoff_status": null,
+    "responses": [
+      {
+        "type": "RetrievalResponse",
+        "status": "FAILED",
+        "evidence_count": 0,
+        "error": {
+          "category": "TIMEOUT",
+          "code": "RETRIEVAL_TIMEOUT",
+          "stage": "encoding",
+          "message": "Retrieval exceeded its deadline.",
+          "retryable": true
+        },
+        "reranking_status": null
+      }
+    ],
+    "evidence_counts": null,
+    "direct_parity_excluding_ids_time": null
+  },
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/evidence/live-hybrid.json",
+    "sha256": "1348093dc758b1a0b13c9031019f2b997973bec862e1dacfb9a27f66e185753a",
+    "label": "HISTORICAL_OBSERVED_NOT_RERUN",
+    "probe": "hybrid",
+    "elapsed_seconds": 20.964111900000034,
+    "status": "COMPLETED",
+    "handoff_status": null,
+    "responses": [
+      {
+        "type": "HybridRetrievalResponse",
+        "status": "OK",
+        "evidence_count": 5,
+        "error": null,
+        "reranking_status": null
+      }
+    ],
+    "evidence_counts": null,
+    "direct_parity_excluding_ids_time": null
+  },
+  {
+    "file": ".docs/agent-development/task-04-multimode-verification/evidence/live-rerank.json",
+    "sha256": "ce3cb875f8d8cca3f565a4325ced442c7c02d8394dc3817b188c58e2b5288ab9",
+    "label": "HISTORICAL_OBSERVED_NOT_RERUN",
+    "probe": "rerank",
+    "elapsed_seconds": 24.154172400000107,
+    "status": "COMPLETED",
+    "handoff_status": null,
+    "responses": [
+      {
+        "type": "RerankedHybridRetrievalResponse",
+        "status": "OK",
+        "evidence_count": 5,
+        "error": null,
+        "reranking_status": "APPLIED"
+      }
+    ],
+    "evidence_counts": null,
+    "direct_parity_excluding_ids_time": null
+  },
+  {
+    "file": ".docs/agent-development/task-05-langgraph-integration/evidence/live-bm25.json",
+    "sha256": "43c6de92f68089f37809e46e405320d8570cca0637d7fe0060ca3337ac29bae6",
+    "label": "HISTORICAL_OBSERVED_NOT_RERUN",
+    "probe": "graph-bm25",
+    "elapsed_seconds": 3.062240799999927,
+    "status": "SEARCH_COMPLETED",
+    "handoff_status": "READY",
+    "responses": [],
+    "evidence_counts": [
+      5
+    ],
+    "direct_parity_excluding_ids_time": null
+  }
+]

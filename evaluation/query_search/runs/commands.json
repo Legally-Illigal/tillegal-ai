@@ -1,0 +1,24 @@
+{
+  "commands": [
+    ".\\.venv\\Scripts\\python.exe -m scripts.evaluate_query_search --mode deterministic --label baseline --output evaluation/query_search/runs/deterministic-before.json",
+    ".\\.venv\\Scripts\\python.exe -m scripts.evaluate_query_search --mode gemini --label baseline --max-requests 15 --output evaluation/query_search/runs/gemini-before.json",
+    ".\\.venv\\Scripts\\python.exe -m scripts.evaluate_query_search --mode gemini --label after --max-requests 21 --ids Q001,Q004,Q007,Q010,Q013,Q016,Q019,Q022,Q025,Q028,Q031,Q034,Q037,Q040,Q043,Q002,Q005,Q008,Q017,Q026,Q044 --output evaluation/query_search/runs/gemini-after.json",
+    ".\\.venv\\Scripts\\python.exe -m scripts.evaluate_query_search --mode deterministic --label after --output evaluation/query_search/runs/deterministic-after.json",
+    ".\\.venv\\Scripts\\python.exe -m scripts.evaluate_query_search --mode gemini --label final-small --max-requests 6 --ids Q004,Q007,Q016,Q025,Q037,Q044 --output evaluation/query_search/runs/gemini-final.json",
+    ".\\.venv\\Scripts\\python.exe -m scripts.evaluate_query_search_retrieval --plans evaluation/query_search/runs/deterministic-before.json --output evaluation/query_search/runs/retrieval-deterministic.json --as-of-date 2026-11-23 --bm25-only",
+    ".\\.venv\\Scripts\\python.exe -m scripts.evaluate_query_search_retrieval --plans evaluation/query_search/runs/gemini-before.json --output evaluation/query_search/runs/retrieval-before.json --as-of-date 2026-11-23",
+    ".\\.venv\\Scripts\\python.exe -m scripts.evaluate_query_search_retrieval --plans evaluation/query_search/runs/gemini-before.json --output evaluation/query_search/runs/retrieval-before-warm.json --as-of-date 2026-11-23 --warm-models",
+    ".\\.venv\\Scripts\\python.exe -m scripts.evaluate_query_search_retrieval --plans evaluation/query_search/runs/gemini-after.json --output evaluation/query_search/runs/retrieval-candidate-warm.json --as-of-date 2026-11-23 --warm-models",
+    ".\\.venv\\Scripts\\python.exe -m scripts.evaluate_query_search_retrieval --plans evaluation/query_search/runs/gemini-final.json --output evaluation/query_search/runs/retrieval-final.json --as-of-date 2026-11-23 --bm25-only --case-ids Q004,Q007,Q025",
+    ".\\.venv\\Scripts\\python.exe -m scripts.summarize_query_search_evaluation"
+  ],
+  "environment": {
+    "PYTHONUTF8": "1",
+    "LITELLM_LOCAL_MODEL_COST_MAP": "True",
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "OMP_NUM_THREADS": "2",
+    "MKL_NUM_THREADS": "2"
+  },
+  "note": "Offline/model thread flags apply to retrieval/test runs; API key inherited and never recorded."
+}

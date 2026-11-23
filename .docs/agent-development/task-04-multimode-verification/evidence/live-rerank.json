@@ -1,0 +1,475 @@
+{
+  "probe": "rerank",
+  "question": "Trích dẫn: hợp đồng dân sự",
+  "options": {
+    "mode": "hybrid",
+    "top_k": 5,
+    "as_of_date": "2026-11-17",
+    "allowed_usage_policies": [
+      "EXPERIMENTAL_ONLY"
+    ]
+  },
+  "service_timeout_seconds": 30,
+  "rerank_total_timeout_seconds": 40,
+  "elapsed_seconds": 24.154172400000107,
+  "status": "COMPLETED",
+  "plan": {
+    "original": "Trích dẫn: hợp đồng dân sự",
+    "intent": "quote_lookup",
+    "domain": "unknown",
+    "temporal_scope": [],
+    "subqueries": [
+      {
+        "text": "hợp đồng dân sự",
+        "purpose": "lookup"
+      }
+    ],
+    "clarification": null
+  },
+  "requests": [
+    {
+      "query": "hợp đồng dân sự",
+      "mode": "hybrid",
+      "top_k": 5,
+      "as_of_date": "2026-11-17",
+      "allowed_usage_policies": [
+        "EXPERIMENTAL_ONLY"
+      ]
+    }
+  ],
+  "responses": [
+    {
+      "type": "RerankedHybridRetrievalResponse",
+      "mode": "hybrid",
+      "status": "OK",
+      "evidence_count": 5,
+      "index": null,
+      "warnings": [
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "e6efaa3a-30db-4aaa-8d5f-f5d3455aad79"
+        },
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "6d1ed861-672c-4672-8f81-dd561c383907"
+        },
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "608799f4-838a-4fa5-8308-51f4404d5a1b"
+        },
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "a423deb3-a0c5-4b62-8576-0350ce52e4e7"
+        },
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "be10ac49-1fc8-4ea5-ad74-811f4b1318fb"
+        }
+      ],
+      "error": null,
+      "consistency": "BEST_EFFORT",
+      "evidence": [
+        {
+          "retrieval_chunk_id": "608799f4-838a-4fa5-8308-51f4404d5a1b",
+          "source_document_id": "5d85a3c5-e170-408f-a3f0-f0e1eeb3eb6b",
+          "document_structure_id": "c87fe1b4-a40d-4488-bbf9-c453f7a634ee",
+          "chunk_key": "legal-v2-block-000438-1",
+          "content_sha256": "a03a24eaf57f3a5871f61485ae165aa410c2089080bce5c36108a1b0ee4d54d9",
+          "hash_check": "MATCHED_STORED",
+          "rank": 1,
+          "raw_score": 0.014285714285714285,
+          "score_kind": "RRF",
+          "retrieval_method": "hybrid",
+          "content_hash_matches": true,
+          "provenance_digest": "05c382010bd5dd8fda9c5794a342be6e3f3357f7cc8059d5210fdd9c513d018d",
+          "source_metadata_digest": "8e756996e064ac685aaf8461850547e4cad47e186402a7f0eafa6e96b5f13f2c",
+          "missing_temporal": true
+        },
+        {
+          "retrieval_chunk_id": "a423deb3-a0c5-4b62-8576-0350ce52e4e7",
+          "source_document_id": "05232619-fa5a-450c-9da0-3508242ff4b4",
+          "document_structure_id": "1b231cc1-eb8a-41bc-8527-bfdf74072f44",
+          "chunk_key": "legal-v2-block-000015-1",
+          "content_sha256": "f14d31c6404666a3fb861cf8a13091000bf0d5e826b55b7d67f46a3df5767da2",
+          "hash_check": "MATCHED_STORED",
+          "rank": 2,
+          "raw_score": 0.016129032258064516,
+          "score_kind": "RRF",
+          "retrieval_method": "hybrid",
+          "content_hash_matches": true,
+          "provenance_digest": "0286f584a07410faa6ebf1e4df11ab48f0d061010247884a60043792407ef23d",
+          "source_metadata_digest": "7c4da1c9d4bcf03a85c8cefc3292fc7d66e31f26bb03d8c54abbed9c4ec7902c",
+          "missing_temporal": true
+        },
+        {
+          "retrieval_chunk_id": "6d1ed861-672c-4672-8f81-dd561c383907",
+          "source_document_id": "5d85a3c5-e170-408f-a3f0-f0e1eeb3eb6b",
+          "document_structure_id": "c87fe1b4-a40d-4488-bbf9-c453f7a634ee",
+          "chunk_key": "legal-v2-block-000151-1",
+          "content_sha256": "52b676385df7cf0254248643bc40910868d41826718437ff306262b7af076e74",
+          "hash_check": "MATCHED_STORED",
+          "rank": 3,
+          "raw_score": 0.014925373134328358,
+          "score_kind": "RRF",
+          "retrieval_method": "hybrid",
+          "content_hash_matches": true,
+          "provenance_digest": "b4b767387a83908676dbecf6532458f9468e1f8be0afa43af4a820bcac7e0770",
+          "source_metadata_digest": "8e756996e064ac685aaf8461850547e4cad47e186402a7f0eafa6e96b5f13f2c",
+          "missing_temporal": true
+        },
+        {
+          "retrieval_chunk_id": "be10ac49-1fc8-4ea5-ad74-811f4b1318fb",
+          "source_document_id": "5e363c33-decb-4520-b0b6-17d8987d05be",
+          "document_structure_id": "f75bf876-13a0-4f13-b51c-aa2b4903b429",
+          "chunk_key": "legal-v2-block-000020-1",
+          "content_sha256": "63a97528d8942c0fdf79d0bac4a14f27448a3324cd8e0245f815d90baeaf8cab",
+          "hash_check": "MATCHED_STORED",
+          "rank": 4,
+          "raw_score": 0.015625,
+          "score_kind": "RRF",
+          "retrieval_method": "hybrid",
+          "content_hash_matches": true,
+          "provenance_digest": "1c2a54806d7aa4b83af0511acca6f079f68ed7af8d4e6cca0f730c658f16c8ef",
+          "source_metadata_digest": "4be0a4e67abac8425a9f04123affe8c8ca7a27c0860d0052b07c393b74d0046c",
+          "missing_temporal": true
+        },
+        {
+          "retrieval_chunk_id": "e6efaa3a-30db-4aaa-8d5f-f5d3455aad79",
+          "source_document_id": "5d85a3c5-e170-408f-a3f0-f0e1eeb3eb6b",
+          "document_structure_id": "c87fe1b4-a40d-4488-bbf9-c453f7a634ee",
+          "chunk_key": "legal-v2-block-000025-1",
+          "content_sha256": "f619bda61eec2e48d8053d69d44c03b70974817b0bfca072a3176449ce478d9f",
+          "hash_check": "MATCHED_STORED",
+          "rank": 5,
+          "raw_score": 0.016129032258064516,
+          "score_kind": "RRF",
+          "retrieval_method": "hybrid",
+          "content_hash_matches": true,
+          "provenance_digest": "bcafcc1dc2cf140e43ce79ecb8e6e23a69cf73e1bf81f921a01e8b8a52bf819b",
+          "source_metadata_digest": "8e756996e064ac685aaf8461850547e4cad47e186402a7f0eafa6e96b5f13f2c",
+          "missing_temporal": true
+        }
+      ],
+      "fusion": {
+        "algorithm": "RRF",
+        "failure_policy": "STRICT",
+        "execution": "SEQUENTIAL",
+        "config": {
+          "rrf_k": 60,
+          "bm25_candidates": 20,
+          "dense_candidates": 20
+        },
+        "branches": [
+          {
+            "backend": "bm25",
+            "status": "OK",
+            "requested_candidates": 20,
+            "returned_candidates": 20,
+            "index": {
+              "id": "2acb41da-84af-4e7b-95b6-00faa3f73528",
+              "index_name": "vbpl-bm25-unicode-v1",
+              "index_version": "v1",
+              "status": "READY",
+              "updated_at": "2026-11-14T08:27:10.966337Z",
+              "algorithm": "BM25",
+              "tokenizer": "unicode-nfc-lower-v1"
+            },
+            "error": null
+          },
+          {
+            "backend": "dense",
+            "status": "OK",
+            "requested_candidates": 20,
+            "returned_candidates": 20,
+            "index": {
+              "id": "0fe7b3a9-d051-41c5-ae61-257790c997f9",
+              "index_name": "vbpl-multilingual-e5-small-v1",
+              "index_version": "v1",
+              "status": "READY",
+              "updated_at": "2026-11-14T08:27:44.253063Z",
+              "algorithm": null,
+              "tokenizer": null
+            },
+            "error": null
+          }
+        ],
+        "ranking": [
+          {
+            "retrieval_chunk_id": "608799f4-838a-4fa5-8308-51f4404d5a1b",
+            "contributions": [
+              {
+                "backend": "bm25",
+                "rank": 10,
+                "raw_score": 5.86746935871208,
+                "score_kind": "BM25"
+              }
+            ]
+          },
+          {
+            "retrieval_chunk_id": "a423deb3-a0c5-4b62-8576-0350ce52e4e7",
+            "contributions": [
+              {
+                "backend": "dense",
+                "rank": 2,
+                "raw_score": 0.860338951955407,
+                "score_kind": "COSINE_SIMILARITY"
+              }
+            ]
+          },
+          {
+            "retrieval_chunk_id": "6d1ed861-672c-4672-8f81-dd561c383907",
+            "contributions": [
+              {
+                "backend": "bm25",
+                "rank": 7,
+                "raw_score": 6.22227713176203,
+                "score_kind": "BM25"
+              }
+            ]
+          },
+          {
+            "retrieval_chunk_id": "be10ac49-1fc8-4ea5-ad74-811f4b1318fb",
+            "contributions": [
+              {
+                "backend": "dense",
+                "rank": 4,
+                "raw_score": 0.856163195142938,
+                "score_kind": "COSINE_SIMILARITY"
+              }
+            ]
+          },
+          {
+            "retrieval_chunk_id": "e6efaa3a-30db-4aaa-8d5f-f5d3455aad79",
+            "contributions": [
+              {
+                "backend": "bm25",
+                "rank": 2,
+                "raw_score": 6.72468315560713,
+                "score_kind": "BM25"
+              }
+            ]
+          }
+        ]
+      },
+      "reranking": {
+        "schema_version": "1",
+        "status": "APPLIED",
+        "model_name": "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1",
+        "model_revision": "1427fd652930e4ba29e8149678df786c240d8825",
+        "config": {
+          "enabled": true,
+          "model_path": "C:\\Users\\Admin\\.cache\\huggingface\\hub\\models--cross-encoder--mmarco-mMiniLMv2-L12-H384-v1\\snapshots\\1427fd652930e4ba29e8149678df786c240d8825",
+          "candidate_pool": 20,
+          "batch_size": 4,
+          "max_length": 512,
+          "inference_timeout_seconds": 10.0,
+          "total_timeout_seconds": 40.0
+        },
+        "requested_candidates": 20,
+        "candidates": [
+          {
+            "retrieval_chunk_id": "13bf9c77-72f2-4f0a-9afa-56c621517287",
+            "original_rank": 1,
+            "rrf_score": 0.02631578947368421,
+            "cross_encoder_score": -6.1175947189331055,
+            "final_rank": null
+          },
+          {
+            "retrieval_chunk_id": "8ace515e-582e-405a-aa9e-06e09a186439",
+            "original_rank": 2,
+            "rrf_score": 0.01639344262295082,
+            "cross_encoder_score": -4.085037708282471,
+            "final_rank": null
+          },
+          {
+            "retrieval_chunk_id": "d2d598f2-34fa-4886-9b61-ccae6b78ee42",
+            "original_rank": 3,
+            "rrf_score": 0.01639344262295082,
+            "cross_encoder_score": -5.327036380767822,
+            "final_rank": null
+          },
+          {
+            "retrieval_chunk_id": "a423deb3-a0c5-4b62-8576-0350ce52e4e7",
+            "original_rank": 4,
+            "rrf_score": 0.016129032258064516,
+            "cross_encoder_score": -3.550642251968384,
+            "final_rank": 2
+          },
+          {
+            "retrieval_chunk_id": "e6efaa3a-30db-4aaa-8d5f-f5d3455aad79",
+            "original_rank": 5,
+            "rrf_score": 0.016129032258064516,
+            "cross_encoder_score": -3.640395402908325,
+            "final_rank": 5
+          },
+          {
+            "retrieval_chunk_id": "39dd64e3-06ae-4265-bd77-2919ce049bb4",
+            "original_rank": 6,
+            "rrf_score": 0.015873015873015872,
+            "cross_encoder_score": -4.571839332580566,
+            "final_rank": null
+          },
+          {
+            "retrieval_chunk_id": "a47af466-98ed-423e-9b06-bc110e5587dd",
+            "original_rank": 7,
+            "rrf_score": 0.015873015873015872,
+            "cross_encoder_score": -4.5219597816467285,
+            "final_rank": null
+          },
+          {
+            "retrieval_chunk_id": "7a2d9923-a3f3-4bbc-8b83-13c82b95d6ba",
+            "original_rank": 8,
+            "rrf_score": 0.015625,
+            "cross_encoder_score": -4.829363822937012,
+            "final_rank": null
+          },
+          {
+            "retrieval_chunk_id": "be10ac49-1fc8-4ea5-ad74-811f4b1318fb",
+            "original_rank": 9,
+            "rrf_score": 0.015625,
+            "cross_encoder_score": -3.622307538986206,
+            "final_rank": 4
+          },
+          {
+            "retrieval_chunk_id": "102be0d7-2c6b-40ea-869a-2fedfb5aa0f1",
+            "original_rank": 10,
+            "rrf_score": 0.015384615384615385,
+            "cross_encoder_score": -4.016634464263916,
+            "final_rank": null
+          },
+          {
+            "retrieval_chunk_id": "1ea69865-f572-48bb-bbd6-980c95c211a6",
+            "original_rank": 11,
+            "rrf_score": 0.015384615384615385,
+            "cross_encoder_score": -4.3321099281311035,
+            "final_rank": null
+          },
+          {
+            "retrieval_chunk_id": "1396d54c-e0a5-4572-83a2-9c892351a4ed",
+            "original_rank": 12,
+            "rrf_score": 0.015151515151515152,
+            "cross_encoder_score": -5.642694473266602,
+            "final_rank": null
+          },
+          {
+            "retrieval_chunk_id": "6ec8fd11-c71c-4a40-a225-3419bcdcda97",
+            "original_rank": 13,
+            "rrf_score": 0.015151515151515152,
+            "cross_encoder_score": -4.346754550933838,
+            "final_rank": null
+          },
+          {
+            "retrieval_chunk_id": "6d1ed861-672c-4672-8f81-dd561c383907",
+            "original_rank": 14,
+            "rrf_score": 0.014925373134328358,
+            "cross_encoder_score": -3.562777280807495,
+            "final_rank": 3
+          },
+          {
+            "retrieval_chunk_id": "79f178af-009c-4e63-a0ce-6945468079d7",
+            "original_rank": 15,
+            "rrf_score": 0.014925373134328358,
+            "cross_encoder_score": -6.938351631164551,
+            "final_rank": null
+          },
+          {
+            "retrieval_chunk_id": "4488110e-6264-4496-b75d-f45894bc5597",
+            "original_rank": 16,
+            "rrf_score": 0.014705882352941176,
+            "cross_encoder_score": -3.9928762912750244,
+            "final_rank": null
+          },
+          {
+            "retrieval_chunk_id": "6e45e004-d3be-4d89-adc5-1f02875e6cfa",
+            "original_rank": 17,
+            "rrf_score": 0.014705882352941176,
+            "cross_encoder_score": -5.202001094818115,
+            "final_rank": null
+          },
+          {
+            "retrieval_chunk_id": "5c135ad8-b6a3-4c8a-b89a-0f9d311785b3",
+            "original_rank": 18,
+            "rrf_score": 0.014492753623188406,
+            "cross_encoder_score": -4.758708477020264,
+            "final_rank": null
+          },
+          {
+            "retrieval_chunk_id": "6d7ffdf1-bf1b-4412-a1fc-af6c717bf9bf",
+            "original_rank": 19,
+            "rrf_score": 0.014492753623188406,
+            "cross_encoder_score": -4.750129222869873,
+            "final_rank": null
+          },
+          {
+            "retrieval_chunk_id": "608799f4-838a-4fa5-8308-51f4404d5a1b",
+            "original_rank": 20,
+            "rrf_score": 0.014285714285714285,
+            "cross_encoder_score": -2.548325300216675,
+            "final_rank": 1
+          }
+        ],
+        "diagnostics": {
+          "scores": [
+            -6.1175947189331055,
+            -4.085037708282471,
+            -5.327036380767822,
+            -3.550642251968384,
+            -3.640395402908325,
+            -4.571839332580566,
+            -4.5219597816467285,
+            -4.829363822937012,
+            -3.622307538986206,
+            -4.016634464263916,
+            -4.3321099281311035,
+            -5.642694473266602,
+            -4.346754550933838,
+            -3.562777280807495,
+            -6.938351631164551,
+            -3.9928762912750244,
+            -5.202001094818115,
+            -4.758708477020264,
+            -4.750129222869873,
+            -2.548325300216675
+          ],
+          "truncated": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "cold": true,
+          "load_seconds": 3.964188100000001,
+          "inference_seconds": 1.5848100000000613
+        },
+        "failure_code": null
+      }
+    }
+  ],
+  "legacy_modules_loaded": [],
+  "e5_local_path": "C:\\Users\\Admin\\.cache\\huggingface\\hub\\models--intfloat--multilingual-e5-small\\snapshots\\614241f622f53c4eeff9890bdc4f31cfecc418b3",
+  "encoder_loaded": true,
+  "encoder_dimension": 384,
+  "encoder_max_seq_length": 512,
+  "reranker_local_path": "C:\\Users\\Admin\\.cache\\huggingface\\hub\\models--cross-encoder--mmarco-mMiniLMv2-L12-H384-v1\\snapshots\\1427fd652930e4ba29e8149678df786c240d8825"
+}
