@@ -76,7 +76,25 @@ def test_temporal_semantics(question, expected):
 
 def test_contract_and_regressions():
     plan = understand("Trích dẫn: đối thoại")
-    assert set(plan) == {"original", "intent", "domain", "temporal_scope", "subqueries", "clarification"}
+    assert set(plan) == {
+        "original",
+        "intent",
+        "domain",
+        "temporal_scope",
+        "subqueries",
+        "clarification",
+        "analysis_method",
+        "analysis_model",
+        "facts",
+        "issues",
+        "missing_information",
+        "citations",
+        "temporal_context",
+        "search_objectives",
+        "planning_warnings",
+    }
+    assert plan["analysis_method"] == "deterministic" and plan["analysis_model"] is None
+    assert plan["facts"] == plan["issues"] == plan["missing_information"] == []
     assert QueryPlan.model_validate(plan).model_dump() == plan
     assert plan["intent"] == "quote_lookup"
     assert plan["subqueries"] == [{"text": "đối thoại", "purpose": "lookup"}]

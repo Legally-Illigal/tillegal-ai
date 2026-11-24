@@ -1,6 +1,11 @@
 default_model: gpt-4o-mini
 
 providers:
+  gemini:
+    enabled: true
+    api_key_env: GOOGLE_API_KEY
+    default_model: gemini-3.5-flash-lite
+    timeout_seconds: 30
   openai:
     enabled: true
     api_key_env: OPENAI_API_KEY
@@ -14,6 +19,10 @@ providers:
     timeout_seconds: 60
 
 profiles:
+  query_semantic:
+    provider: gemini
+    model: gemini-3.5-flash-lite
+    max_output_tokens: 4096
   legal_fast:
     provider: openai
     model: gpt-4o-mini
