@@ -32,6 +32,21 @@ class QuerySearchNodes:
             "handoff": None,
         }
 
+    async def query_semantic(self, state: LegalQAState) -> LegalQAState:
+        """Use the application-injected planner; failures propagate without fallback."""
+        agent = self.pipeline.query_agent
+        if agent is None:
+            raise ValueError("QUERY_SEMANTIC_AGENT_REQUIRED")
+        plan = await agent.understand(state["question"])
+        return {
+            "plan": plan,
+            "options": self.pipeline.options,
+            "clarification": plan["clarification"],
+            "status": "CLARIFICATION_REQUIRED" if plan["clarification"] else "QUERY_COMPLETED",
+            "search_result": None,
+            "handoff": None,
+        }
+
     @staticmethod
     def route_query(state: LegalQAState) -> Literal["search", "end"]:
         return "end" if state["clarification"] else "search"
@@ -58,7 +73,7 @@ def compile_query_search_graph(pipeline: QuerySearch):
     """Compile the existing framework's StateGraph with no persistent request state."""
     nodes = QuerySearchNodes(pipeline)
     builder = create_state_graph(LegalQAState)
-    builder.add_node("query", nodes.query)
+    builder.add_node("query", nodes.query_semantic if pipeline.query_agent is not None else nodes.query)
     builder.add_node("search", nodes.search)
     builder.add_edge(START, "query")
     builder.add_conditional_edges("query", nodes.route_query, {"search": "search", "end": END})
