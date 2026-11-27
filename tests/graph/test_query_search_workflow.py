@@ -1,25 +1,30 @@
 """Unit and in-memory graph tests; no database or model inference."""
 
 import asyncio
+import json
 from copy import deepcopy
 from datetime import UTC, datetime
-from unittest.mock import patch
+from unittest.mock import AsyncMock, patch
 
 import pytest
 from pydantic import ValidationError
 
 from src.applications.tillegal.agents.query.agent import QueryInputError, understand
+from src.applications.tillegal.agents.query.semantic import QueryAnalysisError
 from src.applications.tillegal.graphs.legal_qa import QuerySearchNodes, QuerySearchWorkflow
 from src.applications.tillegal.retrieval.contracts import RetrievalResponse, RetrievalWarning
 from src.applications.tillegal.retrieval.errors import RetrievalErrorDetail
 from src.applications.tillegal.state.legal_qa_state import JudgeHandoff
+from src.core.config import SupabaseSettings
 from src.framework.runtime.cancellation import CancellationToken, ExecutionCancelledError
 from src.framework.runtime.execution_context import ExecutionContext, current_execution_context
 from src.framework.runtime.lifecycle import ExecutionLifecycle, ExecutionStatus
-from src.query_search_bootstrap import QuerySearch
+from src.query_search_bootstrap import QuerySearch, create_query_search
 from tests.unit.applications.tillegal.retrieval.test_hybrid_service import hybrid_service
 from tests.unit.applications.tillegal.retrieval.test_reranking import configured
+from tests.unit.applications.tillegal.test_gemini_query import FAKE_KEY, TARGET, reply
 from tests.unit.applications.tillegal.test_query_search_multimode import options
+from tests.unit.applications.tillegal.test_query_search_semantic import QUESTION, analysis
 
 
 class FakeRetrieval:
@@ -358,3 +363,265 @@ def test_unicode_original_survives_graph_and_handoff():
     assert state["question"] == state["plan"]["original"] == state["handoff"].question == question
     assert service.requests[0].query == "nghỉ phép"
     assert JudgeHandoff.model_validate_json(state["handoff"].model_dump_json()).plan.original == question
+
+
+# Phase A: exercise the actual compiled graph with the existing Gemini factory/adapter.
+def semantic_runner(monkeypatch, service=None, mode="bm25"):
+    monkeypatch.setenv("GOOGLE_API_KEY", FAKE_KEY)
+    with patch("src.query_search_bootstrap.create_retrieval_service", return_value=service or FakeRetrieval()):
+        return create_query_search(SupabaseSettings(), options(mode), semantic_mode="gemini")
+
+
+def test_phase_a_default_compiled_graph_does_not_call_gemini():
+    service = FakeRetrieval()
+    with patch(TARGET, AsyncMock(side_effect=AssertionError("unexpected provider"))) as provider:
+        state = asyncio.run(workflow(service).execute(QUESTION, context(), timeout_seconds=2))
+    provider.assert_not_called()
+    assert state["plan"] == understand(QUESTION)
+    assert state["plan"]["analysis_method"] == "deterministic"
+    assert [request.query for request in service.requests] == [s["text"] for s in state["plan"]["subqueries"]]
+
+
+@pytest.mark.parametrize("fail_at", [None, 2])
+def test_phase_a_compiled_gemini_matches_facade_payload_and_entire_search_state(monkeypatch, fail_at):
+    service = FakeRetrieval(fail_at=fail_at)
+    data = analysis()
+    data["issues"].append({"issue": "Điều kiện nghỉ việc", "search_query": "người lao động điều kiện nghỉ việc"})
+    with patch(TARGET, AsyncMock(return_value=reply(json.dumps(data)))) as provider:
+        runner = semantic_runner(monkeypatch, service)
+        direct = asyncio.run(runner.search(QUESTION))
+        arguments = provider.call_args
+        assert provider.await_count == 1
+        service.requests.clear()
+        service.responses.clear()
+        provider.reset_mock()
+        with patch.object(QuerySearch, "search", side_effect=AssertionError("graph must not call facade.search")):
+            state = asyncio.run(QuerySearchWorkflow(runner).execute(QUESTION, context(), timeout_seconds=2))
+        assert provider.await_count == 1 and provider.call_args == arguments
+    assert state["plan"] == direct["plan"]
+    assert state["plan"]["analysis_method"] == "llm"
+    assert state["search_result"] == direct  # Includes all warnings/errors/occurrences/options/scores.
+    assert service.requests == list(direct["requests"])
+    assert len(service.requests) == (2 if fail_at else 3)
+    assert state["handoff"].responses == direct["responses"]
+    if fail_at:
+        assert state["search_result"]["completeness"] == "PARTIAL"
+        assert state["search_result"]["skipped_subqueries"] == (2,)
+        assert state["errors"] == ["FIXTURE_READ_FAILED"]
+    else:
+        assert state["errors"] == []
+
+
+def test_phase_a_compiled_stream_orders_semantic_query_before_search(monkeypatch):
+    with patch(TARGET, AsyncMock(return_value=reply())) as provider:
+        runner = semantic_runner(monkeypatch)
+
+        async def run():
+            return [
+                item
+                async for item in QuerySearchWorkflow(runner).graph.astream(
+                    {"question": QUESTION, "run_id": "stream", "request_id": "stream-request"}, stream_mode="updates"
+                )
+            ]
+
+        updates = asyncio.run(run())
+    assert [next(iter(update)) for update in updates] == ["query", "search"]
+    assert updates[0]["query"]["plan"]["analysis_method"] == "llm"
+    assert updates[0]["query"]["search_result"] is None
+    assert updates[1]["search"]["search_result"]["plan"] == updates[0]["query"]["plan"]
+    assert provider.await_count == 1
+
+
+@pytest.mark.parametrize("question", ["Trích dẫn: thuế", "Có được không?", "31/02/2024"])
+def test_phase_a_existing_deterministic_guards_make_zero_model_calls(monkeypatch, question):
+    service = FakeRetrieval()
+    with patch(TARGET, AsyncMock(side_effect=AssertionError("guard must bypass model"))) as provider:
+        state = asyncio.run(
+            QuerySearchWorkflow(semantic_runner(monkeypatch, service)).execute(question, context(), timeout_seconds=2)
+        )
+    provider.assert_not_called()
+    assert state["plan"] == understand(question)
+    if state["clarification"]:
+        assert state["status"] == "CLARIFICATION_REQUIRED"
+        assert state["handoff"] is state["search_result"] is None and service.requests == []
+    else:
+        assert len(service.requests) == 1 and state["handoff"].plan.intent == "quote_lookup"
+
+
+@pytest.mark.parametrize("failure", ["timeout", "provider", "invalid_json", "invalid_schema", "grounding"])
+def test_phase_a_query_errors_never_fallback_or_execute_search(monkeypatch, failure):
+    data = analysis(facts=[{"text": "hợp đồng lao động 3 năm", "source_quote": "hợp đồng lao động 3 năm"}])
+    provider = AsyncMock(return_value=reply(json.dumps(data)))
+    code = "QUERY_ANALYSIS_INVALID_RESPONSE"
+    if failure in {"timeout", "provider"}:
+        provider.side_effect = TimeoutError() if failure == "timeout" else RuntimeError(FAKE_KEY)
+        code = "QUERY_ANALYSIS_TIMEOUT" if failure == "timeout" else "QUERY_ANALYSIS_PROVIDER_ERROR"
+    elif failure == "invalid_json":
+        provider.return_value = reply("not JSON")
+        code = "QUERY_ANALYSIS_PROVIDER_ERROR"  # Existing adapter rejects non-JSON before semantic validation.
+    elif failure == "invalid_schema":
+        provider.return_value = reply("{}")
+    service = FakeRetrieval()
+    lifecycle = ExecutionLifecycle()
+    with (
+        patch(TARGET, provider),
+        patch("src.applications.tillegal.graphs.legal_qa.understand", side_effect=AssertionError("no fallback")),
+        patch("src.applications.tillegal.graphs.legal_qa.search", new_callable=AsyncMock) as search_node,
+    ):
+        with pytest.raises(QueryAnalysisError) as error:
+            asyncio.run(
+                QuerySearchWorkflow(semantic_runner(monkeypatch, service)).execute(
+                    QUESTION, context(), timeout_seconds=2, lifecycle=lifecycle
+                )
+            )
+        search_node.assert_not_called()
+    assert provider.await_count == 1 and service.requests == []
+    assert error.value.args == (code,) and str(error.value) == code
+    assert FAKE_KEY not in str(error.value) and QUESTION not in str(error.value)
+    assert lifecycle.snapshot.status is ExecutionStatus.FAILED
+
+
+def test_phase_a_semantic_clarification_skips_search(monkeypatch):
+    service = FakeRetrieval()
+    clarification = "Bạn dự định nghỉ việc vào thời điểm nào?"
+    with patch(TARGET, AsyncMock(return_value=reply(json.dumps(analysis(clarification=clarification))))) as provider:
+        state = asyncio.run(
+            QuerySearchWorkflow(semantic_runner(monkeypatch, service)).execute(QUESTION, context(), timeout_seconds=2)
+        )
+    assert provider.await_count == 1
+    assert state["plan"]["analysis_method"] == "llm"
+    assert state["clarification"] == clarification and state["status"] == "CLARIFICATION_REQUIRED"
+    assert state["handoff"] is state["search_result"] is None and service.requests == []
+
+
+@pytest.mark.parametrize("kind", ["caller", "token", "deadline"])
+def test_phase_a_semantic_cancellation_and_deadline_propagate(monkeypatch, kind):
+    async def run():
+        started, finished = asyncio.Event(), asyncio.Event()
+
+        async def wait(**kwargs):
+            started.set()
+            try:
+                await asyncio.Event().wait()
+            finally:
+                finished.set()
+
+        service = FakeRetrieval()
+        lifecycle = ExecutionLifecycle()
+        token = CancellationToken()
+        with patch(TARGET, AsyncMock(side_effect=wait)) as provider:
+            flow = QuerySearchWorkflow(semantic_runner(monkeypatch, service))
+            task = asyncio.create_task(
+                flow.execute(
+                    QUESTION,
+                    context(token=token),
+                    timeout_seconds=0.1 if kind == "deadline" else 2,
+                    lifecycle=lifecycle,
+                )
+            )
+            await asyncio.wait_for(started.wait(), timeout=1)
+            if kind == "caller":
+                task.cancel()
+                expected = asyncio.CancelledError
+            elif kind == "token":
+                token.cancel("fixture cancellation")
+                expected = ExecutionCancelledError
+            else:
+                expected = TimeoutError
+            with pytest.raises(expected):
+                await task
+            assert provider.await_count == 1 and finished.is_set()
+        assert service.requests == [] and current_execution_context() is None
+        assert lifecycle.snapshot.status is (
+            ExecutionStatus.FAILED if kind == "deadline" else ExecutionStatus.CANCELLED
+        )
+
+    asyncio.run(run())
+
+
+def test_phase_a_concurrent_semantic_graph_requests_are_isolated(monkeypatch):
+    async def run():
+        entered, both = [], asyncio.Event()
+
+        async def respond(**kwargs):
+            question = json.loads(kwargs["messages"][1]["content"])["question"]
+            entered.append((question, current_execution_context().run_id))
+            if len(entered) == 2:
+                both.set()
+            await asyncio.wait_for(both.wait(), timeout=1)
+            data = analysis()
+            if "3 năm" in question:
+                data = json.loads(json.dumps(data, ensure_ascii=False).replace("2 năm", "3 năm"))
+            return reply(json.dumps(data))
+
+        service = FakeRetrieval()
+        with patch(TARGET, AsyncMock(side_effect=respond)) as provider:
+            flow = QuerySearchWorkflow(semantic_runner(monkeypatch, service))
+            one, two = await asyncio.gather(
+                flow.execute(QUESTION, context("one", "r1"), timeout_seconds=2),
+                flow.execute(QUESTION.replace("2 năm", "3 năm"), context("two", "r2"), timeout_seconds=2),
+            )
+            assert provider.await_count == 2
+        assert set(entered) == {(QUESTION, "one"), (QUESTION.replace("2 năm", "3 năm"), "two")}
+        assert one["handoff"].request_id == "r1" and two["handoff"].request_id == "r2"
+        assert one["plan"]["original"] == QUESTION and two["plan"]["original"] != QUESTION
+        assert "2 năm" in one["plan"]["facts"][0]["text"] and "3 năm" in two["plan"]["facts"][0]["text"]
+        assert len(service.requests) == 4
+        one["plan"]["issues"].append("caller mutation")
+        assert "caller mutation" not in two["plan"]["issues"]
+        assert one["errors"] == two["errors"] == [] and current_execution_context() is None
+
+    asyncio.run(run())
+
+
+@pytest.mark.parametrize("mode", ["bm25", "dense", "hybrid", "rerank"])
+def test_phase_a_semantic_native_subtypes_scores_and_dedup_stay_intact(monkeypatch, mode):
+    service, *_ = configured() if mode == "rerank" else hybrid_service()
+    data = analysis(
+        domain="unknown",
+        facts=[],
+        missing_information=[],
+        issues=[
+            {"issue": "Nội dung về thuế", "search_query": "thuế"},
+            {"issue": "Căn cứ liên quan thuế", "search_query": "thuế"},
+        ],
+    )
+    question = "Quy định về thuế là gì?"
+    with (
+        patch(TARGET, AsyncMock(return_value=reply(json.dumps(data)))) as provider,
+        patch.object(service, "search", wraps=service.search) as retrieval,
+    ):
+        runner = semantic_runner(monkeypatch, service, mode)
+        state = asyncio.run(QuerySearchWorkflow(runner).execute(question, context(), timeout_seconds=2))
+        # Hybrid recursively dispatches its two native branches through the same service.
+        native_calls = 3 if mode in {"hybrid", "rerank"} else 1
+        assert provider.await_count == 1 and retrieval.await_count == native_calls
+        assert sum(call.args[0].mode == options(mode).mode for call in retrieval.await_args_list) == 1
+        assert len(state["plan"]["issues"]) == 2 and len(state["plan"]["subqueries"]) == 1
+        assert state["plan"]["search_objectives"][0]["issue_indices"] == [0, 1]
+        assert state["search_result"]["executed_searches"] == 1
+        assert all(o.issue_indices == (0, 1) for g in state["search_result"]["evidence"] for o in g.occurrences)
+        response = state["search_result"]["responses"][0]
+        assert state["handoff"].responses[0] is response and response.evidence
+        restored = JudgeHandoff.model_validate_json(state["handoff"].model_dump_json())
+        assert type(restored.responses[0]) is type(response)
+        assert restored == state["handoff"]
+        arguments = provider.call_args
+        direct = asyncio.run(runner.search(question))
+        assert provider.await_count == 2 and provider.call_args == arguments
+        assert retrieval.await_count == 2 * native_calls
+    assert response.model_dump(exclude={"request_id", "retrieved_at"}) == direct["responses"][0].model_dump(
+        exclude={"request_id", "retrieved_at"}
+    )
+    assert state["search_result"]["warnings"] == direct["warnings"]
+    assert state["search_result"]["errors"] == direct["errors"]
+
+
+def test_phase_a_semantic_sync_invoke_is_explicitly_unsupported(monkeypatch):
+    service = FakeRetrieval()
+    with patch(TARGET, AsyncMock(return_value=reply())) as provider:
+        flow = QuerySearchWorkflow(semantic_runner(monkeypatch, service))
+        with pytest.raises(TypeError, match="No synchronous function provided"):
+            flow.graph.invoke({"question": QUESTION, "run_id": "sync", "request_id": "sync-r"})
+    provider.assert_not_called()
+    assert service.requests == []
