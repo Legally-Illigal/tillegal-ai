@@ -118,3 +118,30 @@ LLM. Bước tiếp theo (ngoài phạm vi): Query refine, evidence tích lũy r
 - Mypy không có trong môi trường và không thuộc dev dependencies; chưa chạy static
   type checker. Không chạy toàn test suite hoặc live services; phạm vi regression
   tập trung vào graph và các module tích hợp.
+
+## Test online bằng CLI
+
+Tạo `.env` tại repo root (không commit), gồm GOOGLE_API_KEY, SUPABASE_URL và
+SUPABASE_SERVICE_ROLE_KEY của corpus hiện có. Có thể dùng --env-file với đường dẫn
+khác. Biến môi trường đã tồn tại được ưu tiên; GEMINI_MODEL chọn model Query,
+JUDGE_GEMINI_MODEL và SUMMARY_GEMINI_MODEL override hai model tương ứng nếu cần.
+
+```powershell
+python -m scripts.run_orchestrator --as-of-date 2026-11-28 --allow-live
+```
+
+CLI hỏi câu hỏi trong terminal; hoặc truyền `--question "Câu hỏi của bạn"`.
+Mặc định env-file là `.env` tại repo root và timeout graph là 240 giây.
+Có thể dùng `--timeout-seconds 240` và `--output-root <folder>`.
+Phải bật --allow-live trước khi cấu hình provider; lệnh này có thể phát sinh phí.
+Search là BM25 top 3, policy EXPERIMENTAL_ONLY, không dense/reranker.
+Không cần tạo script Python hoặc nối lại graph. Script chỉ cấu hình và gọi
+create_single_pass_workflow/execute; không thay implementation Orchestrator.
+
+Terminal hiển thị trace, workflow/Judge/Summary statuses, draft và limitations.
+JSON đầy đủ lưu tại tmp/orchestrator-online/online-<uuid>/output.json.
+Exit code 0: hoàn tất hoặc cần clarification; 1: workflow lỗi/config/timeout;
+2: tham số sai hoặc thiếu --allow-live; 130: ngắt bàn phím khi đang thực thi.
+Bản nháp luôn chưa Verify. Khi timeout trong provider sync, tiến trình có thể
+chờ worker kết thúc lúc đóng asyncio executor; không chạy lại ngay để tránh
+request trùng. Không có secrets được in bởi CLI; không chia sẻ .env.
