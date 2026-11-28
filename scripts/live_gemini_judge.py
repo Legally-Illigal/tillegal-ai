@@ -44,7 +44,7 @@ class LiveGeminiJudge:
                     model=self.model,
                     system=messages[0]["content"],
                     user=messages[1]["content"],
-                    schema=wire_schema(OUTPUT_SCHEMA),
+                    schema=wire_schema(self.output_schema),
                 )
             )
         except GeminiProviderError as error:

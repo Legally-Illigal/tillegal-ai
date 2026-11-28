@@ -1,4 +1,4 @@
-"""Live three-stage demo; no fixtures, migrations or corpus writes."""
+"""Live sequential Query/Search/Judge demo (optional Summary); no fixtures, migrations or corpus writes."""
 
 import argparse
 import asyncio
@@ -18,6 +18,7 @@ def main():
     parser.add_argument("--question", required=True)
     parser.add_argument("--as-of-date", type=date.fromisoformat, required=True)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--with-summary", action="store_true")
     args = parser.parse_args()
     sys.path.insert(0, str(args.repo.resolve()))
     os.chdir(args.repo)
@@ -86,6 +87,12 @@ def main():
         print("Judge:", result["status"])
         print("Provider calls:", telemetry.get("provider_calls"))
         print("Inspect source IDs/URLs in 04_search_output.json to confirm corpus membership.")
+        if args.with_summary and result["status"] != "ERROR":
+            from run_live_summary import run_summary
+
+            from src.applications.tillegal.agents.judge.adapter import NativeJudgeResult
+
+            return run_summary(NativeJudgeResult(adapted, result, telemetry), args.out / "summary", args.env_file)
         return 0 if result["status"] != "ERROR" else 1
     except Exception as error:
         # Never print upstream response bodies, settings or credentials.

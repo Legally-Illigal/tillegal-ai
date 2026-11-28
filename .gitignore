@@ -229,3 +229,6 @@ __marimo__/
 *.onnx
 .huggingface/
 .docs/development/task8-execution-evidence.json
+
+# Local live agent payloads (never publish)
+outputs/
