@@ -1,0 +1,369 @@
+{
+  "description": "Synthetic contract fixture replay; not legal evaluation.",
+  "plan": {
+    "original": "Tôi ký hợp đồng lao động 2 năm, mới làm được 6 tháng nhưng muốn nghỉ việc. Tôi có phải báo trước không và có phải bồi thường không?",
+    "intent": "legal_question",
+    "domain": "labour",
+    "temporal_scope": [],
+    "subqueries": [
+      {
+        "text": "người lao động đơn phương chấm dứt hợp đồng lao động nghĩa vụ báo trước trường hợp miễn báo trước; tình huống: hợp đồng lao động 2 năm mới làm được 6 tháng muốn nghỉ việc",
+        "purpose": "question_part"
+      },
+      {
+        "text": "người lao động đơn phương chấm dứt hợp đồng lao động trái pháp luật bồi thường chi phí đào tạo; tình huống: hợp đồng lao động 2 năm mới làm được 6 tháng muốn nghỉ việc",
+        "purpose": "question_part"
+      }
+    ],
+    "clarification": null,
+    "analysis_method": "deterministic",
+    "analysis_model": null,
+    "facts": [
+      {
+        "text": "hợp đồng lao động 2 năm",
+        "source_quote": "hợp đồng lao động 2 năm"
+      },
+      {
+        "text": "mới làm được 6 tháng",
+        "source_quote": "mới làm được 6 tháng"
+      },
+      {
+        "text": "muốn nghỉ việc",
+        "source_quote": "muốn nghỉ việc"
+      }
+    ],
+    "issues": [
+      "Đơn phương chấm dứt hợp đồng lao động và nghĩa vụ báo trước",
+      "Nghĩa vụ bồi thường khi chấm dứt hợp đồng lao động"
+    ],
+    "missing_information": [
+      "Lý do nghỉ việc và ngày dự kiến nghỉ là gì?",
+      "Có thỏa thuận đào tạo hoặc cam kết hoàn trả chi phí đào tạo không?"
+    ],
+    "citations": [],
+    "temporal_context": [
+      {
+        "text": "2 năm",
+        "start": 25,
+        "end": 30,
+        "role": "duration",
+        "iso_date": null,
+        "negated": false
+      },
+      {
+        "text": "6 tháng",
+        "start": 45,
+        "end": 52,
+        "role": "duration",
+        "iso_date": null,
+        "negated": false
+      }
+    ],
+    "search_objectives": [
+      {
+        "query_index": 0,
+        "issue_indices": [
+          0
+        ]
+      },
+      {
+        "query_index": 1,
+        "issue_indices": [
+          1
+        ]
+      }
+    ],
+    "planning_warnings": []
+  },
+  "options": {
+    "mode": "bm25",
+    "top_k": 5,
+    "as_of_date": "2026-11-10",
+    "allowed_usage_policies": [
+      "EXPERIMENTAL_ONLY"
+    ]
+  },
+  "responses": [
+    {
+      "schema_version": "1",
+      "request_id": "3c6470fa-254a-458c-9569-ab836d2444b3",
+      "query": "người lao động đơn phương chấm dứt hợp đồng lao động nghĩa vụ báo trước trường hợp miễn báo trước; tình huống: hợp đồng lao động 2 năm mới làm được 6 tháng muốn nghỉ việc",
+      "query_used": "người lao động đơn phương chấm dứt hợp đồng lao động nghĩa vụ báo trước trường hợp miễn báo trước; tình huống: hợp đồng lao động 2 năm mới làm được 6 tháng muốn nghỉ việc",
+      "mode": "bm25",
+      "top_k": 5,
+      "as_of_date": "2026-11-10",
+      "allowed_usage_policies": [
+        "EXPERIMENTAL_ONLY"
+      ],
+      "selected_index_name": "vbpl-bm25-unicode-v1",
+      "index": {
+        "id": "00000000-0000-0000-0000-000000000014",
+        "index_name": "vbpl-bm25-unicode-v1",
+        "index_version": "v1",
+        "status": "READY",
+        "updated_at": "2026-11-10T00:00:00Z",
+        "algorithm": "BM25",
+        "tokenizer": "unicode-nfc-lower-v1"
+      },
+      "status": "OK",
+      "evidence": [
+        {
+          "retrieval_chunk_id": "00000000-0000-0000-0000-000000000002",
+          "source_document_id": "00000000-0000-0000-0000-00000000001e",
+          "document_structure_id": "00000000-0000-0000-0000-000000000028",
+          "chunk_key": "chunk-2",
+          "content": "Demo > Điều 1 > Thuế 2.",
+          "content_sha256": "dd9314bb58dd5dfa69a24b00571195f1ee0d4bd47d384e0486ed978396fef1c0",
+          "hash_check": "MATCHED_STORED",
+          "content_representation": "retrieval_chunk_content",
+          "rank": 1,
+          "raw_score": 7.2,
+          "score_kind": "BM25",
+          "retrieval_method": "bm25",
+          "node_id": null,
+          "block_id": null,
+          "chunk_type": "text",
+          "start_offset": null,
+          "end_offset": null,
+          "chunk_metadata": {
+            "breadcrumb": "Demo > Điều 1"
+          },
+          "source_id": null,
+          "source_record_id": null,
+          "source_snapshot_id": null,
+          "title": "Demo",
+          "source_url": null,
+          "language": null,
+          "issued_on": null,
+          "effective_from": "2026-01-01",
+          "effective_to": null,
+          "effect_status_reported": null,
+          "usage_policy": "EXPERIMENTAL_ONLY",
+          "source_metadata": {}
+        },
+        {
+          "retrieval_chunk_id": "00000000-0000-0000-0000-000000000001",
+          "source_document_id": "00000000-0000-0000-0000-00000000001e",
+          "document_structure_id": "00000000-0000-0000-0000-000000000028",
+          "chunk_key": "chunk-1",
+          "content": "Demo > Điều 1 > Thuế 1.",
+          "content_sha256": "357303a997e14de6aa3e9b8603ac96241b9816c75e9a4bb0d49ab30703d06ab2",
+          "hash_check": "MATCHED_STORED",
+          "content_representation": "retrieval_chunk_content",
+          "rank": 2,
+          "raw_score": 5.4,
+          "score_kind": "BM25",
+          "retrieval_method": "bm25",
+          "node_id": null,
+          "block_id": null,
+          "chunk_type": "text",
+          "start_offset": null,
+          "end_offset": null,
+          "chunk_metadata": {
+            "breadcrumb": "Demo > Điều 1"
+          },
+          "source_id": null,
+          "source_record_id": null,
+          "source_snapshot_id": null,
+          "title": "Demo",
+          "source_url": null,
+          "language": null,
+          "issued_on": null,
+          "effective_from": "2026-01-01",
+          "effective_to": null,
+          "effect_status_reported": null,
+          "usage_policy": "EXPERIMENTAL_ONLY",
+          "source_metadata": {}
+        }
+      ],
+      "warnings": [
+        {
+          "code": "SOURCE_URL_MISSING",
+          "message": "Source URL is unavailable.",
+          "retrieval_chunk_id": "00000000-0000-0000-0000-000000000002"
+        },
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "00000000-0000-0000-0000-000000000002"
+        },
+        {
+          "code": "SOURCE_URL_MISSING",
+          "message": "Source URL is unavailable.",
+          "retrieval_chunk_id": "00000000-0000-0000-0000-000000000001"
+        },
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "00000000-0000-0000-0000-000000000001"
+        }
+      ],
+      "error": null,
+      "retrieved_at": "2026-11-28T16:08:07.348374Z",
+      "consistency": "BEST_EFFORT"
+    },
+    {
+      "schema_version": "1",
+      "request_id": "5a340ad9-a135-4597-92f5-929526ef68f2",
+      "query": "người lao động đơn phương chấm dứt hợp đồng lao động trái pháp luật bồi thường chi phí đào tạo; tình huống: hợp đồng lao động 2 năm mới làm được 6 tháng muốn nghỉ việc",
+      "query_used": "người lao động đơn phương chấm dứt hợp đồng lao động trái pháp luật bồi thường chi phí đào tạo; tình huống: hợp đồng lao động 2 năm mới làm được 6 tháng muốn nghỉ việc",
+      "mode": "bm25",
+      "top_k": 5,
+      "as_of_date": "2026-11-10",
+      "allowed_usage_policies": [
+        "EXPERIMENTAL_ONLY"
+      ],
+      "selected_index_name": "vbpl-bm25-unicode-v1",
+      "index": {
+        "id": "00000000-0000-0000-0000-000000000014",
+        "index_name": "vbpl-bm25-unicode-v1",
+        "index_version": "v1",
+        "status": "READY",
+        "updated_at": "2026-11-10T00:00:00Z",
+        "algorithm": "BM25",
+        "tokenizer": "unicode-nfc-lower-v1"
+      },
+      "status": "OK",
+      "evidence": [
+        {
+          "retrieval_chunk_id": "00000000-0000-0000-0000-000000000002",
+          "source_document_id": "00000000-0000-0000-0000-00000000001e",
+          "document_structure_id": "00000000-0000-0000-0000-000000000028",
+          "chunk_key": "chunk-2",
+          "content": "Demo > Điều 1 > Thuế 2.",
+          "content_sha256": "dd9314bb58dd5dfa69a24b00571195f1ee0d4bd47d384e0486ed978396fef1c0",
+          "hash_check": "MATCHED_STORED",
+          "content_representation": "retrieval_chunk_content",
+          "rank": 1,
+          "raw_score": 7.2,
+          "score_kind": "BM25",
+          "retrieval_method": "bm25",
+          "node_id": null,
+          "block_id": null,
+          "chunk_type": "text",
+          "start_offset": null,
+          "end_offset": null,
+          "chunk_metadata": {
+            "breadcrumb": "Demo > Điều 1"
+          },
+          "source_id": null,
+          "source_record_id": null,
+          "source_snapshot_id": null,
+          "title": "Demo",
+          "source_url": null,
+          "language": null,
+          "issued_on": null,
+          "effective_from": "2026-01-01",
+          "effective_to": null,
+          "effect_status_reported": null,
+          "usage_policy": "EXPERIMENTAL_ONLY",
+          "source_metadata": {}
+        },
+        {
+          "retrieval_chunk_id": "00000000-0000-0000-0000-000000000001",
+          "source_document_id": "00000000-0000-0000-0000-00000000001e",
+          "document_structure_id": "00000000-0000-0000-0000-000000000028",
+          "chunk_key": "chunk-1",
+          "content": "Demo > Điều 1 > Thuế 1.",
+          "content_sha256": "357303a997e14de6aa3e9b8603ac96241b9816c75e9a4bb0d49ab30703d06ab2",
+          "hash_check": "MATCHED_STORED",
+          "content_representation": "retrieval_chunk_content",
+          "rank": 2,
+          "raw_score": 5.4,
+          "score_kind": "BM25",
+          "retrieval_method": "bm25",
+          "node_id": null,
+          "block_id": null,
+          "chunk_type": "text",
+          "start_offset": null,
+          "end_offset": null,
+          "chunk_metadata": {
+            "breadcrumb": "Demo > Điều 1"
+          },
+          "source_id": null,
+          "source_record_id": null,
+          "source_snapshot_id": null,
+          "title": "Demo",
+          "source_url": null,
+          "language": null,
+          "issued_on": null,
+          "effective_from": "2026-01-01",
+          "effective_to": null,
+          "effect_status_reported": null,
+          "usage_policy": "EXPERIMENTAL_ONLY",
+          "source_metadata": {}
+        }
+      ],
+      "warnings": [
+        {
+          "code": "SOURCE_URL_MISSING",
+          "message": "Source URL is unavailable.",
+          "retrieval_chunk_id": "00000000-0000-0000-0000-000000000002"
+        },
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "00000000-0000-0000-0000-000000000002"
+        },
+        {
+          "code": "SOURCE_URL_MISSING",
+          "message": "Source URL is unavailable.",
+          "retrieval_chunk_id": "00000000-0000-0000-0000-000000000001"
+        },
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "00000000-0000-0000-0000-000000000001"
+        }
+      ],
+      "error": null,
+      "retrieved_at": "2026-11-28T16:08:07.348374Z",
+      "consistency": "BEST_EFFORT"
+    }
+  ],
+  "judge_response": {
+    "status": "SUFFICIENT",
+    "issue_checks": [
+      {
+        "issue_id": "I:d2364c8a140e124251c320bbd598758dd659046682bed87207b98ff00a4886d1",
+        "evidence_ids": [
+          "E:e871af4d5688b852962908be487c16a8f4c0176e39ac2d1eba027f954a69aab2",
+          "E:679429c5669dd155389468d1a5c25b055ad1708acd522f059e9de0f2444840df"
+        ],
+        "coverage": "full"
+      },
+      {
+        "issue_id": "I:6fac2d4a4d86efb3bb019816eafa6b9dec381d50fbe1951837306295b49f6245",
+        "evidence_ids": [
+          "E:e871af4d5688b852962908be487c16a8f4c0176e39ac2d1eba027f954a69aab2",
+          "E:679429c5669dd155389468d1a5c25b055ad1708acd522f059e9de0f2444840df"
+        ],
+        "coverage": "full"
+      }
+    ],
+    "missing_items": [],
+    "next_queries": [],
+    "usable_evidence_ids": [
+      "E:e871af4d5688b852962908be487c16a8f4c0176e39ac2d1eba027f954a69aab2",
+      "E:679429c5669dd155389468d1a5c25b055ad1708acd522f059e9de0f2444840df"
+    ],
+    "explanation": "Fixture only; no legal evaluation.",
+    "error_code": null
+  },
+  "summary_response": {
+    "units": [
+      {
+        "text": "Nội dung minh họa, không phải quy định pháp luật.",
+        "issue_ids": [
+          "I:d2364c8a140e124251c320bbd598758dd659046682bed87207b98ff00a4886d1"
+        ],
+        "evidence_ids": [
+          "E:e871af4d5688b852962908be487c16a8f4c0176e39ac2d1eba027f954a69aab2"
+        ],
+        "statement_type": "source_statement"
+      }
+    ],
+    "limitations": [],
+    "abstain": false
+  }
+}
