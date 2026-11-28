@@ -1,0 +1,175 @@
+{
+  "request_id": "ae0a4736-2330-4bf6-a502-6b8fe0628bfc",
+  "question": "Nhà cũ tại Cần Thơ chưa có chống sét nhưng được yêu cầu lắp bổ sung thì phải làm gì, và hệ thống phải có những bộ phận nào?",
+  "query_plan": {
+    "issues": [
+      {
+        "issue_id": "I:ba26344d70ca30e9255f8023baf75f1a2a21d4637b8c26be3e0b4bde1c1c95ea",
+        "text": "Quy định về việc lắp đặt hệ thống chống sét cho nhà ở hiện hữu"
+      },
+      {
+        "issue_id": "I:1d8490ac658d3e3ec4b27a11beff525289ca6f12f41dd6c7a2e3b4c1c274b614",
+        "text": "Cấu tạo các bộ phận của hệ thống chống sét"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "evidence_id": "E:628a025de635ddbc95225799ba090476cb69119e1fbb31080852cf943112fd5e",
+      "content": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 1 > 1. Công trình, nhà ở hiện hữu chưa có hệ thống chống sét nhưng thuộc trường hợp phải lắp đặt theo quy định hoặc theo yêu cầu của cơ quan có thẩm quyền thì phải được lắp đặt bổ sung hệ thống chống sét.",
+      "document_id": "b0b58841-01d1-4753-aeee-567b59bd9ba4",
+      "chunk_id": "15d04eac-959e-49c9-a5f2-ed7aa1a86842",
+      "document_version_id": null,
+      "title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+      "source_url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+      "issued_on": null,
+      "effective_from": null,
+      "effective_to": null,
+      "effect_status_reported": null,
+      "usage_policy": "EXPERIMENTAL_ONLY",
+      "quote_representation": "retrieval_chunk_content",
+      "exact_citation_verified": null,
+      "temporal_status": "UNKNOWN",
+      "warnings": [
+        "NATIVE_CHUNK_NOT_VERIFIED_QUOTE"
+      ]
+    },
+    {
+      "evidence_id": "E:562c118a37d91371546297d5b007a9453628bdcbcb9cf1e2d992dfe0ccf25149",
+      "content": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 2 > 2. Công trình, nhà ở xây dựng mới, cải tạo hoặc thay đổi tính chất, công năng sử dụng thuộc trường hợp phải có hệ thống chống sét theo quy định hoặc theo yêu cầu của cơ quan có thẩm quyền thì hệ thống chống sét phải đáp ứng các yêu cầu kỹ thuật theo TCVN 9385:2012 về chống sét cho công trình xây dựng - Hướng dẫn thiết kế, kiểm tra và bảo trì hệ thống.",
+      "document_id": "b0b58841-01d1-4753-aeee-567b59bd9ba4",
+      "chunk_id": "be408d7d-5b35-4229-8339-44a1f23e1b72",
+      "document_version_id": null,
+      "title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+      "source_url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+      "issued_on": null,
+      "effective_from": null,
+      "effective_to": null,
+      "effect_status_reported": null,
+      "usage_policy": "EXPERIMENTAL_ONLY",
+      "quote_representation": "retrieval_chunk_content",
+      "exact_citation_verified": null,
+      "temporal_status": "UNKNOWN",
+      "warnings": [
+        "NATIVE_CHUNK_NOT_VERIFIED_QUOTE"
+      ]
+    },
+    {
+      "evidence_id": "E:689715060b84cd1ebc36008821ace2f44466e6673789caee24c5c7885204efa4",
+      "content": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 4: Các tiêu chí bảo đảm yêu cầu phòng, chống thiên tai đối với công trình, nhà ở > Khoản 3 > 3. Bồn chứa nước trên cao, dàn nóng máy điều hòa nhiệt độ lắp đặt trên mái, tường ngoài công trình, hệ thống máy nước nóng năng lượng mặt trời trên mái và các thiết bị, công trình khác lắp đặt trên cao phải được gia cường, neo giữ chắc chắn, bảo đảm an toàn khi xảy ra thiên tai.",
+      "document_id": "b0b58841-01d1-4753-aeee-567b59bd9ba4",
+      "chunk_id": "fefe67b7-a892-4d0c-b9d3-4559e85520f6",
+      "document_version_id": null,
+      "title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+      "source_url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+      "issued_on": null,
+      "effective_from": null,
+      "effective_to": null,
+      "effect_status_reported": null,
+      "usage_policy": "EXPERIMENTAL_ONLY",
+      "quote_representation": "retrieval_chunk_content",
+      "exact_citation_verified": null,
+      "temporal_status": "UNKNOWN",
+      "warnings": [
+        "NATIVE_CHUNK_NOT_VERIFIED_QUOTE"
+      ]
+    },
+    {
+      "evidence_id": "E:ba4d132c8df61a2bbe4f73b16912e4f9a56c915eef4bd1ff04eb4039423d1404",
+      "content": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 3 > 3. Hệ thống chống sét quy định tại khoản 1 và khoản 2 Điều này phải có đầy đủ các bộ phận cơ bản theo Điều 10 TCVN 9385:2012, bao gồm: bộ phận thu sét, bộ phận dây xuống, các mối nối, điểm kiểm tra đo đạc, bộ phận dây dẫn nối đất và bộ phận cực nối đất.",
+      "document_id": "b0b58841-01d1-4753-aeee-567b59bd9ba4",
+      "chunk_id": "1a299f34-63f9-45b8-a761-33a9bc7c9cc7",
+      "document_version_id": null,
+      "title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+      "source_url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+      "issued_on": null,
+      "effective_from": null,
+      "effective_to": null,
+      "effect_status_reported": null,
+      "usage_policy": "EXPERIMENTAL_ONLY",
+      "quote_representation": "retrieval_chunk_content",
+      "exact_citation_verified": null,
+      "temporal_status": "UNKNOWN",
+      "warnings": [
+        "NATIVE_CHUNK_NOT_VERIFIED_QUOTE"
+      ]
+    }
+  ],
+  "as_of_date": "2026-11-28",
+  "search_rounds_completed": 1,
+  "query_history": [
+    "2dec147d-50d4-44db-90bc-67bf6e3ee8a2",
+    "a92c3421-dd1a-4d4c-830e-99c0376c5ec4"
+  ],
+  "query_text_history": [
+    "lắp đặt hệ thống chống sét nhà ở hiện hữu quy định thủ tục",
+    "hệ thống chống sét gồm những bộ phận nào quy chuẩn kỹ thuật"
+  ],
+  "context": {
+    "bundle_status": "NOT_PROVIDED",
+    "groups": [],
+    "limitations": [
+      "NATIVE_CHUNKS_NOT_VERIFIED_QUOTES",
+      "LEGAL_VERSION_AND_CONTEXT_NOT_VERIFIED"
+    ],
+    "native_search": {
+      "links": [
+        {
+          "evidence_id": "E:628a025de635ddbc95225799ba090476cb69119e1fbb31080852cf943112fd5e",
+          "query": "lắp đặt hệ thống chống sét nhà ở hiện hữu quy định thủ tục",
+          "subquery_index": 0,
+          "issue_ids": [
+            "I:ba26344d70ca30e9255f8023baf75f1a2a21d4637b8c26be3e0b4bde1c1c95ea"
+          ]
+        },
+        {
+          "evidence_id": "E:628a025de635ddbc95225799ba090476cb69119e1fbb31080852cf943112fd5e",
+          "query": "hệ thống chống sét gồm những bộ phận nào quy chuẩn kỹ thuật",
+          "subquery_index": 1,
+          "issue_ids": [
+            "I:1d8490ac658d3e3ec4b27a11beff525289ca6f12f41dd6c7a2e3b4c1c274b614"
+          ]
+        },
+        {
+          "evidence_id": "E:562c118a37d91371546297d5b007a9453628bdcbcb9cf1e2d992dfe0ccf25149",
+          "query": "lắp đặt hệ thống chống sét nhà ở hiện hữu quy định thủ tục",
+          "subquery_index": 0,
+          "issue_ids": [
+            "I:ba26344d70ca30e9255f8023baf75f1a2a21d4637b8c26be3e0b4bde1c1c95ea"
+          ]
+        },
+        {
+          "evidence_id": "E:562c118a37d91371546297d5b007a9453628bdcbcb9cf1e2d992dfe0ccf25149",
+          "query": "hệ thống chống sét gồm những bộ phận nào quy chuẩn kỹ thuật",
+          "subquery_index": 1,
+          "issue_ids": [
+            "I:1d8490ac658d3e3ec4b27a11beff525289ca6f12f41dd6c7a2e3b4c1c274b614"
+          ]
+        },
+        {
+          "evidence_id": "E:689715060b84cd1ebc36008821ace2f44466e6673789caee24c5c7885204efa4",
+          "query": "lắp đặt hệ thống chống sét nhà ở hiện hữu quy định thủ tục",
+          "subquery_index": 0,
+          "issue_ids": [
+            "I:ba26344d70ca30e9255f8023baf75f1a2a21d4637b8c26be3e0b4bde1c1c95ea"
+          ]
+        },
+        {
+          "evidence_id": "E:ba4d132c8df61a2bbe4f73b16912e4f9a56c915eef4bd1ff04eb4039423d1404",
+          "query": "hệ thống chống sét gồm những bộ phận nào quy chuẩn kỹ thuật",
+          "subquery_index": 1,
+          "issue_ids": [
+            "I:1d8490ac658d3e3ec4b27a11beff525289ca6f12f41dd6c7a2e3b4c1c274b614"
+          ]
+        }
+      ],
+      "representation": "retrieval_chunk_content",
+      "completeness": "COMPLETE",
+      "warnings": [
+        "TEMPORAL_METADATA_INCOMPLETE"
+      ],
+      "executed_searches": 2,
+      "skipped_subqueries": []
+    }
+  }
+}

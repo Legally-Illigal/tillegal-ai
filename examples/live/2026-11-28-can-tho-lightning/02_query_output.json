@@ -1,0 +1,47 @@
+{
+  "original": "Nhà cũ tại Cần Thơ chưa có chống sét nhưng được yêu cầu lắp bổ sung thì phải làm gì, và hệ thống phải có những bộ phận nào?",
+  "intent": "legal_question",
+  "domain": "unknown",
+  "temporal_scope": [],
+  "subqueries": [
+    {
+      "text": "lắp đặt hệ thống chống sét nhà ở hiện hữu quy định thủ tục",
+      "purpose": "question_part"
+    },
+    {
+      "text": "hệ thống chống sét gồm những bộ phận nào quy chuẩn kỹ thuật",
+      "purpose": "question_part"
+    }
+  ],
+  "clarification": null,
+  "analysis_method": "llm",
+  "analysis_model": "gemini-3.5-flash-lite",
+  "facts": [
+    {
+      "text": "Nhà cũ tại Cần Thơ chưa có chống sét nhưng được yêu cầu lắp bổ sung thì phải làm gì, và hệ thống phải có những bộ phận nào?",
+      "source_quote": "Nhà cũ tại Cần Thơ chưa có chống sét nhưng được yêu cầu lắp bổ sung thì phải làm gì, và hệ thống phải có những bộ phận nào?"
+    }
+  ],
+  "issues": [
+    "Quy định về việc lắp đặt hệ thống chống sét cho nhà ở hiện hữu",
+    "Cấu tạo các bộ phận của hệ thống chống sét"
+  ],
+  "missing_information": [],
+  "citations": [],
+  "temporal_context": [],
+  "search_objectives": [
+    {
+      "query_index": 0,
+      "issue_indices": [
+        0
+      ]
+    },
+    {
+      "query_index": 1,
+      "issue_indices": [
+        1
+      ]
+    }
+  ],
+  "planning_warnings": []
+}

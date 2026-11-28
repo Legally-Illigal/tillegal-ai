@@ -1,0 +1,10 @@
+{
+  "prompt_version": "tillegal-summary-native-v2",
+  "model": "gemini-3.5-flash-lite",
+  "provider_mode": "live",
+  "provider_calls": 1,
+  "error_code": null,
+  "input_bytes": 11158,
+  "stage": "render",
+  "latency_ms": 11076.773
+}

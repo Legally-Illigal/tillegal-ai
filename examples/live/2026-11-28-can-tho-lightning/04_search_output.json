@@ -1,0 +1,1659 @@
+{
+  "plan": {
+    "original": "Nhà cũ tại Cần Thơ chưa có chống sét nhưng được yêu cầu lắp bổ sung thì phải làm gì, và hệ thống phải có những bộ phận nào?",
+    "intent": "legal_question",
+    "domain": "unknown",
+    "temporal_scope": [],
+    "subqueries": [
+      {
+        "text": "lắp đặt hệ thống chống sét nhà ở hiện hữu quy định thủ tục",
+        "purpose": "question_part"
+      },
+      {
+        "text": "hệ thống chống sét gồm những bộ phận nào quy chuẩn kỹ thuật",
+        "purpose": "question_part"
+      }
+    ],
+    "clarification": null,
+    "analysis_method": "llm",
+    "analysis_model": "gemini-3.5-flash-lite",
+    "facts": [
+      {
+        "text": "Nhà cũ tại Cần Thơ chưa có chống sét nhưng được yêu cầu lắp bổ sung thì phải làm gì, và hệ thống phải có những bộ phận nào?",
+        "source_quote": "Nhà cũ tại Cần Thơ chưa có chống sét nhưng được yêu cầu lắp bổ sung thì phải làm gì, và hệ thống phải có những bộ phận nào?"
+      }
+    ],
+    "issues": [
+      "Quy định về việc lắp đặt hệ thống chống sét cho nhà ở hiện hữu",
+      "Cấu tạo các bộ phận của hệ thống chống sét"
+    ],
+    "missing_information": [],
+    "citations": [],
+    "temporal_context": [],
+    "search_objectives": [
+      {
+        "query_index": 0,
+        "issue_indices": [
+          0
+        ]
+      },
+      {
+        "query_index": 1,
+        "issue_indices": [
+          1
+        ]
+      }
+    ],
+    "planning_warnings": []
+  },
+  "requests": [
+    {
+      "query": "lắp đặt hệ thống chống sét nhà ở hiện hữu quy định thủ tục",
+      "mode": "bm25",
+      "top_k": 3,
+      "as_of_date": "2026-11-28",
+      "allowed_usage_policies": [
+        "EXPERIMENTAL_ONLY"
+      ]
+    },
+    {
+      "query": "hệ thống chống sét gồm những bộ phận nào quy chuẩn kỹ thuật",
+      "mode": "bm25",
+      "top_k": 3,
+      "as_of_date": "2026-11-28",
+      "allowed_usage_policies": [
+        "EXPERIMENTAL_ONLY"
+      ]
+    }
+  ],
+  "responses": [
+    {
+      "schema_version": "1",
+      "request_id": "2dec147d-50d4-44db-90bc-67bf6e3ee8a2",
+      "query": "lắp đặt hệ thống chống sét nhà ở hiện hữu quy định thủ tục",
+      "query_used": "lắp đặt hệ thống chống sét nhà ở hiện hữu quy định thủ tục",
+      "mode": "bm25",
+      "top_k": 3,
+      "as_of_date": "2026-11-28",
+      "allowed_usage_policies": [
+        "EXPERIMENTAL_ONLY"
+      ],
+      "selected_index_name": "vbpl-bm25-unicode-v1",
+      "index": {
+        "id": "9cdc7e8d-d7d1-4e7c-8e44-cf69a2430921",
+        "index_name": "vbpl-bm25-unicode-v1",
+        "index_version": "v1",
+        "status": "READY",
+        "updated_at": "2026-11-16T08:24:48.486515Z",
+        "algorithm": "BM25",
+        "tokenizer": "unicode-nfc-lower-v1"
+      },
+      "status": "OK",
+      "evidence": [
+        {
+          "retrieval_chunk_id": "15d04eac-959e-49c9-a5f2-ed7aa1a86842",
+          "source_document_id": "b0b58841-01d1-4753-aeee-567b59bd9ba4",
+          "document_structure_id": "89d06f7d-e6d9-4f5b-83db-e74573cf86f3",
+          "chunk_key": "legal-v1-block-000028-1",
+          "content": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 1 > 1. Công trình, nhà ở hiện hữu chưa có hệ thống chống sét nhưng thuộc trường hợp phải lắp đặt theo quy định hoặc theo yêu cầu của cơ quan có thẩm quyền thì phải được lắp đặt bổ sung hệ thống chống sét.",
+          "content_sha256": "b98b06f6d2178dffbb882a4d7739d605944e7d35f7604f3cb953ce5c72d8ea60",
+          "hash_check": "MATCHED_STORED",
+          "content_representation": "retrieval_chunk_content",
+          "rank": 1,
+          "raw_score": 55.3868147745694,
+          "score_kind": "BM25",
+          "retrieval_method": "bm25",
+          "node_id": "chapter-ii-article-5-clause-1",
+          "block_id": "block-000028",
+          "chunk_type": "clause",
+          "start_offset": 3405,
+          "end_offset": 3605,
+          "chunk_metadata": {
+            "block_ids": [
+              "block-000028"
+            ],
+            "breadcrumb": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 1"
+          },
+          "source_id": "vbpl",
+          "source_record_id": "2c94ef50-d982-11f1-9be0-b9342de7fef9",
+          "source_snapshot_id": null,
+          "title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+          "source_url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+          "language": "vi",
+          "issued_on": null,
+          "effective_from": null,
+          "effective_to": null,
+          "effect_status_reported": null,
+          "usage_policy": "EXPERIMENTAL_ONLY",
+          "source_metadata": {
+            "json_ld": [
+              {
+                "url": "https://vbpl.vn",
+                "name": "Cơ sở dữ liệu quốc gia về pháp luật",
+                "@type": "Organization",
+                "@context": "https://schema.org",
+                "description": "Cơ sở dữ liệu quốc gia về pháp luật được xây dựng và vận hành bởi Bộ Tư pháp, cung cấp thông tin đầy đủ, chính xác về văn bản pháp luật Việt Nam."
+              },
+              {
+                "url": "https://vbpl.vn",
+                "name": "CSDL quốc gia về pháp luật",
+                "@type": "WebSite",
+                "@context": "https://schema.org"
+              }
+            ],
+            "meta_tags": {
+              "og:url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+              "robots": "index, follow",
+              "og:type": "article",
+              "og:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+              "viewport": "width=device-width, initial-scale=1",
+              "og:locale": "vi_VN",
+              "description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "og:site_name": "CSDL quốc gia về pháp luật",
+              "twitter:card": "summary_large_image",
+              "twitter:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+              "og:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "twitter:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "article:modified_time": "2026-11-10T06:14:51.000Z",
+              "article:published_time": "2026-11-04T17:00:00.000Z",
+              "google-site-verification": "LY6q8GyDpuCAuWEtIfZgVg__EaZ8Cyk-rYDq8p-bUKw"
+            },
+            "sitemap_url": "https://vbpl.vn/sitemap/13.xml",
+            "source_files": [
+              {
+                "size": 32083,
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 474746,
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "size": 27862,
+                "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 865193,
+                "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.pdf",
+                "content_type": "application/pdf"
+              }
+            ],
+            "stored_files": [
+              {
+                "size": 32083,
+                "sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 474746,
+                "sha256": "4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3",
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3/origin.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "size": 27862,
+                "sha256": "bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0",
+                "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0/origin.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 865193,
+                "sha256": "3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269",
+                "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269/origin.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "role": "normalized_markdown",
+                "size": 17282,
+                "sha256": "6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8",
+                "file_name": "origin.md",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8/origin.md",
+                "content_type": "text/markdown; charset=utf-8",
+                "source_sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+                "source_file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "source_storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx"
+              }
+            ],
+            "sitemap_lastmod": "2026-11-10",
+            "stored_files_refreshed": true
+          }
+        },
+        {
+          "retrieval_chunk_id": "be408d7d-5b35-4229-8339-44a1f23e1b72",
+          "source_document_id": "b0b58841-01d1-4753-aeee-567b59bd9ba4",
+          "document_structure_id": "89d06f7d-e6d9-4f5b-83db-e74573cf86f3",
+          "chunk_key": "legal-v1-block-000029-1",
+          "content": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 2 > 2. Công trình, nhà ở xây dựng mới, cải tạo hoặc thay đổi tính chất, công năng sử dụng thuộc trường hợp phải có hệ thống chống sét theo quy định hoặc theo yêu cầu của cơ quan có thẩm quyền thì hệ thống chống sét phải đáp ứng các yêu cầu kỹ thuật theo TCVN 9385:2012 về chống sét cho công trình xây dựng - Hướng dẫn thiết kế, kiểm tra và bảo trì hệ thống.",
+          "content_sha256": "90024e38217bb922f90d498414f4e40b95f9fb13ee427e52ee69cd4cb751b9d0",
+          "hash_check": "MATCHED_STORED",
+          "content_representation": "retrieval_chunk_content",
+          "rank": 2,
+          "raw_score": 32.0861801998582,
+          "score_kind": "BM25",
+          "retrieval_method": "bm25",
+          "node_id": "chapter-ii-article-5-clause-2",
+          "block_id": "block-000029",
+          "chunk_type": "clause",
+          "start_offset": 3607,
+          "end_offset": 3960,
+          "chunk_metadata": {
+            "block_ids": [
+              "block-000029"
+            ],
+            "breadcrumb": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 2"
+          },
+          "source_id": "vbpl",
+          "source_record_id": "2c94ef50-d982-11f1-9be0-b9342de7fef9",
+          "source_snapshot_id": null,
+          "title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+          "source_url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+          "language": "vi",
+          "issued_on": null,
+          "effective_from": null,
+          "effective_to": null,
+          "effect_status_reported": null,
+          "usage_policy": "EXPERIMENTAL_ONLY",
+          "source_metadata": {
+            "json_ld": [
+              {
+                "url": "https://vbpl.vn",
+                "name": "Cơ sở dữ liệu quốc gia về pháp luật",
+                "@type": "Organization",
+                "@context": "https://schema.org",
+                "description": "Cơ sở dữ liệu quốc gia về pháp luật được xây dựng và vận hành bởi Bộ Tư pháp, cung cấp thông tin đầy đủ, chính xác về văn bản pháp luật Việt Nam."
+              },
+              {
+                "url": "https://vbpl.vn",
+                "name": "CSDL quốc gia về pháp luật",
+                "@type": "WebSite",
+                "@context": "https://schema.org"
+              }
+            ],
+            "meta_tags": {
+              "og:url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+              "robots": "index, follow",
+              "og:type": "article",
+              "og:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+              "viewport": "width=device-width, initial-scale=1",
+              "og:locale": "vi_VN",
+              "description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "og:site_name": "CSDL quốc gia về pháp luật",
+              "twitter:card": "summary_large_image",
+              "twitter:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+              "og:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "twitter:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "article:modified_time": "2026-11-10T06:14:51.000Z",
+              "article:published_time": "2026-11-04T17:00:00.000Z",
+              "google-site-verification": "LY6q8GyDpuCAuWEtIfZgVg__EaZ8Cyk-rYDq8p-bUKw"
+            },
+            "sitemap_url": "https://vbpl.vn/sitemap/13.xml",
+            "source_files": [
+              {
+                "size": 32083,
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 474746,
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "size": 27862,
+                "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 865193,
+                "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.pdf",
+                "content_type": "application/pdf"
+              }
+            ],
+            "stored_files": [
+              {
+                "size": 32083,
+                "sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 474746,
+                "sha256": "4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3",
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3/origin.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "size": 27862,
+                "sha256": "bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0",
+                "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0/origin.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 865193,
+                "sha256": "3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269",
+                "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269/origin.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "role": "normalized_markdown",
+                "size": 17282,
+                "sha256": "6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8",
+                "file_name": "origin.md",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8/origin.md",
+                "content_type": "text/markdown; charset=utf-8",
+                "source_sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+                "source_file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "source_storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx"
+              }
+            ],
+            "sitemap_lastmod": "2026-11-10",
+            "stored_files_refreshed": true
+          }
+        },
+        {
+          "retrieval_chunk_id": "fefe67b7-a892-4d0c-b9d3-4559e85520f6",
+          "source_document_id": "b0b58841-01d1-4753-aeee-567b59bd9ba4",
+          "document_structure_id": "89d06f7d-e6d9-4f5b-83db-e74573cf86f3",
+          "chunk_key": "legal-v1-block-000025-1",
+          "content": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 4: Các tiêu chí bảo đảm yêu cầu phòng, chống thiên tai đối với công trình, nhà ở > Khoản 3 > 3. Bồn chứa nước trên cao, dàn nóng máy điều hòa nhiệt độ lắp đặt trên mái, tường ngoài công trình, hệ thống máy nước nóng năng lượng mặt trời trên mái và các thiết bị, công trình khác lắp đặt trên cao phải được gia cường, neo giữ chắc chắn, bảo đảm an toàn khi xảy ra thiên tai.",
+          "content_sha256": "26bd7b03d22af31396fdddbfa50c9e6c638c8f5bb84c4b74ef8203201ca1101e",
+          "hash_check": "MATCHED_STORED",
+          "content_representation": "retrieval_chunk_content",
+          "rank": 3,
+          "raw_score": 28.0708666074633,
+          "score_kind": "BM25",
+          "retrieval_method": "bm25",
+          "node_id": "chapter-ii-article-4-clause-3",
+          "block_id": "block-000025",
+          "chunk_type": "clause",
+          "start_offset": 2735,
+          "end_offset": 3014,
+          "chunk_metadata": {
+            "block_ids": [
+              "block-000025"
+            ],
+            "breadcrumb": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 4: Các tiêu chí bảo đảm yêu cầu phòng, chống thiên tai đối với công trình, nhà ở > Khoản 3"
+          },
+          "source_id": "vbpl",
+          "source_record_id": "2c94ef50-d982-11f1-9be0-b9342de7fef9",
+          "source_snapshot_id": null,
+          "title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+          "source_url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+          "language": "vi",
+          "issued_on": null,
+          "effective_from": null,
+          "effective_to": null,
+          "effect_status_reported": null,
+          "usage_policy": "EXPERIMENTAL_ONLY",
+          "source_metadata": {
+            "json_ld": [
+              {
+                "url": "https://vbpl.vn",
+                "name": "Cơ sở dữ liệu quốc gia về pháp luật",
+                "@type": "Organization",
+                "@context": "https://schema.org",
+                "description": "Cơ sở dữ liệu quốc gia về pháp luật được xây dựng và vận hành bởi Bộ Tư pháp, cung cấp thông tin đầy đủ, chính xác về văn bản pháp luật Việt Nam."
+              },
+              {
+                "url": "https://vbpl.vn",
+                "name": "CSDL quốc gia về pháp luật",
+                "@type": "WebSite",
+                "@context": "https://schema.org"
+              }
+            ],
+            "meta_tags": {
+              "og:url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+              "robots": "index, follow",
+              "og:type": "article",
+              "og:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+              "viewport": "width=device-width, initial-scale=1",
+              "og:locale": "vi_VN",
+              "description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "og:site_name": "CSDL quốc gia về pháp luật",
+              "twitter:card": "summary_large_image",
+              "twitter:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+              "og:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "twitter:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "article:modified_time": "2026-11-10T06:14:51.000Z",
+              "article:published_time": "2026-11-04T17:00:00.000Z",
+              "google-site-verification": "LY6q8GyDpuCAuWEtIfZgVg__EaZ8Cyk-rYDq8p-bUKw"
+            },
+            "sitemap_url": "https://vbpl.vn/sitemap/13.xml",
+            "source_files": [
+              {
+                "size": 32083,
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 474746,
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "size": 27862,
+                "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 865193,
+                "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.pdf",
+                "content_type": "application/pdf"
+              }
+            ],
+            "stored_files": [
+              {
+                "size": 32083,
+                "sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 474746,
+                "sha256": "4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3",
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3/origin.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "size": 27862,
+                "sha256": "bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0",
+                "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0/origin.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 865193,
+                "sha256": "3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269",
+                "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269/origin.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "role": "normalized_markdown",
+                "size": 17282,
+                "sha256": "6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8",
+                "file_name": "origin.md",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8/origin.md",
+                "content_type": "text/markdown; charset=utf-8",
+                "source_sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+                "source_file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "source_storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx"
+              }
+            ],
+            "sitemap_lastmod": "2026-11-10",
+            "stored_files_refreshed": true
+          }
+        }
+      ],
+      "warnings": [
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "15d04eac-959e-49c9-a5f2-ed7aa1a86842"
+        },
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "be408d7d-5b35-4229-8339-44a1f23e1b72"
+        },
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "fefe67b7-a892-4d0c-b9d3-4559e85520f6"
+        }
+      ],
+      "error": null,
+      "retrieved_at": "2026-11-28T11:17:35.550977Z",
+      "consistency": "BEST_EFFORT"
+    },
+    {
+      "schema_version": "1",
+      "request_id": "a92c3421-dd1a-4d4c-830e-99c0376c5ec4",
+      "query": "hệ thống chống sét gồm những bộ phận nào quy chuẩn kỹ thuật",
+      "query_used": "hệ thống chống sét gồm những bộ phận nào quy chuẩn kỹ thuật",
+      "mode": "bm25",
+      "top_k": 3,
+      "as_of_date": "2026-11-28",
+      "allowed_usage_policies": [
+        "EXPERIMENTAL_ONLY"
+      ],
+      "selected_index_name": "vbpl-bm25-unicode-v1",
+      "index": {
+        "id": "9cdc7e8d-d7d1-4e7c-8e44-cf69a2430921",
+        "index_name": "vbpl-bm25-unicode-v1",
+        "index_version": "v1",
+        "status": "READY",
+        "updated_at": "2026-11-16T08:24:48.486515Z",
+        "algorithm": "BM25",
+        "tokenizer": "unicode-nfc-lower-v1"
+      },
+      "status": "OK",
+      "evidence": [
+        {
+          "retrieval_chunk_id": "1a299f34-63f9-45b8-a761-33a9bc7c9cc7",
+          "source_document_id": "b0b58841-01d1-4753-aeee-567b59bd9ba4",
+          "document_structure_id": "89d06f7d-e6d9-4f5b-83db-e74573cf86f3",
+          "chunk_key": "legal-v1-block-000030-1",
+          "content": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 3 > 3. Hệ thống chống sét quy định tại khoản 1 và khoản 2 Điều này phải có đầy đủ các bộ phận cơ bản theo Điều 10 TCVN 9385:2012, bao gồm: bộ phận thu sét, bộ phận dây xuống, các mối nối, điểm kiểm tra đo đạc, bộ phận dây dẫn nối đất và bộ phận cực nối đất.",
+          "content_sha256": "e04253fb9e164e25901f707fd61280b2df696f78143238274eeb16f97f2fcf57",
+          "hash_check": "MATCHED_STORED",
+          "content_representation": "retrieval_chunk_content",
+          "rank": 1,
+          "raw_score": 37.7498368672729,
+          "score_kind": "BM25",
+          "retrieval_method": "bm25",
+          "node_id": "chapter-ii-article-5-clause-3",
+          "block_id": "block-000030",
+          "chunk_type": "clause",
+          "start_offset": 3962,
+          "end_offset": 4215,
+          "chunk_metadata": {
+            "block_ids": [
+              "block-000030"
+            ],
+            "breadcrumb": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 3"
+          },
+          "source_id": "vbpl",
+          "source_record_id": "2c94ef50-d982-11f1-9be0-b9342de7fef9",
+          "source_snapshot_id": null,
+          "title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+          "source_url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+          "language": "vi",
+          "issued_on": null,
+          "effective_from": null,
+          "effective_to": null,
+          "effect_status_reported": null,
+          "usage_policy": "EXPERIMENTAL_ONLY",
+          "source_metadata": {
+            "json_ld": [
+              {
+                "url": "https://vbpl.vn",
+                "name": "Cơ sở dữ liệu quốc gia về pháp luật",
+                "@type": "Organization",
+                "@context": "https://schema.org",
+                "description": "Cơ sở dữ liệu quốc gia về pháp luật được xây dựng và vận hành bởi Bộ Tư pháp, cung cấp thông tin đầy đủ, chính xác về văn bản pháp luật Việt Nam."
+              },
+              {
+                "url": "https://vbpl.vn",
+                "name": "CSDL quốc gia về pháp luật",
+                "@type": "WebSite",
+                "@context": "https://schema.org"
+              }
+            ],
+            "meta_tags": {
+              "og:url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+              "robots": "index, follow",
+              "og:type": "article",
+              "og:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+              "viewport": "width=device-width, initial-scale=1",
+              "og:locale": "vi_VN",
+              "description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "og:site_name": "CSDL quốc gia về pháp luật",
+              "twitter:card": "summary_large_image",
+              "twitter:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+              "og:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "twitter:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "article:modified_time": "2026-11-10T06:14:51.000Z",
+              "article:published_time": "2026-11-04T17:00:00.000Z",
+              "google-site-verification": "LY6q8GyDpuCAuWEtIfZgVg__EaZ8Cyk-rYDq8p-bUKw"
+            },
+            "sitemap_url": "https://vbpl.vn/sitemap/13.xml",
+            "source_files": [
+              {
+                "size": 32083,
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 474746,
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "size": 27862,
+                "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 865193,
+                "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.pdf",
+                "content_type": "application/pdf"
+              }
+            ],
+            "stored_files": [
+              {
+                "size": 32083,
+                "sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 474746,
+                "sha256": "4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3",
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3/origin.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "size": 27862,
+                "sha256": "bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0",
+                "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0/origin.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 865193,
+                "sha256": "3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269",
+                "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269/origin.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "role": "normalized_markdown",
+                "size": 17282,
+                "sha256": "6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8",
+                "file_name": "origin.md",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8/origin.md",
+                "content_type": "text/markdown; charset=utf-8",
+                "source_sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+                "source_file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "source_storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx"
+              }
+            ],
+            "sitemap_lastmod": "2026-11-10",
+            "stored_files_refreshed": true
+          }
+        },
+        {
+          "retrieval_chunk_id": "be408d7d-5b35-4229-8339-44a1f23e1b72",
+          "source_document_id": "b0b58841-01d1-4753-aeee-567b59bd9ba4",
+          "document_structure_id": "89d06f7d-e6d9-4f5b-83db-e74573cf86f3",
+          "chunk_key": "legal-v1-block-000029-1",
+          "content": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 2 > 2. Công trình, nhà ở xây dựng mới, cải tạo hoặc thay đổi tính chất, công năng sử dụng thuộc trường hợp phải có hệ thống chống sét theo quy định hoặc theo yêu cầu của cơ quan có thẩm quyền thì hệ thống chống sét phải đáp ứng các yêu cầu kỹ thuật theo TCVN 9385:2012 về chống sét cho công trình xây dựng - Hướng dẫn thiết kế, kiểm tra và bảo trì hệ thống.",
+          "content_sha256": "90024e38217bb922f90d498414f4e40b95f9fb13ee427e52ee69cd4cb751b9d0",
+          "hash_check": "MATCHED_STORED",
+          "content_representation": "retrieval_chunk_content",
+          "rank": 2,
+          "raw_score": 32.3225944680481,
+          "score_kind": "BM25",
+          "retrieval_method": "bm25",
+          "node_id": "chapter-ii-article-5-clause-2",
+          "block_id": "block-000029",
+          "chunk_type": "clause",
+          "start_offset": 3607,
+          "end_offset": 3960,
+          "chunk_metadata": {
+            "block_ids": [
+              "block-000029"
+            ],
+            "breadcrumb": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 2"
+          },
+          "source_id": "vbpl",
+          "source_record_id": "2c94ef50-d982-11f1-9be0-b9342de7fef9",
+          "source_snapshot_id": null,
+          "title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+          "source_url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+          "language": "vi",
+          "issued_on": null,
+          "effective_from": null,
+          "effective_to": null,
+          "effect_status_reported": null,
+          "usage_policy": "EXPERIMENTAL_ONLY",
+          "source_metadata": {
+            "json_ld": [
+              {
+                "url": "https://vbpl.vn",
+                "name": "Cơ sở dữ liệu quốc gia về pháp luật",
+                "@type": "Organization",
+                "@context": "https://schema.org",
+                "description": "Cơ sở dữ liệu quốc gia về pháp luật được xây dựng và vận hành bởi Bộ Tư pháp, cung cấp thông tin đầy đủ, chính xác về văn bản pháp luật Việt Nam."
+              },
+              {
+                "url": "https://vbpl.vn",
+                "name": "CSDL quốc gia về pháp luật",
+                "@type": "WebSite",
+                "@context": "https://schema.org"
+              }
+            ],
+            "meta_tags": {
+              "og:url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+              "robots": "index, follow",
+              "og:type": "article",
+              "og:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+              "viewport": "width=device-width, initial-scale=1",
+              "og:locale": "vi_VN",
+              "description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "og:site_name": "CSDL quốc gia về pháp luật",
+              "twitter:card": "summary_large_image",
+              "twitter:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+              "og:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "twitter:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "article:modified_time": "2026-11-10T06:14:51.000Z",
+              "article:published_time": "2026-11-04T17:00:00.000Z",
+              "google-site-verification": "LY6q8GyDpuCAuWEtIfZgVg__EaZ8Cyk-rYDq8p-bUKw"
+            },
+            "sitemap_url": "https://vbpl.vn/sitemap/13.xml",
+            "source_files": [
+              {
+                "size": 32083,
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 474746,
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "size": 27862,
+                "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 865193,
+                "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.pdf",
+                "content_type": "application/pdf"
+              }
+            ],
+            "stored_files": [
+              {
+                "size": 32083,
+                "sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 474746,
+                "sha256": "4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3",
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3/origin.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "size": 27862,
+                "sha256": "bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0",
+                "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0/origin.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 865193,
+                "sha256": "3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269",
+                "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269/origin.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "role": "normalized_markdown",
+                "size": 17282,
+                "sha256": "6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8",
+                "file_name": "origin.md",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8/origin.md",
+                "content_type": "text/markdown; charset=utf-8",
+                "source_sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+                "source_file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "source_storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx"
+              }
+            ],
+            "sitemap_lastmod": "2026-11-10",
+            "stored_files_refreshed": true
+          }
+        },
+        {
+          "retrieval_chunk_id": "15d04eac-959e-49c9-a5f2-ed7aa1a86842",
+          "source_document_id": "b0b58841-01d1-4753-aeee-567b59bd9ba4",
+          "document_structure_id": "89d06f7d-e6d9-4f5b-83db-e74573cf86f3",
+          "chunk_key": "legal-v1-block-000028-1",
+          "content": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 1 > 1. Công trình, nhà ở hiện hữu chưa có hệ thống chống sét nhưng thuộc trường hợp phải lắp đặt theo quy định hoặc theo yêu cầu của cơ quan có thẩm quyền thì phải được lắp đặt bổ sung hệ thống chống sét.",
+          "content_sha256": "b98b06f6d2178dffbb882a4d7739d605944e7d35f7604f3cb953ce5c72d8ea60",
+          "hash_check": "MATCHED_STORED",
+          "content_representation": "retrieval_chunk_content",
+          "rank": 3,
+          "raw_score": 25.7392197610451,
+          "score_kind": "BM25",
+          "retrieval_method": "bm25",
+          "node_id": "chapter-ii-article-5-clause-1",
+          "block_id": "block-000028",
+          "chunk_type": "clause",
+          "start_offset": 3405,
+          "end_offset": 3605,
+          "chunk_metadata": {
+            "block_ids": [
+              "block-000028"
+            ],
+            "breadcrumb": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 1"
+          },
+          "source_id": "vbpl",
+          "source_record_id": "2c94ef50-d982-11f1-9be0-b9342de7fef9",
+          "source_snapshot_id": null,
+          "title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+          "source_url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+          "language": "vi",
+          "issued_on": null,
+          "effective_from": null,
+          "effective_to": null,
+          "effect_status_reported": null,
+          "usage_policy": "EXPERIMENTAL_ONLY",
+          "source_metadata": {
+            "json_ld": [
+              {
+                "url": "https://vbpl.vn",
+                "name": "Cơ sở dữ liệu quốc gia về pháp luật",
+                "@type": "Organization",
+                "@context": "https://schema.org",
+                "description": "Cơ sở dữ liệu quốc gia về pháp luật được xây dựng và vận hành bởi Bộ Tư pháp, cung cấp thông tin đầy đủ, chính xác về văn bản pháp luật Việt Nam."
+              },
+              {
+                "url": "https://vbpl.vn",
+                "name": "CSDL quốc gia về pháp luật",
+                "@type": "WebSite",
+                "@context": "https://schema.org"
+              }
+            ],
+            "meta_tags": {
+              "og:url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+              "robots": "index, follow",
+              "og:type": "article",
+              "og:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+              "viewport": "width=device-width, initial-scale=1",
+              "og:locale": "vi_VN",
+              "description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "og:site_name": "CSDL quốc gia về pháp luật",
+              "twitter:card": "summary_large_image",
+              "twitter:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+              "og:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "twitter:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+              "article:modified_time": "2026-11-10T06:14:51.000Z",
+              "article:published_time": "2026-11-04T17:00:00.000Z",
+              "google-site-verification": "LY6q8GyDpuCAuWEtIfZgVg__EaZ8Cyk-rYDq8p-bUKw"
+            },
+            "sitemap_url": "https://vbpl.vn/sitemap/13.xml",
+            "source_files": [
+              {
+                "size": 32083,
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 474746,
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "size": 27862,
+                "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 865193,
+                "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+                "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.pdf",
+                "content_type": "application/pdf"
+              }
+            ],
+            "stored_files": [
+              {
+                "size": 32083,
+                "sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 474746,
+                "sha256": "4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3",
+                "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3/origin.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "size": 27862,
+                "sha256": "bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0",
+                "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0/origin.docx",
+                "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              },
+              {
+                "size": 865193,
+                "sha256": "3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269",
+                "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269/origin.pdf",
+                "content_type": "application/pdf"
+              },
+              {
+                "role": "normalized_markdown",
+                "size": 17282,
+                "sha256": "6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8",
+                "file_name": "origin.md",
+                "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8/origin.md",
+                "content_type": "text/markdown; charset=utf-8",
+                "source_sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+                "source_file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+                "source_storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx"
+              }
+            ],
+            "sitemap_lastmod": "2026-11-10",
+            "stored_files_refreshed": true
+          }
+        }
+      ],
+      "warnings": [
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "1a299f34-63f9-45b8-a761-33a9bc7c9cc7"
+        },
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "be408d7d-5b35-4229-8339-44a1f23e1b72"
+        },
+        {
+          "code": "TEMPORAL_METADATA_INCOMPLETE",
+          "message": "Effective dates are partly unspecified; legal applicability has not been evaluated.",
+          "retrieval_chunk_id": "15d04eac-959e-49c9-a5f2-ed7aa1a86842"
+        }
+      ],
+      "error": null,
+      "retrieved_at": "2026-11-28T11:17:36.517359Z",
+      "consistency": "BEST_EFFORT"
+    }
+  ],
+  "status": "COMPLETED",
+  "completeness": "COMPLETE",
+  "evidence": [
+    {
+      "evidence": {
+        "retrieval_chunk_id": "15d04eac-959e-49c9-a5f2-ed7aa1a86842",
+        "source_document_id": "b0b58841-01d1-4753-aeee-567b59bd9ba4",
+        "document_structure_id": "89d06f7d-e6d9-4f5b-83db-e74573cf86f3",
+        "chunk_key": "legal-v1-block-000028-1",
+        "content": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 1 > 1. Công trình, nhà ở hiện hữu chưa có hệ thống chống sét nhưng thuộc trường hợp phải lắp đặt theo quy định hoặc theo yêu cầu của cơ quan có thẩm quyền thì phải được lắp đặt bổ sung hệ thống chống sét.",
+        "content_sha256": "b98b06f6d2178dffbb882a4d7739d605944e7d35f7604f3cb953ce5c72d8ea60",
+        "hash_check": "MATCHED_STORED",
+        "content_representation": "retrieval_chunk_content",
+        "rank": 1,
+        "raw_score": 55.3868147745694,
+        "score_kind": "BM25",
+        "retrieval_method": "bm25",
+        "node_id": "chapter-ii-article-5-clause-1",
+        "block_id": "block-000028",
+        "chunk_type": "clause",
+        "start_offset": 3405,
+        "end_offset": 3605,
+        "chunk_metadata": {
+          "block_ids": [
+            "block-000028"
+          ],
+          "breadcrumb": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 1"
+        },
+        "source_id": "vbpl",
+        "source_record_id": "2c94ef50-d982-11f1-9be0-b9342de7fef9",
+        "source_snapshot_id": null,
+        "title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+        "source_url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+        "language": "vi",
+        "issued_on": null,
+        "effective_from": null,
+        "effective_to": null,
+        "effect_status_reported": null,
+        "usage_policy": "EXPERIMENTAL_ONLY",
+        "source_metadata": {
+          "json_ld": [
+            {
+              "url": "https://vbpl.vn",
+              "name": "Cơ sở dữ liệu quốc gia về pháp luật",
+              "@type": "Organization",
+              "@context": "https://schema.org",
+              "description": "Cơ sở dữ liệu quốc gia về pháp luật được xây dựng và vận hành bởi Bộ Tư pháp, cung cấp thông tin đầy đủ, chính xác về văn bản pháp luật Việt Nam."
+            },
+            {
+              "url": "https://vbpl.vn",
+              "name": "CSDL quốc gia về pháp luật",
+              "@type": "WebSite",
+              "@context": "https://schema.org"
+            }
+          ],
+          "meta_tags": {
+            "og:url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+            "robots": "index, follow",
+            "og:type": "article",
+            "og:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+            "viewport": "width=device-width, initial-scale=1",
+            "og:locale": "vi_VN",
+            "description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+            "og:site_name": "CSDL quốc gia về pháp luật",
+            "twitter:card": "summary_large_image",
+            "twitter:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+            "og:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+            "twitter:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+            "article:modified_time": "2026-11-10T06:14:51.000Z",
+            "article:published_time": "2026-11-04T17:00:00.000Z",
+            "google-site-verification": "LY6q8GyDpuCAuWEtIfZgVg__EaZ8Cyk-rYDq8p-bUKw"
+          },
+          "sitemap_url": "https://vbpl.vn/sitemap/13.xml",
+          "source_files": [
+            {
+              "size": 32083,
+              "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+              "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+              "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            {
+              "size": 474746,
+              "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+              "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+              "content_type": "application/pdf"
+            },
+            {
+              "size": 27862,
+              "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+              "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.docx",
+              "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            {
+              "size": 865193,
+              "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+              "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.pdf",
+              "content_type": "application/pdf"
+            }
+          ],
+          "stored_files": [
+            {
+              "size": 32083,
+              "sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+              "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx",
+              "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            {
+              "size": 474746,
+              "sha256": "4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3",
+              "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3/origin.pdf",
+              "content_type": "application/pdf"
+            },
+            {
+              "size": 27862,
+              "sha256": "bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0",
+              "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0/origin.docx",
+              "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            {
+              "size": 865193,
+              "sha256": "3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269",
+              "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269/origin.pdf",
+              "content_type": "application/pdf"
+            },
+            {
+              "role": "normalized_markdown",
+              "size": 17282,
+              "sha256": "6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8",
+              "file_name": "origin.md",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8/origin.md",
+              "content_type": "text/markdown; charset=utf-8",
+              "source_sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+              "source_file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+              "source_storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx"
+            }
+          ],
+          "sitemap_lastmod": "2026-11-10",
+          "stored_files_refreshed": true
+        }
+      },
+      "occurrences": [
+        {
+          "subquery_index": 0,
+          "response_index": 0,
+          "query": "lắp đặt hệ thống chống sét nhà ở hiện hữu quy định thủ tục",
+          "request_id": "2dec147d-50d4-44db-90bc-67bf6e3ee8a2",
+          "rank": 1,
+          "raw_score": 55.3868147745694,
+          "score_kind": "BM25",
+          "issue_indices": [
+            0
+          ]
+        },
+        {
+          "subquery_index": 1,
+          "response_index": 1,
+          "query": "hệ thống chống sét gồm những bộ phận nào quy chuẩn kỹ thuật",
+          "request_id": "a92c3421-dd1a-4d4c-830e-99c0376c5ec4",
+          "rank": 3,
+          "raw_score": 25.7392197610451,
+          "score_kind": "BM25",
+          "issue_indices": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "evidence": {
+        "retrieval_chunk_id": "be408d7d-5b35-4229-8339-44a1f23e1b72",
+        "source_document_id": "b0b58841-01d1-4753-aeee-567b59bd9ba4",
+        "document_structure_id": "89d06f7d-e6d9-4f5b-83db-e74573cf86f3",
+        "chunk_key": "legal-v1-block-000029-1",
+        "content": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 2 > 2. Công trình, nhà ở xây dựng mới, cải tạo hoặc thay đổi tính chất, công năng sử dụng thuộc trường hợp phải có hệ thống chống sét theo quy định hoặc theo yêu cầu của cơ quan có thẩm quyền thì hệ thống chống sét phải đáp ứng các yêu cầu kỹ thuật theo TCVN 9385:2012 về chống sét cho công trình xây dựng - Hướng dẫn thiết kế, kiểm tra và bảo trì hệ thống.",
+        "content_sha256": "90024e38217bb922f90d498414f4e40b95f9fb13ee427e52ee69cd4cb751b9d0",
+        "hash_check": "MATCHED_STORED",
+        "content_representation": "retrieval_chunk_content",
+        "rank": 2,
+        "raw_score": 32.0861801998582,
+        "score_kind": "BM25",
+        "retrieval_method": "bm25",
+        "node_id": "chapter-ii-article-5-clause-2",
+        "block_id": "block-000029",
+        "chunk_type": "clause",
+        "start_offset": 3607,
+        "end_offset": 3960,
+        "chunk_metadata": {
+          "block_ids": [
+            "block-000029"
+          ],
+          "breadcrumb": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 2"
+        },
+        "source_id": "vbpl",
+        "source_record_id": "2c94ef50-d982-11f1-9be0-b9342de7fef9",
+        "source_snapshot_id": null,
+        "title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+        "source_url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+        "language": "vi",
+        "issued_on": null,
+        "effective_from": null,
+        "effective_to": null,
+        "effect_status_reported": null,
+        "usage_policy": "EXPERIMENTAL_ONLY",
+        "source_metadata": {
+          "json_ld": [
+            {
+              "url": "https://vbpl.vn",
+              "name": "Cơ sở dữ liệu quốc gia về pháp luật",
+              "@type": "Organization",
+              "@context": "https://schema.org",
+              "description": "Cơ sở dữ liệu quốc gia về pháp luật được xây dựng và vận hành bởi Bộ Tư pháp, cung cấp thông tin đầy đủ, chính xác về văn bản pháp luật Việt Nam."
+            },
+            {
+              "url": "https://vbpl.vn",
+              "name": "CSDL quốc gia về pháp luật",
+              "@type": "WebSite",
+              "@context": "https://schema.org"
+            }
+          ],
+          "meta_tags": {
+            "og:url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+            "robots": "index, follow",
+            "og:type": "article",
+            "og:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+            "viewport": "width=device-width, initial-scale=1",
+            "og:locale": "vi_VN",
+            "description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+            "og:site_name": "CSDL quốc gia về pháp luật",
+            "twitter:card": "summary_large_image",
+            "twitter:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+            "og:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+            "twitter:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+            "article:modified_time": "2026-11-10T06:14:51.000Z",
+            "article:published_time": "2026-11-04T17:00:00.000Z",
+            "google-site-verification": "LY6q8GyDpuCAuWEtIfZgVg__EaZ8Cyk-rYDq8p-bUKw"
+          },
+          "sitemap_url": "https://vbpl.vn/sitemap/13.xml",
+          "source_files": [
+            {
+              "size": 32083,
+              "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+              "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+              "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            {
+              "size": 474746,
+              "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+              "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+              "content_type": "application/pdf"
+            },
+            {
+              "size": 27862,
+              "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+              "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.docx",
+              "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            {
+              "size": 865193,
+              "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+              "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.pdf",
+              "content_type": "application/pdf"
+            }
+          ],
+          "stored_files": [
+            {
+              "size": 32083,
+              "sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+              "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx",
+              "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            {
+              "size": 474746,
+              "sha256": "4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3",
+              "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3/origin.pdf",
+              "content_type": "application/pdf"
+            },
+            {
+              "size": 27862,
+              "sha256": "bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0",
+              "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0/origin.docx",
+              "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            {
+              "size": 865193,
+              "sha256": "3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269",
+              "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269/origin.pdf",
+              "content_type": "application/pdf"
+            },
+            {
+              "role": "normalized_markdown",
+              "size": 17282,
+              "sha256": "6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8",
+              "file_name": "origin.md",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8/origin.md",
+              "content_type": "text/markdown; charset=utf-8",
+              "source_sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+              "source_file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+              "source_storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx"
+            }
+          ],
+          "sitemap_lastmod": "2026-11-10",
+          "stored_files_refreshed": true
+        }
+      },
+      "occurrences": [
+        {
+          "subquery_index": 0,
+          "response_index": 0,
+          "query": "lắp đặt hệ thống chống sét nhà ở hiện hữu quy định thủ tục",
+          "request_id": "2dec147d-50d4-44db-90bc-67bf6e3ee8a2",
+          "rank": 2,
+          "raw_score": 32.0861801998582,
+          "score_kind": "BM25",
+          "issue_indices": [
+            0
+          ]
+        },
+        {
+          "subquery_index": 1,
+          "response_index": 1,
+          "query": "hệ thống chống sét gồm những bộ phận nào quy chuẩn kỹ thuật",
+          "request_id": "a92c3421-dd1a-4d4c-830e-99c0376c5ec4",
+          "rank": 2,
+          "raw_score": 32.3225944680481,
+          "score_kind": "BM25",
+          "issue_indices": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "evidence": {
+        "retrieval_chunk_id": "fefe67b7-a892-4d0c-b9d3-4559e85520f6",
+        "source_document_id": "b0b58841-01d1-4753-aeee-567b59bd9ba4",
+        "document_structure_id": "89d06f7d-e6d9-4f5b-83db-e74573cf86f3",
+        "chunk_key": "legal-v1-block-000025-1",
+        "content": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 4: Các tiêu chí bảo đảm yêu cầu phòng, chống thiên tai đối với công trình, nhà ở > Khoản 3 > 3. Bồn chứa nước trên cao, dàn nóng máy điều hòa nhiệt độ lắp đặt trên mái, tường ngoài công trình, hệ thống máy nước nóng năng lượng mặt trời trên mái và các thiết bị, công trình khác lắp đặt trên cao phải được gia cường, neo giữ chắc chắn, bảo đảm an toàn khi xảy ra thiên tai.",
+        "content_sha256": "26bd7b03d22af31396fdddbfa50c9e6c638c8f5bb84c4b74ef8203201ca1101e",
+        "hash_check": "MATCHED_STORED",
+        "content_representation": "retrieval_chunk_content",
+        "rank": 3,
+        "raw_score": 28.0708666074633,
+        "score_kind": "BM25",
+        "retrieval_method": "bm25",
+        "node_id": "chapter-ii-article-4-clause-3",
+        "block_id": "block-000025",
+        "chunk_type": "clause",
+        "start_offset": 2735,
+        "end_offset": 3014,
+        "chunk_metadata": {
+          "block_ids": [
+            "block-000025"
+          ],
+          "breadcrumb": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 4: Các tiêu chí bảo đảm yêu cầu phòng, chống thiên tai đối với công trình, nhà ở > Khoản 3"
+        },
+        "source_id": "vbpl",
+        "source_record_id": "2c94ef50-d982-11f1-9be0-b9342de7fef9",
+        "source_snapshot_id": null,
+        "title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+        "source_url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+        "language": "vi",
+        "issued_on": null,
+        "effective_from": null,
+        "effective_to": null,
+        "effect_status_reported": null,
+        "usage_policy": "EXPERIMENTAL_ONLY",
+        "source_metadata": {
+          "json_ld": [
+            {
+              "url": "https://vbpl.vn",
+              "name": "Cơ sở dữ liệu quốc gia về pháp luật",
+              "@type": "Organization",
+              "@context": "https://schema.org",
+              "description": "Cơ sở dữ liệu quốc gia về pháp luật được xây dựng và vận hành bởi Bộ Tư pháp, cung cấp thông tin đầy đủ, chính xác về văn bản pháp luật Việt Nam."
+            },
+            {
+              "url": "https://vbpl.vn",
+              "name": "CSDL quốc gia về pháp luật",
+              "@type": "WebSite",
+              "@context": "https://schema.org"
+            }
+          ],
+          "meta_tags": {
+            "og:url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+            "robots": "index, follow",
+            "og:type": "article",
+            "og:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+            "viewport": "width=device-width, initial-scale=1",
+            "og:locale": "vi_VN",
+            "description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+            "og:site_name": "CSDL quốc gia về pháp luật",
+            "twitter:card": "summary_large_image",
+            "twitter:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+            "og:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+            "twitter:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+            "article:modified_time": "2026-11-10T06:14:51.000Z",
+            "article:published_time": "2026-11-04T17:00:00.000Z",
+            "google-site-verification": "LY6q8GyDpuCAuWEtIfZgVg__EaZ8Cyk-rYDq8p-bUKw"
+          },
+          "sitemap_url": "https://vbpl.vn/sitemap/13.xml",
+          "source_files": [
+            {
+              "size": 32083,
+              "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+              "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+              "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            {
+              "size": 474746,
+              "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+              "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+              "content_type": "application/pdf"
+            },
+            {
+              "size": 27862,
+              "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+              "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.docx",
+              "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            {
+              "size": 865193,
+              "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+              "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.pdf",
+              "content_type": "application/pdf"
+            }
+          ],
+          "stored_files": [
+            {
+              "size": 32083,
+              "sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+              "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx",
+              "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            {
+              "size": 474746,
+              "sha256": "4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3",
+              "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3/origin.pdf",
+              "content_type": "application/pdf"
+            },
+            {
+              "size": 27862,
+              "sha256": "bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0",
+              "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0/origin.docx",
+              "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            {
+              "size": 865193,
+              "sha256": "3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269",
+              "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269/origin.pdf",
+              "content_type": "application/pdf"
+            },
+            {
+              "role": "normalized_markdown",
+              "size": 17282,
+              "sha256": "6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8",
+              "file_name": "origin.md",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8/origin.md",
+              "content_type": "text/markdown; charset=utf-8",
+              "source_sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+              "source_file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+              "source_storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx"
+            }
+          ],
+          "sitemap_lastmod": "2026-11-10",
+          "stored_files_refreshed": true
+        }
+      },
+      "occurrences": [
+        {
+          "subquery_index": 0,
+          "response_index": 0,
+          "query": "lắp đặt hệ thống chống sét nhà ở hiện hữu quy định thủ tục",
+          "request_id": "2dec147d-50d4-44db-90bc-67bf6e3ee8a2",
+          "rank": 3,
+          "raw_score": 28.0708666074633,
+          "score_kind": "BM25",
+          "issue_indices": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "evidence": {
+        "retrieval_chunk_id": "1a299f34-63f9-45b8-a761-33a9bc7c9cc7",
+        "source_document_id": "b0b58841-01d1-4753-aeee-567b59bd9ba4",
+        "document_structure_id": "89d06f7d-e6d9-4f5b-83db-e74573cf86f3",
+        "chunk_key": "legal-v1-block-000030-1",
+        "content": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 3 > 3. Hệ thống chống sét quy định tại khoản 1 và khoản 2 Điều này phải có đầy đủ các bộ phận cơ bản theo Điều 10 TCVN 9385:2012, bao gồm: bộ phận thu sét, bộ phận dây xuống, các mối nối, điểm kiểm tra đo đạc, bộ phận dây dẫn nối đất và bộ phận cực nối đất.",
+        "content_sha256": "e04253fb9e164e25901f707fd61280b2df696f78143238274eeb16f97f2fcf57",
+        "hash_check": "MATCHED_STORED",
+        "content_representation": "retrieval_chunk_content",
+        "rank": 1,
+        "raw_score": 37.7498368672729,
+        "score_kind": "BM25",
+        "retrieval_method": "bm25",
+        "node_id": "chapter-ii-article-5-clause-3",
+        "block_id": "block-000030",
+        "chunk_type": "clause",
+        "start_offset": 3962,
+        "end_offset": 4215,
+        "chunk_metadata": {
+          "block_ids": [
+            "block-000030"
+          ],
+          "breadcrumb": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ > Chương II > Điều 5: Tiêu chí về phòng, chống sét đối với công trình, nhà ở > Khoản 3"
+        },
+        "source_id": "vbpl",
+        "source_record_id": "2c94ef50-d982-11f1-9be0-b9342de7fef9",
+        "source_snapshot_id": null,
+        "title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+        "source_url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+        "language": "vi",
+        "issued_on": null,
+        "effective_from": null,
+        "effective_to": null,
+        "effect_status_reported": null,
+        "usage_policy": "EXPERIMENTAL_ONLY",
+        "source_metadata": {
+          "json_ld": [
+            {
+              "url": "https://vbpl.vn",
+              "name": "Cơ sở dữ liệu quốc gia về pháp luật",
+              "@type": "Organization",
+              "@context": "https://schema.org",
+              "description": "Cơ sở dữ liệu quốc gia về pháp luật được xây dựng và vận hành bởi Bộ Tư pháp, cung cấp thông tin đầy đủ, chính xác về văn bản pháp luật Việt Nam."
+            },
+            {
+              "url": "https://vbpl.vn",
+              "name": "CSDL quốc gia về pháp luật",
+              "@type": "WebSite",
+              "@context": "https://schema.org"
+            }
+          ],
+          "meta_tags": {
+            "og:url": "https://vbpl.vn/van-ban/chi-tiet/quyet-dinh-so-103-2026-qd-ubnd-ban-hanh-quy-dinh-tieu-chi-bao-dam-yeu-cau-phong-chong-thien-tai-trong-su-dung-cong-trinh-nha-o-thuoc-quyen-so-huu-cua-ho-gia-dinh-ca-nhan-tren-dia-ban-thanh-pho-can-tho--2c94ef50-d982-11f1-9be0-b9342de7fef9",
+            "robots": "index, follow",
+            "og:type": "article",
+            "og:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+            "viewport": "width=device-width, initial-scale=1",
+            "og:locale": "vi_VN",
+            "description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+            "og:site_name": "CSDL quốc gia về pháp luật",
+            "twitter:card": "summary_large_image",
+            "twitter:title": "Quyết định 103/2026/QĐ-UBND của UBND Thành phố Cần Thơ",
+            "og:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+            "twitter:description": "Tra cứu Quyết định 103/2026/QĐ-UBND, Quyết định số 103/2026/QĐ-UBND Ban hành Quy định tiêu chí bảo đảm yêu cầu phòng, chống thiên tai trong sử dụng công trình, nhà ở thuộc quyền sở hữu của hộ gia đình, cá nhân trên địa bàn thành phố Cần Thơ. Xem toàn văn và hiệu lực.",
+            "article:modified_time": "2026-11-10T06:14:51.000Z",
+            "article:published_time": "2026-11-04T17:00:00.000Z",
+            "google-site-verification": "LY6q8GyDpuCAuWEtIfZgVg__EaZ8Cyk-rYDq8p-bUKw"
+          },
+          "sitemap_url": "https://vbpl.vn/sitemap/13.xml",
+          "source_files": [
+            {
+              "size": 32083,
+              "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+              "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+              "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            {
+              "size": 474746,
+              "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+              "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+              "content_type": "application/pdf"
+            },
+            {
+              "size": 27862,
+              "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+              "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.docx",
+              "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            {
+              "size": 865193,
+              "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+              "full_path": "2c94ef50-d982-11f1-9be0-b9342de7fef9/Quyet dinh 103.2026.QD.UBND.pdf",
+              "content_type": "application/pdf"
+            }
+          ],
+          "stored_files": [
+            {
+              "size": 32083,
+              "sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+              "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx",
+              "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            {
+              "size": 474746,
+              "sha256": "4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3",
+              "file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.pdf",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/4187cb878d6d06234d9f395f5bc5938a698f38df455ce014646eefbc280a47c3/origin.pdf",
+              "content_type": "application/pdf"
+            },
+            {
+              "size": 27862,
+              "sha256": "bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0",
+              "file_name": "Quyet dinh 103.2026.QD.UBND.docx",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/bc709ad16c532acdc3a10375bd5d6060b419491ff4da4341605455795e32dcd0/origin.docx",
+              "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            },
+            {
+              "size": 865193,
+              "sha256": "3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269",
+              "file_name": "Quyet dinh 103.2026.QD.UBND.pdf",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/3a9f4b42050bae153e8418e02cfd799bc7b5cb88dd027c1845bfd8667992b269/origin.pdf",
+              "content_type": "application/pdf"
+            },
+            {
+              "role": "normalized_markdown",
+              "size": 17282,
+              "sha256": "6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8",
+              "file_name": "origin.md",
+              "storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/6ded6f4d2ca3cde02ba6a41dc575d9a017627c14039784d7a8150ab0c0b4e5f8/origin.md",
+              "content_type": "text/markdown; charset=utf-8",
+              "source_sha256": "fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781",
+              "source_file_name": "Quy dinh - kem theo QD 103.2026.QD.UBND.docx",
+              "source_storage_ref": "vbpl-raw/vbpl/2c94ef50-d982-11f1-9be0-b9342de7fef9/fb93a975966dc0cb514e26dd2d005dddda97b6d80a22eb5dcd3db378a760b781/origin.docx"
+            }
+          ],
+          "sitemap_lastmod": "2026-11-10",
+          "stored_files_refreshed": true
+        }
+      },
+      "occurrences": [
+        {
+          "subquery_index": 1,
+          "response_index": 1,
+          "query": "hệ thống chống sét gồm những bộ phận nào quy chuẩn kỹ thuật",
+          "request_id": "a92c3421-dd1a-4d4c-830e-99c0376c5ec4",
+          "rank": 1,
+          "raw_score": 37.7498368672729,
+          "score_kind": "BM25",
+          "issue_indices": [
+            1
+          ]
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    "TEMPORAL_METADATA_INCOMPLETE"
+  ],
+  "errors": [],
+  "skipped_subqueries": [],
+  "executed_searches": 2
+}
